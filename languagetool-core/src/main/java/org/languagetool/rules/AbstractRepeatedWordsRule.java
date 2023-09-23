@@ -138,7 +138,7 @@ public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
             if (createMatch) {
               RuleMatch rulematch = new RuleMatch(this, sentence, pos + atrs.getStartPos(), pos + atrs.getEndPos(),
                   getMessage(), getShortMessage());
-              rulematch.setSpecificRuleId(ruleId + "_" + StringTools.toId(lemma));
+              rulematch.specificRuleId = ruleId + "_" + StringTools.toId(lemma);
               List<String> replacementLemmas = getWordsToCheck().get(lemma).getSynonyms();
               for (String replacementLemma : replacementLemmas) {
                 String[] replacements = getSynthesizer().synthesize(

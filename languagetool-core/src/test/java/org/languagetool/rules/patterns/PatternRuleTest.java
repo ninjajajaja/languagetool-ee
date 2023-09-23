@@ -49,7 +49,7 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
   // This check prints a warning for affected rules, but it's disabled by default because
   // it makes the tests very slow:
   private static final boolean CHECK_WITH_SENTENCE_SPLITTING = false;
-  private static final Comparator<Match> MATCH_COMPARATOR = Comparator.comparingInt(Match::getTokenRef);
+  private static final Comparator<Match> MATCH_COMPARATOR = Comparator.comparingInt(m -> m.tokenRef);
 
   static class PatternRuleTestFailure extends Exception {
     private final AbstractPatternRule rule;
@@ -348,9 +348,9 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
           suggestionMatches.addAll(apRule.getSuggestionMatchesOutMsg());
         }
         for (Match suggestionMatch : suggestionMatches) {
-          if (suggestionMatch.getPosTag() != null && suggestionMatch.getPosTagReplace() != null) {
-            long openingNum = suggestionMatch.getPosTag().chars().filter(ch -> ch == '(').count();
-            int maxBackReference = getMaxBackReferenceNo(suggestionMatch.getPosTagReplace());
+          if (suggestionMatch.posTag != null && suggestionMatch.posTagReplace != null) {
+            long openingNum = suggestionMatch.posTag.chars().filter(ch -> ch == '(').count();
+            int maxBackReference = getMaxBackReferenceNo(suggestionMatch.posTagReplace);
             if (openingNum < maxBackReference) {
               String failure = "Back reference number (" + maxBackReference
                   + ") is greater than existing number of parenthesis.";
@@ -391,10 +391,10 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
           suggestionMatches.addAll(apRule.getSuggestionMatchesOutMsg());
         }
         List<Integer> matchNos = getMatchNos(
-            ((AbstractPatternRule) rule).getMessage() + ((AbstractPatternRule) rule).getSuggestionsOutMsg());
+            ((AbstractPatternRule) rule).message + ((AbstractPatternRule) rule).getSuggestionsOutMsg());
         int i = 0;
         for (Match suggestionMatch : suggestionMatches) {
-          if (suggestionMatch.isPostagRegexp()) {
+          if (suggestionMatch.postagRegexp) {
             int no = matchNos.get(i);
             if (patternTokens != null && no > patternTokens.size()) {
               System.err.println("Warning: Rule " + rule.getFullId() + " refers to token \\" + (no) + " but has only "
@@ -461,7 +461,7 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
   protected void testMessages(Language lang, List<AbstractPatternRule> rules) {
     System.out.println("Checking messages for 'TBD' etc of " + rules.size() + " rules for " + lang + "...");
     for (AbstractPatternRule rule : rules) {
-      String msg = rule.getMessage().trim();
+      String msg = rule.message.trim();
       if (msg.trim().isEmpty()) {
         fail("Empty message of rule " + rule.getFullId());
       }
@@ -478,11 +478,11 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
         fail("Unfinished message (contains 'tbd') of rule " + rule.getFullId() + ": '" + msg + "'");
       }
       if (msg.startsWith(">")) {
-        System.err.println("*** WARNING: Message of rule " + rule.getFullId() + " starts with '>', is this a typo?: '" + rule.getMessage() + "'");
+        System.err.println("*** WARNING: Message of rule " + rule.getFullId() + " starts with '>', is this a typo?: '" + rule.message + "'");
       }
       if (lang.getShortCode().matches("de|en|fr|es|nl")) {  // not yet 'pt' due to many matches there
-        if (!msg.trim().equals(rule.getMessage())) {
-          System.err.println("*** WARNING: Message of rule " + rule.getFullId() + " starts or ends with spaces: '" + rule.getMessage() + "'");
+        if (!msg.trim().equals(rule.message)) {
+          System.err.println("*** WARNING: Message of rule " + rule.getFullId() + " starts or ends with spaces: '" + rule.message + "'");
         }
       }
       if (lang.getShortCode().equals("de") && !msg.equals("Failing for testing purposes")) {
@@ -637,7 +637,7 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
           String failure = "\"" + badSentence + "\"\n"
                   + "Errors expected: 1\n"
                   + "Errors found   : " + matches.size() + "\n"
-                  + "Message: " + rule.getMessage() + "\n" + sb + "\nMatches: " + matches + info;
+                  + "Message: " + rule.message + "\n" + sb + "\nMatches: " + matches + info;
           addError(rule, failure);
           continue;
         }
@@ -645,9 +645,9 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
         int maxReference = 0;
         if (rule.getSuggestionMatches() != null) {
           Optional<Match> opt = rule.getSuggestionMatches().stream().max(MATCH_COMPARATOR);
-          maxReference = opt.isPresent() ? opt.get().getTokenRef() : 0;
+          maxReference = opt.isPresent() ? opt.get().tokenRef : 0;
         }
-        maxReference = Math.max(rule.getMessage() != null ? findLargestReference(rule.getMessage()) : 0, maxReference);
+        maxReference = Math.max(rule.message != null ? findLargestReference(rule.message) : 0, maxReference);
         if (rule.getPatternTokens() != null && maxReference > rule.getPatternTokens().size()) {
           System.err.println("Warning: Rule "+rule.getFullId()+" refers to token \\"+(maxReference)+" but has only "+rule.getPatternTokens().size()+" tokens.");
         }
@@ -749,10 +749,10 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
     if (!expectedCorrections.isEmpty()) {
       boolean expectedNonEmptyCorrection = expectedCorrections.get(0).length() > 0;
       if (expectedNonEmptyCorrection) {
-        if (!(rule.getMessage().contains("<suggestion>") || rule.getSuggestionsOutMsg().contains("<suggestion>"))
+        if (!(rule.message.contains("<suggestion>") || rule.getSuggestionsOutMsg().contains("<suggestion>"))
             && rule.getFilter() == null) {
           addError(rule,
-              "You specified a correction, but your message has no suggestions. rule.getMessage(): " + rule.getMessage()
+              "You specified a correction, but your message has no suggestions. rule.message: " + rule.message
                   + ", rule.getSuggestionsOutMsg(): " + rule.getSuggestionsOutMsg() + ", rule.getFullId():"
                   + rule.getFullId());
         }
@@ -903,7 +903,7 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
         pToken = new PatternToken("", caseSensitive, regex, false);
       }
       if (pos) {
-        pToken.setPosToken(new PatternToken.PosToken(element, false, false));
+        pToken.posToken = new PatternToken.PosToken(element, false, false);
       }
       patternTokens.add(pToken);
       pos = false;

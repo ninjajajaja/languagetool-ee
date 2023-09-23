@@ -409,8 +409,8 @@ public class PatternRuleMatcherTest {
     patternTokenAB.setSkipNext(-1);
     PatternToken patternTokenC = makeElement("\\0");
     Match match = new Match(null, null, false, null, null, Match.CaseConversion.NONE, false, false, Match.IncludeRange.NONE);
-    match.setTokenRef(0);
-    match.setInMessageOnly(true);
+    match.tokenRef = 0;
+    match.inMessageOnly = true;
     patternTokenC.setMatch(match);
     PatternRuleMatcher matcher = getMatcher(patternTokenAB, patternTokenC);
     assertCompleteMatch("a a", matcher);
@@ -446,10 +446,10 @@ public class PatternRuleMatcherTest {
     PatternRuleMatcher matcher = new PatternRuleMatcher(rule, false);
     RuleMatch[] matches = getMatches(":42", matcher);
     assertThat(matches.length, is(1));
-    assertThat(matches[0].getMessage(), equalTo("Here come the match references: :42. This is the end"));
+    assertThat(matches[0].message, equalTo("Here come the match references: :42. This is the end"));
     RuleMatch[] matches2 = getMatches("\\42", matcher);
     assertThat(matches2.length, is(1));
-    assertThat(matches2[0].getMessage(), equalTo("Here come the match references: \\42. This is the end"));
+    assertThat(matches2[0].message, equalTo("Here come the match references: \\42. This is the end"));
   }
 
   @Test

@@ -357,8 +357,8 @@ public class XMLRuleHandler extends DefaultHandler {
     int counter = 0;
     for (PatternToken pToken : patternTokens) {
         if (pToken.getPhraseName() != null && counter > 0 && pToken.isReferenceElement()) {
-            int tokRef = pToken.getMatch().getTokenRef();
-            pToken.getMatch().setTokenRef(tokRef + counter - 1);
+            int tokRef = pToken.getMatch().tokenRef;
+            pToken.getMatch().tokenRef = tokRef + counter - 1;
             String offsetToken = pToken.getString().replace("\\" + tokRef,
                     "\\" + (tokRef + counter - 1));
             pToken.setStringElement(offsetToken);
@@ -386,7 +386,7 @@ public class XMLRuleHandler extends DefaultHandler {
         caseConversion, YES.equals(attrs.getValue("setpos")),
         isSuppressMisspelled,
         includeRange);
-    mWorker.setInMessageOnly(!inSuggestion);
+    mWorker.inMessageOnly = !inSuggestion;
     if (inMessage) {
       suggestionMatches.add(mWorker);
       // add incorrect XML character for simplicity
@@ -402,7 +402,7 @@ public class XMLRuleHandler extends DefaultHandler {
     } else if (inToken && attrs.getValue("no") != null) {
       int refNumber = Integer.parseInt(attrs.getValue("no"));
       checkRefNumber(refNumber);
-      mWorker.setTokenRef(refNumber);
+      mWorker.tokenRef = refNumber;
       tokenReference = mWorker;
       elements.append('\\');
       elements.append(refNumber);
@@ -476,7 +476,7 @@ public class XMLRuleHandler extends DefaultHandler {
       boolean caseSensitive = exceptionLevelCaseSensitive == null ? patternToken.isCaseSensitive() : exceptionLevelCaseSensitive;
       PatternToken exception = new PatternToken(exceptionStringInflected, internMatcher(exceptions.toString().trim(), exceptionStringRegExp, caseSensitive));
       exception.setNegation(exceptionStringNegation);
-      exception.setPosToken(obtainPosToken(exceptionPosToken, exceptionPosRegExp, exceptionPosNegation));
+      exception.posToken = obtainPosToken(exceptionPosToken, exceptionPosRegExp, exceptionPosNegation);
       patternToken.addException(exceptionValidNext, exceptionValidPrev, exception);
       exceptionPosToken = null;
       exceptionLevelCaseSensitive = null;
@@ -563,7 +563,7 @@ public class XMLRuleHandler extends DefaultHandler {
         if (pos == 0 || messageStr.charAt(pos - 1) != '\u0001') {
           Match mWorker = new Match(null, null, false, null,
               null, Match.CaseConversion.NONE, false, false, Match.IncludeRange.NONE);
-          mWorker.setInMessageOnly(true);
+          mWorker.inMessageOnly = true;
           sugMatch.add(mWorker);
         } else if (messageStr.charAt(pos - 1) == '\u0001') { // real suggestion marker
           sugMatch.add(existingSugMatches.get(matchCounter));
@@ -608,7 +608,7 @@ public class XMLRuleHandler extends DefaultHandler {
       maxOccurrence = 1;
     }
     if (posToken != null) {
-      patternToken.setPosToken(obtainPosToken(posToken, posRegExp, posNegation));
+      patternToken.posToken = obtainPosToken(posToken, posRegExp, posNegation);
       posToken = null;
     }
     if (chunkTag != null) {

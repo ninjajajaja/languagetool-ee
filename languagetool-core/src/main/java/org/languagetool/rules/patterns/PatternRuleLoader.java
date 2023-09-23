@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class PatternRuleLoader extends DefaultHandler {
 
-  private boolean relaxedMode = false;
+  public boolean relaxedMode = false;
 
   /**
    * @param file XML file with pattern rules
@@ -48,15 +48,6 @@ public class PatternRuleLoader extends DefaultHandler {
       PatternRuleLoader ruleLoader = new PatternRuleLoader();
       return ruleLoader.getRules(inputStream, file.getAbsolutePath(), lang);
     }
-  }
-
-  /**
-   * If set to true, don't throw an exception if id or name is not set.
-   * Used for online rule editor.
-   * @since 2.1
-   */
-  public void setRelaxedMode(boolean relaxedMode) {
-    this.relaxedMode = relaxedMode;
   }
 
   /**

@@ -50,12 +50,12 @@ public class RegexPatternRuleTest {
     
     assertThat(matches3[0].getFromPos(), is(8));
     assertThat(matches3[0].getToPos(), is(15));
-    assertThat(matches3[0].getMessage(), is("msg: <suggestion>a suggestion foo</suggestion>"));
+    assertThat(matches3[0].message, is("msg: <suggestion>a suggestion foo</suggestion>"));
     assertThat(matches3[0].getSuggestedReplacements().toString(), is("[a suggestion foo, another suggestion bar]"));
 
     assertThat(matches3[1].getFromPos(), is(20));
     assertThat(matches3[1].getToPos(), is(27));
-    assertThat(matches3[1].getMessage(), is("msg: <suggestion>a suggestion fou</suggestion>"));
+    assertThat(matches3[1].message, is("msg: <suggestion>a suggestion fou</suggestion>"));
     assertThat(matches3[1].getSuggestedReplacements().toString(), is("[a suggestion fou, another suggestion bar]"));
   }
  

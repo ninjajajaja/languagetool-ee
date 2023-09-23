@@ -205,7 +205,7 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
         sugStart += PatternRuleHandler.PLEASE_SPELL_ME.length();
       }
       for (Match sMatch : suggestionMatches) {
-        if (!sMatch.isInMessageOnly() && sMatch.convertsCase()
+        if (!sMatch.inMessageOnly && sMatch.convertsCase()
             && msg.charAt(sugStart) == '\\') {
           return false;
         }

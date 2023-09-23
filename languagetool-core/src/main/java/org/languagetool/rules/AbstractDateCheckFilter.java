@@ -91,13 +91,13 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
       if (dayOfWeekFromString != dayOfWeekFromDate) {
         Calendar calFromDateString = Calendar.getInstance();
         calFromDateString.set(Calendar.DAY_OF_WEEK, dayOfWeekFromString);
-        String message = match.getMessage()
+        String message = match.message
           .replace("{realDay}", getDayOfWeek(dateFromDate))
           .replace("{day}", getDayOfWeek(calFromDateString))
           .replace("{currentYear}", Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
-        RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
-        ruleMatch.setType(match.getType());
-        ruleMatch.setUrl(Tools.getUrl("https://www.timeanddate.com/calendar/?year=" + dateFromDate.get(Calendar.YEAR)));
+        RuleMatch ruleMatch = new RuleMatch(match.rule, match.sentence, match.getFromPos(), match.getToPos(), message, match.getShortMessage());
+        ruleMatch.setType(match.type);
+        ruleMatch.url = Tools.getUrl("https://www.timeanddate.com/calendar/?year=" + dateFromDate.get(Calendar.YEAR));
         return ruleMatch;
       } else {
         return null;

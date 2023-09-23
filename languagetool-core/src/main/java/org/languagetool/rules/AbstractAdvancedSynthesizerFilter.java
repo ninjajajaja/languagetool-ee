@@ -115,9 +115,9 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     String[] replacements = getSynthesizer().synthesize(token, desiredPostag, true);
     
     if (replacements.length > 0) {
-      RuleMatch newMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(),
-          match.getMessage(), match.getShortMessage());
-      newMatch.setType(match.getType());
+      RuleMatch newMatch = new RuleMatch(match.rule, match.sentence, match.getFromPos(), match.getToPos(),
+          match.message, match.getShortMessage());
+      newMatch.setType(match.type);
       List<String> replacementsList = new ArrayList<>();
 
       boolean suggestionUsed = false;

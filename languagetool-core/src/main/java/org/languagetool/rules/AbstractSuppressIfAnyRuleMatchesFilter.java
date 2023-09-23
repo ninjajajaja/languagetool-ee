@@ -38,7 +38,7 @@ public abstract class AbstractSuppressIfAnyRuleMatchesFilter extends RuleFilter 
 //    }
     List<String> ruleIDs = Arrays.asList(getRequired("ruleIDs", arguments).split(","));
     JLanguageTool lt = getJLanguageTool();
-    String sentence = match.getSentence().getText();
+    String sentence = match.sentence.getText();
     for (String replacement : match.getSuggestedReplacements()) {
       String newSentence = sentence.substring(0, match.getFromPos()) + replacement
           + sentence.substring(match.getToPos());

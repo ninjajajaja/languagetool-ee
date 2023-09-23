@@ -222,7 +222,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
     potentialRuleMatch = new RuleMatch(this, sentence, pos, pos
         + tokenString.length(), getMessage(tokenString, replacements), getShort());
     if (subRuleSpecificIds) {
-      potentialRuleMatch.setSpecificRuleId(StringTools.toId(getId() + "_" + originalTokenStr));
+      potentialRuleMatch.specificRuleId = StringTools.toId(getId() + "_" + originalTokenStr);
     }
     if (!isCaseSensitive() && StringTools.startsWithUppercase(tokenString)) {
       for (int i = 0; i < replacements.size(); i++) {

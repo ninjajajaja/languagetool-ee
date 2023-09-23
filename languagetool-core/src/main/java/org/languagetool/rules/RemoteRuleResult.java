@@ -43,7 +43,7 @@ public class RemoteRuleResult {
     this.processedSentences = Collections.unmodifiableSet(new HashSet<>(processedSentences));
 
     for (RuleMatch match : matches) {
-      sentenceMatches.compute(match.getSentence(), (sentence, ruleMatches) -> {
+      sentenceMatches.compute(match.sentence, (sentence, ruleMatches) -> {
         if (ruleMatches == null) {
           return new ArrayList<>(Collections.singletonList(match));
         } else {

@@ -43,27 +43,27 @@ public final class Match {
     NONE, FOLLOWING, ALL
   }
 
-  private final String posTag;
-  private final boolean suppressMisspelled;
-  private final String regexReplace;
-  private final String posTagReplace;
-  private final CaseConversion caseConversionType;
-  private final IncludeRange includeSkipped;
+  public String posTag;
+  public boolean suppressMisspelled;
+  public String regexReplace;
+  public String posTagReplace;
+  public CaseConversion caseConversionType;
+  public IncludeRange includeSkipped;
   // Pattern used to define parts of the matched token:
-  private final Pattern pRegexMatch;
+  public Pattern pRegexMatch;
   // True if this match element is used for formatting POS token:
-  private final boolean setPos;
+  public boolean setPos;
 
-  private boolean postagRegexp;
+  public boolean postagRegexp;
   // True if this match element formats a statically defined lemma which is
   // enclosed by the element, e.g., <match...>word</match>:
-  private boolean staticLemma;
-  private String lemma;
-  private int tokenRef;
+  public boolean staticLemma;
+  public String lemma;
+  public int tokenRef;
   // Pattern used to define parts of the matched POS token:
-  private Pattern pPosRegexMatch;
+  public Pattern pPosRegexMatch;
   // True when the match is not in the suggestion:
-  private boolean inMessageOnly;
+  public boolean inMessageOnly;
 
   public Match(String posTag, String posTagReplace,
       boolean postagRegexp, String regexMatch,
@@ -106,14 +106,6 @@ public final class Match {
   }
 
   /**
-   * Checks if the Match element is used for setting the part of speech: {@code setpos="yes"} in XML.
-   * @return True if Match sets POS.
-   */
-  public boolean setsPos() {
-    return setPos;
-  }
-
-  /**
    * Checks if the Match element uses regexp-based form of the POS tag.
    * @return True if regexp is used in POS.
    */
@@ -137,16 +129,6 @@ public final class Match {
     }
   }
 
-  /** @since 2.3 */
-  public String getLemma() {
-    return lemma;
-  }
-
-  /** @since 2.3 */
-  public boolean isStaticLemma() {
-    return staticLemma;
-  }
-
   /**
    * Used to tell whether the Match class will spell-check the result so
    * that misspelled suggestions are suppressed.
@@ -157,75 +139,10 @@ public final class Match {
   }
 
   /**
-   * Sets the token number referenced by the match.
-   * @param i Token number.
-   */
-  public void setTokenRef(int i) {
-    tokenRef = i;
-  }
-
-  /**
-   * Gets the token number referenced by the match.
-   * @return token number.
-   */
-  public int getTokenRef() {
-    return tokenRef;
-  }
-
-  /**
    * Used to let LT know that it should change the case of the match.
    * @return true if match converts the case of the token.
    */
   public boolean convertsCase() {
     return caseConversionType != CaseConversion.NONE;
   }
-
-  /** @since 2.3 */
-  public CaseConversion getCaseConversionType() {
-    return caseConversionType;
-  }
-
-  public void setInMessageOnly(boolean inMessageOnly) {
-    this.inMessageOnly = inMessageOnly;
-  }
-
-  public boolean isInMessageOnly() {
-    return inMessageOnly;
-  }
-
-  /** @since 2.3 */
-  public String getPosTag() {
-    return posTag;
-  }
-
-  /** @since 2.3 */
-  public Pattern getRegexMatch() {
-    return pRegexMatch;
-  }
-
-  /** @since 2.3 */
-  public String getRegexReplace() {
-    return regexReplace;
-  }
-
-  /** @since 2.3 */
-  public Pattern getPosRegexMatch() {
-    return pPosRegexMatch;
-  }
-
-  /** @since 2.3 */
-  public boolean isPostagRegexp() {
-    return postagRegexp;
-  }
-
-  /** @since 2.3 */
-  public String getPosTagReplace() {
-    return posTagReplace;
-  }
-
-  /** @since 2.3 */
-  public IncludeRange getIncludeSkipped() {
-    return includeSkipped;
-  }
-
 }

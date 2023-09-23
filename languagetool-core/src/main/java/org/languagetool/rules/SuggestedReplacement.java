@@ -72,9 +72,9 @@ public class SuggestedReplacement {
   public SuggestedReplacement(SuggestedReplacement repl) {
     this.replacement = repl.replacement;
     this.suffix = repl.suffix;
-    setShortDescription(repl.shortDescription);
-    setConfidence(repl.confidence);
-    setFeatures(repl.getFeatures());
+    shortDescription = repl.shortDescription;
+    confidence = repl.confidence;
+    features = repl.getFeatures();
     setType(repl.type);
   }
 
@@ -82,17 +82,9 @@ public class SuggestedReplacement {
     this.replacement = Objects.requireNonNull(replacement);
   }
 
-  public void setShortDescription(String desc) {
-    this.shortDescription = desc;
-  }
-
   /** @since 4.9 */
   public void setType(SuggestionType type) {
     this.type = Objects.requireNonNull(type);
-  }
-
-  public void setSuffix(String val) {
-    this.suffix = val;
   }
 
   @Override
@@ -114,17 +106,9 @@ public class SuggestedReplacement {
     return Objects.hash(replacement, shortDescription);
   }
 
-  public void setConfidence(@Nullable Float confidence) {
-    this.confidence = confidence;
-  }
-
   @NotNull
   public SortedMap<String, Float> getFeatures() {
     return Collections.unmodifiableSortedMap(features);
-  }
-
-  public void setFeatures(@NotNull SortedMap<String, Float> features) {
-    this.features = features;
   }
 
   public static List<SuggestedReplacement> convert(List<String> suggestions) {
@@ -137,7 +121,7 @@ public class SuggestedReplacement {
 
   public static List<SuggestedReplacement> topMatch(String word, String shortDesc) {
     SuggestedReplacement sugg = new SuggestedReplacement(word, shortDesc);
-    sugg.setConfidence(SpellingCheckRule.HIGH_CONFIDENCE);
+    sugg.confidence = SpellingCheckRule.HIGH_CONFIDENCE;
     return singletonList(sugg);
   }
 

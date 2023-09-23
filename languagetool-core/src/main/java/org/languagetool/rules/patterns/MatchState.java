@@ -56,14 +56,14 @@ public class MatchState {
   public MatchState(Match match, Synthesizer synthesizer) {
     this.match = match;
     this.synthesizer = synthesizer;
-    String lemma = match.getLemma();
+    String lemma = match.lemma;
     if (!StringUtils.isEmpty(lemma)) {
-      formattedToken = new AnalyzedTokenReadings(new AnalyzedToken(lemma, match.getPosTag(), lemma), 0);
+      formattedToken = new AnalyzedTokenReadings(new AnalyzedToken(lemma, match.posTag, lemma), 0);
     }
   }
 
   public void setToken(AnalyzedTokenReadings token) {
-    if (match.isStaticLemma()) {
+    if (match.staticLemma) {
       this.matchedToken = token;
     } else {
       this.formattedToken = token;
@@ -85,7 +85,7 @@ public class MatchState {
       idx = tokens.length - 1;
     }
     setToken(tokens[idx]);
-    IncludeRange includeSkipped = match.getIncludeSkipped();
+    IncludeRange includeSkipped = match.includeSkipped;
     if (next > 1 && includeSkipped != IncludeRange.NONE) {
       StringBuilder sb = new StringBuilder();
       if (includeSkipped == IncludeRange.FOLLOWING) {
@@ -107,28 +107,28 @@ public class MatchState {
   public final AnalyzedTokenReadings filterReadings() {
     List<AnalyzedToken> l = new ArrayList<>();
     if (formattedToken != null) {
-      if (match.isStaticLemma()) {
+      if (match.staticLemma) {
         // Note: we want the token without ignored characters so we can't use matchedToken.getToken()
         matchedToken.leaveReading(new AnalyzedToken(matchedToken.getReadings().get(0).getToken(),
-                match.getPosTag(), formattedToken.getToken()));
+                match.posTag, formattedToken.getToken()));
         formattedToken = matchedToken;
       }
       // Note: we want the token without ignored characters so we can't use formattedToken.getToken()
       String token = formattedToken.getAnalyzedToken(0).getToken();
-      Pattern regexMatch = match.getRegexMatch();
-      String regexReplace = match.getRegexReplace();
+      Pattern regexMatch = match.pRegexMatch;
+      String regexReplace = match.regexReplace;
       if (regexMatch != null && regexReplace != null) {
         /* only replace if it is something to replace */
         token = regexMatch.matcher(token).replaceAll(regexReplace);
       }
       token = convertCase(token, token, null);
 
-      String posTag = match.getPosTag();
+      String posTag = match.posTag;
       if (posTag != null) {
         int numRead = formattedToken.getReadingsLength();
-        if (match.isPostagRegexp()) {
-          Pattern pPosRegexMatch = match.getPosRegexMatch();
-          String posTagReplace = match.getPosTagReplace();
+        if (match.postagRegexp) {
+          Pattern pPosRegexMatch = match.pPosRegexMatch;
+          String posTagReplace = match.posTagReplace;
           String targetPosTag;
           for (int i = 0; i < numRead; i++) {
             String testTag = formattedToken.getAnalyzedToken(i).getPOSTag();
@@ -167,7 +167,7 @@ public class MatchState {
     // TODO: in case original had ignored characters we want to restore readings.token
     // but there's no setToken() available :(
 //    anTkRead.setToken(formattedToken.getToken());
-    
+
     anTkRead.setWhitespaceBefore(formattedToken.getWhitespaceBefore());
     if (!formattedToken.getChunkTags().isEmpty()) {
       anTkRead.setChunkTags(formattedToken.getChunkTags());
@@ -185,11 +185,11 @@ public class MatchState {
    * @return Converted string.
    */
   String convertCase(String s, String sample, Language lang) {
-    return CaseConversionHelper.convertCase(match.getCaseConversionType(), s, sample, lang);
+    return CaseConversionHelper.convertCase(match.caseConversionType, s, sample, lang);
   }
 
   private List<AnalyzedToken> getNewToken(int numRead, String token) {
-    String posTag = match.getPosTag();
+    String posTag = match.posTag;
     List<AnalyzedToken> list = new ArrayList<>();
     String lemma = "";
     for (int j = 0; j < numRead; j++) {
@@ -218,8 +218,8 @@ public class MatchState {
       int readingCount = formattedToken.getReadingsLength();
       formattedString[0] = formattedToken.getToken();
 
-      Pattern pRegexMatch = match.getRegexMatch();
-      String regexReplace = match.getRegexReplace();
+      Pattern pRegexMatch = match.pRegexMatch;
+      String regexReplace = match.regexReplace;
       if (pRegexMatch != null) {
         if (lang != null && lang.getShortCode().equals("ar")) {
            formattedString[0] = StringTools.removeTashkeel(formattedString[0]);
@@ -227,11 +227,11 @@ public class MatchState {
         formattedString[0] = pRegexMatch.matcher(formattedString[0]).replaceAll(regexReplace);
       }
 
-      String posTag = match.getPosTag();
+      String posTag = match.posTag;
       if (posTag != null) {
         if (synthesizer == null) {
           formattedString[0] = formattedToken.getToken();
-        } else if (match.isPostagRegexp()) {
+        } else if (match.postagRegexp) {
           TreeSet<String> wordForms = new TreeSet<>();
           boolean oneForm = false;
           for (int k = 0; k < readingCount; k++) {
@@ -282,7 +282,7 @@ public class MatchState {
       }
     }
     String original;
-    if (match.isStaticLemma()) {
+    if (match.staticLemma) {
       original = matchedToken != null ? matchedToken.getToken() : "";
     } else {
       original = formattedToken != null ? formattedToken.getToken() : "";
@@ -291,7 +291,7 @@ public class MatchState {
       formattedString[i] = convertCase(formattedString[i], original, lang);
     }
     // TODO should case conversion happen before or after including skipped tokens?
-    IncludeRange includeSkipped = match.getIncludeSkipped();
+    IncludeRange includeSkipped = match.includeSkipped;
     if (includeSkipped != IncludeRange.NONE && skippedTokens != null
         && !skippedTokens.isEmpty()) {
       String[] helper = new String[formattedString.length];
@@ -327,11 +327,11 @@ public class MatchState {
   // on the other hand, many POS tags = too many suggestions?
   // POS tags can be chosen by the synthesizer of each language: synthesizer.getTargetPosTag()
   public final String getTargetPosTag() {
-    String targetPosTag = match.getPosTag();
+    String targetPosTag = match.posTag;
     List<String> posTags = new ArrayList<>();
-    Pattern pPosRegexMatch = match.getPosRegexMatch();
-    String posTagReplace = match.getPosTagReplace();
-    if (match.isStaticLemma()) {
+    Pattern pPosRegexMatch = match.pPosRegexMatch;
+    String posTagReplace = match.posTagReplace;
+    if (match.staticLemma) {
       for (AnalyzedToken analyzedToken : matchedToken) {
         String tst = analyzedToken.getPOSTag();
         if (tst != null && pPosRegexMatch.matcher(tst).matches()) {
@@ -360,7 +360,7 @@ public class MatchState {
         for (String lPosTag : posTags) {
           l++;
           lPosTag = pPosRegexMatch.matcher(lPosTag).replaceAll(posTagReplace);
-          if (match.setsPos()) {
+          if (match.setPos) {
             lPosTag = synthesizer.getPosTagCorrection(lPosTag);
           }
           sb.append(lPosTag);

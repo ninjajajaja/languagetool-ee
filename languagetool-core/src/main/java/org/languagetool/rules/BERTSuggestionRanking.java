@@ -211,7 +211,7 @@ public class BERTSuggestionRanking extends RemoteRule {
     List<String> suggestions = match.getSuggestedReplacements();
     if (suggestions != null && suggestions.size() > 1) {
       return new RemoteLanguageModel.Request(
-        match.getSentence().getText(), match.getFromPos(), match.getToPos(), suggestions);
+        match.sentence.getText(), match.getFromPos(), match.getToPos(), suggestions);
     } else {
       return null;
     }

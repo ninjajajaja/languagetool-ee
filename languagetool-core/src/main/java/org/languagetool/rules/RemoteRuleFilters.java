@@ -175,7 +175,7 @@ public final class RemoteRuleFilters {
         System.out.println("---");
         for (Map.Entry<Boolean, RuleMatch> entry : matches) {
           RuleMatch match = entry.getValue();
-          String s = match.getSentence().getText();
+          String s = match.sentence.getText();
           String marked = s.substring(0, match.getFromPos()) + "<marker>" +
             s.substring(match.getFromPos(), match.getToPos()) + "</marker>" + s.substring(match.getToPos());
           System.out.println(marked);

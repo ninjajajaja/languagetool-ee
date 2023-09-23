@@ -55,7 +55,7 @@ public class PatternTokenMatcher {
   public void resolveReference(int firstMatchToken,
       AnalyzedTokenReadings[] tokens, Language language) throws IOException {
     if (basePatternToken.isReferenceElement()) {
-      int refPos = firstMatchToken + basePatternToken.getMatch().getTokenRef();
+      int refPos = firstMatchToken + basePatternToken.getMatch().tokenRef;
       if (refPos < tokens.length) {
         patternToken = basePatternToken.compile(tokens[refPos], language.getSynthesizer());
       }

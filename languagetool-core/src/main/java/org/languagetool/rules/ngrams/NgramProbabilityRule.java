@@ -81,7 +81,7 @@ public class NgramProbabilityRule extends Rule {
   private final LanguageModel lm;
   private final Language language;
 
-  private double minProbability = 0.00000000000001;
+  public double minProbability = 0.00000000000001;
 
   public NgramProbabilityRule(ResourceBundle messages, LanguageModel languageModel, Language language) {
     super(messages);
@@ -94,11 +94,6 @@ public class NgramProbabilityRule extends Rule {
   @Override
   public String getId() {
     return RULE_ID;
-  }
-
-  @Experimental
-  public void setMinProbability(double minProbability) {
-    this.minProbability = minProbability;
   }
 
   @Override

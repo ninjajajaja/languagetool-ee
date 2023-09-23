@@ -88,7 +88,7 @@ public abstract class SpellingCheckRule extends Rule {
   private volatile String[] wordsToBeIgnoredDictionaryIgnoreCase = null;
 
   private List<DisambiguationPatternRule> antiPatterns = new ArrayList<>();
-  private boolean considerIgnoreWords = true;
+  public boolean considerIgnoreWords = true;
   private boolean convertsCase = false;
   protected final Set<String> wordsToBeIgnored = new THashSet<>();
   protected int ignoreWordsWithLength = 0;
@@ -129,7 +129,7 @@ public abstract class SpellingCheckRule extends Rule {
    */
   protected static void addSuggestionsToRuleMatch(String word, List<SuggestedReplacement> userCandidatesList, List<SuggestedReplacement> candidatesList,
                                                   @Nullable SuggestionsOrderer orderer, RuleMatch match) {
-    AnalyzedSentence sentence = match.getSentence();
+    AnalyzedSentence sentence = match.sentence;
     List<String> userCandidates = userCandidatesList.stream().map(sr -> sr.replacement).collect(Collectors.toList());
     List<String> candidates = candidatesList.stream().map(sr -> sr.replacement).collect(Collectors.toList());
     int startPos = match.getFromPos();
@@ -145,7 +145,7 @@ public abstract class SpellingCheckRule extends Rule {
           // could not rank for some reason
         } else {
           if (userCandidates.isEmpty()) {
-            match.setAutoCorrect(ranker.shouldAutoCorrect(defaultSuggestions));
+            match.autoCorrect = ranker.shouldAutoCorrect(defaultSuggestions);
             match.setSuggestedReplacementObjects(defaultSuggestions);
           } else {
             List<SuggestedReplacement> combinedSuggestions = new ArrayList<>();
@@ -157,7 +157,7 @@ public abstract class SpellingCheckRule extends Rule {
             combinedSuggestions.addAll(defaultSuggestions);
             match.setSuggestedReplacementObjects(combinedSuggestions);
             // no auto correct when words from personal dictionaries are included
-            match.setAutoCorrect(false);
+            match.autoCorrect = false;
           }
         }
       } else if (orderer instanceof SuggestionsOrdererFeatureExtractor) {
@@ -172,7 +172,7 @@ public abstract class SpellingCheckRule extends Rule {
           featureExtractor.computeFeatures(candidates, word, sentence, startPos);
 
         match.setSuggestedReplacementObjects(suggestions.getLeft());
-        match.setFeatures(suggestions.getRight());
+        match.features = suggestions.getRight();
       } else {
         List<SuggestedReplacement> combinedSuggestions = new ArrayList<>();
         combinedSuggestions.addAll(orderer.orderSuggestions(userCandidates, word, sentence, startPos));
@@ -236,13 +236,6 @@ public abstract class SpellingCheckRule extends Rule {
   private void updateIgnoredWordDictionary() {
     wordsToBeIgnoredDictionaryIgnoreCase = null;
     wordsToBeIgnoredDictionary = null;
-  }
-
-  /**
-   * Set whether the list of words to be explicitly ignored (set with {@link #addIgnoreTokens(List)}) is considered at all.
-   */
-  public void setConsiderIgnoreWords(boolean considerIgnoreWords) {
-    this.considerIgnoreWords = considerIgnoreWords;
   }
 
   /**

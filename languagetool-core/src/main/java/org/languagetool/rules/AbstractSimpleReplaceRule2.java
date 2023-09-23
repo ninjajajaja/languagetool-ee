@@ -282,10 +282,10 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
           int endPos = prevTokensList.get(len - 1).getEndPos();
           RuleMatch ruleMatch = new RuleMatch(this, sentence, startPos, endPos, msg, getShort());
           if (crtMatch.message != null && (crtMatch.message.startsWith("http://") || crtMatch.message.startsWith("https://"))) {
-            ruleMatch.setUrl(Tools.getUrl(crtMatch.message));
+            ruleMatch.url = Tools.getUrl(crtMatch.message);
           }
           if (subRuleSpecificIds) {
-            ruleMatch.setSpecificRuleId(StringTools.toId(getId() + "_" + crt));
+            ruleMatch.specificRuleId = StringTools.toId(getId() + "_" + crt);
           }
           if ((getCaseSensitivy() != CaseSensitivy.CS || getCaseSensitivy() == CaseSensitivy.CSExceptAtSentenceStart)
                && StringTools.startsWithUppercase(crt)) {

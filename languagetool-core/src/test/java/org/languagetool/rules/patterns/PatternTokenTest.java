@@ -32,36 +32,36 @@ public class PatternTokenTest {
   @Test
   public void testSentenceStart() {
     PatternToken patternToken = new PatternToken("", false, false, false);
-    patternToken.setPosToken(new PatternToken.PosToken(SENTENCE_START_TAGNAME, false, false));
+    patternToken.posToken = new PatternToken.PosToken(SENTENCE_START_TAGNAME, false, false);
     assertTrue(patternToken.isSentenceStart());
-    patternToken.setPosToken(new PatternToken.PosToken(SENTENCE_START_TAGNAME, false, true));
+    patternToken.posToken = new PatternToken.PosToken(SENTENCE_START_TAGNAME, false, true);
     assertFalse(patternToken.isSentenceStart());
-    patternToken.setPosToken(new PatternToken.PosToken(SENTENCE_START_TAGNAME, true, false));
+    patternToken.posToken = new PatternToken.PosToken(SENTENCE_START_TAGNAME, true, false);
     assertTrue(patternToken.isSentenceStart());
-    patternToken.setPosToken(new PatternToken.PosToken(SENTENCE_START_TAGNAME, true, true));
+    patternToken.posToken = new PatternToken.PosToken(SENTENCE_START_TAGNAME, true, true);
     assertFalse(patternToken.isSentenceStart());
 
     PatternToken patternToken2 = new PatternToken("bla|blah", false, true, false);
-    patternToken2.setPosToken(new PatternToken.PosToken("foo", true, true));
+    patternToken2.posToken = new PatternToken.PosToken("foo", true, true);
     assertFalse(patternToken2.isSentenceStart());
   }
 
   @Test
   public void testUnknownTag() {
     PatternToken patternToken = new PatternToken("", false, false, false);
-    patternToken.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG, false, false));
+    patternToken.posToken = new PatternToken.PosToken(UNKNOWN_TAG, false, false);
 
     PatternToken patternToken2 = new PatternToken("", false, false, false);
-    patternToken2.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG, false, true));
+    patternToken2.posToken = new PatternToken.PosToken(UNKNOWN_TAG, false, true);
 
     PatternToken patternToken3 = new PatternToken("", false, false, false);
-    patternToken3.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG + "|VBG", true, false));
+    patternToken3.posToken = new PatternToken.PosToken(UNKNOWN_TAG + "|VBG", true, false);
 
     PatternToken patternToken4 = new PatternToken("", false, false, false);
-    patternToken4.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG + "|VBG", true, true));
+    patternToken4.posToken = new PatternToken.PosToken(UNKNOWN_TAG + "|VBG", true, true);
 
     PatternToken patternToken5 = new PatternToken("\\p{Ll}+", false, true, false);
-    patternToken5.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG, false, false));
+    patternToken5.posToken = new PatternToken.PosToken(UNKNOWN_TAG, false, false);
 
     AnalyzedToken an = new AnalyzedToken("schword", null, null);
     assertTrue(patternToken.isMatched(an));
@@ -87,11 +87,11 @@ public class PatternTokenTest {
     assertTrue(patternToken5.isMatched(anSentEnd));
 
     PatternToken patternToken6 = new PatternToken("\\p{Ll}+", false, true, false);
-    patternToken6.setPosToken(new PatternToken.PosToken(SENTENCE_END_TAGNAME, false, false));
+    patternToken6.posToken = new PatternToken.PosToken(SENTENCE_END_TAGNAME, false, false);
     assertTrue(patternToken6.isMatched(anSentEnd));
 
     PatternToken patternToken7 = new PatternToken("\\p{Ll}+", false, true, false);
-    patternToken7.setPosToken(new PatternToken.PosToken(SENTENCE_END_TAGNAME + "|BLABLA", true, false));
+    patternToken7.posToken = new PatternToken.PosToken(SENTENCE_END_TAGNAME + "|BLABLA", true, false);
     assertTrue(patternToken7.isMatched(anSentEnd));
 
     // if the AnalyzedToken is in the set of readings that have

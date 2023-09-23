@@ -49,11 +49,11 @@ public class YMDDateHelper {
     String day = args.get("day");
     int correctYear = Integer.parseInt(year) + 1;
     String correctDate = String.format("%d-%s-%s", correctYear, month, day);
-    String message = match.getMessage()
+    String message = match.message
             .replace("{realDate}", correctDate);
-    RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(),
+    RuleMatch ruleMatch = new RuleMatch(match.rule, match.sentence, match.getFromPos(),
             match.getToPos(), message, match.getShortMessage());
-    ruleMatch.setType(match.getType());
+    ruleMatch.setType(match.type);
     return ruleMatch;
   }
 }

@@ -191,10 +191,10 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
     if (replacements.size() + replacements2.size() == 0 && bSuppressMatch) {
       return null;
     }
-    String message = match.getMessage();
-    RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(),
+    String message = match.message;
+    RuleMatch ruleMatch = new RuleMatch(match.rule, match.sentence, match.getFromPos(), match.getToPos(),
         message, match.getShortMessage());
-    ruleMatch.setType(match.getType());
+    ruleMatch.setType(match.type);
 
     List<String> definitiveReplacements = new ArrayList<>();
     boolean replacementsUsed = false;

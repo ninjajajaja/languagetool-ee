@@ -177,7 +177,7 @@ public class RuleMatchesAsJsonSerializer {
     for (CheckResults r : res) {
       for (RuleMatch match : r.getRuleMatches()) {
         g.writeStartObject();
-        g.writeStringField("message", cleanSuggestion(match.getMessage()));
+        g.writeStringField("message", cleanSuggestion(match.message));
         if (match.getShortMessage() != null) {
           g.writeStringField("shortMessage", cleanSuggestion(match.getShortMessage()));
         }
@@ -187,7 +187,7 @@ public class RuleMatchesAsJsonSerializer {
         writeContext(g, match, text, contextTools);
         if (compactMode != 1) {
           g.writeObjectFieldStart("type");
-          g.writeStringField("typeName", match.getType().toString());
+          g.writeStringField("typeName", match.type.toString());
           g.writeEndObject();
         }
         writeRule(g, match);
@@ -284,8 +284,8 @@ public class RuleMatchesAsJsonSerializer {
       g.writeNumberField("offset", contextOffset);
       g.writeNumberField("length", match.getToPos()-match.getFromPos());
       g.writeEndObject();
-      if (match.getSentence() != null) {
-        g.writeStringField("sentence", match.getSentence().getText().trim());
+      if (match.sentence != null) {
+        g.writeStringField("sentence", match.sentence.getText().trim());
       }
     }
   }
@@ -305,11 +305,11 @@ public class RuleMatchesAsJsonSerializer {
     if (rule.isDefaultTempOff()) {
       g.writeBooleanField("tempOff", true);
     }
-    if (match.getUrl() != null || rule.getUrl() != null) {
+    if (match.url != null || rule.getUrl() != null) {
       g.writeArrayFieldStart("urls");  // currently only one, but keep it extensible
       g.writeStartObject();
-      if (match.getUrl() != null) {
-        g.writeStringField("value", match.getUrl().toString());
+      if (match.url != null) {
+        g.writeStringField("value", match.url.toString());
       } else if (rule.getUrl() != null) {
         g.writeStringField("value", rule.getUrl().toString());
       }

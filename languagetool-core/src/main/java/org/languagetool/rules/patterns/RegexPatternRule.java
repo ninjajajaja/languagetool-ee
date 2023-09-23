@@ -168,11 +168,11 @@ public class RegexPatternRule extends AbstractPatternRule implements RuleMatcher
       }
 
       Match currentProcessingMatch = matches.get(i);
-      String regexReplace = currentProcessingMatch.getRegexReplace();
+      String regexReplace = currentProcessingMatch.regexReplace;
       String suggestion;
       if (regexReplace != null) {
-        suggestion = currentProcessingMatch.getRegexMatch().matcher(matchReferenceStringValue).replaceFirst(regexReplace);
-        suggestion = CaseConversionHelper.convertCase(currentProcessingMatch.getCaseConversionType(), suggestion, matchReferenceStringValue, getLanguage());
+        suggestion = currentProcessingMatch.pRegexMatch.matcher(matchReferenceStringValue).replaceFirst(regexReplace);
+        suggestion = CaseConversionHelper.convertCase(currentProcessingMatch.caseConversionType, suggestion, matchReferenceStringValue, getLanguage());
       } else {
         suggestion = matchReferenceStringValue;
       }

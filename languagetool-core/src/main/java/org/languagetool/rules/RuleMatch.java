@@ -34,7 +34,6 @@ import org.languagetool.tools.StringTools;
 import java.net.URL;
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -50,9 +49,9 @@ public class RuleMatch implements Comparable<RuleMatch> {
 
   //private static final Pattern SUGGESTION_PATTERN = Pattern.compile("<suggestion>(.*?)</suggestion>");
   public final Rule rule;
-  private final String message;
-  private final String shortMessage;   // used e.g. for OOo/LO context menu
-  private final AnalyzedSentence sentence;
+  public final String message;
+  public final String shortMessage;   // used e.g. for OOo/LO context menu
+  public final AnalyzedSentence sentence;
 
   private PatternPosition patternPosition;
   private OffsetPosition offsetPosition;
@@ -64,17 +63,17 @@ public class RuleMatch implements Comparable<RuleMatch> {
   private Supplier<List<SuggestedReplacement>> suggestedReplacements;
   // track if more work needs to be done to compute suggestions;
   // allows enforcement of timeouts to return partial results without spending more time
-  private boolean suggestionsComputed = true;
-  private URL url;
-  private Type type = Type.Other;
+  public boolean suggestionsComputed = true;
+  public URL url;
+  public Type type = Type.Other;
   public SortedMap<String, Float> features = Collections.emptySortedMap();
   public boolean autoCorrect = false;
-  private String errorLimitLang;
+  public String errorLimitLang;
 
-  private String specificRuleId = "";
+  public String specificRuleId = "";
 
   // the underlined error in the original sentence
-  private String originalErrorStr = "";
+  public String originalErrorStr = "";
 
   /**
    * Creates a RuleMatch object, taking the rule that triggered
@@ -194,7 +193,7 @@ public class RuleMatch implements Comparable<RuleMatch> {
       // ignore single words in mixed case
       if (isAllUppercase && !(StringTools.isMixedCase(replacement) && !replacement.contains(" "))) {
         // do not create a suggestion equal to the input string
-        if (!getOriginalErrorStr().equals(replacement.toUpperCase())) {
+        if (!originalErrorStr.equals(replacement.toUpperCase())) {
           replacement = replacement.toUpperCase();
         }
       } else if (startWithUppercase) {
@@ -210,22 +209,22 @@ public class RuleMatch implements Comparable<RuleMatch> {
   @SuppressWarnings("CopyConstructorMissesField")
   public RuleMatch(RuleMatch clone) {
     this.rule = clone.rule;
-    this.sentence = clone.getSentence();
+    this.sentence = clone.sentence;
     this.setOffsetPosition(clone.getFromPos(), clone.getToPos());
-    this.message = clone.getMessage();
+    this.message = clone.message;
     this.shortMessage = clone.getShortMessage();
     this.setPatternPosition(clone.getPatternFromPos(), clone.getPatternToPos());
     this.suggestedReplacements = clone.suggestedReplacements;
-    this.setAutoCorrect(clone.autoCorrect);
-    this.setFeatures(clone.features);
-    this.setUrl(clone.getUrl());
-    this.setType(clone.getType());
+    this.autoCorrect = clone.autoCorrect;
+    this.features = clone.features;
+    this.url = clone.url;
+    this.setType(clone.type);
     this.setLine(clone.getLine());
     this.setEndLine(clone.getEndLine());
     this.setColumn(clone.getColumn());
     this.setEndColumn(clone.getEndColumn());
-    this.setSpecificRuleId(clone.getSpecificRuleId());
-    this.setOriginalErrorStr(clone.getOriginalErrorStr());
+    this.specificRuleId = clone.getSpecificRuleId();
+    this.originalErrorStr = clone.originalErrorStr;
     this.setSentencePosition(clone.getFromPosSentence(), clone.getToPosSentence());
   }
 
@@ -239,14 +238,6 @@ public class RuleMatch implements Comparable<RuleMatch> {
   // for compatibility
   public RuleMatch(RuleMatch clone, List<SuggestedReplacement> replacements) {
     this(clone, replacements, false);
-  }
-
-  public void setFeatures(@NotNull SortedMap<String, Float> features) {
-    this.features = features;
-  }
-
-  public void setAutoCorrect(boolean autoCorrect) {
-    this.autoCorrect = autoCorrect;
   }
 
   /**
@@ -383,21 +374,10 @@ public class RuleMatch implements Comparable<RuleMatch> {
   }
 
   /**
-   * A human-readable explanation describing the error. This may contain
-   * one or more corrections marked up with &lt;suggestion&gt;...&lt;/suggestion&gt;.
-   *
-   * @see #getSuggestedReplacements()
-   * @see #getShortMessage()
-   */
-  public String getMessage() {
-    return message;
-  }
-
-  /**
    * A shorter human-readable explanation describing the error or an empty string
    * if no such explanation is available.
    *
-   * @see #getMessage()
+   * @see #message
    */
   @ApiCleanupNeeded("Should return an Optional")
   public String getShortMessage() {
@@ -499,40 +479,6 @@ public class RuleMatch implements Comparable<RuleMatch> {
   }
 
   /**
-   * A URL that points to a more detailed error description or {@code null}.
-   * Note that the {@link Rule} itself might also have an URL, which is usually
-   * a less specific one than this. This one will overwrite the rule's URL in
-   * the JSON output.
-   *
-   * @since 4.0
-   */
-  @Nullable
-  public URL getUrl() {
-    return url;
-  }
-
-  /**
-   * @since 4.0
-   */
-  public void setUrl(URL url) {
-    this.url = url;
-  }
-
-  /**
-   * @since 4.0
-   */
-  public AnalyzedSentence getSentence() {
-    return sentence;
-  }
-
-  /**
-   * @since 4.3
-   */
-  public Type getType() {
-    return this.type;
-  }
-
-  /**
    * @since 4.3
    */
   public void setType(Type type) {
@@ -577,27 +523,6 @@ public class RuleMatch implements Comparable<RuleMatch> {
   @Override
   public int hashCode() {
     return Objects.hash(rule.getId(), offsetPosition, patternPosition, message, sentence, type);
-  }
-
-  /**
-   * The language that the text might be in if the error limit has been reached.
-   *
-   * @since 5.3
-   */
-  @Nullable
-  public String getErrorLimitLang() {
-    return errorLimitLang;
-  }
-
-  /**
-   * Call if the error limit is reached for this sentence. The caller will then get text ranges for the
-   * sentence and can ignore errors there. Note: will not have an effect for text-level rules.
-   *
-   * @param langCode the language this could be instead
-   * @since 5.3
-   */
-  public void setErrorLimitLang(String langCode) {
-    this.errorLimitLang = langCode;
   }
 
   /**
@@ -654,16 +579,6 @@ public class RuleMatch implements Comparable<RuleMatch> {
   }
 
   /**
-   * Set a new specific rule ID in the RuleMatch to replace getRule().getId() in
-   * the output. Used for statistical purposes.
-   *
-   * @since 5.6
-   */
-  public void setSpecificRuleId(String ruleId) {
-    specificRuleId = ruleId;
-  }
-
-  /**
    * Get the specific rule ID from the RuleMatch to replace getRule().getId() in
    * the output. Used for statistical purposes.
    *
@@ -683,32 +598,14 @@ public class RuleMatch implements Comparable<RuleMatch> {
     }
     int fromPos = this.getFromPos();
     int toPos = this.getToPos();
-    if (this.getSentence() != null) {
+    if (this.sentence != null) {
       if (fromPos > -1 && toPos > -1) {
-        String sentenceStr = this.getSentence().getText();
+        String sentenceStr = this.sentence.getText();
         if (!sentenceStr.isEmpty()) {
           this.originalErrorStr = sentenceStr.substring(fromPos, toPos);
         }
       }
     }
-  }
-
-  /**
-   * To store the underlined string in the original sentence.
-   */
-  public void setOriginalErrorStr(String originalErrorStr) {
-    this.originalErrorStr = originalErrorStr;
-  }
-
-  /**
-   * Get the underlined string in the original sentence.
-   * Only available for sentence-level pattern rules.
-   * Returns an empty string if not available.
-   * For other rules, use setOriginalErrorStr(String originalErrorStr)
-   * @since 6.3
-   */
-  public String getOriginalErrorStr() {
-    return this.originalErrorStr;
   }
 }
 

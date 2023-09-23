@@ -70,7 +70,7 @@ public class PatternToken implements Cloneable {
   private short flags;
 
   private StringMatcher textMatcher;
-  private PosToken posToken;
+  public PosToken posToken;
 
   private RareFields rareFields;
 
@@ -280,11 +280,6 @@ public class PatternToken implements Cloneable {
   }
 
   /** @since 2.9 */
-  public void setPosToken(PosToken posToken) {
-    this.posToken = posToken;
-  }
-
-  /** @since 2.9 */
   public void setChunkTag(ChunkTag chunkTag) {
     initRareFields().chunkTag = chunkTag;
   }
@@ -326,7 +321,7 @@ public class PatternToken implements Cloneable {
           String posToken, boolean posRegExp, boolean posNegation, Boolean caseSensitivity) {
     PatternToken exception = new PatternToken(token, caseSensitivity == null ? isCaseSensitive() : caseSensitivity, regExp, inflected);
     exception.setNegation(negation);
-    exception.setPosToken(new PosToken(posToken, posRegExp, posNegation));
+    exception.posToken = new PosToken(posToken, posRegExp, posNegation);
     addException(scopeNext, scopePrevious, exception);
   }
 
@@ -502,11 +497,11 @@ public class PatternToken implements Cloneable {
   private void doCompile(AnalyzedTokenReadings token, Synthesizer synth) throws IOException {
     Match tokenReference = rareFields.tokenReference;
     MatchState matchState = tokenReference.createState(synth, token);
-    String reference = "\\" + tokenReference.getTokenRef();
-    if (tokenReference.setsPos()) {
+    String reference = "\\" + tokenReference.tokenRef;
+    if (tokenReference.setPos) {
       String posReference = matchState.getTargetPosTag();
       if (posReference != null) {
-        setPosToken(new PosToken(posReference, tokenReference.posRegExp(), getNegation()));
+        posToken = new PosToken(posReference, tokenReference.posRegExp(), getNegation());
       }
       setStringElement(getString().replace(reference, ""));
     } else {

@@ -1541,8 +1541,8 @@ public class JLanguageTool {
       SuggestedReplacement newReplacement = new SuggestedReplacement(replacement);
       if (replacement.shortDescription == null) {  // don't overwrite more specific suggestions from the rule
         String descOrNull = descProvider.getShortDescription(replacement.replacement, language);
-        newReplacement.setShortDescription(descOrNull);
-        newReplacement.setSuffix(replacement.suffix);
+        newReplacement.shortDescription = descOrNull;
+        newReplacement.suffix = replacement.suffix;
       }
       extended.add(newReplacement);
     }
@@ -2036,8 +2036,8 @@ public class JLanguageTool {
             }
             for (RuleMatch elem : sentenceMatches) {
               RuleMatch thisMatch = adjustRuleMatchPos(elem, sentence.startOffset, sentence.startColumn, sentence.startLine, sentence.text, annotatedText);
-              if (elem.getErrorLimitLang() != null) {
-                Range ignoreRange = new Range(sentence.startOffset, sentence.startOffset + sentence.text.length(), elem.getErrorLimitLang());
+              if (elem.errorLimitLang != null) {
+                Range ignoreRange = new Range(sentence.startOffset, sentence.startOffset + sentence.text.length(), elem.errorLimitLang);
                 if (!ignoreRanges.contains(ignoreRange)) {
                   ignoreRanges.add(ignoreRange);
                 }

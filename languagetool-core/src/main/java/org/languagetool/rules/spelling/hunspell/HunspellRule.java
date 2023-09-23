@@ -237,7 +237,7 @@ public class HunspellRule extends SpellingCheckRule {
               try {
                 List<SuggestedReplacement> sugg = calcSuggestions(word, cleanWord2);
                 if (isFirstItemHighConfidenceSuggestion(word, sugg)) {
-                  sugg.get(0).setConfidence(HIGH_CONFIDENCE);
+                  sugg.get(0).confidence = HIGH_CONFIDENCE;
                 }
                 return sugg;
               } catch (IOException e) {
@@ -253,7 +253,7 @@ public class HunspellRule extends SpellingCheckRule {
             String langCode = foreignLanguageChecker.check(ruleMatches.size());
             if (langCode != null) {
               if (!langCode.equals(ForeignLanguageChecker.NO_FOREIGN_LANG_DETECTED)) {
-                ruleMatches.get(0).setErrorLimitLang(langCode);
+                ruleMatches.get(0).errorLimitLang = langCode;
               }
               gotResultsFromForeignLanguageChecker = true;
             }

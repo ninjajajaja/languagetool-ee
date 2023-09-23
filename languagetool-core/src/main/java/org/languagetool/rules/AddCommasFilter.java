@@ -44,7 +44,7 @@ public class AddCommasFilter extends RuleFilter {
       bSuggestSemicolon = true;
     }
 
-    AnalyzedTokenReadings[] tokens = match.getSentence().getTokensWithoutWhitespace();
+    AnalyzedTokenReadings[] tokens = match.sentence.getTokensWithoutWhitespace();
     int postagFrom = 1;
     while (postagFrom < tokens.length && tokens[postagFrom].getStartPos() < match.getFromPos()) {
       postagFrom++;
@@ -63,33 +63,33 @@ public class AddCommasFilter extends RuleFilter {
     }
     RuleMatch newMatch = null;
     if (bSuggestSemicolon && tokens[postagFrom - 1].getToken().equals(",") && !afterOK) {
-      newMatch = new RuleMatch(match.rule, match.getSentence(), tokens[postagFrom - 1].getStartPos(),
-          tokens[postagTo].getEndPos(), match.getMessage(), match.getShortMessage());
+      newMatch = new RuleMatch(match.rule, match.sentence, tokens[postagFrom - 1].getStartPos(),
+          tokens[postagTo].getEndPos(), match.message, match.getShortMessage());
       newMatch.addSuggestedReplacement(
-          "; " + match.getSentence().getText().substring(match.getFromPos(), match.getToPos()) + ",");
+          "; " + match.sentence.getText().substring(match.getFromPos(), match.getToPos()) + ",");
       newMatch.addSuggestedReplacement(
-          ", " + match.getSentence().getText().substring(match.getFromPos(), match.getToPos()) + ",");
+          ", " + match.sentence.getText().substring(match.getFromPos(), match.getToPos()) + ",");
     } else if (beforeOK && !afterOK) {
-      newMatch = new RuleMatch(match.rule, match.getSentence(), tokens[postagTo].getStartPos(), match.getToPos(),
-          match.getMessage(), match.getShortMessage());
+      newMatch = new RuleMatch(match.rule, match.sentence, tokens[postagTo].getStartPos(), match.getToPos(),
+          match.message, match.getShortMessage());
       newMatch.setSuggestedReplacement(tokens[postagTo].getToken() + ",");
     } else if (!beforeOK && afterOK) {
       int startPos = tokens[postagFrom].getStartPos();
       if (tokens[postagFrom].isWhitespaceBefore()) {
         startPos--;
       }
-      newMatch = new RuleMatch(match.rule, match.getSentence(), startPos, tokens[postagFrom].getEndPos(),
-          match.getMessage(), match.getShortMessage());
+      newMatch = new RuleMatch(match.rule, match.sentence, startPos, tokens[postagFrom].getEndPos(),
+          match.message, match.getShortMessage());
       newMatch.setSuggestedReplacement(", " + tokens[postagFrom].getToken());
     } else if (!beforeOK && !afterOK) {
       int startPos = tokens[postagFrom].getStartPos();
       if (tokens[postagFrom].isWhitespaceBefore()) {
         startPos--;
       }
-      newMatch = new RuleMatch(match.rule, match.getSentence(), startPos, tokens[postagTo].getEndPos(),
-          match.getMessage(), match.getShortMessage());
+      newMatch = new RuleMatch(match.rule, match.sentence, startPos, tokens[postagTo].getEndPos(),
+          match.message, match.getShortMessage());
       newMatch.setSuggestedReplacement(
-          ", " + match.getSentence().getText().substring(match.getFromPos(), match.getToPos()) + ",");
+          ", " + match.sentence.getText().substring(match.getFromPos(), match.getToPos()) + ",");
     }
     return newMatch;
   }

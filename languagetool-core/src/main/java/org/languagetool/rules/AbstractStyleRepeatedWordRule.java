@@ -310,7 +310,7 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
               RuleMatch ruleMatch = new RuleMatch(this, null, startPos, endPos, msg);
               URL url = setURL(token);
               if(url != null) {
-                ruleMatch.setUrl(url);
+                ruleMatch.url = url;
               }
               ruleMatches.add(ruleMatch);
             }

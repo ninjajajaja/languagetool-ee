@@ -86,11 +86,11 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
     }
     int currentYear = getCurrentYear();
     if (isJanuary() && monthFromText != 11 /*December*/ && yearFromText + 1 == currentYear) {
-      String message = match.getMessage()
+      String message = match.message
               .replace("{year}", Integer.toString(yearFromText))
               .replace("{realYear}", Integer.toString(currentYear));
-      RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
-      ruleMatch.setType(match.getType());
+      RuleMatch ruleMatch = new RuleMatch(match.rule, match.sentence, match.getFromPos(), match.getToPos(), message, match.getShortMessage());
+      ruleMatch.setType(match.type);
       return ruleMatch;
     } else {
       return null;

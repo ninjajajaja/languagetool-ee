@@ -154,7 +154,7 @@ public class PatternTokenBuilder {
     PatternToken patternToken;
     patternToken = new PatternToken(token, caseSensitive, regexp, matchInflectedForms);
     if (posTag != null) {
-      patternToken.setPosToken(new PatternToken.PosToken(posTag, regexp, false));
+      patternToken.posToken = new PatternToken.PosToken(posTag, regexp, false);
     }
     if (isWhiteSpaceSet) {
       patternToken.setWhitespaceBefore(isWhiteSpaceBefore);

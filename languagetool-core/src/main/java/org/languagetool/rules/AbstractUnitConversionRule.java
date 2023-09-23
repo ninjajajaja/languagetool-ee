@@ -463,7 +463,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
         .map(formatted -> getSuggestion(unitMatcher.group(0), formatted))
         .collect(Collectors.toList());
       match.setSuggestedReplacements(suggestions);
-      match.setUrl(buildURLForExplanation(unitMatcher.group(0)));
+      match.url = buildURLForExplanation(unitMatcher.group(0));
       matches.add(match);
     } else { // check given conversion for accuracy
       Map.Entry<Integer, Integer> convertedRange = new AbstractMap.SimpleImmutableEntry<>(
@@ -500,7 +500,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
               RuleMatch match = new RuleMatch(this, sentence,
                 convertedMatcher.start(1) + convertedOffset, convertedMatcher.end(1) + convertedOffset,
                 getMessage(Message.CHECK), getShortMessage(Message.CHECK));
-              match.setUrl(buildURLForExplanation(convertedTrimmed));
+              match.url = buildURLForExplanation(convertedTrimmed);
               List<Map.Entry<Unit, Double>> numbers = new ArrayList<>();
               numbers.add(new AbstractMap.SimpleImmutableEntry<>(convertedUnit, unitConverted));
               reverseConverted = getFormattedConversions(numbers);
@@ -516,7 +516,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
             if (reverseConverted != null) {
               match.setSuggestedReplacements(reverseConverted);
             }
-            match.setUrl(buildURLForExplanation(convertedTrimmed));
+            match.url = buildURLForExplanation(convertedTrimmed);
             matches.add(match);
           }
         } else { // found conversion to metric, check for accuracy
@@ -535,7 +535,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
               unitMatcher.start(), convertedMatcher.end(0) + convertedOffset,
               getMessage(Message.CHECK), getShortMessage(Message.CHECK));
             match.setSuggestedReplacements(corrected);
-            match.setUrl(buildURLForExplanation(unitMatcher.group(0)));
+            match.url = buildURLForExplanation(unitMatcher.group(0));
             matches.add(match);
           }
         }

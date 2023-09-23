@@ -123,15 +123,6 @@ public class SuggestionsChanges {
     return experiments;
   }
 
-  /**
-   * For testing changes to suggestion ordering using a data corpus;
-   * iterate over experiments (including grid search for parameters)
-   * original behavior (for A/B testing) can be modeled by an experiment without parameters and an arbitrary name
-   */
-  public void setCurrentExperiment(@Nullable SuggestionChangesExperiment experiment) {
-    currentExperiment = experiment;
-  }
-
   public static boolean isRunningExperiment(String name) {
     if (getInstance() == null) {
       return false;

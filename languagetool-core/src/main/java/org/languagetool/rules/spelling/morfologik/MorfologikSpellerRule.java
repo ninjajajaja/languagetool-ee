@@ -57,7 +57,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
   protected MorfologikMultiSpeller speller1;
   protected MorfologikMultiSpeller speller2;
   protected MorfologikMultiSpeller speller3;
-  protected Locale conversionLocale;
+  public Locale conversionLocale;
   protected final Language motherTongue;
   protected final GlobalConfig globalConfig;
 
@@ -108,10 +108,6 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
   @Override
   public String getDescription() {
     return messages.getString("desc_spelling");
-  }
-
-  public void setLocale(Locale locale) {
-    conversionLocale = locale;
   }
 
   /**
@@ -208,7 +204,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
         String langCode = foreignLanguageChecker.check(ruleMatches.size());
         if (langCode != null) {
           if (!langCode.equals(ForeignLanguageChecker.NO_FOREIGN_LANG_DETECTED)) {
-            ruleMatches.get(0).setErrorLimitLang(langCode);
+            ruleMatches.get(0).errorLimitLang = langCode;
           }
           gotResultsFromForeignLanguageChecker = true;
         }
@@ -513,7 +509,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
         || ruleMatchesSoFar.size() <= userConfig.getMaxSpellingSuggestions()) {
       if (translationSuggestionCount > 0) {
         List<SuggestedReplacement> prev = ruleMatch.getSuggestedReplacementObjects();
-        ruleMatch = new RuleMatch(ruleMatch.rule, ruleMatch.getSentence(), ruleMatch.getFromPos(), ruleMatch.getToPos(),
+        ruleMatch = new RuleMatch(ruleMatch.rule, ruleMatch.sentence, ruleMatch.getFromPos(), ruleMatch.getToPos(),
           messages.getString("spelling") + " Translations to English are also offered.");
         ruleMatch.setSuggestedReplacementObjects(prev);
       }

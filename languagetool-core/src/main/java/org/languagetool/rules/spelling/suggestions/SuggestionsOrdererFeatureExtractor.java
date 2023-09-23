@@ -126,7 +126,7 @@ public class SuggestionsOrdererFeatureExtractor implements SuggestionsOrderer {
 
     List<SuggestedReplacement> suggestionsData = features.stream().map(f -> {
       SuggestedReplacement s = new SuggestedReplacement(f.getWord());
-      s.setFeatures(f.getData());
+      s.features = f.getData();
       return s;
     }).collect(Collectors.toList());
     return Pair.of(suggestionsData, matchData);

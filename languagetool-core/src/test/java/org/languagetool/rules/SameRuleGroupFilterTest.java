@@ -45,7 +45,7 @@ public class SameRuleGroupFilterTest {
     SameRuleGroupFilter filter = new SameRuleGroupFilter();
     List<RuleMatch> filteredMatches = filter.filter(Arrays.asList(match1, match2));
     assertEquals(1, filteredMatches.size());
-    assertEquals("Match1", filteredMatches.get(0).getMessage());
+    assertEquals("Match1", filteredMatches.get(0).message);
   }
 
   @Test
