@@ -220,12 +220,12 @@ public abstract class Language {
                                            GlobalConfig globalConfig, UserConfig userConfig, Language motherTongue, List<Language> altLanguages, boolean inputLogging)
       throws IOException {
     List<Rule> rules = new ArrayList<>();
-    GRPCPostProcessing.configure(this, configs);
-    rules.addAll(GRPCRule.createAll(this, configs, inputLogging));
-    configs.stream()
-      .filter(config -> config.getRuleId().startsWith("TEST"))
-      .map(c -> new TestRemoteRule(this, c))
-      .forEach(rules::add);
+//    GRPCPostProcessing.configure(this, configs);
+//    rules.addAll(GRPCRule.createAll(this, configs, inputLogging));
+//    configs.stream()
+//      .filter(config -> config.getRuleId().startsWith("TEST"))
+//      .map(c -> new TestRemoteRule(this, c))
+//      .forEach(rules::add);
     return rules;
   }
 

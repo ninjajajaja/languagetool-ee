@@ -39,11 +39,11 @@ public final class DetailedDamerauLevenstheinDistance {
     protected final Random random;
 
     public EditOperation() {
-      this.random = new Random();
+      this.random = new Random(100);
     }
 
     public EditOperation(long seed) {
-      this.random = new Random(seed);
+      this.random = new Random(100);
     }
   }
 
@@ -127,7 +127,7 @@ public final class DetailedDamerauLevenstheinDistance {
 
   public static final List<EditOperation> editOperations = Arrays.asList(
     new Insert(), new Replace(), new Transpose(), new Delete());
-  private static final Random random = new Random();
+  private static final Random random = new Random(100);
 
   public static final EditOperation randomEdit() {
     return editOperations.get(random.nextInt(editOperations.size()));

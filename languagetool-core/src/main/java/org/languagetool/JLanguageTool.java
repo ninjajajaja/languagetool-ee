@@ -1042,19 +1042,19 @@ public class JLanguageTool {
     // decide if this should be done right after performCheck, before waiting for remote rule results
     // better for latency, remote rules probably don't need resorting
     // complications with application of other filters?
-    List<GRPCPostProcessing> postProcessingRules = GRPCPostProcessing.get(language);
-    List<RuleMatch> finalRuleMatches = ruleMatches;
-    try {
-      ruleMatches = TelemetryProvider.INSTANCE.createSpan("grpc-postprocessing", Attributes.builder().put("check.post_processing.rule_count", postProcessingRules.size()).build(), () -> {
-        List<RuleMatch> localMatches = finalRuleMatches;
-        for (GRPCPostProcessing postProcessing : postProcessingRules) {
-          localMatches = postProcessing.filter(analyzedSentences, localMatches, textSessionID, inputLogging);
-        }
-        return localMatches;
-      });
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+//    List<GRPCPostProcessing> postProcessingRules = GRPCPostProcessing.get(language);
+//    List<RuleMatch> finalRuleMatches = ruleMatches;
+//    try {
+//      ruleMatches = TelemetryProvider.INSTANCE.createSpan("grpc-postprocessing", Attributes.builder().put("check.post_processing.rule_count", postProcessingRules.size()).build(), () -> {
+//        List<RuleMatch> localMatches = finalRuleMatches;
+//        for (GRPCPostProcessing postProcessing : postProcessingRules) {
+//          localMatches = postProcessing.filter(analyzedSentences, localMatches, textSessionID, inputLogging);
+//        }
+//        return localMatches;
+//      });
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
 
     return new CheckResults(ruleMatches, res.getIgnoredRanges());
   }

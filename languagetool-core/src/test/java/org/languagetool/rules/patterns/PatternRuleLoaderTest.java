@@ -252,18 +252,6 @@ public class PatternRuleLoaderTest {
     return result;
   }
 
-  @Test
-  @Ignore
-  public void testEncryptDecrypt() throws Exception {
-    String encrypted = encrypt();
-    System.out.println("encrypted: " + decrypt(encrypted));
-    String decrypted = decrypt(encrypted);
-    System.out.println("decrypted: " + decrypted);
-    PatternRuleLoader loader = new PatternRuleLoader();
-    List<AbstractPatternRule> rules = loader.getRules(new ByteArrayInputStream(decrypted.getBytes(StandardCharsets.UTF_8)), "<unknown>", null);
-    System.out.println("Loaded " + rules.size() + " rules");
-  }
-
   private String encrypt() throws Exception {
     Key key = generateKey();
     Cipher c = Cipher.getInstance("AES");

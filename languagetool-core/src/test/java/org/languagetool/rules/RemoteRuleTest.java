@@ -151,23 +151,6 @@ public class RemoteRuleTest {
   }
 
   @Test
-  @Ignore("Unstable in CI because of reliance on timings, for local testing only")
-  public void testCircuitbreaker() throws IOException, InterruptedException {
-    waitTime = config.baseTimeoutMilliseconds * 2;
-    assertMatches("timeouts work", 0);
-    assertMatches("timeouts work", 0);
-
-    waitTime = 0;
-    int callsBefore = calls;
-    assertMatches("No matches when circuitbreaker open", 0);
-    assertEquals("No calls when circuitbreaker open", callsBefore, calls);
-
-    Thread.sleep(config.downMilliseconds);
-    assertMatches("matches when circuitbreaker half-open", 1);
-    assertEquals("calls when circuitbreaker half-open", callsBefore+1, calls);
-  }
-
-  @Test
   public void testFailedRequests() throws IOException {
     fail = true;
     assertMatches("no matches for failing requests", 0);

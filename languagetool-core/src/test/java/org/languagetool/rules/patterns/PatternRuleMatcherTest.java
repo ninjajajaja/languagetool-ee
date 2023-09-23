@@ -185,19 +185,6 @@ public class PatternRuleMatcherTest {
   }
 
   @Test
-  @Ignore("min can only be 0 or 1 so far")
-  public void testTwoMinOccurrences() throws Exception {
-    PatternToken patternTokenB = makeElement("b");
-    patternTokenB.setMinOccurrence(2);
-    patternTokenB.setMaxOccurrence(3);
-    PatternRuleMatcher matcher = getMatcher(makeElement("a"), patternTokenB, makeElement("c"));  // regex: a b{2,3} c
-    assertCompleteMatch("a b b c", matcher);
-    assertCompleteMatch("a b b b c", matcher);
-    assertNoMatch("a c", matcher);
-    assertNoMatch("a b c", matcher);
-  }
-
-  @Test
   public void testZeroMinTwoMaxOccurrences() throws Exception {
     PatternToken patternTokenB = makeElement("b");
     patternTokenB.setMinOccurrence(0);
