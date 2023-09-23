@@ -89,7 +89,7 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
       String message = match.getMessage()
               .replace("{year}", Integer.toString(yearFromText))
               .replace("{realYear}", Integer.toString(currentYear));
-      RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
+      RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
       ruleMatch.setType(match.getType());
       return ruleMatch;
     } else {

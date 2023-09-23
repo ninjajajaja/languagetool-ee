@@ -58,8 +58,8 @@ public class SameRuleGroupFilter implements RuleMatchFilter {
   }
 
   private boolean haveSameRuleGroup(RuleMatch match, RuleMatch nextMatch) {
-    String id1 = match.getRule().getId();
-    return id1 != null && id1.equals(nextMatch.getRule().getId());
+    String id1 = match.rule.getId();
+    return id1 != null && id1.equals(nextMatch.rule.getId());
   }
 
 }

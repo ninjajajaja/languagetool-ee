@@ -264,7 +264,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
             wrongWords.get(crtWordCount - 1).get(crt.toLowerCase(getLocale()));
         }
         if (crtMatch != null) {
-          List<String> replacements = Arrays.asList(crtMatch.getSuggestion().split("\\|"));
+          List<String> replacements = Arrays.asList(crtMatch.suggestion.split("\\|"));
           String msgSuggestions = "";
           for (int k = 0; k < replacements.size(); k++) {
             if (k > 0) {
@@ -273,16 +273,16 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
             msgSuggestions += "<suggestion>" + replacements.get(k) + "</suggestion>";
           }
           String msg = getMessage().replaceFirst("\\$match", crt).replaceFirst("\\$suggestions", msgSuggestions);
-          if (crtMatch.getMessage() != null) {
-            if (!crtMatch.getMessage().startsWith("http://") && !crtMatch.getMessage().startsWith("https://")) {
-              msg = crtMatch.getMessage();
+          if (crtMatch.message != null) {
+            if (!crtMatch.message.startsWith("http://") && !crtMatch.message.startsWith("https://")) {
+              msg = crtMatch.message;
             }
           }
           int startPos = prevTokensList.get(len - crtWordCount).getStartPos();
           int endPos = prevTokensList.get(len - 1).getEndPos();
           RuleMatch ruleMatch = new RuleMatch(this, sentence, startPos, endPos, msg, getShort());
-          if (crtMatch.getMessage() != null && (crtMatch.getMessage().startsWith("http://") || crtMatch.getMessage().startsWith("https://"))) {
-            ruleMatch.setUrl(Tools.getUrl(crtMatch.getMessage()));
+          if (crtMatch.message != null && (crtMatch.message.startsWith("http://") || crtMatch.message.startsWith("https://"))) {
+            ruleMatch.setUrl(Tools.getUrl(crtMatch.message));
           }
           if (subRuleSpecificIds) {
             ruleMatch.setSpecificRuleId(StringTools.toId(getId() + "_" + crt));

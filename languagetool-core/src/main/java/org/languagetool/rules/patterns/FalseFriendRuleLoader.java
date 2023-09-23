@@ -74,14 +74,14 @@ public class FalseFriendRuleLoader extends DefaultHandler {
             "http://apache.org/xml/features/nonvalidating/load-external-dtd",
             false);
     saxParser.parse(stream, handler);
-    List<AbstractPatternRule> rules = handler.getRules();
+    List<AbstractPatternRule> rules = handler.rules;
     List<AbstractPatternRule> filteredRules = new ArrayList<>();
     // Add suggestions to each rule:
     MessageFormat msgFormat = new MessageFormat(falseFriendSugg);
     ShortDescriptionProvider descProvider = new ShortDescriptionProvider();
     for (AbstractPatternRule rule : rules) {
       String patternStr = rule.getPatternTokens().stream().map(k -> k.getString()).collect(Collectors.joining(" "));
-      List<String> suggestions = handler.getSuggestionMap().get(rule.getId());
+      List<String> suggestions = handler.suggestionMap.get(rule.getId());
       if (suggestions != null) {
         List<String> formattedSuggestions = new ArrayList<>();
         for (String suggestion : suggestions) {

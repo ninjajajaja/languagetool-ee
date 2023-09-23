@@ -28,10 +28,10 @@ import java.util.*;
  */
 public class ConfusionPair {
 
-  private final ConfusionString term1;
-  private final ConfusionString term2;
-  private final long factor;
-  private final boolean bidirectional;
+  public final ConfusionString term1;
+  public final ConfusionString term2;
+  public final long factor;
+  public final boolean bidirectional;
 
   public ConfusionPair(ConfusionString cs1, ConfusionString cs2, long factor, boolean bidirectional) {
     this.term1 = Objects.requireNonNull(cs1);
@@ -52,24 +52,6 @@ public class ConfusionPair {
     this.factor = factor;
     this.bidirectional = bidirectional;
   }
-
-  /* Alternative must be at least this much more probable to be considered correct. */
-  public long getFactor() {
-    return factor;
-  }
-
-  /* If true, only direction term1 -> term2 is possible, i.e. if term1 is used incorrectly, term2 is suggested - not vice versa. */
-  public boolean isBidirectional() {
-    return bidirectional;
-  }
-
-  public ConfusionString getTerm1() {
-    return term1;
-  }
-  
-  public ConfusionString getTerm2() {
-    return term2;
-  }
   
   public List<ConfusionString> getTerms() {
     return Collections.unmodifiableList(Arrays.asList(term1, term2));
@@ -77,8 +59,8 @@ public class ConfusionPair {
   
   public List<ConfusionString> getUppercaseFirstCharTerms() {
     List<ConfusionString> result = new ArrayList<>();
-    result.add(new ConfusionString(StringTools.uppercaseFirstChar(term1.getString()), term1.getDescription()));
-    result.add(new ConfusionString(StringTools.uppercaseFirstChar(term2.getString()), term2.getDescription()));
+    result.add(new ConfusionString(StringTools.uppercaseFirstChar(term1.str), term1.description));
+    result.add(new ConfusionString(StringTools.uppercaseFirstChar(term2.str), term2.description));
     return Collections.unmodifiableList(result);
   }
 

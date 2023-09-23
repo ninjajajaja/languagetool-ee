@@ -193,7 +193,7 @@ public class RuleMatchesAsJsonSerializer {
         writeRule(g, match);
         // 3 is a guess - key 'ignoreForIncompleteSentence' isn't official and can hopefully be removed in the future
         // now that we have 'contextForSureMatch':
-        int contextEstimate = match.getRule().estimateContextForSureMatch();
+        int contextEstimate = match.rule.estimateContextForSureMatch();
         g.writeBooleanField("ignoreForIncompleteSentence", contextEstimate == -1 || contextEstimate > 3);
         g.writeNumberField("contextForSureMatch", contextEstimate);
         g.writeEndObject();
@@ -244,7 +244,7 @@ public class RuleMatchesAsJsonSerializer {
   
   private void writeReplacements(JsonGenerator g, RuleMatch match) throws IOException {
     g.writeArrayFieldStart("replacements");
-    boolean autoCorrect = match.isAutoCorrect();
+    boolean autoCorrect = match.autoCorrect;
     int i = 0;
     for (SuggestedReplacement replacement : match.getSuggestedReplacementObjects()) {
       i++;
@@ -252,22 +252,22 @@ public class RuleMatchesAsJsonSerializer {
         break;
       }
       g.writeStartObject();
-      g.writeStringField("value", replacement.getReplacement());
-      if (replacement.getShortDescription() != null) {
-        g.writeStringField("shortDescription", replacement.getShortDescription());
+      g.writeStringField("value", replacement.replacement);
+      if (replacement.shortDescription != null) {
+        g.writeStringField("shortDescription", replacement.shortDescription);
       }
-      if (replacement.getSuffix() != null) {
-        g.writeStringField("suffix", replacement.getSuffix());
+      if (replacement.suffix != null) {
+        g.writeStringField("suffix", replacement.suffix);
       }
-      if (replacement.getType() != SuggestedReplacement.SuggestionType.Default) {
-        g.writeStringField("type", replacement.getType().name());
+      if (replacement.type != SuggestedReplacement.SuggestionType.Default) {
+        g.writeStringField("type", replacement.type.name());
       }
       if (autoCorrect) {
         g.writeBooleanField("autoCorrect", true);
         autoCorrect = false; // only for first replacement
       }
-      if (replacement.getConfidence() != null) {
-        g.writeNumberField("confidence", replacement.getConfidence());
+      if (replacement.confidence != null) {
+        g.writeNumberField("confidence", replacement.confidence);
       }
       g.writeEndObject();
     }
@@ -292,7 +292,7 @@ public class RuleMatchesAsJsonSerializer {
 
   private void writeRule(JsonGenerator g, RuleMatch match) throws IOException {
     g.writeObjectFieldStart("rule");
-    Rule rule = match.getRule();
+    Rule rule = match.rule;
     g.writeStringField("id", match.getSpecificRuleId()); // rule.getId()
     if (rule.getSubId() != null) {
       g.writeStringField("subId", rule.getSubId());

@@ -83,7 +83,7 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
 
           while (iter.hasNext()) {
             RuleMatch match = iter.next();
-            if (match.getRule().isDictionaryBasedSpellingRule() &&
+            if (match.rule.isDictionaryBasedSpellingRule() &&
                 match.getFromPos() >= phrase.begin &&
                 match.getToPos() <= phrase.end) {
               // remove all spelling matches that are (subsets) of accepted phrases
@@ -106,7 +106,7 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
     List<RuleMatch> collectedMatches = new ArrayList<>();
     List<String> collectedTerms = new ArrayList<>();
     for (RuleMatch match : ruleMatches) {
-      if (match.getRule().isDictionaryBasedSpellingRule()) {
+      if (match.rule.isDictionaryBasedSpellingRule()) {
         String covered = text.getPlainText().substring(match.getFromPos(), match.getToPos());
         if (match.getFromPos() == prevToPos + 1) {
           String key = String.join(" ", collectedTerms) + " " + covered;

@@ -70,7 +70,7 @@ public class ConfusionSet {
   public Set<ConfusionString> getUppercaseFirstCharSet() {
     Set<ConfusionString> result = new HashSet<>();
     for (ConfusionString s : set) {
-      ConfusionString newString = new ConfusionString(StringTools.uppercaseFirstChar(s.getString()), s.getDescription());
+      ConfusionString newString = new ConfusionString(StringTools.uppercaseFirstChar(s.str), s.description);
       result.add(newString);
     }
     return Collections.unmodifiableSet(result);

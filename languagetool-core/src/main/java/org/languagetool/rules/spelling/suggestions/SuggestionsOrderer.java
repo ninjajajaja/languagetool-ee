@@ -34,6 +34,6 @@ public interface SuggestionsOrderer {
 
   default List<String> orderSuggestionsUsingModel(List<String> suggestions, String word, AnalyzedSentence sentence, int startPos) {
     List<SuggestedReplacement> ordered = orderSuggestions(suggestions, word, sentence, startPos);
-    return ordered.stream().map(SuggestedReplacement::getReplacement).collect(Collectors.toList());
+    return ordered.stream().map(sr -> sr.replacement).collect(Collectors.toList());
   }
 }

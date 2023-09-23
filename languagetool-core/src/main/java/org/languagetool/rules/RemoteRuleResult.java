@@ -27,10 +27,10 @@ import org.languagetool.AnalyzedSentence;
 import java.util.*;
 
 public class RemoteRuleResult {
-  private final boolean remote; // was remote needed/involved? rules may filter input sentences and only call remote on some; for metrics
-  private final boolean success; // successful -> for caching, so that we can cache: remote not needed for this sentence
-  private final List<RuleMatch> matches;
-  private final Set<AnalyzedSentence> processedSentences;
+  public final boolean remote; // was remote needed/involved? rules may filter input sentences and only call remote on some; for metrics
+  public final boolean success; // successful -> for caching, so that we can cache: remote not needed for this sentence
+  public final List<RuleMatch> matches;
+  public final Set<AnalyzedSentence> processedSentences;
   // which sentences were processed? to distinguish between no matches because not processed (e.g. cached)
   // and no errors/corrections found
 
@@ -54,24 +54,8 @@ public class RemoteRuleResult {
     }
   }
 
-  public boolean isRemote() {
-    return remote;
-  }
-
-  public boolean isSuccess() {
-    return success;
-  }
-
-  public List<RuleMatch> getMatches() {
-    return matches;
-  }
-
   public Set<AnalyzedSentence> matchedSentences() {
     return sentenceMatches.keySet();
-  }
-
-  public Set<AnalyzedSentence> processedSentences() {
-    return processedSentences;
   }
 
   /**

@@ -1063,7 +1063,7 @@ public class JLanguageTool {
     // rules can create matches with rule IDs different from the original rule (see e.g. RemoteRules)
     // so while we can't avoid execution of these rules, we still want disabling them to work
     // so do another pass with ignoreRule here
-    ruleMatches = ruleMatches.stream().filter(match -> !ignoreRule(match.getRule())).collect(Collectors.toList());
+    ruleMatches = ruleMatches.stream().filter(match -> !ignoreRule(match.rule)).collect(Collectors.toList());
 
     ruleMatches = new SameRuleGroupFilter().filter(ruleMatches);
     // no sorting: SameRuleGroupFilter sorts rule matches already
@@ -1181,9 +1181,9 @@ public class JLanguageTool {
         TimeUnit.NANOSECONDS.toMillis(waitTime), ruleKey, chars);
       result = task.get(waitTime, TimeUnit.NANOSECONDS);
     }
-    RemoteRuleMetrics.RequestResult loggedResult = result.isSuccess() ?
+    RemoteRuleMetrics.RequestResult loggedResult = result.success ?
       RemoteRuleMetrics.RequestResult.SUCCESS : RemoteRuleMetrics.RequestResult.ERROR;
-    if (result.isRemote()) {
+    if (result.remote) {
       RemoteRuleMetrics.request(ruleKey, deadlineStartNanos, chars, loggedResult);
     }
     for (int sentenceIndex = 0; sentenceIndex < analyzedSentences.size(); sentenceIndex++) {
@@ -1192,7 +1192,7 @@ public class JLanguageTool {
       if (matches == null) {
         continue;
       }
-      if (cache != null && result.isSuccess()) {
+      if (cache != null && result.success) {
         // store in cache
         InputSentence cacheKey = new InputSentence(
           sentence.getText(), language, motherTongue, disabledRules, disabledRuleCategories,
@@ -1462,7 +1462,7 @@ public class JLanguageTool {
     // so while we can't avoid execution of these rules, we still want disabling them to work
     // so do another pass with ignoreRule here
     sentenceMatches = sentenceMatches.stream()
-      .filter(match -> !ignoreRule(match.getRule())).collect(Collectors.toList());
+      .filter(match -> !ignoreRule(match.rule)).collect(Collectors.toList());
     return applyCustomFilters(new SameRuleGroupFilter().filter(sentenceMatches), text);
   }
 
@@ -1539,10 +1539,10 @@ public class JLanguageTool {
     List<SuggestedReplacement> extended = new ArrayList<>();
     for (SuggestedReplacement replacement : replacements) {
       SuggestedReplacement newReplacement = new SuggestedReplacement(replacement);
-      if (replacement.getShortDescription() == null) {  // don't overwrite more specific suggestions from the rule
-        String descOrNull = descProvider.getShortDescription(replacement.getReplacement(), language);
+      if (replacement.shortDescription == null) {  // don't overwrite more specific suggestions from the rule
+        String descOrNull = descProvider.getShortDescription(replacement.replacement, language);
         newReplacement.setShortDescription(descOrNull);
-        newReplacement.setSuffix(replacement.getSuffix());
+        newReplacement.setSuffix(replacement.suffix);
       }
       extended.add(newReplacement);
     }

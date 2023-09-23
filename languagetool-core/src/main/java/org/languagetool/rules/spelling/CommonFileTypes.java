@@ -41,13 +41,9 @@ public class CommonFileTypes {
     "doc", "docx", "dot", "dotx", "pdf", "rtf", "srx", "text", "tex", "wks", "wps", "wpd", "txt", "yaml", "yml", "csl", "md", "adm", "webm", "webp"
   );
   
-  private final static Pattern suffixPattern = 
+  public final static Pattern suffixPattern =
     //Pattern.compile(".+\\.(" + String.join("|", COMMON_FILE_TYPES) + ")", Pattern.CASE_INSENSITIVE); 
-    Pattern.compile("[\\wáàâóòìíéèùúôîêûäöüß\\-.()]*?.+\\.(" + String.join("|", COMMON_FILE_TYPES) + ")", Pattern.CASE_INSENSITIVE); 
-
-  public static Pattern getSuffixPattern() {
-    return suffixPattern;
-  }
+    Pattern.compile("[\\wáàâóòìíéèùúôîêûäöüß\\-.()]*?.+\\.(" + String.join("|", COMMON_FILE_TYPES) + ")", Pattern.CASE_INSENSITIVE);
 
   private CommonFileTypes() {}
 }

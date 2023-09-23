@@ -38,7 +38,7 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
   private final MessageFormat formatter;
   private final Language textLanguage;
   private final Language motherTongue;
-  private final Map<String, List<String>> suggestionMap = new HashMap<>();  // rule ID -> list of translations
+  public final Map<String, List<String>> suggestionMap = new HashMap<>();  // rule ID -> list of translations
   private final List<String> suggestions = new ArrayList<>();
   private final List<StringBuilder> translations = new ArrayList<>();
   private final String falseFriendHint;
@@ -58,10 +58,6 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
     this.textLanguage = textLanguage;
     this.motherTongue = motherTongue;
     this.falseFriendHint = falseFriendHint;
-  }
-
-  public Map<String, List<String>> getSuggestionMap() {
-    return suggestionMap;
   }
 
   // ===========================================================

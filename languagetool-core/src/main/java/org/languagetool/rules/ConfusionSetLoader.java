@@ -99,7 +99,7 @@ public class ConfusionSetLoader {
 
   private void addToMap(Map<String, List<ConfusionPair>> map, List<ConfusionString> confusionStrings, ConfusionPair confusionSet) {
     for (ConfusionString confusionString : confusionStrings) {
-      String key = confusionString.getString();
+      String key = confusionString.str;
       List<ConfusionPair> existingEntry = map.get(key);
       if (existingEntry != null) {
         existingEntry.add(confusionSet);

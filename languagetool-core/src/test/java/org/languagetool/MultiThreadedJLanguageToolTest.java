@@ -87,7 +87,7 @@ public class MultiThreadedJLanguageToolTest {
     List<RuleMatch> matches = lt.check(input);
     List<String> ruleMatchIds = new ArrayList<>();
     for (RuleMatch match : matches) {
-      ruleMatchIds.add(match.getRule().getId());
+      ruleMatchIds.add(match.rule.getId());
     }
     return ruleMatchIds;
   }

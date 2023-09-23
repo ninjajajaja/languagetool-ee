@@ -94,7 +94,7 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
       }
       if (posWord < 1 || posWord > patternTokens.length) {
         throw new IllegalArgumentException("FindSuggestionsFilter: Index out of bounds in "
-            + match.getRule().getFullId() + ", wordFrom: " + posWord);
+            + match.rule.getFullId() + ", wordFrom: " + posWord);
       }
       AnalyzedTokenReadings atrWord = patternTokens[posWord - 1];
       stringComparator = new StringComparator(atrWord.getToken());
@@ -192,7 +192,7 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
       return null;
     }
     String message = match.getMessage();
-    RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(),
+    RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(),
         message, match.getShortMessage());
     ruleMatch.setType(match.getType());
 

@@ -78,7 +78,7 @@ public class LanguageSpecificTest {
           List<Map<String, SuggestionWithMessage>> wrongWords = replRule.getWrongWords(false);
           for (Map<String, SuggestionWithMessage> entry : wrongWords) {
             for (String s : entry.keySet()) {
-              String repl = entry.get(s).getSuggestion();
+              String repl = entry.get(s).suggestion;
               RuleMatch[] matches = spellRule.match(lt.getAnalyzedSentence(repl));
               if (matches.length > 0) {
                 System.err.println("*** WARNING: replacement '" + repl + "' for '" + s + "' from one of " + replRule.getFileNames() +

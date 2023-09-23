@@ -23,15 +23,11 @@ import java.util.List;
 /** @since 4.9 */
 public class TranslationData {
 
-  private final List<TranslationEntry> translations;
+  public final List<TranslationEntry> translations;
   private final DataSource dataSource;
 
   public TranslationData(List<TranslationEntry> translations, DataSource dataSource) {
     this.translations = translations;
     this.dataSource = dataSource;
-  }
-
-  public List<TranslationEntry> getTranslations() {
-    return translations;
   }
 }

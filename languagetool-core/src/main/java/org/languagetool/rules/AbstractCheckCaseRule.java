@@ -77,7 +77,7 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
         if (suggMess == null) {
           continue;
         }
-        String correctPhrase = suggMess.getSuggestion();
+        String correctPhrase = suggMess.suggestion;
         String capitalizedCorrect = StringTools.uppercaseFirstChar(correctPhrase);
         int startPos = prevTokensList.get(len - crtWordCount).getStartPos();
         int endPos = prevTokensList.get(len - 1).getEndPos();
@@ -98,7 +98,7 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
         }
         if (correctPhrase != null && !correctPhrase.equals(originalPhrase)) {
           RuleMatch ruleMatch;
-          String msg = suggMess.getMessage();
+          String msg = suggMess.message;
           if (msg == null) {
             msg = getMessage();
           }

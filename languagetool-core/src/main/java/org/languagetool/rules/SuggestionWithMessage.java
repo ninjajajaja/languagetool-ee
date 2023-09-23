@@ -22,8 +22,8 @@ import java.util.Objects;
 
 public class SuggestionWithMessage {
   
-  private final String suggestion;
-  private final String message;
+  public final String suggestion;
+  public final String message;
 
   SuggestionWithMessage(String suggestion) {
     this(suggestion, null);
@@ -32,13 +32,5 @@ public class SuggestionWithMessage {
   SuggestionWithMessage(String suggestion, String message) {
     this.suggestion = Objects.requireNonNull(suggestion);
     this.message = message;
-  }
-
-  public String getSuggestion() {
-    return suggestion;
-  }
-
-  public String getMessage() {
-    return message;
   }
 }

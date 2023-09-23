@@ -44,7 +44,7 @@ public abstract class AbstractSuppressIfAnyRuleMatchesFilter extends RuleFilter 
           + sentence.substring(match.getToPos());
       List<RuleMatch> matches = lt.check(newSentence);
       for (RuleMatch m : matches) {
-        if (ruleIDs.contains(m.getRule().getId())) {
+        if (ruleIDs.contains(m.rule.getId())) {
           if ((m.getToPos() >= match.getFromPos() && m.getToPos() <= match.getToPos())
               || (match.getToPos() >= m.getFromPos() && match.getToPos() <= m.getToPos())) {
             return null;

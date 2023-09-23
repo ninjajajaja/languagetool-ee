@@ -54,7 +54,7 @@ public abstract class RemoteRule extends Rule {
   protected static final List<Runnable> shutdownRoutines = new LinkedList<>();
   protected static final ConcurrentMap<String, CircuitBreaker> circuitBreakers = new ConcurrentHashMap<>();
 
-  protected final RemoteRuleConfig serviceConfiguration;
+  public final RemoteRuleConfig serviceConfiguration;
   protected final boolean premium;
   protected final boolean inputLogging;
   protected final boolean filterMatches;
@@ -74,13 +74,13 @@ public abstract class RemoteRule extends Rule {
     if (ruleId == null) { // allow both providing rule ID in constructor or overriding getId
       ruleId = getId();
     }
-    filterMatches = Boolean.parseBoolean(serviceConfiguration.getOptions().getOrDefault("filterMatches", "false"));
-    whitespaceNormalisation = Boolean.parseBoolean(serviceConfiguration.getOptions().getOrDefault("whitespaceNormalisation", "true"));
-    fixOffsets = Boolean.parseBoolean(serviceConfiguration.getOptions().getOrDefault("fixOffsets", "true"));
-    premium = Boolean.parseBoolean(serviceConfiguration.getOptions().getOrDefault("premium", "false"));
+    filterMatches = Boolean.parseBoolean(serviceConfiguration.options.getOrDefault("filterMatches", "false"));
+    whitespaceNormalisation = Boolean.parseBoolean(serviceConfiguration.options.getOrDefault("whitespaceNormalisation", "true"));
+    fixOffsets = Boolean.parseBoolean(serviceConfiguration.options.getOrDefault("fixOffsets", "true"));
+    premium = Boolean.parseBoolean(serviceConfiguration.options.getOrDefault("premium", "false"));
     try {
-      if (serviceConfiguration.getOptions().containsKey("suppressMisspelledMatch")) {
-        suppressMisspelledMatch = Pattern.compile(serviceConfiguration.getOptions().get("suppressMisspelledMatch"));
+      if (serviceConfiguration.options.containsKey("suppressMisspelledMatch")) {
+        suppressMisspelledMatch = Pattern.compile(serviceConfiguration.options.get("suppressMisspelledMatch"));
       } else {
         suppressMisspelledMatch = null;
       }
@@ -88,8 +88,8 @@ public abstract class RemoteRule extends Rule {
       throw new IllegalArgumentException("suppressMisspelledMatch must be a valid regex", e);
     }
     try {
-      if (serviceConfiguration.getOptions().containsKey("suppressMisspelledSuggestions")) {
-        suppressMisspelledSuggestions = Pattern.compile(serviceConfiguration.getOptions().get("suppressMisspelledSuggestions"));
+      if (serviceConfiguration.options.containsKey("suppressMisspelledSuggestions")) {
+        suppressMisspelledSuggestions = Pattern.compile(serviceConfiguration.options.get("suppressMisspelledSuggestions"));
       } else {
         suppressMisspelledSuggestions = null;
       }
@@ -144,18 +144,18 @@ public abstract class RemoteRule extends Rule {
   static CircuitBreakerConfig getCircuitBreakerConfig(RemoteRuleConfig c, String id) {
     CircuitBreakerConfig.SlidingWindowType type;
     try {
-      type = CircuitBreakerConfig.SlidingWindowType.valueOf(c.getSlidingWindowType());
+      type = CircuitBreakerConfig.SlidingWindowType.valueOf(c.slidingWindowType);
     } catch (IllegalArgumentException e) {
       type = CircuitBreakerConfig.SlidingWindowType.COUNT_BASED;
-      logger.warn("Couldn't parse slidingWindowType value '{}' for rule '{}', use one of {}; defaulting to '{}'", c.getSlidingWindowType(), id, Arrays.asList(CircuitBreakerConfig.SlidingWindowType.values()), type);
+      logger.warn("Couldn't parse slidingWindowType value '{}' for rule '{}', use one of {}; defaulting to '{}'", c.slidingWindowType, id, Arrays.asList(CircuitBreakerConfig.SlidingWindowType.values()), type);
     }
 
     CircuitBreakerConfig config = CircuitBreakerConfig
       .custom()
-      .failureRateThreshold(c.getFailureRateThreshold())
+      .failureRateThreshold(c.failureRateThreshold)
       .slidingWindow(
-        c.getSlidingWindowSize(), c.getMinimumNumberOfCalls(), type)
-      .waitDurationInOpenState(Duration.ofMillis(Math.max(1, c.getDownMilliseconds())))
+        c.slidingWindowSize, c.minimumNumberOfCalls, type)
+      .waitDurationInOpenState(Duration.ofMillis(Math.max(1, c.downMilliseconds)))
       .enableAutomaticTransitionFromOpenToHalfOpen()
       .build();
     return config;
@@ -207,7 +207,7 @@ public abstract class RemoteRule extends Rule {
             filteredMatches.addAll(filteredSentenceMatches);
           }
         }
-        result = new RemoteRuleResult(result.isRemote(), result.isSuccess(), filteredMatches, sentences);
+        result = new RemoteRuleResult(result.remote, result.success, filteredMatches, sentences);
       }
 
       List<RuleMatch> filteredMatches = new ArrayList<>();
@@ -218,14 +218,14 @@ public abstract class RemoteRule extends Rule {
           filteredMatches.addAll(filteredSentenceMatches);
         }
       }
-      result = new RemoteRuleResult(result.isRemote(), result.isSuccess(), filteredMatches, sentences);
+      result = new RemoteRuleResult(result.remote, result.success, filteredMatches, sentences);
       return result;
     });
   }
 
   static long getTimeout(RemoteRuleConfig serviceConfiguration, long characters) {
-    long timeout = serviceConfiguration.getBaseTimeoutMilliseconds() +
-      Math.round(characters * serviceConfiguration.getTimeoutPerCharacterMilliseconds());
+    long timeout = serviceConfiguration.baseTimeoutMilliseconds +
+      Math.round(characters * serviceConfiguration.timeoutPerCharacterMilliseconds);
     return timeout;
   }
 
@@ -250,7 +250,7 @@ public abstract class RemoteRule extends Rule {
 
     Predicate<SuggestedReplacement> checkSpelling = (s) -> {
       try {
-        AnalyzedSentence sentence = lt.getRawAnalyzedSentence(s.getReplacement());
+        AnalyzedSentence sentence = lt.getRawAnalyzedSentence(s.replacement);
         RuleMatch[] matches = speller.match(sentence);
         return matches.length == 0;
       } catch(IOException e) {
@@ -259,7 +259,7 @@ public abstract class RemoteRule extends Rule {
     };
 
     for (RuleMatch m : sentenceMatches) {
-        String id = m.getRule().getId();
+        String id = m.rule.getId();
         if (suppressMisspelledMatch != null && suppressMisspelledMatch.matcher(id).matches()) {
           if (!m.getSuggestedReplacementObjects().stream().allMatch(checkSpelling)) {
             continue;
@@ -280,7 +280,7 @@ public abstract class RemoteRule extends Rule {
 
   @Override
   public String getId() {
-    return serviceConfiguration.getRuleId();
+    return serviceConfiguration.ruleId;
   }
 
   @Override
@@ -295,17 +295,12 @@ public abstract class RemoteRule extends Rule {
         task.run();
       }
       RemoteRuleResult result = task.get(timeout, TimeUnit.MILLISECONDS);
-      return result.getMatches().toArray(RuleMatch.EMPTY_ARRAY);
+      return result.matches.toArray(RuleMatch.EMPTY_ARRAY);
     } catch (InterruptedException | ExecutionException | TimeoutException e) {
       logger.info("Fetching results for remote rule " + getId() + " failed.", e);
       return RuleMatch.EMPTY_ARRAY;
     }
   }
-
-  public RemoteRuleConfig getServiceConfiguration() {
-    return serviceConfiguration;
-  }
-
 
   /**
    *  Helper for {@link #fixMatchOffsets}

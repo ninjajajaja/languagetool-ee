@@ -28,20 +28,12 @@ import java.util.Objects;
  */
 public class RuleWithLanguage {
 
-  private final Rule rule;
-  private final Language language;
+  public final Rule rule;
+  public final Language language;
   
   public RuleWithLanguage(Rule rule, Language language) {
     this.rule = Objects.requireNonNull(rule);
     this.language = Objects.requireNonNull(language);
-  }
-
-  public Language getLanguage() {
-    return language;
-  }
-
-  public Rule getRule() {
-    return rule;
   }
 
   @Override

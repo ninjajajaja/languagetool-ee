@@ -49,7 +49,7 @@ public class RuleMatch implements Comparable<RuleMatch> {
   public static final String SUGGESTION_END_TAG = "</suggestion>";
 
   //private static final Pattern SUGGESTION_PATTERN = Pattern.compile("<suggestion>(.*?)</suggestion>");
-  private final Rule rule;
+  public final Rule rule;
   private final String message;
   private final String shortMessage;   // used e.g. for OOo/LO context menu
   private final AnalyzedSentence sentence;
@@ -67,8 +67,8 @@ public class RuleMatch implements Comparable<RuleMatch> {
   private boolean suggestionsComputed = true;
   private URL url;
   private Type type = Type.Other;
-  private SortedMap<String, Float> features = Collections.emptySortedMap();
-  private boolean autoCorrect = false;
+  public SortedMap<String, Float> features = Collections.emptySortedMap();
+  public boolean autoCorrect = false;
   private String errorLimitLang;
 
   private String specificRuleId = "";
@@ -209,15 +209,15 @@ public class RuleMatch implements Comparable<RuleMatch> {
 
   @SuppressWarnings("CopyConstructorMissesField")
   public RuleMatch(RuleMatch clone) {
-    this.rule = clone.getRule();
+    this.rule = clone.rule;
     this.sentence = clone.getSentence();
     this.setOffsetPosition(clone.getFromPos(), clone.getToPos());
     this.message = clone.getMessage();
     this.shortMessage = clone.getShortMessage();
     this.setPatternPosition(clone.getPatternFromPos(), clone.getPatternToPos());
     this.suggestedReplacements = clone.suggestedReplacements;
-    this.setAutoCorrect(clone.isAutoCorrect());
-    this.setFeatures(clone.getFeatures());
+    this.setAutoCorrect(clone.autoCorrect);
+    this.setFeatures(clone.features);
     this.setUrl(clone.getUrl());
     this.setType(clone.getType());
     this.setLine(clone.getLine());
@@ -241,25 +241,12 @@ public class RuleMatch implements Comparable<RuleMatch> {
     this(clone, replacements, false);
   }
 
-  @NotNull
-  public SortedMap<String, Float> getFeatures() {
-    return features;
-  }
-
   public void setFeatures(@NotNull SortedMap<String, Float> features) {
     this.features = features;
   }
 
-  public boolean isAutoCorrect() {
-    return autoCorrect;
-  }
-
   public void setAutoCorrect(boolean autoCorrect) {
     this.autoCorrect = autoCorrect;
-  }
-
-  public Rule getRule() {
-    return rule;
   }
 
   /**
@@ -451,7 +438,7 @@ public class RuleMatch implements Comparable<RuleMatch> {
    */
   public List<String> getSuggestedReplacements() {
     return Collections.unmodifiableList(
-      suggestedReplacements.get().stream().map(SuggestedReplacement::getReplacement).collect(Collectors.toList())
+      suggestedReplacements.get().stream().map(sr -> sr.replacement).collect(Collectors.toList())
     );
   }
 
@@ -684,7 +671,7 @@ public class RuleMatch implements Comparable<RuleMatch> {
    */
   public String getSpecificRuleId() {
     if (specificRuleId.isEmpty()) {
-      return this.getRule().getId();
+      return this.rule.getId();
     } else {
       return specificRuleId;
     }

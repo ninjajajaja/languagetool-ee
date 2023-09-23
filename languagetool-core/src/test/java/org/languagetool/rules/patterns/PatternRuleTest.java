@@ -632,7 +632,7 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
           }
           String info = "";
           if (rule instanceof RegexPatternRule) {
-            info = "\nRegexp: " + ((RegexPatternRule) rule).getPattern();
+            info = "\nRegexp: " + ((RegexPatternRule) rule).pattern;
           }
           String failure = "\"" + badSentence + "\"\n"
                   + "Errors expected: 1\n"
@@ -705,10 +705,10 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
       /*matches = getMatches(rule, badSentence, lt);
       List<RuleMatch> matchesAllRules = allRulesLt.check(badSentence);
       for (RuleMatch match : matchesAllRules) {
-        if (!match.getRule().getId().equals(rule.getId()) && !matches.isEmpty()
+        if (!match.rule.getId().equals(rule.getId()) && !matches.isEmpty()
             && rangeIsOverlapping(matches.get(0).getFromPos(), matches.get(0).getToPos(), match.getFromPos(), match.getToPos()))
           System.err.println("WARNING: " + lang.getShortCode() + ": '" + badSentence + "' in "
-                  + rule.getId() + " also matched " + match.getRule().getId());
+                  + rule.getId() + " also matched " + match.rule.getId());
       }*/
     }
   }
@@ -826,7 +826,7 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
       List<RuleMatch> matches = allRulesLt.check(goodSentence);
       for (RuleMatch match : matches) {
         System.err.println("WARNING: " + lang.getShortCode() + ": '" + goodSentence + "' did not match "
-                + rule.getId() + " but matched " + match.getRule().getId());
+                + rule.getId() + " but matched " + match.rule.getId());
       }
       */
     }
@@ -875,11 +875,11 @@ public class PatternRuleTest extends AbstractPatternRuleTest {
       List<RuleMatch> realMatches = lt.check(sentence);
       List<String> realMatchRuleIds = new ArrayList<>();
       for (RuleMatch realMatch : realMatches) {
-        realMatchRuleIds.add(realMatch.getRule().getId());
+        realMatchRuleIds.add(realMatch.rule.getId());
       }
       for (RuleMatch match : matches) {
-        String ruleId = match.getRule().getId();
-        if (!match.getRule().isDefaultOff() && !realMatchRuleIds.contains(ruleId)) {
+        String ruleId = match.rule.getId();
+        if (!match.rule.isDefaultOff() && !realMatchRuleIds.contains(ruleId)) {
           System.err.println("WARNING: " + lt.getLanguage().getName()
                   + ": missing rule match " + ruleId + " when splitting sentences for test sentence '" + sentence + "'");
         }

@@ -52,12 +52,12 @@ public class BERTSuggestionRanking extends RemoteRule {
 
   private static final LoadingCache<RemoteRuleConfig, RemoteLanguageModel> models =
     CacheBuilder.newBuilder().build(CacheLoader.from(serviceConfiguration -> {
-      String host = serviceConfiguration.getUrl();
+      String host = serviceConfiguration.url;
       int port = serviceConfiguration.getPort();
-      boolean ssl = Boolean.parseBoolean(serviceConfiguration.getOptions().getOrDefault("secure", "false"));
-      String key = serviceConfiguration.getOptions().get("clientKey");
-      String cert = serviceConfiguration.getOptions().get("clientCertificate");
-      String ca = serviceConfiguration.getOptions().get("rootCertificate");
+      boolean ssl = Boolean.parseBoolean(serviceConfiguration.options.getOrDefault("secure", "false"));
+      String key = serviceConfiguration.options.get("clientKey");
+      String cert = serviceConfiguration.options.get("clientCertificate");
+      String ca = serviceConfiguration.options.get("rootCertificate");
       try {
         return new RemoteLanguageModel(host, port, ssl, key, cert, ca);
       } catch (SSLException e) {
@@ -106,7 +106,7 @@ public class BERTSuggestionRanking extends RemoteRule {
    */
   protected List<SuggestedReplacement> prepareSuggestions(List<SuggestedReplacement> suggestions) {
     // include more suggestions for resorting if there are translations included as original order isn't that good
-    if (suggestions.stream().anyMatch(s -> s.getType() == SuggestedReplacement.SuggestionType.Translation)) {
+    if (suggestions.stream().anyMatch(s -> s.type == SuggestedReplacement.SuggestionType.Translation)) {
       suggestionLimit = 25;
     } else {
       suggestionLimit = 10;
@@ -191,7 +191,7 @@ public class BERTSuggestionRanking extends RemoteRule {
           //logger.info("Scored suggestions for '{}': {} -> {}", error, match.getSuggestedReplacements(), Streams
           //  .zip(match.getSuggestedReplacementObjects().stream(), scores.stream(), Pair::of)
           //  .sorted(new CuratedAndSameCaseComparator(userWord))
-          //  .map(scored -> String.format("%s (%e)", scored.getLeft().getReplacement(), scored.getRight()))
+          //  .map(scored -> String.format("%s (%e)", scored.getLeft().replacement, scored.getRight()))
           //  .collect(Collectors.toList()));
           List<SuggestedReplacement> ranked = Streams
             .zip(match.getSuggestedReplacementObjects().stream(), scores.stream(), Pair::of)
@@ -235,15 +235,15 @@ public class BERTSuggestionRanking extends RemoteRule {
     }
     @Override
     public int compare(Pair<SuggestedReplacement, Double> a, Pair<SuggestedReplacement, Double> b) {
-      //System.out.println(userWord + " -- " + b.getKey().getReplacement());
-      if (a.getKey().getReplacement().equalsIgnoreCase(userWord)) {
+      //System.out.println(userWord + " -- " + b.getKey().replacement);
+      if (a.getKey().replacement.equalsIgnoreCase(userWord)) {
         return -1;
-      } else if (b.getKey().getReplacement().equalsIgnoreCase(userWord)) {
+      } else if (b.getKey().replacement.equalsIgnoreCase(userWord)) {
         return 1;
-      } else if (a.getKey().getType() != b.getKey().getType()) {
-        if (a.getKey().getType() == SuggestedReplacement.SuggestionType.Curated) {
+      } else if (a.getKey().type != b.getKey().type) {
+        if (a.getKey().type == SuggestedReplacement.SuggestionType.Curated) {
           return -1;
-        } else if (b.getKey().getType() == SuggestedReplacement.SuggestionType.Curated) {
+        } else if (b.getKey().type == SuggestedReplacement.SuggestionType.Curated) {
           return 1;
         } else {
           return b.getRight().compareTo(a.getRight());

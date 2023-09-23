@@ -46,7 +46,7 @@ import static org.languagetool.JLanguageTool.SENTENCE_START_TAGNAME;
  */
 public class MatchState {
 
-  private final Match match;
+  public final Match match;
   private final Synthesizer synthesizer;
 
   private AnalyzedTokenReadings formattedToken;
@@ -384,7 +384,4 @@ public class MatchState {
     return String.join("|", Arrays.asList(stringToFormat));
   }
 
-  public Match getMatch() {
-    return match;
-  }
 }

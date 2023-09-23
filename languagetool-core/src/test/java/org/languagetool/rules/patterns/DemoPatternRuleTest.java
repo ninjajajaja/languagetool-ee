@@ -80,7 +80,7 @@ public class DemoPatternRuleTest extends PatternRuleTest {
     // JLanguageTool):
     assertEquals(-1, matches[0].getColumn());
     assertEquals(-1, matches[0].getLine());
-    assertEquals("ID1", matches[0].getRule().getId());
+    assertEquals("ID1", matches[0].rule.getId());
     assertEquals("user visible message", matches[0].getMessage());
     assertEquals("short comment", matches[0].getShortMessage());
     matches = pr.match(lt

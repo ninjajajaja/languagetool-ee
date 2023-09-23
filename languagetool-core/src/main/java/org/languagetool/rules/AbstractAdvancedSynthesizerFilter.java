@@ -74,7 +74,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     }
     if (postagFrom < 1 || postagFrom > patternTokens.length) {
       throw new IllegalArgumentException("AdvancedSynthesizerFilter: Index out of bounds in "
-          + match.getRule().getFullId() + ", value: " + postagFromStr);
+          + match.rule.getFullId() + ", value: " + postagFromStr);
     }
     int lemmaFrom = 0;
     if (lemmaFromStr.startsWith("marker")) {
@@ -90,7 +90,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     }
     if (lemmaFrom < 1 || lemmaFrom > patternTokens.length) {
       throw new IllegalArgumentException("AdvancedSynthesizerFilter: Index out of bounds in "
-          + match.getRule().getFullId() + ", value: " + lemmaFromStr);
+          + match.rule.getFullId() + ", value: " + lemmaFromStr);
     }
 
     String postagReplace = getOptional("postagReplace", arguments);
@@ -101,7 +101,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     
     if (desiredPostag == null) {
       throw new IllegalArgumentException("AdvancedSynthesizerFilter: undefined POS tag for rule " +
-        match.getRule().getFullId() + " with POS regex '" + postagSelect + "' for token: " + patternTokens[postagFrom-1]);
+        match.rule.getFullId() + " with POS regex '" + postagSelect + "' for token: " + patternTokens[postagFrom-1]);
     }
 
     if (postagReplace != null) {
@@ -115,7 +115,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     String[] replacements = getSynthesizer().synthesize(token, desiredPostag, true);
     
     if (replacements.length > 0) {
-      RuleMatch newMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(),
+      RuleMatch newMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(),
           match.getMessage(), match.getShortMessage());
       newMatch.setType(match.getType());
       List<String> replacementsList = new ArrayList<>();
@@ -148,7 +148,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
       }
       
       List<String> adjustedReplacementsList = new ArrayList<>();
-      Rule rule = match.getRule();
+      Rule rule = match.rule;
       if (rule instanceof AbstractPatternRule) {  
         Language lang = ((AbstractPatternRule) rule).getLanguage();
         for (String replacement : replacementsList) {

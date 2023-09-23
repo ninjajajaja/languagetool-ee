@@ -94,7 +94,7 @@ public class ConsistencyPatternRuleTransformer implements PatternRuleTransformer
       List<RuleMatch> resultMatches = new ArrayList<>();
       // count occurrences of features
       for (RuleMatch rm : matches) {
-        String feature = getFeature(rm.getRule().getId());
+        String feature = getFeature(rm.rule.getId());
         countFeatures.put(feature, countFeatures.getOrDefault(feature,0) + 1);
       }
       if (countFeatures.size()<2) {
@@ -116,7 +116,7 @@ public class ConsistencyPatternRuleTransformer implements PatternRuleTransformer
         featuresToKeep.add(keysList.get(0));
       }
       for (RuleMatch rm : matches) {
-        if (featuresToKeep.contains(getFeature(rm.getRule().getId()))) {
+        if (featuresToKeep.contains(getFeature(rm.rule.getId()))) {
           resultMatches.add(rm);
         }
       }

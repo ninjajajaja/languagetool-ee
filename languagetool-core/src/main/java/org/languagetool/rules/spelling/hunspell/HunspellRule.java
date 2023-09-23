@@ -64,7 +64,7 @@ public class HunspellRule extends SpellingCheckRule {
   protected volatile HunspellDictionary hunspell = null;
 
   private static final Logger logger = LoggerFactory.getLogger(HunspellRule.class);
-  private static final ConcurrentLinkedQueue<String> activeChecks = new ConcurrentLinkedQueue<>();
+  public static final ConcurrentLinkedQueue<String> activeChecks = new ConcurrentLinkedQueue<>();
   private static final String NON_ALPHABETIC = "[^\\p{L}]";
 
   private static final boolean monitorRules = System.getProperty("monitorActiveRules") != null;
@@ -72,10 +72,6 @@ public class HunspellRule extends SpellingCheckRule {
   //300 most common Portuguese words. They are used to avoid wrong split suggestions
   private final List<String> commonPortugueseWords = Arrays.asList("eu", "ja", "so", "de", "e", "a", "o", "da", "do", "em", "que", "uma", "um", "com", "no", "se", "na", "para", "por", "os", "foi", "como", "dos", "as", "ao", "mais", "sua", "das", "não", "ou", "km", "seu", "pela", "ser", "pelo", "são", "também", "anos", "cidade", "entre", "era", "tem", "mas", "habitantes", "nos", "seus", "área", "até", "ele", "onde", "foram", "população", "região", "sobre", "nas", "nome", "parte", "quando", "ano", "aos", "grande", "mesmo", "pode", "primeiro", "segundo", "sendo", "suas", "ainda", "dois", "estado", "está", "família", "já", "muito", "outros", "americano", "depois", "durante", "maior", "primeira", "forma", "apenas", "banda", "densidade", "dia", "então", "município", "norte", "tempo", "após", "duas", "num", "pelos", "qual", "século", "ter", "todos", "três", "vez", "água", "acordo", "cobertos", "comuna", "contra", "ela", "grupo", "principal", "quais", "sem", "tendo", "às", "álbum", "alguns", "assim", "asteróide", "bem", "brasileiro", "cerca", "desde", "este", "localizada", "mundo", "outras", "período", "seguinte", "sido", "vida", "através", "cada", "conhecido", "final", "história", "partir", "país", "pessoas", "sistema", "terra", "teve", "tinha", "época", "administrativa", "censo", "departamento", "dias", "esta", "filme", "francesa", "música", "província", "série", "vezes", "além", "antes", "eles", "eram", "espécie", "governo", "podem", "vários", "censos", "distrito", "estão", "exemplo", "hoje", "início", "jogo", "lhe", "lugar", "muitos", "média", "novo", "numa", "número", "pois", "possui", "sob", "só", "todo", "tornou", "trabalho", "algumas", "devido", "estava", "fez", "filho", "fim", "grandes", "há", "isso", "lado", "local", "morte", "orbital", "outro", "passou", "países", "quatro", "representa", "seja", "sempre", "sul", "várias", "capital", "chamado", "começou", " enquanto", "fazer", "lançado", "meio", "nova", "nível", "pelas", "poder", "presidente", "redor", "rio", "tarde", "todas", "carreira", "casa", "década", "estimada", "guerra", "havia", "livro", "localidades", "maioria", "muitas", "obra", "origem", "pai", "pouco", "principais", "produção", "programa", "qualquer", "raio", "seguintes", "sucesso", "título", "aproximadamente", "caso", "centro", "conhecida", "construção", "desta", "diagrama", "faz", "ilha", "importante", "mar", "melhor", "menos", "mesma", "metros", "mil", "nacional", "populacional", "quase", "rei", "sede", "segunda", "tipo", "toda", "uso", "velocidade", "vizinhança", "volta", "base", "brasileira", "clube", "desenvolvimento", "deste", "diferentes", "diversos", "empresa", "entanto", "futebol", "geral", "junto", "longo", "obras", "outra", "pertencente", "política", "português", "principalmente", "processo", "quem", "seria", "têm", "versão", "TV", "acima", "atual", "bairro", "chamada", "cinco", "conta", "corpo", "dentro", "deve");
   private final List<String> commonGermanWords = Arrays.asList("das", "sein", "mein", "meine", "meinen", "meines", "meiner", "haben", "kein", "keine", "keinen", "keinem", "keines", "keiner", "ein", "eines", "eins", "einen", "einem", "eine", "einer", "rund", "sehr", "mach", "noch", "nein", "ja", "hallo", "hi", "das", "die", "der", "den", "dem", "des", "nacht", "diesen", "dieser", "dies", "dieses", "diesem", "zum", "zur", "beim", "noch", "nichts", "aufs", "aufm", "aufn", "ausn", "ausm", "aus", "fürs", "für", "osten", "rein", "raus", "namen", "shippen", "amt", "wir");
-
-  public static Queue<String> getActiveChecks() {
-    return activeChecks;
-  }
 
   private static final String[] WHITESPACE_ARRAY = new String[20];
   static {
@@ -297,11 +293,11 @@ public class HunspellRule extends SpellingCheckRule {
     // finds cases like "HAus", where "Haus" is surely the proper suggestion:
     if (sugg.size() > 0 &&
         !word.equals("IPs") &&
-        word.equalsIgnoreCase(sugg.get(0).getReplacement()) &&
+        word.equalsIgnoreCase(sugg.get(0).replacement) &&
         word.matches("[A-Z][A-Z]\\p{javaLowerCase}+") &&
         language.getShortCode().equals("de")) {
-      //System.out.println("speller high conf case: " + word + "; " + sugg.get(0).getReplacement() + "; " + language.getShortCodeWithCountryAndVariant());
-      if (word.endsWith("s") && StringUtils.isAllUpperCase(sugg.get(0).getReplacement())) {
+      //System.out.println("speller high conf case: " + word + "; " + sugg.get(0).replacement + "; " + language.getShortCodeWithCountryAndVariant());
+      if (word.endsWith("s") && StringUtils.isAllUpperCase(sugg.get(0).replacement)) {
         // e.g. "DMs" could mean plural of "DM"
         return false;
       }
@@ -316,7 +312,7 @@ public class HunspellRule extends SpellingCheckRule {
       AnalyzedToken sentenceStartToken = new AnalyzedToken("", JLanguageTool.SENTENCE_START_TAGNAME, null);
       AnalyzedTokenReadings startTokenReadings = new AnalyzedTokenReadings(sentenceStartToken, 0);
       AnalyzedTokenReadings atr = new AnalyzedTokenReadings(token, 0);
-      RuleMatch[] matches = altRule.getRule().match(new AnalyzedSentence(new AnalyzedTokenReadings[]{startTokenReadings, atr}));
+      RuleMatch[] matches = altRule.rule.match(new AnalyzedSentence(new AnalyzedTokenReadings[]{startTokenReadings, atr}));
       if (matches.length == 0) {
         return true;
       } else {
@@ -337,7 +333,7 @@ public class HunspellRule extends SpellingCheckRule {
     if (word.endsWith(".")) {
       int pos = 1;
       for (String suggestion : getSuggestions(word)) {
-        if (suggestions.stream().noneMatch(sr -> suggestion.equals(sr.getReplacement()))) {
+        if (suggestions.stream().noneMatch(sr -> suggestion.equals(sr.replacement))) {
           suggestions.add(Math.min(pos, suggestions.size()), new SuggestedReplacement(suggestion.substring(0, suggestion.length()-1)));
           pos += 2;  // we mix the lists, as we don't know which one is the better one
         }
@@ -348,28 +344,28 @@ public class HunspellRule extends SpellingCheckRule {
       additionalTopSuggestions = getAdditionalTopSuggestions(suggestions, word).
         stream()
         .map(sugg -> {
-          if (sugg.getReplacement().endsWith(".")) {
+          if (sugg.replacement.endsWith(".")) {
             return sugg;
           } else {
             SuggestedReplacement newSugg = new SuggestedReplacement(sugg);
-            newSugg.setReplacement(sugg.getReplacement() + ".");
+            newSugg.setReplacement(sugg.replacement + ".");
             return newSugg;
           }
         }).collect(Collectors.toList());
     }
     Collections.reverse(additionalTopSuggestions);
     for (SuggestedReplacement additionalTopSuggestion : additionalTopSuggestions) {
-      if (!cleanWord.equals(additionalTopSuggestion.getReplacement())) {
+      if (!cleanWord.equals(additionalTopSuggestion.replacement)) {
         suggestions.add(0, additionalTopSuggestion);
       }
     }
     List<SuggestedReplacement> additionalSuggestions = getAdditionalSuggestions(suggestions, cleanWord);
     for (SuggestedReplacement additionalSuggestion : additionalSuggestions) {
-      if (!cleanWord.equals(additionalSuggestion.getReplacement())) {
+      if (!cleanWord.equals(additionalSuggestion.replacement)) {
         suggestions.addAll(additionalSuggestions);
       }
     }
-    suggestions = suggestions.stream().filter(k -> acceptSuggestion(k.getReplacement())).collect(Collectors.toList());
+    suggestions = suggestions.stream().filter(k -> acceptSuggestion(k.replacement)).collect(Collectors.toList());
     suggestions = filterDupes(filterSuggestions(suggestions));
     // Find potentially missing compounds with privacy-friendly logging: we only log a single unknown word with no
     // meta data and only if it's made up of two valid words, similar to the "UNKNOWN" logging in
@@ -377,10 +373,10 @@ public class HunspellRule extends SpellingCheckRule {
     /*if (language.getShortCode().equals("de")) {
       String covered = sentence.getText().substring(len, len + cleanWord.length());
       if (suggestions.stream().anyMatch(
-            k -> k.getReplacement().contains(" ") &&
-            StringTools.uppercaseFirstChar(k.getReplacement().replaceAll(" ", "").toLowerCase()).equals(covered) &&
-            k.getReplacement().length() > 6 && k.getReplacement().length() < 25 &&
-            k.getReplacement().matches("[a-zA-ZÖÄÜöäüß -]+")
+            k -> k.replacement.contains(" ") &&
+            StringTools.uppercaseFirstChar(k.replacement.replaceAll(" ", "").toLowerCase()).equals(covered) &&
+            k.replacement.length() > 6 && k.replacement.length() < 25 &&
+            k.replacement.matches("[a-zA-ZÖÄÜöäüß -]+")
           )) {
         logger.info("COMPOUND: " + covered);
       }

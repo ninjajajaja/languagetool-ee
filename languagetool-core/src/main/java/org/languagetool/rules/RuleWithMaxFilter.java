@@ -61,19 +61,19 @@ public class RuleWithMaxFilter implements RuleMatchFilter {
   }
 
   private boolean haveSameRule(RuleMatch match, RuleMatch nextMatch) {
-    if (!(match.getRule() instanceof AbstractPatternRule) || !(nextMatch.getRule() instanceof AbstractPatternRule)) {
+    if (!(match.rule instanceof AbstractPatternRule) || !(nextMatch.rule instanceof AbstractPatternRule)) {
       return false;
     }
-    String id1 = match.getRule().getId();
-    String subId1 = ((AbstractPatternRule) match.getRule()).getSubId();
-    String subId2 = ((AbstractPatternRule) nextMatch.getRule()).getSubId();
+    String id1 = match.rule.getId();
+    String subId1 = ((AbstractPatternRule) match.rule).getSubId();
+    String subId2 = ((AbstractPatternRule) nextMatch.rule).getSubId();
     if (subId1 == null &&  subId2 != null) {
       return false;
     }
     if (subId1 != null && subId2 == null) {
       return false;
     }
-    return id1 != null && id1.equals(nextMatch.getRule().getId()) &&
+    return id1 != null && id1.equals(nextMatch.rule.getId()) &&
         (subId1 == null && subId2 == null || subId1 != null && subId1.equals(subId2));
   }
 

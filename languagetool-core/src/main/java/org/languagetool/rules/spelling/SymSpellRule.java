@@ -173,14 +173,14 @@ public class SymSpellRule extends SpellingCheckRule {
 
   private void initParameters() {
     if (SuggestionsChanges.getInstance() != null &&
-      SuggestionsChanges.getInstance().getCurrentExperiment() != null) {
-      if (SuggestionsChanges.getInstance().getCurrentExperiment().parameters.get("candidates") != null) {
-        String candidatesParam = (String) SuggestionsChanges.getInstance().getCurrentExperiment()
+      SuggestionsChanges.getInstance().currentExperiment != null) {
+      if (SuggestionsChanges.getInstance().currentExperiment.parameters.get("candidates") != null) {
+        String candidatesParam = (String) SuggestionsChanges.getInstance().currentExperiment
           .parameters.get("candidates");
         verbosity = SymSpell.Verbosity.valueOf(candidatesParam);
       }
-      if (SuggestionsChanges.getInstance().getCurrentExperiment().parameters.get("editDistance") != null) {
-        editDistance = (Integer) SuggestionsChanges.getInstance().getCurrentExperiment()
+      if (SuggestionsChanges.getInstance().currentExperiment.parameters.get("editDistance") != null) {
+        editDistance = (Integer) SuggestionsChanges.getInstance().currentExperiment
           .parameters.get("editDistance");
       }
       if (SuggestionsChanges.isRunningExperiment("SymSpell+NewSuggestionsOrderer")) {
@@ -232,8 +232,8 @@ public class SymSpellRule extends SpellingCheckRule {
       RuleMatch match = null;
       if (candidates.isEmpty() && userCandidates.isEmpty()) {
         match = new RuleMatch(this, sentence, token.getStartPos(), token.getEndPos(), "Misspelling or unknown word!");
-      } else if (!(candidates.size() > 0 && candidates.get(0).getReplacement().equals(word) ||
-        userCandidates.size() > 0 && userCandidates.get(0).getReplacement().equals(word))) {
+      } else if (!(candidates.size() > 0 && candidates.get(0).replacement.equals(word) ||
+        userCandidates.size() > 0 && userCandidates.get(0).replacement.equals(word))) {
         match = new RuleMatch(this, sentence, token.getStartPos(), token.getEndPos(), "Misspelling!");
 
         addSuggestionsToRuleMatch(token.getToken(), userCandidates, candidates, orderer, match);

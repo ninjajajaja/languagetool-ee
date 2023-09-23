@@ -65,7 +65,7 @@ public class SuggestionsOrdererFeatureExtractor implements SuggestionsOrderer {
   }
 
   protected void initParameters() {
-    SuggestionChangesExperiment experiment = SuggestionsChanges.getInstance().getCurrentExperiment();
+    SuggestionChangesExperiment experiment = SuggestionsChanges.getInstance().currentExperiment;
     topN = (Integer) experiment.parameters.getOrDefault("topN", -1);
     score = (String) experiment.parameters.get("score");
     mistakeProb = (double) experiment.parameters.getOrDefault("levenstheinProb", 1.0);

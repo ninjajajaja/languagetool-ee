@@ -104,7 +104,7 @@ public class RemoteRuleConfig {
   }
 
   public static RemoteRuleConfig getRelevantConfig(String rule, List<RemoteRuleConfig> configs) {
-    return configs.stream().filter(config -> config.getRuleId().equals(rule)).findFirst().orElse(null);
+    return configs.stream().filter(config -> config.ruleId.equals(rule)).findFirst().orElse(null);
   }
   public static Predicate<RemoteRuleConfig> isRelevantConfig(String type, Language language) {
     return (r) -> type.equals(r.type) &&
@@ -120,71 +120,8 @@ public class RemoteRuleConfig {
     return configCache.get(configFile);
   }
 
-  public float getFailureRateThreshold() {
-    return failureRateThreshold;
-  }
-
-  public String getSlidingWindowType() {
-    return slidingWindowType;
-  }
-
-  public int getSlidingWindowSize() {
-    return slidingWindowSize;
-  }
-
-  public String getRuleId() {
-    return ruleId;
-  }
-
-  public String getUrl() {
-    return url;
-  }
-
   public int getPort() {
     return port != null ? port : DEFAULT_PORT;
-  }
-
-  public long getDownMilliseconds() {
-    return downMilliseconds;
-  }
-
-  public long getBaseTimeoutMilliseconds() {
-    return baseTimeoutMilliseconds;
-  }
-
-  public float getTimeoutPerCharacterMilliseconds() {
-    return timeoutPerCharacterMilliseconds;
-  }
-
-  public int getMinimumNumberOfCalls() {
-    return minimumNumberOfCalls;
-  }
-
-  /**
-   *  miscellaneous options for remote rules
-   *  allows implementing additional behavior in subclasses
-   *  some options defined in {@link RemoteRule}:
-   *  fixOffsets: boolean - adjust offsets of matches because of discrepancies in string length for some unicode characters between Java and Python
-   *  filterMatches: boolean - enable anti-patterns from remote-rule-filters.xml
-   *  suppressMisspelledMatch: regex - filter out matches with matching rule IDs that have misspelled suggestions
-   *  suppressMisspelledSuggestions: regex - filter out misspelled suggestions from matches with matching rule IDs
-   *  */
-  public Map<String, String> getOptions() {
-    return options;
-  }
-
-  /**
-   * Regex to match language codes for which this rule should be applied
-   */
-  public String getLanguage() {
-    return language;
-  }
-
-  /**
-   * Identifier for the implementation of RemoteRule that this configuration is meant for
-   */
-  public String getType() {
-    return type;
   }
 
   @Override

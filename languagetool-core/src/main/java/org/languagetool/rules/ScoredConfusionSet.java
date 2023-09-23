@@ -52,12 +52,12 @@ public class ScoredConfusionSet {
   }
 
   public List<String> getConfusionTokens() {
-    return confusionWords.stream().map(ConfusionString::getString).collect(Collectors.toList());
+    return confusionWords.stream().map(cs -> cs.str).collect(Collectors.toList());
   }
 
   public List<Optional<String>> getTokenDescriptions() {
     return confusionWords.stream()
-            .map(ConfusionString::getDescription)
+            .map(cs -> cs.description)
             .map(Optional::ofNullable)
             .collect(Collectors.toList());
   }

@@ -69,7 +69,7 @@ public final class RemoteRuleFilters {
       return matches;
     }
     // load all relevant filters for given matches
-    Set<String> matchIds = matches.stream().map(m -> m.getRule().getId()).collect(Collectors.toSet());
+    Set<String> matchIds = matches.stream().map(m -> m.rule.getId()).collect(Collectors.toSet());
     List<AbstractPatternRule> filters = rules.get(lang).entrySet().stream()
       .filter(e -> matchIds.stream().anyMatch(id -> id.matches(e.getKey())))
       .flatMap(e -> e.getValue().stream())
@@ -90,7 +90,7 @@ public final class RemoteRuleFilters {
         MatchPosition pos = new MatchPosition(match.getFromPos(), match.getToPos());
         // is there a filter match with the right ID at this position?
         boolean matched = filterRulesByPosition.getOrDefault(pos, Collections.emptySet())
-          .stream().anyMatch(rule -> match.getRule().getId().matches(rule.getId()));
+          .stream().anyMatch(rule -> match.rule.getId().matches(rule.getId()));
         return !matched;
       })
       .collect(Collectors.toList());
@@ -168,7 +168,7 @@ public final class RemoteRuleFilters {
         }
       })
       .collect(Collectors.groupingBy(key ->
-        (key.getKey() ? "Remaining" : "Removed" ) + " - " + key.getValue().getRule().getId()));
+        (key.getKey() ? "Remaining" : "Removed" ) + " - " + key.getValue().rule.getId()));
 
     result.forEach((section, matches) -> {
         System.out.println(section);

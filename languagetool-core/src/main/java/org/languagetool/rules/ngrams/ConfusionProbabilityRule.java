@@ -157,17 +157,17 @@ public abstract class ConfusionProbabilityRule extends Rule {
           boolean isEasilyConfused = confusionPair != null;
           if (isEasilyConfused) {
             List<ConfusionString> pairs = uppercase ? confusionPair.getUppercaseFirstCharTerms() : confusionPair.getTerms();
-            ConfusionString betterAlternative = getBetterAlternativeOrNull(tokens.get(pos), tokens, pairs, confusionPair.getFactor());
+            ConfusionString betterAlternative = getBetterAlternativeOrNull(tokens.get(pos), tokens, pairs, confusionPair.factor);
             if (betterAlternative != null && !isException(text, googleToken.startPos, googleToken.endPos)) {
-              if (!confusionPair.isBidirectional() && betterAlternative.getString().equals(pairs.get(0).getString())) {
+              if (!confusionPair.bidirectional && betterAlternative.str.equals(pairs.get(0).str)) {
                 // only direction A -> B is possible, i.e. if A is used incorrectly, B is suggested - not vice versa
                 continue;
               }
               ConfusionString stringFromText = getConfusionString(pairs, tokens.get(pos));
               String message = getMessage(stringFromText, betterAlternative);
               List<String> suggestions = new ArrayList<>(getSuggestions(message));
-              if (!suggestions.contains(betterAlternative.getString())) {
-                suggestions.add(betterAlternative.getString());
+              if (!suggestions.contains(betterAlternative.str)) {
+                suggestions.add(betterAlternative.str);
               }
               if (pos > 0 && "_START_".equals(tokens.get(pos-1).token) && tokens.size() > pos+1 && tokens.get(pos+1).token != null && !isCommonWord(tokens.get(pos+1).token)) {
                 // Let's assume there is not enough data for this. The original problem was a false alarm for
@@ -178,8 +178,8 @@ public abstract class ConfusionProbabilityRule extends Rule {
                 continue;
               }
               if (!isLocalException(sentence, googleToken)) {
-                String term1 = confusionPair.getTerms().get(0).getString();
-                String term2 = confusionPair.getTerms().get(1).getString();
+                String term1 = confusionPair.getTerms().get(0).str;
+                String term2 = confusionPair.getTerms().get(1).str;
                 String id = getId() + "_" + cleanId(term1) +  "_" + cleanId(term2);
                 String desc = getDescription(term1, term2);
                 String shortDesc = Tools.i18n(messages, "statistics_suggest_short_desc");
@@ -265,14 +265,14 @@ public abstract class ConfusionProbabilityRule extends Rule {
   }
   
   protected String getMessage(ConfusionString textString, ConfusionString suggestion) {
-    if (textString.getDescription() != null && suggestion.getDescription() != null) {
-      return Tools.i18n(messages, "statistics_suggest1_new", suggestion.getString(), suggestion.getDescription(), textString.getString(), textString.getDescription());
-    } else if (textString.getDescription() != null) {
-      return Tools.i18n(messages, "statistics_suggest4_new", suggestion.getString(), textString, textString.getDescription());
-    } else if (suggestion.getDescription() != null) {
-      return Tools.i18n(messages, "statistics_suggest2_new", suggestion.getString(), suggestion.getDescription(), textString.getString());
+    if (textString.description != null && suggestion.description != null) {
+      return Tools.i18n(messages, "statistics_suggest1_new", suggestion.str, suggestion.description, textString.str, textString.description);
+    } else if (textString.description != null) {
+      return Tools.i18n(messages, "statistics_suggest4_new", suggestion.str, textString, textString.description);
+    } else if (suggestion.description != null) {
+      return Tools.i18n(messages, "statistics_suggest2_new", suggestion.str, suggestion.description, textString.str);
     } else {
-      return Tools.i18n(messages, "statistics_suggest3_new", suggestion.getString(), textString.getString());
+      return Tools.i18n(messages, "statistics_suggest3_new", suggestion.str, textString.str);
     }
   }
   
@@ -280,7 +280,7 @@ public abstract class ConfusionProbabilityRule extends Rule {
   public void setConfusionPair(ConfusionPair pair) {
     wordToPairs.clear();
     for (ConfusionString word : pair.getTerms()) {
-      wordToPairs.put(word.getString(), Collections.singletonList(pair));
+      wordToPairs.put(word.str, Collections.singletonList(pair));
     }
   }
 
@@ -303,7 +303,7 @@ public abstract class ConfusionProbabilityRule extends Rule {
 
   private ConfusionString getAlternativeTerm(List<ConfusionString> confusionSet, GoogleToken token) {
     for (ConfusionString s : confusionSet) {
-      if (!s.getString().equals(token.token)) {
+      if (!s.str.equals(token.token)) {
         return s;
       }
     }
@@ -312,7 +312,7 @@ public abstract class ConfusionProbabilityRule extends Rule {
 
   private ConfusionString getConfusionString(List<ConfusionString> confusionSet, GoogleToken token) {
     for (ConfusionString s : confusionSet) {
-      if (s.getString().equalsIgnoreCase(token.token)) {
+      if (s.str.equalsIgnoreCase(token.token)) {
         return s;
       }
     }
@@ -325,10 +325,10 @@ public abstract class ConfusionProbabilityRule extends Rule {
     double p2;
     if (grams == 3) {
       p1 = LanguageModelUtils.get3gramProbabilityFor(language, lm, token, tokens, word);
-      p2 = LanguageModelUtils.get3gramProbabilityFor(language, lm, token, tokens, otherWord.getString());
+      p2 = LanguageModelUtils.get3gramProbabilityFor(language, lm, token, tokens, otherWord.str);
     } else if (grams == 4) {
       p1 = LanguageModelUtils.get4gramProbabilityFor(language, lm, token, tokens, word);
-      p2 = LanguageModelUtils.get4gramProbabilityFor(language, lm, token, tokens, otherWord.getString());
+      p2 = LanguageModelUtils.get4gramProbabilityFor(language, lm, token, tokens, otherWord.str);
     } else {
       throw new RuntimeException("Only 3grams and 4grams are supported");
     }

@@ -43,7 +43,7 @@ public class ApostropheTypeFilter extends RuleFilter {
       }
       if (posWord < 1 || posWord > patternTokens.length) {
         throw new IllegalArgumentException("ApostropheTypeFilter: Index out of bounds in "
-            + match.getRule().getFullId() + ", wordFrom: " + posWord);
+            + match.rule.getFullId() + ", wordFrom: " + posWord);
       }
       AnalyzedTokenReadings atrWord = patternTokens[posWord - 1];
       if (hasTypographicalApostrophe == atrWord.hasTypographicApostrophe()) {

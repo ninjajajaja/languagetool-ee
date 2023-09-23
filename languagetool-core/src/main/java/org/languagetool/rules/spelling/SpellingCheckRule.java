@@ -130,8 +130,8 @@ public abstract class SpellingCheckRule extends Rule {
   protected static void addSuggestionsToRuleMatch(String word, List<SuggestedReplacement> userCandidatesList, List<SuggestedReplacement> candidatesList,
                                                   @Nullable SuggestionsOrderer orderer, RuleMatch match) {
     AnalyzedSentence sentence = match.getSentence();
-    List<String> userCandidates = userCandidatesList.stream().map(SuggestedReplacement::getReplacement).collect(Collectors.toList());
-    List<String> candidates = candidatesList.stream().map(SuggestedReplacement::getReplacement).collect(Collectors.toList());
+    List<String> userCandidates = userCandidatesList.stream().map(sr -> sr.replacement).collect(Collectors.toList());
+    List<String> candidates = candidatesList.stream().map(sr -> sr.replacement).collect(Collectors.toList());
     int startPos = match.getFromPos();
     //long startTime = System.currentTimeMillis();
     if (orderer != null && orderer.isMlAvailable()) {
@@ -252,10 +252,10 @@ public abstract class SpellingCheckRule extends Rule {
    */
   protected List<SuggestedReplacement> getAdditionalTopSuggestions(List<SuggestedReplacement> suggestions, String word) throws IOException {
     List<String> moreSuggestions = new ArrayList<>();
-    if (("Languagetool".equals(word) || "languagetool".equals(word)) && suggestions.stream().noneMatch(k -> k.getReplacement().equals(LANGUAGETOOL))) {
+    if (("Languagetool".equals(word) || "languagetool".equals(word)) && suggestions.stream().noneMatch(k -> k.replacement.equals(LANGUAGETOOL))) {
       moreSuggestions.add(LANGUAGETOOL);
     }
-    if (("Languagetooler".equals(word) || "languagetooler".equals(word)) && suggestions.stream().noneMatch(k -> k.getReplacement().equals(LANGUAGETOOLER))) {
+    if (("Languagetooler".equals(word) || "languagetooler".equals(word)) && suggestions.stream().noneMatch(k -> k.replacement.equals(LANGUAGETOOLER))) {
       moreSuggestions.add(LANGUAGETOOLER);
     }
     return SuggestedReplacement.convert(moreSuggestions);
@@ -458,10 +458,10 @@ public abstract class SpellingCheckRule extends Rule {
    * @since 2.8
    */
   protected List<SuggestedReplacement> filterSuggestions(List<SuggestedReplacement> suggestions) {
-    suggestions.removeIf(suggestion -> isProhibited(suggestion.getReplacement()));
+    suggestions.removeIf(suggestion -> isProhibited(suggestion.replacement));
     List<SuggestedReplacement> newSuggestions = new ArrayList<>();
     for (SuggestedReplacement suggestion : suggestions) {
-      String replacement = suggestion.getReplacement();
+      String replacement = suggestion.replacement;
       String suggestionWithoutS = replacement.length() > 3 ? replacement.substring(0, replacement.length() - 2) : "";
       if (replacement.endsWith(" s") && isProperNoun(suggestionWithoutS)) {
         // "Michael s" -> "Michael's"

@@ -38,8 +38,8 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class SuggestionsChanges {
   private static SuggestionsChanges instance;
-  private final SuggestionChangesTestConfig config;
-  private final List<SuggestionChangesExperiment> experiments;
+  public final SuggestionChangesTestConfig config;
+  public final List<SuggestionChangesExperiment> experiments;
 
   private final ConcurrentMap<SuggestionChangesExperiment, Integer> correctSuggestions = new ConcurrentHashMap<>();
   private final ConcurrentMap<SuggestionChangesExperiment, Integer> notFoundSuggestions = new ConcurrentHashMap<>();
@@ -58,7 +58,7 @@ public class SuggestionsChanges {
   private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer> datasetTextSize = new ConcurrentHashMap<>();
   private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Long> datasetComputationTime = new ConcurrentHashMap<>();
 
-  private SuggestionChangesExperiment currentExperiment = null;
+  public SuggestionChangesExperiment currentExperiment = null;
 
   private SuggestionsChanges(SuggestionChangesTestConfig config, BufferedWriter reportWriter) {
     this.config = config;
@@ -123,15 +123,6 @@ public class SuggestionsChanges {
     return experiments;
   }
 
-  public SuggestionChangesTestConfig getConfig() {
-    return config;
-  }
-
-  @Nullable
-  public SuggestionChangesExperiment getCurrentExperiment() {
-    return currentExperiment;
-  }
-
   /**
    * For testing changes to suggestion ordering using a data corpus;
    * iterate over experiments (including grid search for parameters)
@@ -145,7 +136,7 @@ public class SuggestionsChanges {
     if (getInstance() == null) {
       return false;
     }
-    SuggestionChangesExperiment experiment = getInstance().getCurrentExperiment();
+    SuggestionChangesExperiment experiment = getInstance().currentExperiment;
     return experiment != null && experiment.name.equals(name);
   }
 
@@ -175,10 +166,6 @@ public class SuggestionsChanges {
       suggestionPosSum.compute(source.getKey(), (ex, value) -> value == null ? position : value + position);
       datasetSuggestionPosSum.compute(source, (ex, value) -> value == null ? position : value + position);
     }
-  }
-
-  public List<SuggestionChangesExperiment> getExperiments() {
-    return experiments;
   }
 
   private class Report implements Runnable {

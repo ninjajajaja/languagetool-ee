@@ -74,20 +74,20 @@ public class CleanOverlappingFilter implements RuleMatchFilter {
         continue;
       }
       // overlapping
-      int currentPriority = language.getRulePriority(ruleMatch.getRule());
+      int currentPriority = language.getRulePriority(ruleMatch.rule);
       if (isPremiumRule(ruleMatch) && hidePremiumMatches) {
         // non-premium match should win, so the premium match does *not* become a hidden match
         // (we'd show hidden matches for errors covered by an Open Source match)
         currentPriority = Integer.MIN_VALUE;
       }
-      if (ruleMatch.getRule().getTags().contains(Tag.picky) && currentPriority != Integer.MIN_VALUE) {
+      if (ruleMatch.rule.getTags().contains(Tag.picky) && currentPriority != Integer.MIN_VALUE) {
         currentPriority += negativeConstant;
       }
-      int prevPriority = language.getRulePriority(prevRuleMatch.getRule());
+      int prevPriority = language.getRulePriority(prevRuleMatch.rule);
       if (isPremiumRule(prevRuleMatch) && hidePremiumMatches) {
         prevPriority = Integer.MIN_VALUE;
       }
-      if (prevRuleMatch.getRule().getTags().contains(Tag.picky) && prevPriority != Integer.MIN_VALUE) {
+      if (prevRuleMatch.rule.getTags().contains(Tag.picky) && prevPriority != Integer.MIN_VALUE) {
         prevPriority += negativeConstant;
       }
       if (currentPriority == prevPriority) {
@@ -110,7 +110,7 @@ public class CleanOverlappingFilter implements RuleMatchFilter {
   }
 
   protected boolean isPremiumRule(RuleMatch ruleMatch) {
-    return Premium.get().isPremiumRule(ruleMatch.getRule());
+    return Premium.get().isPremiumRule(ruleMatch.rule);
   }
 
 }

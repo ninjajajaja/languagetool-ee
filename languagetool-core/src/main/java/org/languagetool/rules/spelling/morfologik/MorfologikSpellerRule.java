@@ -456,11 +456,11 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
           List<SuggestedReplacement> l = new ArrayList<>();
           String prevWord = idx > 0 ? tokens[idx-1].getToken() : null;
           for (TranslationEntry translation : translations) {
-            for (String s : translation.getL2()) {
+            for (String s : translation.l2) {
               String suffix = translator.getTranslationSuffix(s);
-              SuggestedReplacement repl = new SuggestedReplacement(translator.cleanTranslationForReplace(s, prevWord), String.join(", ", translation.getL1()), suffix.isEmpty() ? null : suffix);
+              SuggestedReplacement repl = new SuggestedReplacement(translator.cleanTranslationForReplace(s, prevWord), String.join(", ", translation.l1), suffix.isEmpty() ? null : suffix);
               repl.setType(SuggestedReplacement.SuggestionType.Translation);
-              if (!repl.getReplacement().equals(word)) {
+              if (!repl.replacement.equals(word)) {
                 l.add(repl);
               }
             }
@@ -505,15 +505,15 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
     }
     
     boolean fullResults = SuggestionsChanges.getInstance() != null &&
-      SuggestionsChanges.getInstance().getCurrentExperiment() != null &&
-      (boolean) SuggestionsChanges.getInstance().getCurrentExperiment()
+      SuggestionsChanges.getInstance().currentExperiment != null &&
+      (boolean) SuggestionsChanges.getInstance().currentExperiment
         .parameters.getOrDefault("fullSuggestionCandidates", Boolean.FALSE);
 
     if (userConfig == null || userConfig.getMaxSpellingSuggestions() == 0 
         || ruleMatchesSoFar.size() <= userConfig.getMaxSpellingSuggestions()) {
       if (translationSuggestionCount > 0) {
         List<SuggestedReplacement> prev = ruleMatch.getSuggestedReplacementObjects();
-        ruleMatch = new RuleMatch(ruleMatch.getRule(), ruleMatch.getSentence(), ruleMatch.getFromPos(), ruleMatch.getToPos(),
+        ruleMatch = new RuleMatch(ruleMatch.rule, ruleMatch.getSentence(), ruleMatch.getFromPos(), ruleMatch.getToPos(),
           messages.getString("spelling") + " Translations to English are also offered.");
         ruleMatch.setSuggestedReplacementObjects(prev);
       }
@@ -553,7 +553,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
     List<SuggestedReplacement> userSuggestions = SuggestedReplacement.convert(speller1.getSuggestionsFromUserDicts(word));
     //System.out.println("speller1: " + suggestions);
     boolean onlyCaseDiffers = false;
-    if (defaultSuggestions.size() > 0 && word.equalsIgnoreCase(defaultSuggestions.get(0).getReplacement())) {
+    if (defaultSuggestions.size() > 0 && word.equalsIgnoreCase(defaultSuggestions.get(0).replacement)) {
       // We have no good concept yet for showing both translations and standard suggestions, so
       // use a hack to fix e.g. "muslims" not suggesting "Muslims" (https://github.com/languagetool-org/languagetool/issues/3333)
       onlyCaseDiffers = true;
@@ -593,17 +593,17 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
     Set<String> handledReplacements = new HashSet<>();
     for (SuggestedReplacement repl : l) {
       List<SuggestedReplacement> sameRepl = l.stream()
-        .filter(k -> k.getReplacement().equals(repl.getReplacement()))
-        .filter(k -> k.getSuffix() == null || (k.getSuffix() != null && k.getSuffix().equals(repl.getSuffix())))
+        .filter(k -> k.replacement.equals(repl.replacement))
+        .filter(k -> k.suffix == null || (k.suffix != null && k.suffix.equals(repl.suffix)))
         .collect(Collectors.toList());
       if (sameRepl.size() > 1) {
-        if (!handledReplacements.contains(repl.getReplacement())) {
+        if (!handledReplacements.contains(repl.replacement)) {
           List<String> joinedRepls = new ArrayList<>();
           for (SuggestedReplacement r : sameRepl) {
-            joinedRepls.add("* " + r.getShortDescription());
+            joinedRepls.add("* " + r.shortDescription);
           }
-          mergedRepl.add(new SuggestedReplacement(repl.getReplacement(), String.join("\n", joinedRepls), repl.getSuffix()));
-          handledReplacements.add(repl.getReplacement());
+          mergedRepl.add(new SuggestedReplacement(repl.replacement, String.join("\n", joinedRepls), repl.suffix));
+          handledReplacements.add(repl.replacement);
         }
       } else {
         mergedRepl.add(repl);
@@ -680,7 +680,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
                                                                        String afterSuggestionStr) {
     List<SuggestedReplacement> newSuggestionsList = new ArrayList<>();
     for (SuggestedReplacement suggestion : suggestionsList) {
-      String str = suggestion.getReplacement();
+      String str = suggestion.replacement;
       SuggestedReplacement newSuggestion = new SuggestedReplacement(suggestion);
       newSuggestion.setReplacement(beforeSuggestionStr + str + afterSuggestionStr);
       newSuggestionsList.add(newSuggestion);

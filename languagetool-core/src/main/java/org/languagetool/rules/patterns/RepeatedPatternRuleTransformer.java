@@ -96,13 +96,13 @@ public class RepeatedPatternRuleTransformer implements PatternRuleTransformer {
           int fromPos = m.getFromPos() + offsetChars;
           int toPos = m.getToPos() + offsetChars;
           m.setOffsetPosition(fromPos, toPos);
-          int maxDistanceTokens = m.getRule().getDistanceTokens();
+          int maxDistanceTokens = m.rule.getDistanceTokens();
           if (maxDistanceTokens < 1) {
-            maxDistanceTokens = defaultMaxDistanceTokens * m.getRule().getMinPrevMatches();
+            maxDistanceTokens = defaultMaxDistanceTokens * m.rule.getMinPrevMatches();
           }
           distancesBetweenMatches.add(fromToken - prevFromToken);
-          if (prevMatches >= m.getRule().getMinPrevMatches()
-              && isDistanceValid(distancesBetweenMatches, maxDistanceTokens, m.getRule().getMinPrevMatches())) {
+          if (prevMatches >= m.rule.getMinPrevMatches()
+              && isDistanceValid(distancesBetweenMatches, maxDistanceTokens, m.rule.getMinPrevMatches())) {
             matches.add(m);
           }
           prevFromToken = fromToken;

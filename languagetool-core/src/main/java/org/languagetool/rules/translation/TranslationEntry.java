@@ -27,26 +27,14 @@ import java.util.Objects;
  */
 public class TranslationEntry {
 
-  private final List<String> l1;
-  private final List<String> l2;
-  private final int itemCount;
+  public final List<String> l1;
+  public final List<String> l2;
+  public final int itemCount;
 
   public TranslationEntry(List<String> l1, List<String> l2, int itemCount) {
     this.l1 = Objects.requireNonNull(l1);
     this.l2 = Objects.requireNonNull(l2);
     this.itemCount = itemCount;
-  }
-
-  public int getItemCount() {
-    return itemCount;
-  }
-
-  public List<String> getL1() {
-    return l1;
-  }
-
-  public List<String> getL2() {
-    return l2;
   }
 
   @Override

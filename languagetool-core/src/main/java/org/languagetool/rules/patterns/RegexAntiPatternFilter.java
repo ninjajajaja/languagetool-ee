@@ -38,7 +38,7 @@ public class RegexAntiPatternFilter extends RegexRuleFilter {
   public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, AnalyzedSentence sentenceObj, Matcher patternMatcher) {
     String antiPatternStr = arguments.get("antipatterns");
     if (antiPatternStr == null) {
-      throw new RuntimeException("Missing 'antiPatterns:' in 'args' in <filter> of rule " + match.getRule().getFullId());
+      throw new RuntimeException("Missing 'antiPatterns:' in 'args' in <filter> of rule " + match.rule.getFullId());
     }
     String[] antiPatterns = antiPatternStr.split("\\|");
     for (String antiPattern : antiPatterns) {

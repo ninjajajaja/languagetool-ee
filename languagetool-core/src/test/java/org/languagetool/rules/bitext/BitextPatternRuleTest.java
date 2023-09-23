@@ -136,8 +136,8 @@ public class BitextPatternRuleTest {
 
   private void testBitextRule(BitextPatternRule rule, Language lang,
                               JLanguageTool lt) throws IOException {
-    JLanguageTool srcTool = new JLanguageTool(rule.getSourceLanguage());
-    List<StringPair> goodSentences = rule.getCorrectBitextExamples();
+    JLanguageTool srcTool = new JLanguageTool(rule.sourceLanguage);
+    List<StringPair> goodSentences = rule.correctExamples;
     for (StringPair goodSentence : goodSentences) {
       assertTrue("Got good sentence: '" + goodSentence.getSource() + "'", cleanSentence(goodSentence.getSource()).trim().length() > 0);
       assertTrue("Got good sentence: '" + goodSentence.getTarget() + "'", cleanSentence(goodSentence.getTarget()).trim().length() > 0);
@@ -146,7 +146,7 @@ public class BitextPatternRuleTest {
               match(rule, goodSentence.getSource(), goodSentence.getTarget(),
                       srcTool, lt));
     }
-    List<IncorrectBitextExample> badSentences = rule.getIncorrectBitextExamples();
+    List<IncorrectBitextExample> badSentences = rule.incorrectExamples;
     for (IncorrectBitextExample origBadExample : badSentences) {
       // enable indentation use
       StringPair example = origBadExample.getExample();

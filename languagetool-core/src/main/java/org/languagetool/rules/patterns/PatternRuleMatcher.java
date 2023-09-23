@@ -41,7 +41,7 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
 
   public static final String MISTAKE = "<mistake/>";
 
-  private static final Map<String,Integer> currentlyActiveRules = new ConcurrentHashMap<>();
+  public static final Map<String,Integer> currentlyActiveRules = new ConcurrentHashMap<>();
 
   private static final String allowedChars = "[^<>()]*?";
   private static final Pattern SUGGESTION_PATTERN_SUPPRESS = Pattern
@@ -59,10 +59,6 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
     this.useList = useList;
     //String slowMatchThresholdStr = System.getProperty("slowMatchThreshold");
     //slowMatchThreshold = slowMatchThresholdStr != null ? Integer.parseInt(slowMatchThresholdStr) : null;
-  }
-
-  public static Map<String, Integer> getCurrentRules() {
-    return currentlyActiveRules;
   }
 
   @Override

@@ -53,9 +53,9 @@ public abstract class BitextRule extends Rule {
   public abstract RuleMatch[] match(AnalyzedSentence sourceText,
       AnalyzedSentence targetText) throws IOException;
 
-  private List<StringPair> correctExamples;
-  private List<IncorrectBitextExample> incorrectExamples;
-  private Language sourceLanguage;
+  public List<StringPair> correctExamples;
+  public List<IncorrectBitextExample> incorrectExamples;
+  public Language sourceLanguage;
 
   /**
    * This method makes no sense for bitext, thus it always returns {@code null}.
@@ -75,10 +75,6 @@ public abstract class BitextRule extends Rule {
     sourceLanguage = lang;
   }
 
-  public final Language getSourceLanguage() {
-    return sourceLanguage;
-  }
-
   /**
    * Set the examples that are correct and thus do not trigger the rule.
    */
@@ -87,25 +83,11 @@ public abstract class BitextRule extends Rule {
   }
 
   /**
-   * Get example sentences that are correct and thus will not match this rule.
-   */
-  public final List<StringPair> getCorrectBitextExamples() {
-    return correctExamples;
-  }
-
-  /**
    * Set the examples that are incorrect and thus do trigger the rule.
    */
   public final void setIncorrectBitextExamples(
       final List<IncorrectBitextExample> incorrectExamples) {
     this.incorrectExamples = Collections.unmodifiableList(incorrectExamples);
-  }
-
-  /**
-   * Get example sentences that are incorrect and thus will match this rule.
-   */
-  public final List<IncorrectBitextExample> getIncorrectBitextExamples() {
-    return incorrectExamples;
   }
 
 }

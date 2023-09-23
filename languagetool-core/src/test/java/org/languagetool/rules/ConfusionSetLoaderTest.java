@@ -43,51 +43,51 @@ public class ConfusionSetLoaderTest {
       assertThat(map.size(), is(15));
 
       assertThat(map.get("there").size(), is(2));
-      assertThat(map.get("there").get(0).getFactor(), is(10L));
+      assertThat(map.get("there").get(0).factor, is(10L));
 
       assertThat(map.get("their").size(), is(2));
-      assertThat(map.get("their").get(0).getFactor(), is(10L));
+      assertThat(map.get("their").get(0).factor, is(10L));
       
       assertThat(map.get("foo").size(), is(4));
-      assertThat(map.get("foo").get(0).getFactor(), is(5L));
-      assertThat(map.get("foo").get(1).getFactor(), is(5L));
-      assertThat(map.get("foo").get(2).getFactor(), is(8L));
-      assertThat(map.get("foo").get(3).getFactor(), is(8L));
+      assertThat(map.get("foo").get(0).factor, is(5L));
+      assertThat(map.get("foo").get(1).factor, is(5L));
+      assertThat(map.get("foo").get(2).factor, is(8L));
+      assertThat(map.get("foo").get(3).factor, is(8L));
 
       assertThat(map.get("goo").size(), is(4));
-      assertThat(map.get("goo").get(0).getFactor(), is(11L));
-      assertThat(map.get("goo").get(1).getFactor(), is(11L));
-      assertThat(map.get("goo").get(2).getFactor(), is(12L));
-      assertThat(map.get("goo").get(3).getFactor(), is(12L));
+      assertThat(map.get("goo").get(0).factor, is(11L));
+      assertThat(map.get("goo").get(1).factor, is(11L));
+      assertThat(map.get("goo").get(2).factor, is(12L));
+      assertThat(map.get("goo").get(3).factor, is(12L));
       assertThat(map.get("lol").size(), is(2));
       assertThat(map.get("something").size(), is(2));
 
       assertThat(map.get("bar").size(), is(2));
-      assertThat(map.get("bar").get(0).getFactor(), is(5L));
+      assertThat(map.get("bar").get(0).factor, is(5L));
       assertThat(map.get("bar").get(0).getTerms().toString(), is("[bar, foo]"));
-      assertThat(map.get("bar").get(1).getFactor(), is(5L));
+      assertThat(map.get("bar").get(1).factor, is(5L));
       assertThat(map.get("bar").get(1).getTerms().toString(), is("[foo, bar]"));
 
       assertThat(map.get("one").size(), is(1));
-      assertThat(map.get("one").get(0).getFactor(), is(13L));
+      assertThat(map.get("one").get(0).factor, is(13L));
       assertThat(map.get("one").get(0).getTerms().toString(), is("[one, two]"));
-      assertThat(map.get("one").get(0).getTerm1().toString(), is("one"));
-      assertThat(map.get("one").get(0).getTerm2().toString(), is("two"));
+      assertThat(map.get("one").get(0).term1.toString(), is("one"));
+      assertThat(map.get("one").get(0).term2.toString(), is("two"));
 
       assertThat(map.get("three").size(), is(1));
-      assertThat(map.get("three").get(0).getFactor(), is(14L));
+      assertThat(map.get("three").get(0).factor, is(14L));
       assertThat(map.get("three").get(0).getTerms().toString(), is("[three, four]"));
-      assertThat(map.get("three").get(0).getTerm1().toString(), is("three"));
-      assertThat(map.get("three").get(0).getTerm2().toString(), is("four"));
+      assertThat(map.get("three").get(0).term1.toString(), is("three"));
+      assertThat(map.get("three").get(0).term2.toString(), is("four"));
       assertThat(map.get("four").size(), is(2));
-      assertThat(map.get("four").get(0).getFactor(), is(14L));
+      assertThat(map.get("four").get(0).factor, is(14L));
       assertThat(map.get("four").get(0).getTerms().toString(), is("[three, four]"));
-      assertThat(map.get("four").get(0).getTerm1().toString(), is("three"));
-      assertThat(map.get("four").get(0).getTerm2().toString(), is("four"));
-      assertThat(map.get("four").get(1).getFactor(), is(15L));
+      assertThat(map.get("four").get(0).term1.toString(), is("three"));
+      assertThat(map.get("four").get(0).term2.toString(), is("four"));
+      assertThat(map.get("four").get(1).factor, is(15L));
       assertThat(map.get("four").get(1).getTerms().toString(), is("[four, five]"));
-      assertThat(map.get("four").get(1).getTerm1().toString(), is("four"));
-      assertThat(map.get("four").get(1).getTerm2().toString(), is("five"));
+      assertThat(map.get("four").get(1).term1.toString(), is("four"));
+      assertThat(map.get("four").get(1).term2.toString(), is("five"));
 
       List<ConfusionString> there = map.get("there").get(0).getTerms();
       assertTrue(getAsString(there).contains("there - example 1"));
@@ -105,8 +105,8 @@ public class ConfusionSetLoaderTest {
   private String getAsString(List<ConfusionString> confStrings) {
     StringBuilder sb = new StringBuilder();
     for (ConfusionString confusionString : confStrings) {
-      sb.append(confusionString.getString()).append(" - ");
-      sb.append(confusionString.getDescription());
+      sb.append(confusionString.str).append(" - ");
+      sb.append(confusionString.description);
       sb.append(' ');
     }
     return sb.toString();

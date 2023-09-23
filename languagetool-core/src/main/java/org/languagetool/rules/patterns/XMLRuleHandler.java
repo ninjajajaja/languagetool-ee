@@ -104,7 +104,7 @@ public class XMLRuleHandler extends DefaultHandler {
   protected static final String MINPREVMATCHES = "min_prev_matches";
   protected static final String DISTANCETOKENS = "distance_tokens";
 
-  protected List<AbstractPatternRule> rules = new ArrayList<>();
+  public List<AbstractPatternRule> rules = new ArrayList<>();
   protected Language language;
   protected ResourceBundle messages;
 
@@ -254,10 +254,6 @@ public class XMLRuleHandler extends DefaultHandler {
   protected Map<String, List<String>> equivalenceFeatures = new HashMap<>();
 
   public XMLRuleHandler() {
-  }
-
-  public List<AbstractPatternRule> getRules() {
-    return rules;
   }
 
   @Override

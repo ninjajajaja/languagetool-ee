@@ -63,14 +63,14 @@ public class AddCommasFilter extends RuleFilter {
     }
     RuleMatch newMatch = null;
     if (bSuggestSemicolon && tokens[postagFrom - 1].getToken().equals(",") && !afterOK) {
-      newMatch = new RuleMatch(match.getRule(), match.getSentence(), tokens[postagFrom - 1].getStartPos(),
+      newMatch = new RuleMatch(match.rule, match.getSentence(), tokens[postagFrom - 1].getStartPos(),
           tokens[postagTo].getEndPos(), match.getMessage(), match.getShortMessage());
       newMatch.addSuggestedReplacement(
           "; " + match.getSentence().getText().substring(match.getFromPos(), match.getToPos()) + ",");
       newMatch.addSuggestedReplacement(
           ", " + match.getSentence().getText().substring(match.getFromPos(), match.getToPos()) + ",");
     } else if (beforeOK && !afterOK) {
-      newMatch = new RuleMatch(match.getRule(), match.getSentence(), tokens[postagTo].getStartPos(), match.getToPos(),
+      newMatch = new RuleMatch(match.rule, match.getSentence(), tokens[postagTo].getStartPos(), match.getToPos(),
           match.getMessage(), match.getShortMessage());
       newMatch.setSuggestedReplacement(tokens[postagTo].getToken() + ",");
     } else if (!beforeOK && afterOK) {
@@ -78,7 +78,7 @@ public class AddCommasFilter extends RuleFilter {
       if (tokens[postagFrom].isWhitespaceBefore()) {
         startPos--;
       }
-      newMatch = new RuleMatch(match.getRule(), match.getSentence(), startPos, tokens[postagFrom].getEndPos(),
+      newMatch = new RuleMatch(match.rule, match.getSentence(), startPos, tokens[postagFrom].getEndPos(),
           match.getMessage(), match.getShortMessage());
       newMatch.setSuggestedReplacement(", " + tokens[postagFrom].getToken());
     } else if (!beforeOK && !afterOK) {
@@ -86,7 +86,7 @@ public class AddCommasFilter extends RuleFilter {
       if (tokens[postagFrom].isWhitespaceBefore()) {
         startPos--;
       }
-      newMatch = new RuleMatch(match.getRule(), match.getSentence(), startPos, tokens[postagTo].getEndPos(),
+      newMatch = new RuleMatch(match.rule, match.getSentence(), startPos, tokens[postagTo].getEndPos(),
           match.getMessage(), match.getShortMessage());
       newMatch.setSuggestedReplacement(
           ", " + match.getSentence().getText().substring(match.getFromPos(), match.getToPos()) + ",");

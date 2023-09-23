@@ -28,21 +28,12 @@ import java.util.Objects;
  */
 public class ConfusionString {
 
-  private final String str;
-  private final String description;
+  public final String str;
+  public final String description;
 
   ConfusionString(String str, String description) {
     this.str = Objects.requireNonNull(str);
     this.description = description;
-  }
-
-  public String getString() {
-    return str;
-  }
-
-  @Nullable
-  public String getDescription() {
-    return description;
   }
 
   @Override

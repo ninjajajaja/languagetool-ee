@@ -48,7 +48,7 @@ public class RegexPatternRule extends AbstractPatternRule implements RuleMatcher
   private static final int MATCHES_IN_SUGGESTIONS_NUMBERED_FROM = 0;
   public static final int MAX_SENT_LENGTH = 2000;
 
-  private final Pattern pattern;
+  public final Pattern pattern;
   private final int markGroup;
   private final String shortMessage;
   private RegexRuleFilter regexFilter;
@@ -66,10 +66,6 @@ public class RegexPatternRule extends AbstractPatternRule implements RuleMatcher
     this.shortMessage = shortMessage == null ? "" : shortMessage;
     this.suggestionsOutMsg = suggestionsOutMsg.isEmpty() ? "" : suggestionsOutMsg;
     markGroup = regexpMark;
-  }
-
-  public Pattern getPattern() {
-    return pattern;
   }
 
   void setRegexFilter(RegexRuleFilter filter) {

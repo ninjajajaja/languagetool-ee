@@ -35,12 +35,12 @@ import static java.util.Collections.singletonList;
  */
 public class SuggestedReplacement {
 
-  private String replacement;
-  private String shortDescription;
-  private String suffix;
-  private SortedMap<String, Float> features = Collections.emptySortedMap();
-  private Float confidence = null;
-  private SuggestionType type = SuggestionType.Default;
+  public String replacement;
+  public String shortDescription;
+  public String suffix;
+  public SortedMap<String, Float> features = Collections.emptySortedMap();
+  public Float confidence = null;
+  public SuggestionType type = SuggestionType.Default;
 
   /**
     classify the type of the suggestion
@@ -72,23 +72,14 @@ public class SuggestedReplacement {
   public SuggestedReplacement(SuggestedReplacement repl) {
     this.replacement = repl.replacement;
     this.suffix = repl.suffix;
-    setShortDescription(repl.getShortDescription());
-    setConfidence(repl.getConfidence());
+    setShortDescription(repl.shortDescription);
+    setConfidence(repl.confidence);
     setFeatures(repl.getFeatures());
-    setType(repl.getType());
-  }
-
-  public String getReplacement() {
-    return replacement;
+    setType(repl.type);
   }
 
   public void setReplacement(String replacement) {
     this.replacement = Objects.requireNonNull(replacement);
-  }
-
-  @Nullable
-  public String getShortDescription() {
-    return shortDescription;
   }
 
   public void setShortDescription(String desc) {
@@ -98,20 +89,6 @@ public class SuggestedReplacement {
   /** @since 4.9 */
   public void setType(SuggestionType type) {
     this.type = Objects.requireNonNull(type);
-  }
-
-  /** @since 4.9 */
-  @NotNull
-  public SuggestionType getType() {
-    return type;
-  }
-
-  /**
-   * Value shown in the UI after the replacement (but not part of it).
-   */
-  @Nullable
-  public String getSuffix() {
-    return suffix;
   }
 
   public void setSuffix(String val) {
@@ -135,11 +112,6 @@ public class SuggestedReplacement {
   @Override
   public int hashCode() {
     return Objects.hash(replacement, shortDescription);
-  }
-
-  @Nullable
-  public Float getConfidence() {
-    return confidence;
   }
 
   public void setConfidence(@Nullable Float confidence) {

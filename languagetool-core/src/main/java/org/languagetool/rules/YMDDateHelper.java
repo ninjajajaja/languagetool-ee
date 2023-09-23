@@ -51,7 +51,7 @@ public class YMDDateHelper {
     String correctDate = String.format("%d-%s-%s", correctYear, month, day);
     String message = match.getMessage()
             .replace("{realDate}", correctDate);
-    RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(),
+    RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(),
             match.getToPos(), message, match.getShortMessage());
     ruleMatch.setType(match.getType());
     return ruleMatch;

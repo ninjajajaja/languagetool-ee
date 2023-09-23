@@ -61,70 +61,70 @@ public class CleanOverlappingFilterTest {
       new RuleMatch(new FakeRule("P1_RULE_B"), sentence, 9, 20, "msg2"));
     matches4 = filter.filter(matches4);
     assertThat(matches4.size(), is(1));  // overlap -> filtering
-    assertThat(matches4.get(0).getRule().getId(), is("P1_RULE_B"));
+    assertThat(matches4.get(0).rule.getId(), is("P1_RULE_B"));
 
     List<RuleMatch> matches5 = Arrays.asList(
       new RuleMatch(new FakeRule("P1_RULE_B"), sentence, 0, 10, "msg1"),
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 9, 20, "msg2"));
     matches5 = filter.filter(matches5);
     assertThat(matches5.size(), is(1));
-    assertThat(matches5.get(0).getRule().getId(), is("P1_RULE"));  // latest wins with equal priority
+    assertThat(matches5.get(0).rule.getId(), is("P1_RULE"));  // latest wins with equal priority
 
     List<RuleMatch> matches6 = Arrays.asList(
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 0, 10, "msg1"),
       new RuleMatch(new FakeRule("P2_RULE"), sentence, 9, 20, "msg2"));
     matches6 = filter.filter(matches6);
     assertThat(matches6.size(), is(1));
-    assertThat(matches6.get(0).getRule().getId(), is("P2_RULE"));  // P2 has higher priority
+    assertThat(matches6.get(0).rule.getId(), is("P2_RULE"));  // P2 has higher priority
 
     List<RuleMatch> matches7 = Arrays.asList(
       new RuleMatch(new FakeRule("P2_RULE"), sentence, 0, 10, "msg1"),
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 9, 20, "msg2"));
     matches7 = filter.filter(matches7);
     assertThat(matches7.size(), is(1));
-    assertThat(matches7.get(0).getRule().getId(), is("P2_RULE"));  // P2 has higher priority
+    assertThat(matches7.get(0).rule.getId(), is("P2_RULE"));  // P2 has higher priority
 
     List<RuleMatch> matches8 = Arrays.asList(
       new RuleMatch(new FakeRule("P2_PREMIUM_RULE"), sentence, 0, 10, "msg1"),
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 9, 20, "msg2"));
     matches8 = filter.filter(matches8);
     assertThat(matches8.size(), is(1));
-    assertThat(matches8.get(0).getRule().getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
+    assertThat(matches8.get(0).rule.getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
 
     List<RuleMatch> matches8b = Arrays.asList(
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 0, 10, "msg2"),
       new RuleMatch(new FakeRule("P2_PREMIUM_RULE"), sentence, 9, 20, "msg1"));
     matches8b = filter.filter(matches8b);
     assertThat(matches8b.size(), is(1));
-    assertThat(matches8b.get(0).getRule().getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
+    assertThat(matches8b.get(0).rule.getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
 
     List<RuleMatch> matches9 = Arrays.asList(
       new RuleMatch(new FakeRule("P2_PREMIUM_RULE", Tag.picky), sentence, 0, 10, "msg1"),
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 9, 20, "msg2"));
     matches9 = filter.filter(matches9);
     assertThat(matches9.size(), is(1));
-    assertThat(matches9.get(0).getRule().getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
+    assertThat(matches9.get(0).rule.getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
 
     List<RuleMatch> matches10 = Arrays.asList(
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 0, 10, "msg2"),
       new RuleMatch(new FakeRule("P2_PREMIUM_RULE", Tag.picky), sentence, 9, 20, "msg1"));
     matches10 = filter.filter(matches10);
     assertThat(matches10.size(), is(1));
-    assertThat(matches10.get(0).getRule().getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
+    assertThat(matches10.get(0).rule.getId(), is("P1_RULE"));  // P2 has higher priority but premium rules are hidden
 
     List<RuleMatch> matches11 = Arrays.asList(
       new RuleMatch(new FakeRule("P2_RULE", Tag.picky), sentence, 0, 10, "msg1"),
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 9, 20, "msg2"));
     matches11 = filter.filter(matches11);
     assertThat(matches11.size(), is(1));
-    assertThat(matches11.get(0).getRule().getId(), is("P1_RULE"));  // P2 has higher priority but it's picky
+    assertThat(matches11.get(0).rule.getId(), is("P1_RULE"));  // P2 has higher priority but it's picky
 
     List<RuleMatch> matches12 = Arrays.asList(
       new RuleMatch(new FakeRule("P1_RULE"), sentence, 0, 10, "msg2"),
       new RuleMatch(new FakeRule("P2_RULE", Tag.picky), sentence, 9, 20, "msg1"));
     matches12 = filter.filter(matches12);
     assertThat(matches12.size(), is(1));
-    assertThat(matches12.get(0).getRule().getId(), is("P1_RULE"));  // P2 has higher priority but it's picky
+    assertThat(matches12.get(0).rule.getId(), is("P1_RULE"));  // P2 has higher priority but it's picky
 
     /* TODO
     List<RuleMatch> matches13 = Arrays.asList(
@@ -132,7 +132,7 @@ public class CleanOverlappingFilterTest {
       new RuleMatch(new FakeRule("P1_PREMIUM_RULE"), sentence, 9, 20, "msg"));
     matches13 = filter.filter(matches13);
     assertThat(matches13.size(), is(1));
-    assertThat(matches13.get(0).getRule().getId(), is("P1_RULE"));  // hidden match should be kept
+    assertThat(matches13.get(0).rule.getId(), is("P1_RULE"));  // hidden match should be kept
     */
 
     // juxtaposed matches, comma in the same place
@@ -143,7 +143,7 @@ public class CleanOverlappingFilterTest {
     List<RuleMatch> matches14 = Arrays.asList(ruleMatch1, ruleMatch2);
     matches14 = filter.filter(matches14);
     assertThat(matches14.size(), is(1)); // filtering
-    assertThat(matches14.get(0).getRule().getId(), is("COMMA_HIGH_PRIORITY"));
+    assertThat(matches14.get(0).rule.getId(), is("COMMA_HIGH_PRIORITY"));
 
     RuleMatch ruleMatch3 = new RuleMatch(new FakeRule("COMMA_HIGH_PRIORITY"), sentence, 5, 10, "msg1");
     ruleMatch3.addSuggestedReplacement("right,");
@@ -152,7 +152,7 @@ public class CleanOverlappingFilterTest {
     List<RuleMatch> matches15 = Arrays.asList(ruleMatch3, ruleMatch4);
     matches15 = filter.filter(matches15);
     assertThat(matches15.size(), is(1)); // filtering
-    assertThat(matches15.get(0).getRule().getId(), is("COMMA_HIGH_PRIORITY"));
+    assertThat(matches15.get(0).rule.getId(), is("COMMA_HIGH_PRIORITY"));
 
     RuleMatch ruleMatch5 = new RuleMatch(new FakeRule("COMMA_LOW_PRIORITY2"), sentence, 5, 10, "msg1");
     ruleMatch5.addSuggestedReplacement("right,");
@@ -161,7 +161,7 @@ public class CleanOverlappingFilterTest {
     List<RuleMatch> matches16 = Arrays.asList(ruleMatch5, ruleMatch6);
     matches16 = filter.filter(matches16);
     assertThat(matches16.size(), is(1)); // filtering
-    assertThat(matches16.get(0).getRule().getId(), is("COMMA_LOW_PRIORITY"));
+    assertThat(matches16.get(0).rule.getId(), is("COMMA_LOW_PRIORITY"));
 
     try {
       List<RuleMatch> unordered = Arrays.asList(
@@ -179,7 +179,7 @@ public class CleanOverlappingFilterTest {
     }
     @Override
     protected boolean isPremiumRule(RuleMatch ruleMatch) {
-      return ruleMatch.getRule().getId().contains("PREMIUM");
+      return ruleMatch.rule.getId().contains("PREMIUM");
     }
   }
 

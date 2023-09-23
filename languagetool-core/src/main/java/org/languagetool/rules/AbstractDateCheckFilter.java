@@ -95,7 +95,7 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
           .replace("{realDay}", getDayOfWeek(dateFromDate))
           .replace("{day}", getDayOfWeek(calFromDateString))
           .replace("{currentYear}", Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
-        RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
+        RuleMatch ruleMatch = new RuleMatch(match.rule, match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
         ruleMatch.setType(match.getType());
         ruleMatch.setUrl(Tools.getUrl("https://www.timeanddate.com/calendar/?year=" + dateFromDate.get(Calendar.YEAR)));
         return ruleMatch;
@@ -108,7 +108,7 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
       // this can happen with some special characters which the Java regex matches but which the Java code
       // cannot map to days, e.g. German "Dıenstag" vs "Dienstag" (note the difference on the second character -
       // the first word is not valid, but it should not crash LT):
-      logger.warn("Skipping potential match for " + match.getRule().getFullId(), e);
+      logger.warn("Skipping potential match for " + match.rule.getFullId(), e);
       return null;
     }
   }
