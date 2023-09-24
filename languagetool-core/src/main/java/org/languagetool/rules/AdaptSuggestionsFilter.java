@@ -43,10 +43,8 @@ public class AdaptSuggestionsFilter extends RuleFilter {
         adjustedSuggestions.add(lang.adaptSuggestion(replacement));  
       }
       match.setSuggestedReplacements(adjustedSuggestions);
-      return match;
-    } else {
-      return match;
     }
+    return match;
   }
 
 }

@@ -63,15 +63,12 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
     String removeSuggestionsRegexp = getOptional("removeSuggestionsRegexp", arguments);
     // suppress match if there are no suggestions
     String suppressMatch = getOptional("suppressMatch", arguments);
-    boolean bSuppressMatch = false;
-    if (suppressMatch != null && suppressMatch.equalsIgnoreCase("true")) {
-      bSuppressMatch = true;
-    }
-    
+    boolean bSuppressMatch = "true".equalsIgnoreCase(suppressMatch);
+
     // diacriticsMode: return only changes in diacritics. If there is none, the
     // match is removed.
     String mode = getOptional("Mode", arguments);
-    boolean diacriticsMode = (mode != null) && mode.equals("diacritics");
+    boolean diacriticsMode = "diacritics".equals(mode);
     boolean generateSuggestions = true;
     Pattern regexpPattern = null;
     Synthesizer synth = getSynthesizer();

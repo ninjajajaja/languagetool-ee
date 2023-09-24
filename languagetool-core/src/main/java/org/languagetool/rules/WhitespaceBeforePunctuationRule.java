@@ -63,7 +63,8 @@ public class WhitespaceBeforePunctuationRule extends Rule {
     AnalyzedTokenReadings[] tokens = sentence.getTokens();
     boolean prevWhite = false;
     int prevLen = 0;
-    for (int i = 0; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 0; i < tokensLength; i++) {
       String token = tokens[i].getToken();
       boolean isWhitespace = tokens[i].isWhitespace() || StringTools.isNonBreakingWhitespace(token)
           || tokens[i].isFieldCode();

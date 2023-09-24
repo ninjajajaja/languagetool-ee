@@ -46,7 +46,8 @@ public abstract class AbstractTokenBasedRule extends AbstractPatternRule {
     TokenHint anchorHint = null;
 
     boolean fixedOffset = true;
-    for (int i = 0; i < patternTokens.size(); i++) {
+    int patternTokensSize = patternTokens.size();
+    for (int i = 0; i < patternTokensSize; i++) {
       PatternToken token = patternTokens.get(i);
 
       boolean inflected = false;

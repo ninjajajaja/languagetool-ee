@@ -166,7 +166,8 @@ public abstract class AbstractStatisticSentenceStyleRule extends TextLevelRule {
       List<AnalyzedTokenReadings> relevantSentencePart = new ArrayList<AnalyzedTokenReadings>();
       boolean isSentenceCount = false;
       AnalyzedTokenReadings foundToken = null;
-      for (int n = 1; n < tokens.length; n++) {
+      int tokensLength = tokens.length;
+      for (int n = 1; n < tokensLength; n++) {
         AnalyzedTokenReadings token = tokens[n];
         String sToken = token.getToken();
         if (excludeDirectSpeech && !isDirectSpeech && OPENING_QUOTES.matcher(sToken).matches() && n < tokens.length - 1 && !tokens[n + 1].isWhitespaceBefore()) {
@@ -206,7 +207,8 @@ public abstract class AbstractStatisticSentenceStyleRule extends TextLevelRule {
       percent = 0;
     }
     if (percent > minPercent) {
-      for (int i = 0; i < startPos.size(); i++) {
+      int startPosSize = startPos.size();
+      for (int i = 0; i < startPosSize; i++) {
         RuleMatch ruleMatch = new RuleMatch(this, relevantSentences.get(i), startPos.get(i), endPos.get(i), 
             getLimitMessage(minPercent, percent));
         ruleMatches.add(ruleMatch);

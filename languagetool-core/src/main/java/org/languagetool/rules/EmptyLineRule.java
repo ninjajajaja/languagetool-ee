@@ -67,7 +67,8 @@ public class EmptyLineRule extends TextLevelRule {
   public org.languagetool.rules.RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     int pos = 0;
-    for (int n = 0; n < sentences.size() - 1; n++) {
+    int sentencesSizeMinusOne = sentences.size() - 1;
+    for (int n = 0; n < sentencesSizeMinusOne; n++) {
       AnalyzedSentence sentence = sentences.get(n);
       if(Tools.isParagraphEnd(sentences, n, lang)) {
         if(isSecondParagraphEndMark(sentence.getText())) {
@@ -88,9 +89,7 @@ public class EmptyLineRule extends TextLevelRule {
 
   private boolean isSecondParagraphEndMark(String sentence) {
     if (lang.getSentenceTokenizer().singleLineBreaksMarksPara()) {
-      if (sentence.endsWith("\n\n") || sentence.endsWith("\n\r\n\r")) {
-        return true;
-      }
+      return sentence.endsWith("\n\n") || sentence.endsWith("\n\r\n\r");
     } else { 
       if (sentence.endsWith("\n\n\n\n") || sentence.endsWith("\n\r\n\r\n\r\n\r") || sentence.endsWith("\r\n\r\n\r\n\r\n")) {
         return true;

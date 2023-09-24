@@ -51,7 +51,8 @@ public abstract class AbstractSuppressMisspelledSuggestionsFilter extends RuleFi
     if (tagger != null && suppressPostag != null) {
       atrs = tagger.tag(replacements);
     }
-    for (int i = 0; i < replacements.size(); i++) {
+    int replacementsSize = replacements.size();
+    for (int i = 0; i < replacementsSize; i++) {
       if (!isMisspelled(replacements.get(i))) {
         if (tagger != null && suppressPostag != null) {
           if (!atrs.get(i).matchesPosTagRegex(suppressPostag)) {
@@ -62,10 +63,7 @@ public abstract class AbstractSuppressMisspelledSuggestionsFilter extends RuleFi
         }
       }
     }
-    boolean bSuppressMatch = true;
-    if (suppressMatch != null && suppressMatch.equalsIgnoreCase("false")) {
-      bSuppressMatch = false;
-    }
+    boolean bSuppressMatch = !"false".equalsIgnoreCase(suppressMatch);
     if (newReplacements.isEmpty() && bSuppressMatch) {
       return null;
     } else {

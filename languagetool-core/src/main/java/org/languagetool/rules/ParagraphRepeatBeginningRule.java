@@ -116,8 +116,9 @@ public class ParagraphRepeatBeginningRule extends TextLevelRule {
     AnalyzedTokenReadings[] lastTokens = lastSentence.getTokensWithoutWhitespace();
     AnalyzedSentence nextSentence;
     AnalyzedTokenReadings[] nextTokens;
-    
-    for (int n = 0; n < sentences.size() - 1; n++) {
+
+    int sentencesSizeMinusOne = sentences.size() - 1;
+    for (int n = 0; n < sentencesSizeMinusOne; n++) {
       nextPos += sentences.get(n).getText().length();
       if(Tools.isParagraphEnd(sentences, n, lang)) {
         nextSentence = sentences.get(n + 1);

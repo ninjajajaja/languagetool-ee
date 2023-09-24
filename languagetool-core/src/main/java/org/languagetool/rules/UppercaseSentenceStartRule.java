@@ -143,10 +143,7 @@ public class UppercaseSentenceStartRule extends TextLevelRule {
         lastToken = tokens[tokens.length - 2].getToken();
       }
 
-      boolean preventError = false;
-      if (lastParagraphString.equals(",") || lastParagraphString.equals(";")) {
-        preventError = true;
-      }
+      boolean preventError = lastParagraphString.equals(",") || lastParagraphString.equals(";");
       if (!SENTENCE_END1.matcher(lastParagraphString).matches() && !isSentenceEnd(lastToken)) {
         preventError = true;
       }

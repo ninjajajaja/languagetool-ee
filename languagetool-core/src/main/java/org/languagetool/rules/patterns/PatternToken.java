@@ -721,7 +721,7 @@ public class PatternToken implements Cloneable {
   }
 
   private Set<String> calcStringHints(boolean inflected) {
-    Set<String> result = inflected != isInflected() ? null : calcOwnPossibleStringValues();
+    Set<String> result = inflected == isInflected() ? calcOwnPossibleStringValues() : null;
     if (result == null) return null;
 
     List<PatternToken> andGroupList = rareFields == null ? null : rareFields.andGroupList;

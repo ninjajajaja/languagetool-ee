@@ -36,14 +36,15 @@ public class RuleWithMaxFilter implements RuleMatchFilter {
   public final List<RuleMatch> filter(List<RuleMatch> ruleMatches) {
     Collections.sort(ruleMatches);
     List<RuleMatch> filteredRules = new ArrayList<>();
-    for (int i = 0; i < ruleMatches.size(); i++) {
+    int ruleMatchesSize = ruleMatches.size();
+    for (int i = 0; i < ruleMatchesSize; i++) {
       RuleMatch match = ruleMatches.get(i);
-      if (i < ruleMatches.size() - 1) {
+      if (i < ruleMatchesSize - 1) {
         RuleMatch nextMatch = ruleMatches.get(i + 1);
         while (includes(match, nextMatch) && haveSameRule(match, nextMatch)
-            && i < ruleMatches.size()) {
+            && i < ruleMatchesSize) {
           i++;  // skip next match
-          if (i < ruleMatches.size() - 1) {
+          if (i < ruleMatchesSize - 1) {
             nextMatch = ruleMatches.get(i + 1);
           }
         }
@@ -54,10 +55,7 @@ public class RuleWithMaxFilter implements RuleMatchFilter {
   }
 
   final boolean includes(RuleMatch match, RuleMatch nextMatch) {
-    if (match.getFromPos() <= nextMatch.getFromPos() && match.getToPos() >= nextMatch.getToPos()) {
-      return true;
-    }
-    return false;
+    return match.getFromPos() <= nextMatch.getFromPos() && match.getToPos() >= nextMatch.getToPos();
   }
 
   private boolean haveSameRule(RuleMatch match, RuleMatch nextMatch) {
@@ -74,7 +72,7 @@ public class RuleWithMaxFilter implements RuleMatchFilter {
       return false;
     }
     return id1 != null && id1.equals(nextMatch.getRule().getId()) &&
-        (subId1 == null && subId2 == null || subId1 != null && subId1.equals(subId2));
+        (subId1 == null && subId2 == null || subId2.equals(subId1));
   }
 
 }

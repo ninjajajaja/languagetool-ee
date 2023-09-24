@@ -69,7 +69,8 @@ public class DoublePunctuationRule extends Rule {
     int startPos = 0;
     int dotCount = 0;
     int commaCount = 0;
-    for (int i = 1; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 1; i < tokensLength; i++) {
       String token = tokens[i].getToken();
       String nextToken = null;
       String prevPrevToken = null;

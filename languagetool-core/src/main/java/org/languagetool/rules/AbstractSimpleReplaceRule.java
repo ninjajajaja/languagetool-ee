@@ -225,7 +225,8 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
       potentialRuleMatch.setSpecificRuleId(StringTools.toId(getId() + "_" + originalTokenStr));
     }
     if (!isCaseSensitive() && StringTools.startsWithUppercase(tokenString)) {
-      for (int i = 0; i < replacements.size(); i++) {
+      int replacementsSize = replacements.size();
+      for (int i = 0; i < replacementsSize; i++) {
         replacements.set(i, StringTools.uppercaseFirstChar(replacements.get(i)));
       }
     }

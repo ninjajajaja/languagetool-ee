@@ -73,10 +73,8 @@ public class LongSentenceRule extends TextLevelRule {
   private boolean isWordCount(String tokenText) {
     if (tokenText.length() > 0) {
       char firstChar = tokenText.charAt(0);
-      if ((firstChar >= 'A' && firstChar <= 'Z') ||
-        (firstChar >= 'a' && firstChar <= 'z')) {
-        return true;
-      }
+      return (firstChar >= 'A' && firstChar <= 'Z') ||
+        (firstChar >= 'a' && firstChar <= 'z');
     }
     return false;
   }
@@ -120,7 +118,8 @@ public class LongSentenceRule extends TextLevelRule {
             if (numWords == maxWords) {
               //Get last word token
               if (toPosToken == null) {
-                for (int j = tokens.length - 1; j >= 0; j--) {
+                int tokensLengthMinusOne = tokens.length - 1;
+                for (int j = tokensLengthMinusOne; j >= 0; j--) {
                   if (isWordCount(tokens[j].getToken())) {
                     if (tokens.length > j + 1 && SENT_END.matcher(tokens[j+1].getToken()).matches()) {
                       toPosToken = tokens[j + 1];
@@ -147,7 +146,8 @@ public class LongSentenceRule extends TextLevelRule {
         }
         i++;
       }
-      for (int j = 0; j < fromPos.size(); j++) {
+      int fromPosSize = fromPos.size();
+      for (int j = 0; j < fromPosSize; j++) {
         RuleMatch ruleMatch = new RuleMatch(this, sentence, pos+fromPos.get(j), pos+toPos.get(j), msg);
         ruleMatches.add(ruleMatch);
       }

@@ -117,6 +117,6 @@ public abstract class PartialPosTagFilter extends RuleFilter {
         }
       }
     }
-    return postagCount == 0 ? false : negatePos;
+    return postagCount != 0 && negatePos;
   }
 }

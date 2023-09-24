@@ -113,7 +113,8 @@ public class LongParagraphRule extends TextLevelRule {
     int endPos = 0;
     int wordCount = 0;
     boolean paraHasLinebreaks = false;
-    for (int n = 0; n < sentences.size(); n++) {
+    int sentencesSize = sentences.size();
+    for (int n = 0; n < sentencesSize; n++) {
       AnalyzedSentence sentence = sentences.get(n);
       boolean paragraphEnd = Tools.isParagraphEnd(sentences, n, lang);
       if (!paragraphEnd && sentence.getText().replaceFirst("^\n+", "").contains("\n")) {

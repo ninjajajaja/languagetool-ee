@@ -101,7 +101,8 @@ public class PunctuationMarkAtParagraphEnd extends TextLevelRule {
     int lastPara = -1;
     int pos = 0;
     boolean isFirstWord;
-    for (int n = 0; n < sentences.size(); n++) {
+    int sentencesSize = sentences.size();
+    for (int n = 0; n < sentencesSize; n++) {
       AnalyzedSentence sentence = sentences.get(n);
       if (Tools.isParagraphEnd(sentences, n, lang)) {
         AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
@@ -109,10 +110,7 @@ public class PunctuationMarkAtParagraphEnd extends TextLevelRule {
           isFirstWord = (isWord(tokens[1]) && !isPunctuationMark(tokens[2]))
                 || (tokens.length > 3 && isQuotationMark(tokens[1]) && isWord(tokens[2]) && !isPunctuationMark(tokens[3]));
           // ignore sentences like "2.2.2. This is an item" (two sentences, first sentence only numbers)
-          boolean ignoreSentence = false;
-          if (n == 1 && isNumeric(sentences.get(0).getText())) {
-            ignoreSentence = true;
-          }
+          boolean ignoreSentence = n == 1 && isNumeric(sentences.get(0).getText());
           if (n > 0 && isNumeric(sentences.get(n - 1).getText())) {
             ignoreSentence = true;
           }

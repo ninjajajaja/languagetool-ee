@@ -97,7 +97,8 @@ public abstract class RuleSet {
     Map<String, BitSet> byToken = new HashMap<>();
     Map<String, BitSet> byLemma = new HashMap<>();
     BitSet unclassified = new BitSet();
-    for (int i = 0; i < allRules.size(); i++) {
+    int allRulesSize = allRules.size();
+    for (int i = 0; i < allRulesSize; i++) {
       Rule rule = allRules.get(i);
       boolean classified = false;
       if (rule instanceof AbstractTokenBasedRule) {

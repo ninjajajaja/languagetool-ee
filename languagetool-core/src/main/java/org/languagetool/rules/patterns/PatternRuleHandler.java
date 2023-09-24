@@ -810,7 +810,8 @@ public class PatternRuleHandler extends XMLRuleHandler {
   String replaceSpacesInRegex(String s) {
     StringBuilder sb = new StringBuilder();
     boolean inBracket = false;
-    for (int i = 0; i < s.length(); i++) {
+    int sLength = s.length();
+    for (int i = 0; i < sLength; i++) {
       char c = s.charAt(i);
       if (c == '[') {
         inBracket = true;

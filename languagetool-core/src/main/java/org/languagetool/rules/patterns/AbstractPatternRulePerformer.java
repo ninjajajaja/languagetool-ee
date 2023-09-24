@@ -229,8 +229,8 @@ public abstract class AbstractPatternRulePerformer {
       }
     }
     if (anyMatched) {
-      for (int i = 0; i < numberOfReadings; i++) {
-        if (matcher.isExceptionMatchedCompletely(tokens[tokenNo].getAnalyzedToken(i))) {
+      for (AnalyzedToken at : tokens[tokenNo].anTokReadings) {
+        if (matcher.isExceptionMatchedCompletely(at)) {
           return false;
         }
       }
@@ -287,7 +287,8 @@ public abstract class AbstractPatternRulePerformer {
 
       for (List<AnalyzedToken> readings : readingSets) {
         boolean anyMatched = false;
-        for (int i = 0; i < readings.size(); i++) {
+        int readingsSize = readings.size();
+        for (int i = 0; i < readingsSize; i++) {
           anyMatched |= unifier.isUnified(readings.get(i), patternToken.getUniFeatures(), i == readings.size() - 1);
         }
         if (patternToken.isUniNegated() && anyMatched) {

@@ -100,7 +100,8 @@ public abstract class AbstractCompoundRule extends Rule {
     RuleMatch prevRuleMatch = null;
     ArrayDeque<AnalyzedTokenReadings> prevTokens = new ArrayDeque<>(MAX_TERMS);
     boolean containsDigits = false;
-    for (int i = 0; i < tokens.length + MAX_TERMS; i++) {
+    int tokenLengthPlusMaxTerms = tokens.length + MAX_TERMS;
+    for (int i = 0; i < tokenLengthPlusMaxTerms; i++) {
       AnalyzedTokenReadings token;
       // we need to extend the token list so we find matches at the end of the original list:
       if (i >= tokens.length) {
@@ -241,7 +242,8 @@ public abstract class AbstractCompoundRule extends Rule {
   public String mergeCompound(String str, boolean uncapitalizeMidWords) {
     String[] stringParts = str.replaceAll("-", " ").split(" ");
     StringBuilder sb = new StringBuilder();
-    for (int k = 0; k < stringParts.length; k++) {  
+    int stringPartsLength = stringParts.length;
+    for (int k = 0; k < stringPartsLength; k++) {
       if (k == 0) {
         sb.append(stringParts[0]);
       } else {

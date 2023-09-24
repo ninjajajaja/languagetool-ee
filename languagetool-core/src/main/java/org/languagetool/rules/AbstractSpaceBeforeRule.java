@@ -63,8 +63,8 @@ public abstract class AbstractSpaceBeforeRule extends Rule {
   public final RuleMatch[] match(AnalyzedSentence sentence) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     AnalyzedTokenReadings[] tokens = sentence.getTokens();
-
-    for (int i = 1; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 1; i < tokensLength; i++) {
       String token = tokens[i].getToken();
       Matcher matcher = getConjunctions().matcher(token);
       if (matcher.matches()) {

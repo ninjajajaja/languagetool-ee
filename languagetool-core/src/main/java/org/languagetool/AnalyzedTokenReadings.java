@@ -49,7 +49,7 @@ public final class AnalyzedTokenReadings implements Iterable<AnalyzedToken> {
   private final boolean isSentStart;
   private final boolean isPosTagUnknown;
 
-  private AnalyzedToken[] anTokReadings;
+  public AnalyzedToken[] anTokReadings;
   private int startPos;
   private int fixPos;
   private String token;

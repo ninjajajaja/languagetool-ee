@@ -75,10 +75,11 @@ public class MultipleWhitespaceRule extends TextLevelRule {
       AnalyzedTokenReadings[] tokens = sentence.getTokens();
       //note: we start from token 1
       //token no. 0 is guaranteed to be SENT_START
-      for (int i = 1; i < tokens.length; i++) {
+      int tokensLength = tokens.length;
+      for (int i = 1; i < tokensLength; i++) {
         if(isFirstWhite(tokens[i])) {
           int nFirst = i;
-          for (i++; i < tokens.length && isRemovableWhite(tokens[i]); i++);
+          for (i++; i < tokensLength && isRemovableWhite(tokens[i]); i++);
           i--;
           if (i > nFirst) {
             String message = messages.getString("whitespace_repetition");
