@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import java.util.Hashtable;
 import org.apache.commons.lang3.StringUtils;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.rules.patterns.RuleFilter;
@@ -55,7 +56,7 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
    * @param args a map with values for {@code year}, {@code month}, {@code day} (day of month), {@code weekDay}
    */
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
     Calendar dateFromDate = getDate(args);
     Calendar currentDate = getCalendar();
     if (TestHackHelper.isJUnitTest()) {
@@ -73,7 +74,7 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
     }
   }
 
-  private Calendar getDate(Map<String, String> args) {
+  private Calendar getDate(Hashtable<String, String> args) {
     int year = Integer.parseInt(getRequired("year", args));
     int month = getMonthFromArguments(args);
     int dayOfMonth = getDayOfMonthFromArguments(args);
@@ -85,7 +86,7 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
     return calendar;
   }
 
-  private int getDayOfMonthFromArguments(Map<String, String> args) {
+  private int getDayOfMonthFromArguments(Hashtable<String, String> args) {
     String dayOfMonthString = getRequired("day", args);
     int dayOfMonth;
     Matcher matcherDayOfMonth = DAY_OF_MONTH_PATTERN.matcher(dayOfMonthString);
@@ -101,7 +102,7 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
     return dayOfMonth;
   }
 
-  private int getMonthFromArguments(Map<String, String> args) {
+  private int getMonthFromArguments(Hashtable<String, String> args) {
     String monthStr = getRequired("month", args);
     int month;
     if (StringUtils.isNumeric(monthStr)) {

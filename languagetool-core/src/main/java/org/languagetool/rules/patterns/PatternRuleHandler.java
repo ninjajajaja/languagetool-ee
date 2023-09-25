@@ -711,7 +711,7 @@ public class PatternRuleHandler extends XMLRuleHandler {
       case UNIFY:
         inUnification = false;
         //clear the features...
-        equivalenceFeatures = new HashMap<>();
+        equivalenceFeatures = new Hashtable<>();
         //set negation on the last token only!
         int lastElement = patternTokens.size() - 1;
         patternTokens.get(lastElement).setLastInUnification();
@@ -912,7 +912,7 @@ public class PatternRuleHandler extends XMLRuleHandler {
     }
   }
 
-  private final Map<String, URL> internedUrls = new HashMap<>();
+  private final Hashtable<String, URL> internedUrls = new Hashtable<>();
 
   private URL internUrl(String s) throws MalformedURLException {
     URL url = internedUrls.get(s);

@@ -18,6 +18,7 @@
  */
 package org.languagetool.tagging.disambiguation.rules;
 
+import java.util.Hashtable;
 import org.languagetool.*;
 import org.languagetool.broker.ResourceDataBroker;
 import org.languagetool.rules.patterns.*;
@@ -404,7 +405,7 @@ class DisambiguationRuleHandler extends XMLRuleHandler {
         break;
       case UNIFY:
         inUnification = false;
-        equivalenceFeatures = new HashMap<>();
+        equivalenceFeatures = new Hashtable<>();
         //set negation on the last token only!
         int lastElement = patternTokens.size() - 1;
         patternTokens.get(lastElement).setLastInUnification();

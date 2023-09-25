@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 import org.languagetool.AnalyzedTokenReadings;
@@ -26,7 +27,7 @@ import org.languagetool.rules.patterns.RuleFilter;
 public class WhitespaceCheckFilter extends RuleFilter  {
 
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) {
     String wsChar = getRequired("whitespaceChar", arguments);
     int pos = Integer.parseInt(getRequired("position", arguments));

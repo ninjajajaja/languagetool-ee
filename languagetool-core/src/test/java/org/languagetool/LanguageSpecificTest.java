@@ -18,6 +18,7 @@
  */
 package org.languagetool;
 
+import gnu.trove.THashSet;
 import org.languagetool.language.Demo;
 import org.languagetool.rules.*;
 import org.languagetool.rules.ngrams.FakeLanguageModel;
@@ -75,8 +76,8 @@ public class LanguageSpecificTest {
       for (Rule rule : lt.getAllActiveRules()) {
         if (rule instanceof AbstractSimpleReplaceRule2) {
           AbstractSimpleReplaceRule2 replRule = (AbstractSimpleReplaceRule2) rule;
-          List<Map<String, SuggestionWithMessage>> wrongWords = replRule.getWrongWords(false);
-          for (Map<String, SuggestionWithMessage> entry : wrongWords) {
+          List<Hashtable<String, SuggestionWithMessage>> wrongWords = replRule.getWrongWords(false);
+          for (Hashtable<String, SuggestionWithMessage> entry : wrongWords) {
             for (String s : entry.keySet()) {
               String repl = entry.get(s).getSuggestion();
               RuleMatch[] matches = spellRule.match(lt.getAnalyzedSentence(repl));
@@ -137,7 +138,7 @@ public class LanguageSpecificTest {
     }
     System.out.println("Testing coherency.txt...");
     System.out.println("Checking " + path + "...");
-    Map<String, Set<String>> map = loader.loadWords(path);
+    Map<String, THashSet<String>> map = loader.loadWords(path);
     Set<String> invalid = new HashSet<>();
     Synthesizer synthesizer = lang.getSynthesizer();
     for (String key : map.keySet()) {

@@ -45,7 +45,7 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
 
   private final List<String> startSymbols;
   private final List<String> endSymbols;
-  private final Map<String,Boolean> uniqueMap;
+  private final Hashtable<String,Boolean> uniqueMap;
   private final String ruleId;
   private final Pattern numerals;
 
@@ -218,8 +218,8 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
     return s.endsWith(".") || s.endsWith("?") || s.endsWith("!");
   }
 
-  private Map<String, Boolean> uniqueMapInit() {
-    Map<String,Boolean> uniqueMap = new HashMap<>();
+  private Hashtable<String, Boolean> uniqueMapInit() {
+    Hashtable<String,Boolean> uniqueMap = new Hashtable<>();
     for (String endSymbol : endSymbols) {
       int found = 0;
       for (String endSymbol1 : endSymbols) {
@@ -229,7 +229,7 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
       }
       uniqueMap.put(endSymbol, found == 1);
     }
-    return Collections.unmodifiableMap(uniqueMap);
+    return uniqueMap;
   }
 
   private boolean fillSymbolStack(int startPosBase, AnalyzedTokenReadings[] tokens, int i, int j, UnsyncStack<SymbolLocator> symbolStack, AnalyzedSentence sentence, int sentenceIdx) {

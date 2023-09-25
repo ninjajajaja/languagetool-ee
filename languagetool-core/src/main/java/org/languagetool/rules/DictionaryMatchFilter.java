@@ -21,6 +21,7 @@
 
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import org.languagetool.UserConfig;
 import org.languagetool.markup.AnnotatedText;
 
@@ -38,7 +39,7 @@ public class DictionaryMatchFilter implements RuleMatchFilter {
 
   @Override
   public List<RuleMatch> filter(List<RuleMatch> ruleMatches, AnnotatedText text) {
-    Set<String> dictionary = new HashSet<>(userConfig.getAcceptedWords());
+    THashSet<String> dictionary = new THashSet<>(userConfig.getAcceptedWords());
 
     return ruleMatches.stream().filter(match -> {
       // at this point, the offsets we get from match are already converted to be pointing to the text with markup

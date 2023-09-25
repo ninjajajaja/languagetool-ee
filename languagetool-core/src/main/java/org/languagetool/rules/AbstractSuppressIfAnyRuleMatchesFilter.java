@@ -20,6 +20,7 @@ package org.languagetool.rules;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ import org.languagetool.rules.patterns.RuleFilter;
 public abstract class AbstractSuppressIfAnyRuleMatchesFilter extends RuleFilter {
 
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) throws IOException {
 //    if (match.getSentence().getText().contains("t'ho has cregut")) {
 //      int ii=0;

@@ -21,6 +21,7 @@ package org.languagetool.rules.spelling.morfologik;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.vdurmont.emoji.EmojiManager;
+import gnu.trove.THashSet;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -590,7 +591,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
   @NotNull
   private static List<SuggestedReplacement> mergeSuggestionsWithSameTranslation(List<SuggestedReplacement> l) {
     List<SuggestedReplacement> mergedRepl = new ArrayList<>();
-    Set<String> handledReplacements = new HashSet<>();
+    THashSet<String> handledReplacements = new THashSet<>();
     for (SuggestedReplacement repl : l) {
       List<SuggestedReplacement> sameRepl = l.stream()
         .filter(k -> k.getReplacement().equals(repl.getReplacement()))

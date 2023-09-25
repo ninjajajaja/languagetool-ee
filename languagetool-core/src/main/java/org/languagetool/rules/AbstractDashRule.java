@@ -20,6 +20,7 @@
 package org.languagetool.rules;
 
 import com.hankcs.algorithm.AhoCorasickDoubleArrayTrie;
+import gnu.trove.TIntHashSet;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.JLanguageTool;
 import org.languagetool.Tag;
@@ -62,7 +63,7 @@ public abstract class AbstractDashRule extends Rule {
     List<RuleMatch> matches = new ArrayList<>();
     String text = sentence.getText();
     List<AhoCorasickDoubleArrayTrie.Hit<String>> hits = getCompoundsData().parseText(text);
-    Set<Integer> startPositions = new HashSet<>();
+    TIntHashSet startPositions = new TIntHashSet();
     Collections.reverse(hits);  // work on longest matches first
     for (AhoCorasickDoubleArrayTrie.Hit<String> hit : hits) {
       if (startPositions.contains(hit.begin)) {
@@ -104,7 +105,7 @@ public abstract class AbstractDashRule extends Rule {
       }
       words.add(line);
     }
-    Map<String,String> map = new HashMap<>();
+    Hashtable<String,String> map = new Hashtable<>();
     for (String word : words) {
       String variant1 = word.replace("-", "–");
       map.put(variant1, variant1);

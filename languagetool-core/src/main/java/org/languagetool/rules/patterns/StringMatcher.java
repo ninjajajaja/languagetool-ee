@@ -20,6 +20,7 @@ package org.languagetool.rules.patterns;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Sets;
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.tools.InterruptibleCharSequence;
@@ -54,7 +55,7 @@ public abstract class StringMatcher {
    * or {@code null} if it's not possible to determine those.
    */
   @Nullable
-  public abstract Set<String> getPossibleValues();
+  public abstract THashSet<String> getPossibleValues();
 
   /**
    * @return whether the given string is accepted by this matcher.
@@ -81,9 +82,9 @@ public abstract class StringMatcher {
     // always compile the pattern to check it's well-formed
     Pattern compiled = Pattern.compile(pattern, caseSensitive ? 0 : Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
-    Set<String> possibleRegexpValues = getPossibleRegexpValues(pattern);
+    THashSet<String> possibleRegexpValues = getPossibleRegexpValues(pattern);
     if (possibleRegexpValues != null) {
-      Set<String> set = possibleRegexpValues.stream().map(internString).collect(Collectors.toSet());
+      THashSet<String> set = new THashSet<>(possibleRegexpValues.stream().map(internString).collect(Collectors.toSet()));
       if (set.size() == 1) {
         return stringEquals(set.iterator().next(), true, caseSensitive);
       }
@@ -92,8 +93,8 @@ public abstract class StringMatcher {
         Arrays.sort(sorted, String.CASE_INSENSITIVE_ORDER);
         return new StringMatcher(pattern, true, false) {
           @Override
-          public Set<String> getPossibleValues() {
-            return Sets.newHashSet(sorted);
+          public THashSet<String> getPossibleValues() {
+            return new THashSet<>(Arrays.asList(sorted));
           }
 
           @Override
@@ -107,8 +108,8 @@ public abstract class StringMatcher {
       }
       return new StringMatcher(pattern, true, true) {
         @Override
-        public Set<String> getPossibleValues() {
-          return Collections.unmodifiableSet(set);
+        public THashSet<String> getPossibleValues() {
+          return set;
         }
 
         @Override
@@ -129,7 +130,7 @@ public abstract class StringMatcher {
     return new StringMatcher(pattern, true, caseSensitive) {
       @Nullable
       @Override
-      public Set<String> getPossibleValues() {
+      public THashSet<String> getPossibleValues() {
         return null;
       }
 
@@ -149,8 +150,8 @@ public abstract class StringMatcher {
   private static StringMatcher stringEquals(String pattern, final boolean isRegExp, boolean caseSensitive) {
     return new StringMatcher(pattern, isRegExp, caseSensitive) {
       @Override
-      public Set<String> getPossibleValues() {
-        return Collections.singleton(pattern);
+      public THashSet<String> getPossibleValues() {
+        return new THashSet<>(Collections.singleton(pattern));
       }
 
       @Override
@@ -210,7 +211,7 @@ public abstract class StringMatcher {
    */
   @Nullable
   @VisibleForTesting
-  static Set<String> getPossibleRegexpValues(String regexp) {
+  static THashSet<String> getPossibleRegexpValues(String regexp) {
     RegexpParser<Stream<String>> parser = new RegexpParser<Stream<String>>(regexp) {
       @Override
       Stream<String> handleConcatenation(Stream<String> left, Stream<String> right) {
@@ -239,7 +240,7 @@ public abstract class StringMatcher {
       }
     };
     try {
-      return parser.disjunction().collect(Collectors.toSet());
+      return new THashSet<>(parser.disjunction().collect(Collectors.toSet()));
     } catch (TooComplexRegexp e) {
       return null;
     }

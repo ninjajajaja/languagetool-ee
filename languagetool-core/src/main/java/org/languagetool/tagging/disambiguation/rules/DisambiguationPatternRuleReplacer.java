@@ -19,6 +19,7 @@
  */
 package org.languagetool.tagging.disambiguation.rules;
 
+import java.util.Hashtable;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.AnalyzedTokenReadings;
@@ -100,7 +101,7 @@ class DisambiguationPatternRuleReplacer extends AbstractPatternRulePerformer {
     if (filter != null) {
       RuleFilterEvaluator ruleFilterEval = new RuleFilterEvaluator(filter);
       List<Integer> tokensPos = IntStream.of(tokenPositions).boxed().collect(Collectors.toList());
-      Map<String, String> resolvedArguments = ruleFilterEval.getResolvedArguments(rule.getFilterArguments(), tokens, firstMatchToken, tokensPos);
+      Hashtable<String, String> resolvedArguments = ruleFilterEval.getResolvedArguments(rule.getFilterArguments(), tokens, firstMatchToken, tokensPos);
       AnalyzedTokenReadings[] relevantTokens = Arrays.copyOfRange(tokens, firstMatchToken, lastMatchToken + 1);
       return filter.matches(resolvedArguments, relevantTokens, firstMatchToken);
     }

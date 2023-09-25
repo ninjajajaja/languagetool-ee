@@ -20,6 +20,7 @@
 
 package org.languagetool.rules;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.Language;
@@ -43,7 +44,7 @@ public abstract class AbstractNumberInWordFilter extends RuleFilter {
 
   @Nullable
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) throws IOException {
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) throws IOException {
     String word = arguments.get("word");
     String wordReplacingZeroO = word.replaceAll("0","o");
     String wordWithoutNumberCharacter = typoPattern.matcher(word).replaceAll("");

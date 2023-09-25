@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.patterns;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.rules.RuleMatch;
@@ -35,7 +36,7 @@ public class RegexAntiPatternFilter extends RegexRuleFilter {
 
   @Nullable
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, AnalyzedSentence sentenceObj, Matcher patternMatcher) {
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, AnalyzedSentence sentenceObj, Matcher patternMatcher) {
     String antiPatternStr = arguments.get("antipatterns");
     if (antiPatternStr == null) {
       throw new RuntimeException("Missing 'antiPatterns:' in 'args' in <filter> of rule " + match.getRule().getFullId());

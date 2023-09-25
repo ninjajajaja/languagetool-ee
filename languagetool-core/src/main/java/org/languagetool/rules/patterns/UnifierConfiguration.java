@@ -20,6 +20,7 @@
 package org.languagetool.rules.patterns;
 
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,17 +36,17 @@ public class UnifierConfiguration {
    * specified as Strings, and map into types defined as maps from Strings to
    * Elements.
    */
-  private final Map<EquivalenceTypeLocator, PatternToken> equivalenceTypes;
+  private final Hashtable<EquivalenceTypeLocator, PatternToken> equivalenceTypes;
 
   /**
    * A Map that stores all possible equivalence types listed for features.
    */
-  private final Map<String, List<String>> equivalenceFeatures;
+  private final Hashtable<String, List<String>> equivalenceFeatures;
 
   public UnifierConfiguration() {
     // workaround for issue #13
-    equivalenceTypes = new ConcurrentHashMap<>();
-    equivalenceFeatures = new ConcurrentHashMap<>();
+    equivalenceTypes = new Hashtable<>();
+    equivalenceFeatures = new Hashtable<>();
   }
 
   /**
@@ -77,12 +78,12 @@ public class UnifierConfiguration {
     lTypes.add(type);
   }
 
-  public Map<EquivalenceTypeLocator, PatternToken> getEquivalenceTypes() {
-    return Collections.unmodifiableMap(equivalenceTypes);
+  public Hashtable<EquivalenceTypeLocator, PatternToken> getEquivalenceTypes() {
+    return (Hashtable<EquivalenceTypeLocator, PatternToken>) equivalenceTypes;
   }
 
-  public Map<String, List<String>> getEquivalenceFeatures() {
-    return Collections.unmodifiableMap(equivalenceFeatures);
+  public Hashtable<String, List<String>> getEquivalenceFeatures() {
+    return (Hashtable<String, List<String>>) equivalenceFeatures;
   }
 
   public Unifier createUnifier() {

@@ -25,7 +25,7 @@ import java.util.*;
 public class GoogleTokenUtil {
 
     public static List<String> getGoogleTokensForString(String sentence, boolean addStartToken, Language language) {
-        List<String> tokens = new LinkedList<>();
+        List<String> tokens = new ArrayList<>();
         for (GoogleToken token : GoogleToken.getGoogleTokens(sentence, addStartToken, language.getWordTokenizer())) {
           tokens.add(token.token);
         }

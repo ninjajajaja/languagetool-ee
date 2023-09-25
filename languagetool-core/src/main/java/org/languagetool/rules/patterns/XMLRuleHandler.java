@@ -214,7 +214,7 @@ public class XMLRuleHandler extends DefaultHandler {
   protected int tokenCounter;
 
   /** Phrase store - elementLists keyed by phraseIds. */
-  protected Map<String, List<List<PatternToken>>> phraseMap;
+  protected Hashtable<String, List<List<PatternToken>>> phraseMap;
 
   /**
    * Logically forking element list, used for including multiple phrases in the
@@ -251,7 +251,7 @@ public class XMLRuleHandler extends DefaultHandler {
   protected String uType = "";
 
   protected List<String> uTypeList = new ArrayList<>();
-  protected Map<String, List<String>> equivalenceFeatures = new HashMap<>();
+  protected Hashtable<String, List<String>> equivalenceFeatures = new Hashtable<>();
 
   public XMLRuleHandler() {
   }
@@ -326,7 +326,7 @@ public class XMLRuleHandler extends DefaultHandler {
   protected void finalizePhrase() {
     // lazy init
     if (phraseMap == null) {
-      phraseMap = new HashMap<>();
+      phraseMap = new Hashtable<>();
     }
     for (PatternToken patternToken : patternTokens) {
       patternToken.setInsideMarker(inMarker);
@@ -690,13 +690,13 @@ public class XMLRuleHandler extends DefaultHandler {
     }
   }
 
-  private final Map<String, String> internedStrings = new HashMap<>();
+  private final Hashtable<String, String> internedStrings = new Hashtable<>();
 
   protected String internString(String s) {
     return internedStrings.computeIfAbsent(s, Function.identity());
   }
 
-  private final Map<Triple<String, Boolean, Boolean>, StringMatcher> internedMatchers = new HashMap<>();
+  private final Hashtable<Triple<String, Boolean, Boolean>, StringMatcher> internedMatchers = new Hashtable<>();
 
   private StringMatcher internMatcher(String text, boolean regexp, boolean caseSensitive) {
     text = internString(PatternToken.normalizeTextPattern(text));
@@ -704,6 +704,6 @@ public class XMLRuleHandler extends DefaultHandler {
       StringMatcher.create(t.getLeft(), t.getMiddle(), t.getRight(), this::internString));
   }
 
-  private final Map<Triple<String, Boolean, Boolean>, PatternToken.PosToken> internedPos = new HashMap<>();
+  private final Hashtable<Triple<String, Boolean, Boolean>, PatternToken.PosToken> internedPos = new Hashtable<>();
 
 }

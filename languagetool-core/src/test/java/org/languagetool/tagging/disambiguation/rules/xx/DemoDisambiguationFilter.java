@@ -18,6 +18,7 @@
  */
 package org.languagetool.tagging.disambiguation.rules.xx;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.rules.RuleMatch;
@@ -29,7 +30,7 @@ public class DemoDisambiguationFilter extends RuleFilter {
   
   @Nullable
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
     if ("X9".equals(patternTokens[0].getToken())) {
       return match;
     }

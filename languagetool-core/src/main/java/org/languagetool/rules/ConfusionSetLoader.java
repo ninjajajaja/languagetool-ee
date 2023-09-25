@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import org.languagetool.Language;
 import org.languagetool.ShortDescriptionProvider;
 
@@ -41,8 +42,8 @@ public class ConfusionSetLoader {
     this.lang = Objects.requireNonNull(lang);
   }
 
-  public Map<String,List<ConfusionPair>> loadConfusionPairs(InputStream stream) throws IOException {
-    Map<String,List<ConfusionPair>> map = new HashMap<>();
+  public Hashtable<String,List<ConfusionPair>> loadConfusionPairs(InputStream stream) throws IOException {
+    Hashtable<String,List<ConfusionPair>> map = new Hashtable<>();
     try (
       InputStreamReader reader = new InputStreamReader(stream, CHARSET);
       BufferedReader br = new BufferedReader(reader)
@@ -58,7 +59,7 @@ public class ConfusionSetLoader {
         }
         boolean bidirectional = !line.replaceFirst("#.*", "").contains(" -> ");
         List<ConfusionString> confusionStrings = new ArrayList<>();
-        Set<String> loadedForSet = new HashSet<>();
+        THashSet<String> loadedForSet = new THashSet<>();
         String prevWord = null;
         for (String part : Arrays.asList(parts).subList(0, parts.length - 1)) {
           String[] subParts = part.split("\\|");
@@ -97,7 +98,7 @@ public class ConfusionSetLoader {
     return map;
   }
 
-  private void addToMap(Map<String, List<ConfusionPair>> map, List<ConfusionString> confusionStrings, ConfusionPair confusionSet) {
+  private void addToMap(Hashtable<String, List<ConfusionPair>> map, List<ConfusionString> confusionStrings, ConfusionPair confusionSet) {
     for (ConfusionString confusionString : confusionStrings) {
       String key = confusionString.getString();
       List<ConfusionPair> existingEntry = map.get(key);

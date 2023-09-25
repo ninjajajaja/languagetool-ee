@@ -19,6 +19,7 @@
 package org.languagetool.rules.patterns;
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Map;
 
 import org.languagetool.AnalyzedTokenReadings;
@@ -27,7 +28,7 @@ import org.languagetool.rules.RuleMatch;
 public class ApostropheTypeFilter extends RuleFilter {
 
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) throws IOException {
     String wordFrom = getRequired("wordFrom", arguments);
     boolean hasTypographicalApostrophe = getRequired("hasTypographicalApostrophe", arguments).equalsIgnoreCase("true");

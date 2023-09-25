@@ -90,8 +90,8 @@ public abstract class AbstractUnitConversionRule extends Rule {
   protected Map<Pattern, Unit> unitPatterns = new LinkedHashMap<>();  // use LinkedHashMap for stable iteration order
 
   // for patterns that require a custom number parsing function
-  protected Map<Pattern, Map.Entry<Unit, Function<MatchResult, Double>>> specialPatterns = new HashMap<>();
-  protected Map<Unit, List<String>> unitSymbols = new HashMap<>();
+  protected Hashtable<Pattern, Map.Entry<Unit, Function<MatchResult, Double>>> specialPatterns = new Hashtable<>();
+  protected Hashtable<Unit, List<String>> unitSymbols = new Hashtable<>();
   // for recognizing conversions made by this rule or the user
   protected List<Pattern> convertedPatterns = new ArrayList<>();
   // units to use for conversions
@@ -306,7 +306,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
    */
   @Nullable
   protected List<Map.Entry<Unit, Double>> getMetricEquivalent(double value, @NotNull Unit unit) {
-    LinkedList<Map.Entry<Unit, Double>> conversions = new LinkedList<>();
+    ArrayList<Map.Entry<Unit, Double>> conversions = new ArrayList<>();
     for (Unit metric : metricUnits) {
       if (unit.equals(metric)) { // don't convert to itself
         return null;
@@ -552,7 +552,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
   @Override
   public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
     List<RuleMatch> matches = new ArrayList<>();
-    List<Map.Entry<Integer, Integer>> ignoreRanges = new LinkedList<>();
+    List<Map.Entry<Integer, Integer>> ignoreRanges = new ArrayList<>();
 
     // handle special patterns where simple number parsing is not enough, e.g. 5'6"
     for (Pattern specialPattern : specialPatterns.keySet()) {
@@ -585,7 +585,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
     // there should be no influence on other results
     matchUnits(sentence, matches, ignoreRanges, true);
     matchUnits(sentence, matches, ignoreRanges, false);
-    Map<Integer, RuleMatch> matchesByStart = new HashMap<>();
+    Hashtable<Integer, RuleMatch> matchesByStart = new Hashtable<>();
     // deduplicate matches with equal start, longer match should win, e.g. miles per hour over just miles
     for (RuleMatch match : matches) {
       matchesByStart.compute(match.getFromPos(), (pos, other) ->
@@ -598,7 +598,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
     return matchesByStart.values().toArray(new RuleMatch[0]);
   }
 
-  private void removeAntiPatternMatches(AnalyzedSentence sentence, Map<Integer, RuleMatch> matchesByStart) {
+  private void removeAntiPatternMatches(AnalyzedSentence sentence, Hashtable<Integer, RuleMatch> matchesByStart) {
     for (Pattern antiPattern : antiPatterns) {
       String text = sentence.getText();
       Matcher matcher = antiPattern.matcher(text);

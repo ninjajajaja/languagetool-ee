@@ -22,6 +22,7 @@
 package org.languagetool.rules.spelling;
 
 import com.google.common.cache.*;
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.*;
@@ -55,30 +56,30 @@ public class SymSpellRule extends SpellingCheckRule {
       }
     });
 
-  private static final LoadingCache<Language, Set<String>> ignoredWordsCache = CacheBuilder.newBuilder()
+  private static final LoadingCache<Language, THashSet<String>> ignoredWordsCache = CacheBuilder.newBuilder()
     .expireAfterAccess(30, TimeUnit.MINUTES)
-    .build(new CacheLoader<Language, Set<String>>() {
+    .build(new CacheLoader<Language, THashSet<String>>() {
       @Override
-      public Set<String> load(Language lang) throws Exception {
+      public THashSet<String> load(Language lang) throws Exception {
         return getWordList(lang, "ignore.txt");
       }
     });
   public static final int INITIAL_CAPACITY = 50000;
 
   @NotNull
-  private static Set<String> getWordList(Language lang, String file) {
+  private static THashSet<String> getWordList(Language lang, String file) {
     String base = getSpellingDictBaseDir(lang);
     List<String> paths = Collections.singletonList(base + file);
-    Set<String> words = new HashSet<>();
+    THashSet<String> words = new THashSet<>();
     forEachLineInResources(paths, words::add);
-    return Collections.unmodifiableSet(words);
+    return words;
   }
 
   private static final LoadingCache<Language, Set<String>> prohibitedWordsCache = CacheBuilder.newBuilder()
     .expireAfterAccess(30, TimeUnit.MINUTES)
     .build(new CacheLoader<Language, Set<String>>() {
       @Override
-      public Set<String> load(Language lang) throws Exception {
+      public THashSet<String> load(Language lang) throws Exception {
         return getWordList(lang, "probibit.txt");
       }
     });
@@ -133,7 +134,7 @@ public class SymSpellRule extends SpellingCheckRule {
   protected static SymSpell initDefaultDictSpeller(Language lang) {
     SymSpell speller = new SymSpell(INITIAL_CAPACITY, 3, -1, 0);
     System.out.println("Initializing symspell");
-    Set<String> prohibitedWords = prohibitedWordsCache.getUnchecked(lang);
+    THashSet<String> prohibitedWords = (THashSet<String>) prohibitedWordsCache.getUnchecked(lang);
     long startTime = System.currentTimeMillis();
 
     String base = getSpellingDictBaseDir(lang);
@@ -218,7 +219,7 @@ public class SymSpellRule extends SpellingCheckRule {
   @Override
   public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
     List<RuleMatch> matches = new ArrayList<>();
-    Set<String> ignoredWords = ignoredWordsCache.getUnchecked(language);
+    THashSet<String> ignoredWords = (THashSet<String>) ignoredWordsCache.getUnchecked(language);
     for (AnalyzedTokenReadings token : sentence.getTokensWithoutWhitespace()) {
       if (token.isSentenceStart() || token.isImmunized() || token.isIgnoredBySpeller() || token.isNonWord())
         continue;
@@ -252,8 +253,8 @@ public class SymSpellRule extends SpellingCheckRule {
 
   @NotNull
   private List<String> filterCandidates(List<String> candidates) {
-    Set<String> ignoredWords = ignoredWordsCache.getUnchecked(language);
-    Set<String> prohibitedWords = prohibitedWordsCache.getUnchecked(language);
+    THashSet<String> ignoredWords = (THashSet<String>) ignoredWordsCache.getUnchecked(language);
+    THashSet<String> prohibitedWords = (THashSet<String>) prohibitedWordsCache.getUnchecked(language);
     return candidates.stream()
       .filter(c -> !ignoredWords.contains(c))
       .filter(c -> !prohibitedWords.contains(c))

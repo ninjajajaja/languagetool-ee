@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.patterns;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedTokenReadings;
@@ -44,10 +45,10 @@ public abstract class RuleFilter {
    *         the arguments) that properly describes the detected error
    */
   @Nullable
-  public abstract RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) throws IOException;
+  public abstract RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) throws IOException;
 
   /** @since 3.2 */
-  public boolean matches(Map<String, String> arguments, AnalyzedTokenReadings[] patternTokens, int firstMatchToken) throws IOException {
+  public boolean matches(Hashtable<String, String> arguments, AnalyzedTokenReadings[] patternTokens, int firstMatchToken) throws IOException {
     RuleMatch fakeMatch = new RuleMatch(new FakeRule(), null, 0, 1, "(internal rule)");
     return acceptRuleMatch(fakeMatch, arguments, firstMatchToken, patternTokens) != null;
   }
@@ -58,7 +59,7 @@ public abstract class RuleFilter {
     @Override public RuleMatch[] match(AnalyzedSentence sentence) throws IOException { return new RuleMatch[0]; }
   }
 
-  protected String getRequired(String key, Map<String, String> map) {
+  protected String getRequired(String key, Hashtable<String, String> map) {
     String result = map.get(key);
     if (result == null) {
       throw new IllegalArgumentException("Missing key '" + key + "'");
@@ -66,7 +67,7 @@ public abstract class RuleFilter {
     return result;
   }
 
-  protected String getOptional(String key, Map<String, String> map) {
+  protected String getOptional(String key, Hashtable<String, String> map) {
     return map.get(key);
   }
 

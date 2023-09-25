@@ -28,8 +28,6 @@ import org.jetbrains.annotations.Nullable;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * Helper class for SuggestionChangesTest, tracks experiment configuration and results
@@ -41,22 +39,22 @@ public class SuggestionsChanges {
   private final SuggestionChangesTestConfig config;
   private final List<SuggestionChangesExperiment> experiments;
 
-  private final ConcurrentMap<SuggestionChangesExperiment, Integer> correctSuggestions = new ConcurrentHashMap<>();
-  private final ConcurrentMap<SuggestionChangesExperiment, Integer> notFoundSuggestions = new ConcurrentHashMap<>();
-  private final ConcurrentMap<SuggestionChangesExperiment, Integer> suggestionPosSum = new ConcurrentHashMap<>();
-  private final ConcurrentMap<SuggestionChangesExperiment, Integer> textSize = new ConcurrentHashMap<>();
-  private final ConcurrentMap<SuggestionChangesExperiment, Long> computationTime = new ConcurrentHashMap<>();
-  private final ConcurrentMap<SuggestionChangesExperiment, Integer> numSamples = new ConcurrentHashMap<>();
+  private final Hashtable<SuggestionChangesExperiment, Integer> correctSuggestions = new Hashtable<>();
+  private final Hashtable<SuggestionChangesExperiment, Integer> notFoundSuggestions = new Hashtable<>();
+  private final Hashtable<SuggestionChangesExperiment, Integer> suggestionPosSum = new Hashtable<>();
+  private final Hashtable<SuggestionChangesExperiment, Integer> textSize = new Hashtable<>();
+  private final Hashtable<SuggestionChangesExperiment, Long> computationTime = new Hashtable<>();
+  private final Hashtable<SuggestionChangesExperiment, Integer> numSamples = new Hashtable<>();
 
-  private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer>
-    datasetCorrectSuggestions = new ConcurrentHashMap<>();
-  private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer>
-    datasetNotFoundSuggestions = new ConcurrentHashMap<>();
-  private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer>
-    datasetSuggestionPosSum = new ConcurrentHashMap<>();
-  private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer> datasetNumSamples = new ConcurrentHashMap<>();
-  private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer> datasetTextSize = new ConcurrentHashMap<>();
-  private final ConcurrentMap<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Long> datasetComputationTime = new ConcurrentHashMap<>();
+  private final Hashtable<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer>
+    datasetCorrectSuggestions = new Hashtable<>();
+  private final Hashtable<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer>
+    datasetNotFoundSuggestions = new Hashtable<>();
+  private final Hashtable<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer>
+    datasetSuggestionPosSum = new Hashtable<>();
+  private final Hashtable<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer> datasetNumSamples = new Hashtable<>();
+  private final Hashtable<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Integer> datasetTextSize = new Hashtable<>();
+  private final Hashtable<Pair<SuggestionChangesExperiment, SuggestionChangesDataset>, Long> datasetComputationTime = new Hashtable<>();
 
   private SuggestionChangesExperiment currentExperiment = null;
 
@@ -79,23 +77,23 @@ public class SuggestionsChanges {
     instance = new SuggestionsChanges(config, reportWriter);
   }
 
-  private List<Map<String, Object>> gridsearch(SortedMap<String, List<Object>> grid, List<Map<String, Object>> current) {
+  private List<Hashtable<String, Object>> gridsearch(SortedMap<String, List<Object>> grid, List<Hashtable<String, Object>> current) {
     if (grid.isEmpty()) { // recursion exit
       return current;
     }
 
     String name = grid.lastKey();
     List<Object> params = grid.get(name);
-    List<Map<String, Object>> result = new LinkedList<>();
+    List<Hashtable<String, Object>> result = new ArrayList<>();
 
     if (current.isEmpty()) {
       for (Object value : params) {
-        result.add(Collections.singletonMap(name, value));
+        result.add((Hashtable<String, Object>) new Hashtable<String, Object>().put(name, value));
       }
     } else {
-      for (Map<String, Object> entry : current) {
+      for (Hashtable<String, Object> entry : current) {
         for (Object value : params) {
-          Map<String, Object> modified = new HashMap<>(entry);
+          Hashtable<String, Object> modified = new Hashtable<>(entry);
           modified.put(name, value);
           result.add(modified);
         }
@@ -106,16 +104,16 @@ public class SuggestionsChanges {
   }
 
   private List<SuggestionChangesExperiment> generateExperiments(List<SuggestionChangesExperimentRuns> experimentSpecs) {
-    List<SuggestionChangesExperiment> experiments = new LinkedList<>();
+    List<SuggestionChangesExperiment> experiments = new ArrayList<>();
     for (SuggestionChangesExperimentRuns spec : experimentSpecs) {
 
       if (spec.parameters == null) {
-        experiments.add(new SuggestionChangesExperiment(spec.name, Collections.emptyMap()));
+        experiments.add(new SuggestionChangesExperiment(spec.name, new Hashtable<>()));
       } else {
         SortedMap<String, List<Object>> params = new TreeMap<>(spec.parameters);
-        List<Map<String, Object>> combinations = gridsearch(params, Collections.emptyList());
+        List<Hashtable<String, Object>> combinations = gridsearch(params, Collections.emptyList());
 
-        for (Map<String, Object> settings : combinations) {
+        for (Hashtable<String, Object> settings : combinations) {
           experiments.add(new SuggestionChangesExperiment(spec.name, settings));
         }
       }

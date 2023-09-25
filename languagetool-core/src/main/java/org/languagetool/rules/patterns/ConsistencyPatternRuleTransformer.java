@@ -70,7 +70,7 @@ public class ConsistencyPatternRuleTransformer implements PatternRuleTransformer
     @Override
     public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
 
-      Map<String, Integer> countFeatures  = new HashMap<>();
+      Hashtable<String, Integer> countFeatures  = new Hashtable<>();
       int offsetChars = 0;
       List<RuleMatch> matches = new ArrayList<>();
       for (AnalyzedSentence s : sentences) {
@@ -139,7 +139,7 @@ public class ConsistencyPatternRuleTransformer implements PatternRuleTransformer
   @Override
   public TransformedRules apply(List<AbstractPatternRule> patternRules) {
     List<AbstractPatternRule> remaining = new ArrayList<>();
-    Map<String, List<AbstractPatternRule>> toTransform = new HashMap<>();
+    Hashtable<String, List<AbstractPatternRule>> toTransform = new Hashtable<>();
     // rule id conventions:
     // PREFIX_GROUPOFRULES_FEATURE
     for (AbstractPatternRule abstractPatternRule : patternRules) {

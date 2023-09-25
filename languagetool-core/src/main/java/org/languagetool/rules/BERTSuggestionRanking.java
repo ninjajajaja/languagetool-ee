@@ -119,7 +119,7 @@ public class BERTSuggestionRanking extends RemoteRule {
 
   @Override
   protected RemoteRequest prepareRequest(List<AnalyzedSentence> sentences, Long textSessionId) {
-    List<RuleMatch> matches = new LinkedList<>();
+    List<RuleMatch> matches = new ArrayList<>();
     int totalWords = 0;
     try {
       for (AnalyzedSentence sentence : sentences) {
@@ -149,7 +149,7 @@ public class BERTSuggestionRanking extends RemoteRule {
       matches.forEach(RuleMatch::discardLazySuggestedReplacements);
       return new MatchesForReordering(sentences, matches, Collections.emptyList());
     }
-    List<RemoteLanguageModel.Request> requests = new LinkedList<>();
+    List<RemoteLanguageModel.Request> requests = new ArrayList<>();
     for (RuleMatch match : matches) {
       match.setSuggestedReplacementObjects(prepareSuggestions(match.getSuggestedReplacementObjects()));
       requests.add(buildRequest(match));

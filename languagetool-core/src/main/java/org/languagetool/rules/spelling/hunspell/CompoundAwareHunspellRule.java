@@ -217,12 +217,12 @@ public abstract class CompoundAwareHunspellRule extends HunspellRule {
 
   @Override
   protected List<String> sortSuggestionByQuality(String misspelling, List<String> suggestions) {
-    List<String> result = new ArrayList<>();
+    LinkedList<String> result = new LinkedList<>();
     for (String suggestion : suggestions) {
       if (StringUtils.remove(suggestion, ' ').equals(misspelling)
           && Arrays.stream(StringUtils.split(suggestion, ' ')).noneMatch(k -> k.length() == 1)) {
         // prefer run-on words unless a single letter is split off:
-        result.add(0, suggestion);
+        result.addFirst(suggestion);
       } else {
         result.add(suggestion);
       }

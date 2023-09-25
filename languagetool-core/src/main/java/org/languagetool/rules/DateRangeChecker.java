@@ -20,6 +20,7 @@
 
 package org.languagetool.rules;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.rules.patterns.RuleFilter;
@@ -38,7 +39,7 @@ import java.util.Map;
 public class DateRangeChecker extends RuleFilter {
   @Nullable
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
     try {
       int x = Integer.parseInt(arguments.get("x"));
       int y = Integer.parseInt(arguments.get("y"));

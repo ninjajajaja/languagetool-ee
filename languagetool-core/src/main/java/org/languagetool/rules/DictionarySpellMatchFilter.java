@@ -23,6 +23,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.hankcs.algorithm.AhoCorasickDoubleArrayTrie;
+import gnu.trove.THashSet;
 import lombok.extern.slf4j.Slf4j;
 import org.languagetool.UserConfig;
 import org.languagetool.markup.AnnotatedText;
@@ -49,7 +50,7 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
     @Override
     public AhoCorasickDoubleArrayTrie<String> load(UserConfig key) throws Exception {
       AhoCorasickDoubleArrayTrie<String> searcher = new AhoCorasickDoubleArrayTrie<>();
-      Map<String, String> phrases = new HashMap<>();
+      Hashtable<String, String> phrases = new Hashtable<>();
       for (String phrase : key.getAcceptedPhrases()) {
         phrases.put(phrase, phrase);
       }
@@ -70,7 +71,7 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
 
   @Override
   public List<RuleMatch> filter(List<RuleMatch> ruleMatches, AnnotatedText text) {
-    Set<String> dictionary = userConfig.getAcceptedPhrases();
+    THashSet<String> dictionary = userConfig.getAcceptedPhrases();
     if (dictionary.size() > 0) {
       List<RuleMatch> cleanMatches = new ArrayList<>(ruleMatches);
       try {
@@ -100,8 +101,8 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
     return ruleMatches;
   }
 
-  public Map<String, List<RuleMatch>> getPhrases(List<RuleMatch> ruleMatches, AnnotatedText text) {
-    Map<String, List<RuleMatch>> phraseToMatches = new HashMap<>();
+  public Hashtable<String, List<RuleMatch>> getPhrases(List<RuleMatch> ruleMatches, AnnotatedText text) {
+    Hashtable<String, List<RuleMatch>> phraseToMatches = new Hashtable<>();
     int prevToPos = Integer.MIN_VALUE;
     List<RuleMatch> collectedMatches = new ArrayList<>();
     List<String> collectedTerms = new ArrayList<>();

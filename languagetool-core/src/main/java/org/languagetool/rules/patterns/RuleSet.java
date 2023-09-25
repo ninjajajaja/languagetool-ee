@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.patterns;
 
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.ApiStatus;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.rules.Rule;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
  */
 @ApiStatus.Internal
 public abstract class RuleSet {
-  private volatile Set<String> ruleIds;
+  private volatile THashSet<String> ruleIds;
 
   /**
    * @return all rules in this set, not filtered
@@ -50,10 +51,10 @@ public abstract class RuleSet {
    * @return the ids of {@link #allRules()}
    * @since 5.6
    */
-  public Set<String> allRuleIds() {
-    Set<String> result = ruleIds;
+  public THashSet<String> allRuleIds() {
+    THashSet<String> result = ruleIds;
     if (result == null) {
-      ruleIds = result = Collections.unmodifiableSet(allRules().stream().map(Rule::getId).collect(Collectors.toSet()));
+      ruleIds = result = new THashSet<>(allRules().stream().map(Rule::getId).collect(Collectors.toSet()));
     }
     return result;
   }
@@ -94,8 +95,8 @@ public abstract class RuleSet {
 
   private static RuleSet hinted(List<? extends Rule> rules, boolean withLemmaHints) {
     List<Rule> allRules = Collections.unmodifiableList(rules);
-    Map<String, BitSet> byToken = new HashMap<>();
-    Map<String, BitSet> byLemma = new HashMap<>();
+    Hashtable<String, BitSet> byToken = new Hashtable<>();
+    Hashtable<String, BitSet> byLemma = new Hashtable<>();
     BitSet unclassified = new BitSet();
     for (int i = 0; i < allRules.size(); i++) {
       Rule rule = allRules.get(i);
@@ -108,7 +109,7 @@ public abstract class RuleSet {
           Arrays.stream(tokenHints).filter(th -> !th.inflected).findFirst().orElse(null);
         if (firstHint != null) {
           classified = true;
-          Map<String, BitSet> map = firstHint.inflected ? byLemma : byToken;
+          Hashtable<String, BitSet> map = firstHint.inflected ? byLemma : byToken;
           for (String hint : firstHint.lowerCaseValues) {
             map.computeIfAbsent(hint, __ -> new BitSet()).set(i);
           }

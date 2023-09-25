@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.ngrams;
 
+import gnu.trove.THashSet;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.AnalyzedTokenReadings;
@@ -37,20 +38,20 @@ class GoogleToken {
   final String token;
   final int startPos;
   final int endPos;
-  final Set<AnalyzedToken> posTags;
+  final THashSet<AnalyzedToken> posTags;
 
   GoogleToken(String token, int startPos, int endPos) {
-    this(token, startPos, endPos, Collections.emptySet());
+    this(token, startPos, endPos, new THashSet<>());
   }
 
-  GoogleToken(String token, int startPos, int endPos, Set<AnalyzedToken> posTags) {
+  GoogleToken(String token, int startPos, int endPos, THashSet<AnalyzedToken> posTags) {
     this.token = "’".equals(token) ? "'" : token;  // Google seems to have indexed the apostrophe always like this
     this.startPos = startPos;
     this.endPos = endPos;
     this.posTags = posTags;
   }
 
-  Set<AnalyzedToken> getPosTags() {
+  THashSet<AnalyzedToken> getPosTags() {
     return posTags;
   }
 
@@ -93,7 +94,7 @@ class GoogleToken {
     for (String token : tokens) {
       if (!StringTools.isWhitespace(token)) {
         int endPos = startPos + token.length();
-        Set<AnalyzedToken> pos = findOriginalAnalyzedTokens(sentence, startPos, endPos);
+        THashSet<AnalyzedToken> pos = findOriginalAnalyzedTokens(sentence, startPos, endPos);
         GoogleToken gToken = new GoogleToken(token, startPos, endPos, pos);
         result.add(gToken);
       }
@@ -102,8 +103,8 @@ class GoogleToken {
     return result;
   }
 
-  private static Set<AnalyzedToken> findOriginalAnalyzedTokens(AnalyzedSentence sentence, int startPos, int endPos) {
-    Set<AnalyzedToken> result = new HashSet<>();
+  private static THashSet<AnalyzedToken> findOriginalAnalyzedTokens(AnalyzedSentence sentence, int startPos, int endPos) {
+    THashSet<AnalyzedToken> result = new THashSet<>();
     for (AnalyzedTokenReadings tokens : sentence.getTokensWithoutWhitespace()) {
       if (tokens.getStartPos() == startPos && tokens.getEndPos() == endPos) {
         for (AnalyzedToken analyzedToken : tokens.getReadings()) {

@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import org.languagetool.tools.StringTools;
 
 import java.util.*;
@@ -30,7 +31,7 @@ import java.util.*;
  */
 public class ConfusionSet {
 
-  private final Set<ConfusionString> set = new HashSet<>();
+  private final THashSet<ConfusionString> set = new THashSet<>();
   private final long factor;
 
   /**
@@ -63,17 +64,17 @@ public class ConfusionSet {
     return factor;
   }
 
-  public Set<ConfusionString> getSet() {
-    return Collections.unmodifiableSet(set);
+  public THashSet<ConfusionString> getSet() {
+    return set;
   }
 
-  public Set<ConfusionString> getUppercaseFirstCharSet() {
-    Set<ConfusionString> result = new HashSet<>();
+  public THashSet<ConfusionString> getUppercaseFirstCharSet() {
+    THashSet<ConfusionString> result = new THashSet<>();
     for (ConfusionString s : set) {
       ConfusionString newString = new ConfusionString(StringTools.uppercaseFirstChar(s.getString()), s.getDescription());
       result.add(newString);
     }
-    return Collections.unmodifiableSet(result);
+    return result;
   }
 
   @Override

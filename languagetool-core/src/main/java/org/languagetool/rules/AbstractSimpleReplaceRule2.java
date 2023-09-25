@@ -81,14 +81,14 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
    */
   public abstract Locale getLocale();
 
-  private static final LoadingCache<PathsAndLanguage, List<Map<String, SuggestionWithMessage>>> cache = CacheBuilder.newBuilder()
+  private static final LoadingCache<PathsAndLanguage, List<Hashtable<String, SuggestionWithMessage>>> cache = CacheBuilder.newBuilder()
           .expireAfterWrite(30, TimeUnit.MINUTES)
-          .build(new CacheLoader<PathsAndLanguage, List<Map<String, SuggestionWithMessage>>>() {
+          .build(new CacheLoader<PathsAndLanguage, List<Hashtable<String, SuggestionWithMessage>>>() {
             @Override
-            public List<Map<String, SuggestionWithMessage>> load(@NotNull PathsAndLanguage lap) throws IOException {
-              List<Map<String, SuggestionWithMessage>> maps = new ArrayList<>();
+            public List<Hashtable<String, SuggestionWithMessage>> load(@NotNull PathsAndLanguage lap) throws IOException {
+              List<Hashtable<String, SuggestionWithMessage>> maps = new ArrayList<>();
               for (String path : lap.paths) {
-                List<Map<String, SuggestionWithMessage>> l = loadWords(path, lap.lang, lap.caseSensitive, lap.checkingCase);
+                List<Hashtable<String, SuggestionWithMessage>> l = loadWords(path, lap.lang, lap.caseSensitive, lap.checkingCase);
                 maps.addAll(l);
               }
               return maps;
@@ -116,7 +116,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
   /**
    * @return the list of wrong words for which this rule can suggest corrections. The list cannot be modified.
    */
-  public List<Map<String, SuggestionWithMessage>> getWrongWords(boolean checkingCase) {
+  public List<Hashtable<String, SuggestionWithMessage>> getWrongWords(boolean checkingCase) {
     try {
       boolean caseSen = getCaseSensitivy() == CaseSensitivy.CS || getCaseSensitivy() == CaseSensitivy.CSExceptAtSentenceStart;
       return cache.get(new PathsAndLanguage(getFileNames(), language, caseSen, checkingCase));
@@ -131,9 +131,9 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
    * @param filename the file from classpath to load
    * @return the list of maps containing the error-corrections pairs. The n-th map contains key strings of (n+1) words.
    */
-  private static List<Map<String, SuggestionWithMessage>> loadWords(String filename, Language lang, boolean caseSensitive, boolean checkingCase)
+  private static List<Hashtable<String, SuggestionWithMessage>> loadWords(String filename, Language lang, boolean caseSensitive, boolean checkingCase)
           throws IOException {
-    List<Map<String, SuggestionWithMessage>> list = new ArrayList<>();
+    List<Hashtable<String, SuggestionWithMessage>> list = new ArrayList<>();
     InputStream stream = getDataBroker().getFromRulesDirAsStream(filename);
     try (
       InputStreamReader isr = new InputStreamReader(stream, StandardCharsets.UTF_8);
@@ -175,7 +175,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
         for (String wrongForm : wrongForms) {
           int wordCount = getWordCount(lang, wrongForm);
           for (int i = list.size(); i < wordCount; i++) {  // grow if necessary
-            list.add(new HashMap<>());
+            list.add(new Hashtable<>());
           }
           String searchToken = caseSensitive ? wrongForm : wrongForm.toLowerCase();
           if (!checkingCase && searchToken.equals(confPairParts[1])) {
@@ -189,9 +189,9 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
       //System.out.println(msgCount + " of " + lineCount + " have a specific message in " + filename);
     }
     // seal the result (prevent modification from outside this class)
-    List<Map<String,SuggestionWithMessage>> result = new ArrayList<>();
-    for (Map<String, SuggestionWithMessage> map : list) {
-      result.add(Collections.unmodifiableMap(map));
+    List<Hashtable<String,SuggestionWithMessage>> result = new ArrayList<>();
+    for (Hashtable<String, SuggestionWithMessage> map : list) {
+      result.add(map);
     }
     return Collections.unmodifiableList(result);
   }
@@ -228,7 +228,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
 
-    List<Map<String, SuggestionWithMessage>> wrongWords = getWrongWords(false);
+    List<Hashtable<String, SuggestionWithMessage>> wrongWords = getWrongWords(false);
     if (wrongWords.size() == 0) {
       return toRuleMatchArray(ruleMatches);
     }

@@ -21,6 +21,7 @@
 
 package org.languagetool.rules.spelling.suggestions;
 
+import java.util.Hashtable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -78,7 +79,7 @@ class SuggestionChangesDataset {
 @SuppressWarnings("ALL")
 class SuggestionChangesExperimentRuns {
   public String name;
-  public Map<String, List<Object>> parameters;
+  public Hashtable<String, List<Object>> parameters;
 
   @Override
   public String toString() {
@@ -92,9 +93,9 @@ class SuggestionChangesExperimentRuns {
 @SuppressWarnings("ALL")
 public class SuggestionChangesExperiment {
   public String name;
-  public Map<String, Object> parameters;
+  public Hashtable<String, Object> parameters;
 
-  public SuggestionChangesExperiment(String name, Map<String, Object> parameters) {
+  public SuggestionChangesExperiment(String name, Hashtable<String, Object> parameters) {
     this.name = name;
     this.parameters = parameters;
   }
