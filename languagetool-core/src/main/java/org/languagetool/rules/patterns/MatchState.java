@@ -287,15 +287,16 @@ public class MatchState {
     } else {
       original = formattedToken != null ? formattedToken.getToken() : "";
     }
-    for (int i = 0; i < formattedString.length; i++) {
+    int formattedStringLength = formattedString.length;
+    for (int i = 0; i < formattedStringLength; i++) {
       formattedString[i] = convertCase(formattedString[i], original, lang);
     }
     // TODO should case conversion happen before or after including skipped tokens?
     IncludeRange includeSkipped = match.getIncludeSkipped();
     if (includeSkipped != IncludeRange.NONE && skippedTokens != null
         && !skippedTokens.isEmpty()) {
-      String[] helper = new String[formattedString.length];
-      for (int i = 0; i < formattedString.length; i++) {
+      String[] helper = new String[formattedStringLength];
+      for (int i = 0; i < formattedStringLength; i++) {
         if (formattedString[i] == null) {
           formattedString[i] = "";
         }
@@ -308,7 +309,7 @@ public class MatchState {
       // tagger-based speller
       List<AnalyzedTokenReadings> analyzed = lang.getTagger().tag(
           formattedStringElements);
-      for (int i = 0; i < formattedString.length; i++) {
+      for (int i = 0; i < formattedStringLength; i++) {
         AnalyzedToken analyzedToken = analyzed.get(i).getAnalyzedToken(0);
         if (analyzedToken.getLemma() == null && analyzedToken.hasNoTag()) {
           formattedString[i] = PatternRuleMatcher.MISTAKE;

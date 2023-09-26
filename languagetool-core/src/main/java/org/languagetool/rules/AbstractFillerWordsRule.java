@@ -158,14 +158,15 @@ public abstract class AbstractFillerWordsRule extends TextLevelRule {
           }
         }
       }
+      int startPosSize = startPos.size();
       if (Tools.isParagraphEnd(sentences, nSentence, lang)) {
         if(wordCount > 0) {
-          percent = startPos.size() * 100.0 / wordCount;
+          percent = startPosSize * 100.0 / wordCount;
         } else {
           percent = 0;
         }
         if (percent > minPercent) {
-          for (int i = 0; i < startPos.size(); i++) {
+          for (int i = 0; i < startPosSize; i++) {
             RuleMatch ruleMatch = new RuleMatch(this, relevantSentences.get(i), startPos.get(i), endPos.get(i), msg);
             ruleMatches.add(ruleMatch);
           }

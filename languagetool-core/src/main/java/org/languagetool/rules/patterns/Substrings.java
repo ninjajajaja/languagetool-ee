@@ -143,11 +143,12 @@ class Substrings {
 
   private boolean containsSubstrings(String text, boolean caseSensitive, int textPos, int firstSubstringIndex) {
     for (int i = firstSubstringIndex; i < substrings.length; i++) {
-      textPos = indexOf(text, substrings[i], caseSensitive, textPos);
+      String substringsI = substrings[i];
+      textPos = indexOf(text, substringsI, caseSensitive, textPos);
       if (textPos < 0) {
         return false;
       }
-      textPos += substrings[i].length();
+      textPos += substringsI.length();
     }
     return true;
   }

@@ -70,7 +70,8 @@ public class DoublePunctuationRule extends Rule {
     int dotCount = 0;
     int commaCount = 0;
     for (int i = 1; i < tokens.length; i++) {
-      String token = tokens[i].getToken();
+      AnalyzedTokenReadings tokensI = tokens[i];
+      String token = tokensI.getToken();
       String nextToken = null;
       String prevPrevToken = null;
       if (i < tokens.length - 1) {
@@ -82,11 +83,11 @@ public class DoublePunctuationRule extends Rule {
       if (".".equals(token)) {
         dotCount++;
         commaCount = 0;
-        startPos = tokens[i].getStartPos();
+        startPos = tokensI.getStartPos();
       } else if (getCommaCharacter().equals(token)) {
         commaCount++;
         dotCount = 0;
-        startPos = tokens[i].getStartPos();
+        startPos = tokensI.getStartPos();
       }
 
 

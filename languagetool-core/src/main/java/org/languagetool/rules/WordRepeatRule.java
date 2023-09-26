@@ -93,15 +93,16 @@ public class WordRepeatRule extends Rule {
     String prevToken = "";
     // we start from token 1, token no. 0 is guaranteed to be SENT_START
     for (int i = 1; i < tokens.length; i++) {
-      String token = tokens[i].getToken();
-      if (tokens[i].isImmunized()) {
+      AnalyzedTokenReadings tokensI = tokens[i];
+      String token = tokensI.getToken();
+      if (tokensI.isImmunized()) {
         prevToken = "";
         continue;
       }
       if (isWord(token) && prevToken.equalsIgnoreCase(token) && !ignore(tokens, i)) {
         String msg = messages.getString("repetition");
         int prevPos = tokens[i - 1].getStartPos();
-        int pos = tokens[i].getStartPos();
+        int pos = tokensI.getStartPos();
         RuleMatch ruleMatch = createRuleMatch(prevToken, token, prevPos, pos, msg, sentence);
         ruleMatches.add(ruleMatch);
       }

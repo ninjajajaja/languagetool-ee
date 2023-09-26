@@ -108,14 +108,17 @@ public class LongSentenceRule extends TextLevelRule {
       AnalyzedTokenReadings toPosToken = null;
       while (i < tokens.length) {
         int numWords = 0;
-        while (i < tokens.length && !tokens[i].getToken().equals(":") && !tokens[i].getToken().equals(";")
-          && !tokens[i].getToken().equals("\n") && !tokens[i].getToken().equals("\r\n")
-          && !tokens[i].getToken().equals("\n\r")
+        String tokensIGetToken1 = tokens[i].getToken();
+         while (i < tokens.length && !tokensIGetToken1.equals(":") && !tokensIGetToken1.equals(";")
+          && !tokensIGetToken1.equals("\n") && !tokensIGetToken1.equals("\r\n")
+          && !tokensIGetToken1.equals("\n\r")
         ) {
-          if (isWordCount(tokens[i].getToken())) {
+           AnalyzedTokenReadings tokensI = tokens[i];
+           String tokensIGetToken = tokensI.getToken();
+           if (isWordCount(tokensIGetToken)) {
             //Get first word token
             if (fromPosToken == null) {
-              fromPosToken = tokens[i];
+              fromPosToken = tokensI;
             }
             if (numWords == maxWords) {
               //Get last word token

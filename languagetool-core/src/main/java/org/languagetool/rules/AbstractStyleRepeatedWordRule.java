@@ -158,7 +158,8 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
    */
   private static boolean hasBreakToken(AnalyzedTokenReadings[] tokens) {
     for (int i = 0; i < tokens.length && i < MAX_TOKEN_TO_CHECK; i++) {
-      if (tokens[i].getToken().equals("-") || tokens[i].getToken().equals("—") || tokens[i].getToken().equals("–")) {
+      String tokensIGetToken = tokens[i].getToken();
+      if (tokensIGetToken.equals("-") || tokensIGetToken.equals("—") || tokensIGetToken.equals("–")) {
         return true;
       }
     }
@@ -235,16 +236,17 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
       }
     }
     for (int i = 0; i < tokens.length; i++) {
-      if (i != notCheck && isTokenToCheck(tokens[i])) {
-        if ((!lemmas.isEmpty() && tokens[i].hasAnyLemma(lemmas.toArray(new String[0])) && !isExceptionPair(testToken, tokens[i])) 
-            || isPartOfWord(testToken.getToken(), tokens[i].getToken())) {
+      AnalyzedTokenReadings tokensI = tokens[i];
+      if (i != notCheck && isTokenToCheck(tokensI)) {
+        if ((!lemmas.isEmpty() && tokensI.hasAnyLemma(lemmas.toArray(new String[0])) && !isExceptionPair(testToken, tokensI))
+            || isPartOfWord(testToken.getToken(), tokensI.getToken())) {
           if (notCheck >= 0) {
             if (notCheck == i - 2) {
               return !isTokenPair(tokens, i, true);
             } else if (notCheck == i + 2) {
               return !isTokenPair(tokens, i, false);
             } else if ((notCheck == i + 1 || notCheck == i - 1) 
-                && testToken.getToken().equals(tokens[i].getToken())) {
+                && testToken.getToken().equals(tokensI.getToken())) {
               return false;
             }
           }
@@ -260,11 +262,12 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     List<AnalyzedTokenReadings[]> tokenList = new ArrayList<>();
     int pos = 0;
-    for (int n = 0; n < maxDistanceOfSentences && n < sentences.size(); n++) {
+    int sentencesSize = sentences.size();
+    for (int n = 0; n < maxDistanceOfSentences && n < sentencesSize; n++) {
       tokenList.add(sentences.get(n).getTokensWithoutWhitespace());
     }
-    for (int n = 0; n < sentences.size(); n++) {
-      if (n + maxDistanceOfSentences < sentences.size()) {
+    for (int n = 0; n < sentencesSize; n++) {
+      if (n + maxDistanceOfSentences < sentencesSize) {
         tokenList.add(sentences.get(n + maxDistanceOfSentences).getTokensWithoutWhitespace());
       }
       if (tokenList.size() > 2 * maxDistanceOfSentences + 1) {
@@ -273,17 +276,19 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
       int nTok = maxDistanceOfSentences;
       if (n < maxDistanceOfSentences) {
         nTok = n;
-      } else if (n >= sentences.size() - maxDistanceOfSentences) {
-        nTok = tokenList.size() - (sentences.size() - n);
+      } else if (n >= sentencesSize - maxDistanceOfSentences) {
+        nTok = tokenList.size() - (sentencesSize - n);
       }
-      if (!hasBreakToken(tokenList.get(nTok))) {
-        for (int i = 0; i < tokenList.get(nTok).length; i++) {
-          AnalyzedTokenReadings token = tokenList.get(nTok)[i];
-          boolean isInQuotes = i > 0 && OPENING_QUOTES.matcher(tokenList.get(nTok)[i - 1].getToken()).matches()
-              && i < tokenList.get(nTok).length - 1 && ENDING_QUOTES.matcher(tokenList.get(nTok)[i + 1].getToken()).matches();
+      AnalyzedTokenReadings[] tokenListGetnTok = tokenList.get(nTok);
+      if (!hasBreakToken(tokenListGetnTok)) {
+        int tokenListGetnTokLengthMinusOne = tokenListGetnTok.length-1;
+        for (int i = 0; i < tokenListGetnTok.length; i++) {
+          AnalyzedTokenReadings token = tokenListGetnTok[i];
+          boolean isInQuotes = i > 0 && OPENING_QUOTES.matcher(tokenListGetnTok[i - 1].getToken()).matches()
+              && i < tokenListGetnTokLengthMinusOne && ENDING_QUOTES.matcher(tokenListGetnTok[i + 1].getToken()).matches();
           if (!isInQuotes && isTokenToCheck(token)) {
             int isRepeated = 0;
-            if (isTokenInSentence(token, tokenList.get(nTok), i)) {
+            if (isTokenInSentence(token, tokenListGetnTok, i)) {
               isRepeated = 1;
             }
             for(int j = nTok - 1; isRepeated == 0 && j >= 0 && j >= nTok - maxDistanceOfSentences; j--) {

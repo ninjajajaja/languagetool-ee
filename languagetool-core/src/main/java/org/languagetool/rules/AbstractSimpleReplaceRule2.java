@@ -235,19 +235,21 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     Queue<AnalyzedTokenReadings> prevTokens = new ArrayBlockingQueue<>(wrongWords.size());
 
     for (int i = 1; i < tokens.length; i++) {
-      addToQueue(tokens[i], prevTokens);
+      AnalyzedTokenReadings tokensI = tokens[i];
+      addToQueue(tokensI, prevTokens);
       StringBuilder sb = new StringBuilder();
       List<String> variants = new ArrayList<>();
       List<AnalyzedTokenReadings> prevTokensList =
               Arrays.asList(prevTokens.toArray(new AnalyzedTokenReadings[0]));
-      for (int j = prevTokensList.size() - 1; j >= 0; j--) {
-        if (j != prevTokensList.size() - 1 && prevTokensList.get(j + 1).isWhitespaceBefore()) {
+      int prevTokensListSizeMinusOne = prevTokensList.size()-1;
+      for (int j = prevTokensListSizeMinusOne; j >= 0; j--) {
+        if (j != prevTokensListSizeMinusOne && prevTokensList.get(j + 1).isWhitespaceBefore()) {
           sb.insert(0, " ");
         }
         sb.insert(0, prevTokensList.get(j).getToken());
         variants.add(0, sb.toString());
       }
-      if (isTokenException(tokens[i])) {
+      if (isTokenException(tokensI)) {
         continue;
       }
       int len = variants.size(); // prevTokensList and variants have now the same length
@@ -266,9 +268,10 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
         if (crtMatch != null) {
           List<String> replacements = Arrays.asList(crtMatch.getSuggestion().split("\\|"));
           String msgSuggestions = "";
-          for (int k = 0; k < replacements.size(); k++) {
+          int replacementsSize = replacements.size();
+          for (int k = 0; k < replacementsSize; k++) {
             if (k > 0) {
-              msgSuggestions += (k == replacements.size() - 1 ? getSuggestionsSeparator(): ", ");
+              msgSuggestions += (k == replacementsSize - 1 ? getSuggestionsSeparator(): ", ");
             }
             msgSuggestions += "<suggestion>" + replacements.get(k) + "</suggestion>";
           }
@@ -289,7 +292,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
           }
           if ((getCaseSensitivy() != CaseSensitivy.CS || getCaseSensitivy() == CaseSensitivy.CSExceptAtSentenceStart)
                && StringTools.startsWithUppercase(crt)) {
-            for (int k = 0; k < replacements.size(); k++) {
+            for (int k = 0; k < replacementsSize; k++) {
               replacements.set(k, StringTools.uppercaseFirstChar(replacements.get(k)));
             }
           }

@@ -90,8 +90,9 @@ public class PunctuationMarkAtParagraphEnd2 extends TextLevelRule {
 
   private AnalyzedTokenReadings getLastNonSpaceToken(AnalyzedTokenReadings[] tokens) {
     for (int i = tokens.length-1; i >= 0; i--) {
-      if (!tokens[i].isWhitespace()) {
-        return tokens[i];
+      AnalyzedTokenReadings tokensI = tokens[i];
+      if (!tokensI.isWhitespace()) {
+        return tokensI;
       }
     }
     return null;

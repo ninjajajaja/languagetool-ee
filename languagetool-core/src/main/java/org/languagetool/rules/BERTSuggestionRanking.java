@@ -184,9 +184,10 @@ public class BERTSuggestionRanking extends RemoteRule {
         // put curated at the top, then compare probabilities
         for (int i = 0; i < indices.size(); i++) {
           List<Double> scores = results.get(i);
-          String userWord = requests.get(i).text.substring(requests.get(i).start, requests.get(i).end);
+          RemoteLanguageModel.Request requestsGetI = requests.get(i);
+          String userWord = requestsGetI.text.substring(requestsGetI.start, requestsGetI.end);
           RuleMatch match = matches.get(indices.get(i).intValue());
-          //RemoteLanguageModel.Request req = requests.get(i);
+          //RemoteLanguageModel.Request req = requestsGetI;
           //String error = req.text.substring(req.start, req.end);
           //logger.info("Scored suggestions for '{}': {} -> {}", error, match.getSuggestedReplacements(), Streams
           //  .zip(match.getSuggestedReplacementObjects().stream(), scores.stream(), Pair::of)

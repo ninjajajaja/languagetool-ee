@@ -100,15 +100,17 @@ public class CommaWhitespaceRule extends Rule {
     String prevToken = "";
     String prevPrevToken = "";
     boolean prevWhite = false;
-    for (int i = 0; i < tokens.length; i++) {
-      String token = tokens[i].getToken();
-      boolean isWhitespace = isWhitespaceToken(tokens[i]);
+    int tokensLength = tokens.length;
+    for (int i = 0; i < tokensLength; i++) {
+      AnalyzedTokenReadings tokensI = tokens[i];
+      String token = tokensI.getToken();
+      boolean isWhitespace = isWhitespaceToken(tokensI);
       boolean twoSuggestions = false;
       
       String msg = null;
       String suggestionText = null;
       if (isWhitespace && isLeftBracket(prevToken)) {
-        boolean isException = i + 1 < tokens.length && prevToken.equals("[") && token.equals(" ") && tokens[i+1].getToken().equals("]");  // "- [ ]" syntax e.g. on GitHub
+        boolean isException = i + 1 < tokensLength && prevToken.equals("[") && token.equals(" ") && tokens[i+1].getToken().equals("]");  // "- [ ]" syntax e.g. on GitHub
         if (!isException) {
           msg = messages.getString("no_space_after");
           suggestionText = prevToken;
@@ -124,7 +126,7 @@ public class CommaWhitespaceRule extends Rule {
           && !containsDigit(token)
           && !",".equals(prevPrevToken)) {
         msg = messages.getString("missing_space_after_comma");
-        suggestionText = getCommaCharacter() + " " + tokens[i].getToken();
+        suggestionText = getCommaCharacter() + " " + token;
       } else if (prevWhite) {
         if (isRightBracket(token)) {
           boolean isException = token.equals("]") && prevToken.equals(" ") && prevPrevToken.equals("["); // "- [ ]" syntax e.g. on GitHub
@@ -136,19 +138,19 @@ public class CommaWhitespaceRule extends Rule {
           msg = messages.getString("space_after_comma");
           suggestionText = getCommaCharacter();
           // exception for duplicated comma (we already have another rule for that)
-          if (i + 1 < tokens.length && getCommaCharacter().equals(tokens[i+1].getToken())) {
+          if (i + 1 < tokensLength && getCommaCharacter().equals(tokens[i+1].getToken())) {
             msg = null;
           }
-          if (i + 1 < tokens.length && !tokens[i+1].isWhitespace()) {
+          if (i + 1 < tokensLength && !tokens[i+1].isWhitespace()) {
             suggestionText = getCommaCharacter() + " ";
           }
         } else if (token.equals(".") && !isDomain(tokens, i+1) && !isFileExtension(tokens, i+1)) {
           msg = messages.getString("no_space_before_dot");
           suggestionText = ".";
           // exception case for figures such as ".5" and ellipsis
-          if (i + 1 < tokens.length && isDigitOrDot(tokens[i+1].getToken())) {
+          if (i + 1 < tokensLength && isDigitOrDot(tokens[i+1].getToken())) {
             msg = null;
-          } else if (i + 2 < tokens.length && tokens[i+1].getToken().equals("/") && tokens[i+2].getToken().matches("[a-zA-Z]+")) {
+          } else if (i + 2 < tokensLength && tokens[i+1].getToken().equals("/") && tokens[i+2].getToken().matches("[a-zA-Z]+")) {
             // commands like "./validate.sh"
             msg = null;
           }
@@ -159,14 +161,14 @@ public class CommaWhitespaceRule extends Rule {
         if (twoSuggestions) {
           fromPos = tokens[i - 2].getStartPos();
         }
-        int toPos = tokens[i].getEndPos();
+        int toPos = tokensI.getEndPos();
         String text = sentence.getText();
         if (toPos < text.length()) {
           String marked = text.substring(fromPos, toPos);
           if (marked.equals(suggestionText) && !twoSuggestions) {
             prevPrevToken = prevToken;
             prevToken = token;
-            prevWhite = isWhitespace && !tokens[i].isFieldCode(); // LO/OO code before comma/dot
+            prevWhite = isWhitespace && !tokensI.isFieldCode(); // LO/OO code before comma/dot
             continue;
           }
         }
@@ -181,7 +183,7 @@ public class CommaWhitespaceRule extends Rule {
       }
       prevPrevToken = prevToken;
       prevToken = token;
-      prevWhite = isWhitespace && !tokens[i].isFieldCode(); // LO/OO code before comma/dot
+      prevWhite = isWhitespace && !tokensI.isFieldCode(); // LO/OO code before comma/dot
     }
 
     return toRuleMatchArray(ruleMatches);

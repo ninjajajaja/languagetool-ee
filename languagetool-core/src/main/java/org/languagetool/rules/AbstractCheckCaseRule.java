@@ -51,22 +51,25 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
     }
     Queue<AnalyzedTokenReadings> prevTokens = new ArrayBlockingQueue<>(wrongWords.size());
     int sentStart = 0;
-    while (sentStart + 1 < tokens.length && isPunctuationStart(tokens[sentStart + 1].getToken())) {
+    int tokensLength = tokens.length;
+    while (sentStart + 1 < tokensLength && isPunctuationStart(tokens[sentStart + 1].getToken())) {
       sentStart++;
     }
-    for (int i = 1; i < tokens.length; i++) {
-      addToQueue(tokens[i], prevTokens);
+    for (int i = 1; i < tokensLength; i++) {
+      AnalyzedTokenReadings tokensI = tokens[i];
+      addToQueue(tokensI, prevTokens);
       StringBuilder sb = new StringBuilder();
       List<String> phrases = new ArrayList<>();
       List<AnalyzedTokenReadings> prevTokensList = Arrays.asList(prevTokens.toArray(new AnalyzedTokenReadings[0]));
-      for (int j = prevTokensList.size() - 1; j >= 0; j--) {
-        if (j != prevTokensList.size() - 1 && prevTokensList.get(j + 1).isWhitespaceBefore()) {
+      int prevTokensListSizeMinusOne = prevTokensList.size()-1;
+      for (int j = prevTokensListSizeMinusOne; j >= 0; j--) {
+        if (j != prevTokensListSizeMinusOne && prevTokensList.get(j + 1).isWhitespaceBefore()) {
           sb.insert(0, " ");
         }
         sb.insert(0, prevTokensList.get(j).getToken());
         phrases.add(0, sb.toString());
       }
-      if (isTokenException(tokens[i])) {
+      if (isTokenException(tokensI)) {
         continue;
       }
       int len = phrases.size(); // prevTokensList and variants have now the same length

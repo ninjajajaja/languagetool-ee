@@ -390,11 +390,12 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
     int lastLeftSugStart = leftSide.lastIndexOf(RuleMatch.SUGGESTION_START_TAG);
     StringBuilder sb = new StringBuilder();
     sb.append(errorMessage);
-    for (int z = 0; z < matches.length; z++) {
+    int matchesLength = matches.length;
+    for (int z = 0; z < matchesLength; z++) {
       sb.append(suggestionLeft);
       sb.append(matches[z]);
       sb.append(suggestionRight);
-      if (z < matches.length - 1 && lastLeftSugEnd < lastLeftSugStart) {
+      if (z < matchesLength - 1 && lastLeftSugEnd < lastLeftSugStart) {
         sb.append(RuleMatch.SUGGESTION_END_TAG);
         sb.append(", ");
         sb.append(RuleMatch.SUGGESTION_START_TAG);
@@ -459,9 +460,10 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
     List<String> outputList = new ArrayList<>();
     if (r == input.length) {
       StringBuilder sb = new StringBuilder();
-      for (int k = 0; k < output.length; k++) {
+      int outputLength = output.length;
+      for (int k = 0; k < outputLength; k++) {
         sb.append(output[k]);
-        if (k < output.length - 1) {
+        if (k < outputLength - 1) {
           sb.append(StringTools.addSpace(output[k + 1], lang));
         }
       }

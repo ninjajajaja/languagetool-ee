@@ -59,10 +59,11 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     String lemmaSelect = getRequired("lemmaSelect", arguments);
     String postagFromStr = getRequired("postagFrom", arguments);
     String lemmaFromStr = getRequired("lemmaFrom", arguments);
-    
+
+    int patternTokensLength = patternTokens.length;
     int postagFrom = 0;
     if (postagFromStr.startsWith("marker")) {
-      while (postagFrom < patternTokens.length && patternTokens[postagFrom].getStartPos() < match.getFromPos()) {
+      while (postagFrom < patternTokensLength && patternTokens[postagFrom].getStartPos() < match.getFromPos()) {
         postagFrom++;
       }
       postagFrom++;
@@ -72,13 +73,13 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     } else {
       postagFrom = Integer.parseInt(postagFromStr);
     }
-    if (postagFrom < 1 || postagFrom > patternTokens.length) {
+    if (postagFrom < 1 || postagFrom > patternTokensLength) {
       throw new IllegalArgumentException("AdvancedSynthesizerFilter: Index out of bounds in "
           + match.getRule().getFullId() + ", value: " + postagFromStr);
     }
     int lemmaFrom = 0;
     if (lemmaFromStr.startsWith("marker")) {
-      while (lemmaFrom < patternTokens.length && patternTokens[lemmaFrom].getStartPos() < match.getFromPos()) {
+      while (lemmaFrom < patternTokensLength && patternTokens[lemmaFrom].getStartPos() < match.getFromPos()) {
         lemmaFrom++;
       }
       lemmaFrom++;
@@ -88,7 +89,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     } else {
       lemmaFrom = Integer.parseInt(lemmaFromStr);
     }
-    if (lemmaFrom < 1 || lemmaFrom > patternTokens.length) {
+    if (lemmaFrom < 1 || lemmaFrom > patternTokensLength) {
       throw new IllegalArgumentException("AdvancedSynthesizerFilter: Index out of bounds in "
           + match.getRule().getFullId() + ", value: " + lemmaFromStr);
     }

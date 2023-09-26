@@ -65,14 +65,15 @@ public abstract class AbstractSpaceBeforeRule extends Rule {
     AnalyzedTokenReadings[] tokens = sentence.getTokens();
 
     for (int i = 1; i < tokens.length; i++) {
-      String token = tokens[i].getToken();
+      AnalyzedTokenReadings tokensI = tokens[i];
+      String token = tokensI.getToken();
       Matcher matcher = getConjunctions().matcher(token);
       if (matcher.matches()) {
         String previousToken = tokens[i - 1].getToken();
         if (!(previousToken.equals(" ") || previousToken.equals("("))) {
           String replacement = " " + token;
           String msg = getSuggestion();
-          int pos = tokens[i].getStartPos();
+          int pos = tokensI.getStartPos();
           RuleMatch potentialRuleMatch = new RuleMatch(this, sentence, pos, pos
               + token.length(), msg, getShort());
           potentialRuleMatch.setSuggestedReplacement(replacement);

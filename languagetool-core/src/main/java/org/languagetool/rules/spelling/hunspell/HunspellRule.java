@@ -436,8 +436,9 @@ public class HunspellRule extends SpellingCheckRule {
     StringBuilder sb = new StringBuilder();
     AnalyzedTokenReadings[] sentenceTokens = getSentenceWithImmunization(sentence).getTokens();
     for (int i = 1; i < sentenceTokens.length; i++) {
-      String token = sentenceTokens[i].getToken();
-      if (sentenceTokens[i].isImmunized() || sentenceTokens[i].isIgnoredBySpeller() || isUrl(token) || isEMail(token) || isQuotedCompound(sentence, i, token)) {
+      AnalyzedTokenReadings sentenceTokensI = sentenceTokens[i];
+      String token = sentenceTokensI.getToken();
+      if (sentenceTokensI.isImmunized() || sentenceTokensI.isIgnoredBySpeller() || isUrl(token) || isEMail(token) || isQuotedCompound(sentence, i, token)) {
         if (isQuotedCompound(sentence, i, token)) {
           sb.append(' ').append(token.substring(1));
         }

@@ -129,22 +129,25 @@ public abstract class AbstractCompoundRule extends Rule {
         if (Stream.of(stringToCheck.split(" ")).anyMatch(s -> StringUtils.isNumeric(s))) {
             containsDigits = true;
         }
-        if (getCompoundRuleData().getIncorrectCompounds().contains(stringToCheck) ||
-            (containsDigits && getCompoundRuleData().getIncorrectCompounds().contains(digitsRegexp = stringToCheck.replaceAll("\\d+", "\\\\d+")))) {
+        CompoundRuleData crd = getCompoundRuleData();
+        Set<String> incorrectCompounds = crd.getIncorrectCompounds();
+        Set<String> dashSuggestion = crd.getDashSuggestion();
+        if (incorrectCompounds.contains(stringToCheck) ||
+            (containsDigits && incorrectCompounds.contains(digitsRegexp = stringToCheck.replaceAll("\\d+", "\\\\d+")))) {
           AnalyzedTokenReadings atr = stringToToken.get(stringToCheck);
           String msg = null;
           List<String> replacement = new ArrayList<>();
-          if (getCompoundRuleData().getDashSuggestion().contains(stringToCheck) && !origStringToCheck.contains(" ")) {
+          if (dashSuggestion.contains(stringToCheck) && !origStringToCheck.contains(" ")) {
             // It is already joined
             break;
           }
-          if (getCompoundRuleData().getDashSuggestion().contains(stringToCheck) ||
-              (containsDigits && getCompoundRuleData().getIncorrectCompounds().contains(digitsRegexp))) {
+          if (dashSuggestion.contains(stringToCheck) ||
+              (containsDigits && incorrectCompounds.contains(digitsRegexp))) {
             replacement.add(origStringToCheck.replace(' ', '-'));
             msg = withHyphenMessage;
           }
-          if (isNotAllUppercase(origStringToCheck) && getCompoundRuleData().getJoinedSuggestion().contains(stringToCheck)) {
-            replacement.add(mergeCompound(origStringToCheck, getCompoundRuleData().getJoinedLowerCaseSuggestion().stream().anyMatch(s -> stringToCheck.contains(s))));
+          if (isNotAllUppercase(origStringToCheck) && crd.getJoinedSuggestion().contains(stringToCheck)) {
+            replacement.add(mergeCompound(origStringToCheck, crd.getJoinedLowerCaseSuggestion().stream().anyMatch(s -> stringToCheck.contains(s))));
             msg = withoutHyphenMessage;
           }
           String[] parts = stringToCheck.split(" ");
@@ -241,12 +244,9 @@ public abstract class AbstractCompoundRule extends Rule {
   public String mergeCompound(String str, boolean uncapitalizeMidWords) {
     String[] stringParts = str.replaceAll("-", " ").split(" ");
     StringBuilder sb = new StringBuilder();
-    for (int k = 0; k < stringParts.length; k++) {  
-      if (k == 0) {
-        sb.append(stringParts[0]);
-      } else {
-        sb.append(uncapitalizeMidWords ? StringUtils.uncapitalize(stringParts[k]) : stringParts[k]);
-      }
+    sb.append(stringParts[0]);
+    for (int k = 1; k < stringParts.length; k++) {
+      sb.append(uncapitalizeMidWords ? StringUtils.uncapitalize(stringParts[k]) : stringParts[k]);
     }
     return sb.toString();
   }
