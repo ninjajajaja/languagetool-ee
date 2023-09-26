@@ -48,7 +48,7 @@ public class MorfologikMultiSpeller {
 
   private static class UserDictCacheKey {
 
-    private final long userId;
+    private final Long userId;
     private final String binaryDictPath;
 
     UserDictCacheKey(long userId, String binaryDictPath) {

@@ -42,7 +42,7 @@ public class ForeignLanguageChecker {
   private final long sentenceLength;
   private final List<String> preferredLanguages;
   
-  public ForeignLanguageChecker(String languageShortCode, String sentence, Long sentenceLength, List<String> preferredLanguages) {
+  public ForeignLanguageChecker(String languageShortCode, String sentence, long sentenceLength, List<String> preferredLanguages) {
     this.languageShortCode = languageShortCode;
     this.sentence = sentence;
     this.sentenceLength = sentenceLength;

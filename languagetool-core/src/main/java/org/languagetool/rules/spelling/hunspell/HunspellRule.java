@@ -174,7 +174,7 @@ public class HunspellRule extends SpellingCheckRule {
       }
       int prevStartPos = -1;
       boolean gotResultsFromForeignLanguageChecker = false;
-      Long sentenceLength = Arrays.stream(sentence.getTokensWithoutWhitespace()).filter(k -> !k.isNonWord()).count() - 1;
+      long sentenceLength = Arrays.stream(sentence.getTokensWithoutWhitespace()).filter(k -> !k.isNonWord()).count() - 1;
       ForeignLanguageChecker foreignLanguageChecker = null;
       if (userConfig != null && !userConfig.getPreferredLanguages().isEmpty() && userConfig.getPreferredLanguages().size() >= 2) { //only create instance if user has 2 or more preferredLanguages
         foreignLanguageChecker = new ForeignLanguageChecker(language.getShortCode(), sentence.getText(), sentenceLength, userConfig.getPreferredLanguages());
