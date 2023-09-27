@@ -50,7 +50,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
   protected abstract Map<String, List<String>> getWrongWords();
 
   protected static Map<String, List<String>> loadFromPath(String path) {
-    return new SimpleReplaceDataLoader().loadWords(path);
+    return SimpleReplaceDataLoader.loadWords(path);
   }
 
   /**
@@ -60,7 +60,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
     SimpleReplaceDataLoader loader = new SimpleReplaceDataLoader();
     Map<String, List<String>> map = new HashMap<>();
     for (String path : paths) {
-      map.putAll(loader.loadWords(path));
+      map.putAll(SimpleReplaceDataLoader.loadWords(path));
     }
     return map;
   }
@@ -255,7 +255,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
    * @since 5.1
    */
   @Nullable
-  public Synthesizer getSynthesizer() {
+  public static Synthesizer getSynthesizer() {
     return null;
   }
 

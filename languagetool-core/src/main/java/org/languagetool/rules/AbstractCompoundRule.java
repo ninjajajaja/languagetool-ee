@@ -221,7 +221,7 @@ public abstract class AbstractCompoundRule extends Rule {
     return stringToToken;
   }
 
-  private String normalize(String inStr) {
+  private static String normalize(String inStr) {
     String str = inStr.trim();
     str = str.replace(" - ", " ");
     str = str.replace('-', ' ');
@@ -229,7 +229,7 @@ public abstract class AbstractCompoundRule extends Rule {
     return str;
   }
 
-  private boolean isNotAllUppercase(String str) {
+  private static boolean isNotAllUppercase(String str) {
     String[] parts = str.split(" ");
     for (String part : parts) {
       if (!"-".equals(part)) { // do not treat '-' as an upper-case word
@@ -241,7 +241,7 @@ public abstract class AbstractCompoundRule extends Rule {
     return true;
   }
 
-  public String mergeCompound(String str, boolean uncapitalizeMidWords) {
+  public static String mergeCompound(String str, boolean uncapitalizeMidWords) {
     String[] stringParts = str.replaceAll("-", " ").split(" ");
     String sb = new String();
     sb += stringParts[0];

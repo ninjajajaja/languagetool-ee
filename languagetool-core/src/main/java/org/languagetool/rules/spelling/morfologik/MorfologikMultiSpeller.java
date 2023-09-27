@@ -234,7 +234,7 @@ public class MorfologikMultiSpeller {
     return new MorfologikSpeller(dictionary, maxEditDistance);
   }
 
-  private MorfologikSpeller getBinaryDict(String binaryDictPath, int maxEditDistance) {
+  private static MorfologikSpeller getBinaryDict(String binaryDictPath, int maxEditDistance) {
     if (binaryDictPath.endsWith(DICTIONARY_FILENAME_EXTENSION)) {
       return new MorfologikSpeller(binaryDictPath, maxEditDistance);
     } else {
@@ -325,7 +325,7 @@ public class MorfologikMultiSpeller {
   }
 
   @NotNull
-  private List<String> getSuggestionsFromSpellers(String word, List<MorfologikSpeller> spellerList) {
+  private static List<String> getSuggestionsFromSpellers(String word, List<MorfologikSpeller> spellerList) {
     List<WeightedSuggestion> result = new ArrayList<>();
     Set<String> seenWords = new HashSet<>();
     for (MorfologikSpeller speller : spellerList) {

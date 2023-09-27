@@ -79,7 +79,7 @@ public class SuggestionsChanges {
     instance = new SuggestionsChanges(config, reportWriter);
   }
 
-  private List<Map<String, Object>> gridsearch(SortedMap<String, List<Object>> grid, List<Map<String, Object>> current) {
+  private static List<Map<String, Object>> gridsearch(SortedMap<String, List<Object>> grid, List<Map<String, Object>> current) {
     if (grid.isEmpty()) { // recursion exit
       return current;
     }
@@ -105,7 +105,7 @@ public class SuggestionsChanges {
     return gridsearch(grid.headMap(name), result);
   }
 
-  private List<SuggestionChangesExperiment> generateExperiments(List<SuggestionChangesExperimentRuns> experimentSpecs) {
+  private static List<SuggestionChangesExperiment> generateExperiments(List<SuggestionChangesExperimentRuns> experimentSpecs) {
     List<SuggestionChangesExperiment> experiments = new LinkedList<>();
     for (SuggestionChangesExperimentRuns spec : experimentSpecs) {
 

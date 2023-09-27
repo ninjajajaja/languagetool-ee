@@ -28,13 +28,13 @@ public class RuleFilterCreatorTest {
 
   @Test
   public void testMockFilter() throws Exception {
-    RuleFilter filter = creator.getFilter(MockFilter.class.getName());
+    RuleFilter filter = RuleFilterCreator.getFilter(MockFilter.class.getName());
     assertNotNull(filter);
   }
 
   @Test(expected = RuntimeException.class)
   public void testInvalidClassName() throws Exception {
-    creator.getFilter("MyInvalidClassName");
+    RuleFilterCreator.getFilter("MyInvalidClassName");
   }
 
 }

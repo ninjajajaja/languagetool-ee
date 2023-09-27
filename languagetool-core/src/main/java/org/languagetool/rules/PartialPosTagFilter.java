@@ -97,7 +97,7 @@ public abstract class PartialPosTagFilter extends RuleFilter {
     return null;
   }
 
-  private boolean partialTagHasRequiredTag(List<AnalyzedTokenReadings> tags, String requiredTagRegexp, boolean negatePos) {
+  private static boolean partialTagHasRequiredTag(List<AnalyzedTokenReadings> tags, String requiredTagRegexp, boolean negatePos) {
     // Without negate_pos=yes: return true if any postag matches the regexp.
     // With negate_pos=yes:    return true if there are postag and none them matches the regexp.
     int postagCount = 0;

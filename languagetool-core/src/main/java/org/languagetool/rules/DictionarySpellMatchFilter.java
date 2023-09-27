@@ -100,7 +100,7 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
     return ruleMatches;
   }
 
-  public Map<String, List<RuleMatch>> getPhrases(List<RuleMatch> ruleMatches, AnnotatedText text) {
+  public static Map<String, List<RuleMatch>> getPhrases(List<RuleMatch> ruleMatches, AnnotatedText text) {
     Map<String, List<RuleMatch>> phraseToMatches = new HashMap<>();
     int prevToPos = Integer.MIN_VALUE;
     List<RuleMatch> collectedMatches = new ArrayList<>();

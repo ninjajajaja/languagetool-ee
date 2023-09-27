@@ -131,6 +131,6 @@ public class ArabicMasdarToVerbFilter extends RuleFilter {
   }
 
   protected static Map<String, List<String>> loadFromPath(String path) {
-    return new SimpleReplaceDataLoader().loadWords(path);
+    return SimpleReplaceDataLoader.loadWords(path);
   }
 }

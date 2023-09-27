@@ -53,14 +53,14 @@ public class RuleWithMaxFilter implements RuleMatchFilter {
     return filteredRules;
   }
 
-  final boolean includes(RuleMatch match, RuleMatch nextMatch) {
+  static boolean includes(RuleMatch match, RuleMatch nextMatch) {
     if (match.getFromPos() <= nextMatch.getFromPos() && match.getToPos() >= nextMatch.getToPos()) {
       return true;
     }
     return false;
   }
 
-  private boolean haveSameRule(RuleMatch match, RuleMatch nextMatch) {
+  private static boolean haveSameRule(RuleMatch match, RuleMatch nextMatch) {
     if (!(match.getRule() instanceof AbstractPatternRule) || !(nextMatch.getRule() instanceof AbstractPatternRule)) {
       return false;
     }

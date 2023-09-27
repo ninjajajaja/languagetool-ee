@@ -122,7 +122,7 @@ public class LanguageSpecificTest {
     }
   }
 
-  protected void testCoherencyBaseformIsOtherForm(Language lang) throws IOException {
+  protected static void testCoherencyBaseformIsOtherForm(Language lang) throws IOException {
     if (lang.getShortCode().equals("km")) {
       // "coherency.txt" is for a different rule for Khmer
       return;
@@ -137,7 +137,7 @@ public class LanguageSpecificTest {
     }
     System.out.println("Testing coherency.txt...");
     System.out.println("Checking " + path + "...");
-    Map<String, Set<String>> map = loader.loadWords(path);
+    Map<String, Set<String>> map = WordCoherencyDataLoader.loadWords(path);
     Set<String> invalid = new HashSet<>();
     Synthesizer synthesizer = lang.getSynthesizer();
     for (String key : map.keySet()) {

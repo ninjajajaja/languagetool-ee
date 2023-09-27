@@ -37,8 +37,8 @@ public class YMDNewYearDateFilter extends NewYearDateFilter {
     if (args.containsKey("year") || args.containsKey("month") || args.containsKey("day")) {
       throw new RuntimeException("Set only 'weekDay' and 'date' for " + YMDDateCheckFilter.class.getSimpleName());
     }
-    args = ymdDateHelper.parseDate(args);
-    return super.acceptRuleMatch(ymdDateHelper.correctDate(match, args), args, patternTokenPos, patternTokens);
+    args = YMDDateHelper.parseDate(args);
+    return super.acceptRuleMatch(YMDDateHelper.correctDate(match, args), args, patternTokenPos, patternTokens);
   }
 
 }

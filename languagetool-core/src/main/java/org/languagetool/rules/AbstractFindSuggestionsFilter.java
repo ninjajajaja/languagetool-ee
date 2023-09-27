@@ -256,7 +256,7 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
     return false;
   };
 
-  private boolean equalWithoutDiacritics(String s, String t) {
+  private static boolean equalWithoutDiacritics(String s, String t) {
     return StringTools.removeDiacritics(s).equalsIgnoreCase(StringTools.removeDiacritics(t));
   }
 

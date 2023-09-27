@@ -37,7 +37,7 @@ import java.util.Set;
  */
 public class PortugueseWordCoherencyRule extends AbstractWordCoherencyRule {
 
-  private static final Map<String, Set<String>> wordMap = new WordCoherencyDataLoader().loadWords("/pt/coherency.txt");
+  private static final Map<String, Set<String>> wordMap = WordCoherencyDataLoader.loadWords("/pt/coherency.txt");
 
   public PortugueseWordCoherencyRule(ResourceBundle messages) throws IOException {
     super(messages);

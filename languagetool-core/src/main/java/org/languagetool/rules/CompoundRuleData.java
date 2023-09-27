@@ -125,7 +125,7 @@ public class CompoundRuleData {
     }
   }
 
-  private String removeLastCharacter(String str) {
+  private static String removeLastCharacter(String str) {
     return str.substring(0, str.length() - 1);
   }
 

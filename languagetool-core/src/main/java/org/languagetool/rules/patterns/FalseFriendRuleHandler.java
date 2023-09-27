@@ -194,7 +194,7 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
     }
   }
 
-  private String formatTranslations(List<String> translations) {
+  private static String formatTranslations(List<String> translations) {
     return translations.stream().map(o -> "\"" + o + "\"").collect(Collectors.joining(", "));
   }
 

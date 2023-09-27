@@ -46,7 +46,7 @@ public class RuleFilterEvaluator {
   /**
    * Resolves the backref arguments, e.g. replaces {@code \1} by the value of the first token in the pattern.
    */
-  public Map<String,String> getResolvedArguments(String filterArgs, AnalyzedTokenReadings[] patternTokens, int patternTokenPos, List<Integer> tokenPositions) {
+  public static Map<String,String> getResolvedArguments(String filterArgs, AnalyzedTokenReadings[] patternTokens, int patternTokenPos, List<Integer> tokenPositions) {
     Map<String,String> result = new HashMap<>();
     String[] arguments = filterArgs.split("\\s+");
     for (String arg : arguments) {
@@ -78,7 +78,7 @@ public class RuleFilterEvaluator {
   }
 
   // when there's a 'skip', we need to adapt the reference number
-  private int getSkipCorrectedReference(List<Integer> tokenPositions, int refNumber) {
+  private static int getSkipCorrectedReference(List<Integer> tokenPositions, int refNumber) {
     int correctedRef = 0;
     int i = 0;
     for (int tokenPosition : tokenPositions) {

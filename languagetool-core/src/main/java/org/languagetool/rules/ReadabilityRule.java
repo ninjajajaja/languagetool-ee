@@ -190,7 +190,7 @@ public class ReadabilityRule extends TextLevelRule {
   /**
    * get level of readability (0 - 6)
    */
-  private int getReadabilityLevel(double fre) {
+  private static int getReadabilityLevel(double fre) {
     if (fre < 30) {
       return 0;
     } else if (fre < 50) {

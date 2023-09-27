@@ -130,7 +130,7 @@ public class RegexPatternRule extends AbstractPatternRule implements RuleMatcher
   }
 
   @NotNull
-  private List<Pair<Integer, Integer>> getClausePositionsInMessage(Pattern pattern, String message) {
+  private static List<Pair<Integer, Integer>> getClausePositionsInMessage(Pattern pattern, String message) {
     Matcher matcher = pattern.matcher(message);
     List<Pair<Integer, Integer>> clausePositionsInMessage = new ArrayList<>();
     while (matcher.find()) {

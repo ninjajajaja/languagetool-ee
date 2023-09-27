@@ -42,9 +42,9 @@ import org.xml.sax.SAXException;
  */
 public class FalseFriendsAsBitextLoader {
 
-  public List<BitextPatternRule> getFalseFriendsAsBitext(
-          String filename, Language motherTongue,
-          Language language) throws ParserConfigurationException,
+  public static List<BitextPatternRule> getFalseFriendsAsBitext(
+    String filename, Language motherTongue,
+    Language language) throws ParserConfigurationException,
           SAXException, IOException {
     FalseFriendRuleLoader ruleLoader = new FalseFriendRuleLoader(motherTongue);
     List<BitextPatternRule> bRules = new ArrayList<>();

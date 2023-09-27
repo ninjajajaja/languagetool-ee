@@ -266,7 +266,7 @@ public abstract class WrongWordInContextRule extends Rule {
       contexts = new Pattern[2];
     }
     
-    private String addBoundaries(String str) {
+    private static String addBoundaries(String str) {
       String ignoreCase = "";
       if (str.startsWith("(?i)")) {
         str = str.substring(4);

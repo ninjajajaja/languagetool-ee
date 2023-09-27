@@ -217,7 +217,7 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
     return toRuleMatchArray(ruleMatches);
   }
 
-  private boolean endsLikeRealSentence(String r) {
+  private static boolean endsLikeRealSentence(String r) {
     String s = r.trim();
     return s.endsWith(".") || s.endsWith("?") || s.endsWith("!");
   }

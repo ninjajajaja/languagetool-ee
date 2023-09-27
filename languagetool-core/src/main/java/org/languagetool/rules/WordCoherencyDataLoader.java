@@ -34,7 +34,7 @@ import java.util.stream.Stream;
  */
 public class WordCoherencyDataLoader {
 
-  public Map<String, Set<String>> loadWords(String path) {
+  public static Map<String, Set<String>> loadWords(String path) {
     InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
     Map<String, Set<String>> map = new THashMap<>();
     try (

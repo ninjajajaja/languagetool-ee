@@ -28,7 +28,7 @@ public class YMDDateHelper {
   public YMDDateHelper() {
   }
 
-  public Map<String, String> parseDate(Map<String, String> args) {
+  public static Map<String, String> parseDate(Map<String, String> args) {
     String dateString = args.get("date");
     if (dateString == null) {
       throw new IllegalArgumentException("Missing key 'date'");
@@ -43,7 +43,7 @@ public class YMDDateHelper {
     return args;
   }
 
-  public RuleMatch correctDate(RuleMatch match, Map<String, String> args) {
+  public static RuleMatch correctDate(RuleMatch match, Map<String, String> args) {
     String year = args.get("year");
     String month = args.get("month");
     String day = args.get("day");

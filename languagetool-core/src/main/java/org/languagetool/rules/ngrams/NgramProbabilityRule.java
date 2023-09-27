@@ -168,7 +168,7 @@ public class NgramProbabilityRule extends Rule {
    * Overwrite this method to discard matches by returning {@code false}.
    * @since 3.3
    */
-  protected boolean acceptMatch(RuleMatch match, Probability p, AnalyzedSentence sentence) {
+  protected static boolean acceptMatch(RuleMatch match, Probability p, AnalyzedSentence sentence) {
     return true;
   }
 
@@ -236,7 +236,7 @@ public class NgramProbabilityRule extends Rule {
     return Optional.empty();
   }
 
-  private Optional<AnalyzedToken> getByPosTag(Set<AnalyzedToken> tokens, String wantedPosTagRegex) {
+  private static Optional<AnalyzedToken> getByPosTag(Set<AnalyzedToken> tokens, String wantedPosTagRegex) {
     for (AnalyzedToken token : tokens) {
       if (token.getPOSTag() != null && token.getPOSTag().matches(wantedPosTagRegex)) {
         return Optional.of(token);
@@ -254,7 +254,7 @@ public class NgramProbabilityRule extends Rule {
     return language.getWordTokenizer();
   }
   
-  private void debug(String message, Object... vars) {
+  private static void debug(String message, Object... vars) {
     if (DEBUG) {
       System.out.printf(Locale.ENGLISH, message, vars);
     }

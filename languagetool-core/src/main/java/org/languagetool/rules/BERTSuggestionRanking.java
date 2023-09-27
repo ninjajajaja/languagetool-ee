@@ -208,7 +208,7 @@ public class BERTSuggestionRanking extends RemoteRule {
   }
 
   @Nullable
-  private RemoteLanguageModel.Request buildRequest(RuleMatch match) {
+  private static RemoteLanguageModel.Request buildRequest(RuleMatch match) {
     List<String> suggestions = match.getSuggestedReplacements();
     if (suggestions != null && suggestions.size() > 1) {
       return new RemoteLanguageModel.Request(

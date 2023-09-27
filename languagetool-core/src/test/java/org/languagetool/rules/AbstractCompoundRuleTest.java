@@ -82,7 +82,7 @@ public abstract class AbstractCompoundRuleTest {
         }
       }
       if (rule.getCompoundRuleData().getJoinedSuggestion().contains(compound)) {
-        suggestion = rule.mergeCompound(compound, rule.getCompoundRuleData().getJoinedLowerCaseSuggestion().contains(compound));
+        suggestion = AbstractCompoundRule.mergeCompound(compound, rule.getCompoundRuleData().getJoinedLowerCaseSuggestion().contains(compound));
         if (rule.isMisspelled(suggestion)) {
           printWarning(suggestion);
         }

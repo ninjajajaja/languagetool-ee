@@ -70,7 +70,7 @@ public class LongSentenceRule extends TextLevelRule {
     return RULE_ID;
   }
 
-  private boolean isWordCount(String tokenText) {
+  private static boolean isWordCount(String tokenText) {
     if (tokenText.length() > 0) {
       char firstChar = tokenText.charAt(0);
       if ((firstChar >= 'A' && firstChar <= 'Z') ||

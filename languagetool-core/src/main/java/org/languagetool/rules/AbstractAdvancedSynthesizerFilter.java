@@ -164,8 +164,8 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     return match;
   }
 
-  private String getCompositePostag(String lemmaSelect, String postagSelect, String originalPostag,
-      String desiredPostag, String postagReplace) {
+  private static String getCompositePostag(String lemmaSelect, String postagSelect, String originalPostag,
+    String desiredPostag, String postagReplace) {
     Pattern aPattern = Pattern.compile(lemmaSelect, Pattern.UNICODE_CASE);
     Pattern bPattern = Pattern.compile(postagSelect, Pattern.UNICODE_CASE);
     Matcher aMatcher = aPattern.matcher(originalPostag);
@@ -190,7 +190,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     return false;
   }
 
-  private AnalyzedToken getAnalyzedToken(AnalyzedTokenReadings aToken, String regexp) {
+  private static AnalyzedToken getAnalyzedToken(AnalyzedTokenReadings aToken, String regexp) {
     Pattern pattern = Pattern.compile(regexp);
     for (AnalyzedToken analyzedToken : aToken) {
       String posTag = analyzedToken.getPOSTag();

@@ -81,15 +81,15 @@ public class RuleWithMaxFilterTest {
   public void testOverlaps() {
     RuleWithMaxFilter filter = new RuleWithMaxFilter();
 
-    assertTrue(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(10, 20)));
-    assertFalse(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(5, 11)));
-    assertFalse(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(11, 21)));
-    assertTrue(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(11, 19)));
-    assertFalse(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(1, 10)));
-    assertTrue(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(19, 20)));
+    assertTrue(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(10, 20)));
+    assertFalse(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(5, 11)));
+    assertFalse(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(11, 21)));
+    assertTrue(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(11, 19)));
+    assertFalse(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(1, 10)));
+    assertTrue(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(19, 20)));
 
-    assertFalse(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(21, 30)));
-    assertFalse(filter.includes(makeRuleMatch(10, 20), makeRuleMatch(1, 9)));
+    assertFalse(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(21, 30)));
+    assertFalse(RuleWithMaxFilter.includes(makeRuleMatch(10, 20), makeRuleMatch(1, 9)));
   }
 
   private RuleMatch makeRuleMatch(int fromPos, int toPos) {

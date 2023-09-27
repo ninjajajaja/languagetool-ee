@@ -356,7 +356,7 @@ public class Unifier {
     return uTokens.toArray(new AnalyzedTokenReadings[0]);
   }
 
-  private void addTokenToSequence(List<AnalyzedTokenReadings> tokenSequence, AnalyzedToken token, int pos) {
+  private static void addTokenToSequence(List<AnalyzedTokenReadings> tokenSequence, AnalyzedToken token, int pos) {
     if (tokenSequence.size() <= pos || tokenSequence.isEmpty()) {
       AnalyzedTokenReadings tmpATR = new AnalyzedTokenReadings(token, 0);
       tokenSequence.add(tmpATR);

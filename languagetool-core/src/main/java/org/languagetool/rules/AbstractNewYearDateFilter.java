@@ -66,7 +66,7 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
    * Implement so that "first" returns {@code 1}, second returns {@code 2} etc.
    * @param localizedDayOfMonth name of day of the month or abbreviation thereof
    */
-  protected int getDayOfMonth(String localizedDayOfMonth) {
+  protected static int getDayOfMonth(String localizedDayOfMonth) {
     return 0;
   }
 
@@ -109,7 +109,7 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
     return calendar;
   }
 
-  private int getDayOfMonthFromArguments(Map<String, String> args) {
+  private static int getDayOfMonthFromArguments(Map<String, String> args) {
     String dayOfMonthString = getRequired("day", args).replace("\u00AD", "");  // replace soft hyphen
     int dayOfMonth;
     Matcher matcherDayOfMonth = DAY_OF_MONTH_PATTERN.matcher(dayOfMonthString);

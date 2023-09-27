@@ -47,7 +47,7 @@ public class FalseFriendsAsBitextLoaderTest {
     
     FalseFriendsAsBitextLoader ruleLoader = new FalseFriendsAsBitextLoader();
     String name = "/false-friends.xml";
-    List<BitextPatternRule> rules = ruleLoader.
+    List<BitextPatternRule> rules = FalseFriendsAsBitextLoader.
     getFalseFriendsAsBitext(name, english, polish);
     
     assertErrors(1, rules, "This is an absurd.", "To absurd.", lt, trgTool);       

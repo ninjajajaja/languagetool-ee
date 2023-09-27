@@ -120,17 +120,17 @@ public final class Tools {
     if (JLanguageTool.getDataBroker().ruleFileExists(name)) {
       InputStream is = JLanguageTool.getDataBroker().getFromRulesDirAsStream(name);
       if (is != null) {
-        bRules.addAll(ruleLoader.getRules(is, name));
+        bRules.addAll(BitextPatternRuleLoader.getRules(is, name));
       }
     }
     if (externalBitextRuleFile != null) {
-      bRules.addAll(ruleLoader.getRules(new FileInputStream(externalBitextRuleFile), externalBitextRuleFile.getAbsolutePath()));
+      bRules.addAll(BitextPatternRuleLoader.getRules(new FileInputStream(externalBitextRuleFile), externalBitextRuleFile.getAbsolutePath()));
     }
     
     //load the false friend rules in the bitext mode:
     FalseFriendsAsBitextLoader fRuleLoader = new FalseFriendsAsBitextLoader();
     String falseFriendsFile = "/false-friends.xml";
-    List<BitextPatternRule> rules = fRuleLoader.getFalseFriendsAsBitext(falseFriendsFile, source, target);
+    List<BitextPatternRule> rules = FalseFriendsAsBitextLoader.getFalseFriendsAsBitext(falseFriendsFile, source, target);
     bRules.addAll(rules);
 
     //load Java bitext rules:

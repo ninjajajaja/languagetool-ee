@@ -22,7 +22,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.Language;
-import org.languagetool.ResourceBundleTools;
 import org.languagetool.chunking.ChunkTag;
 import org.languagetool.rules.CorrectExample;
 import org.languagetool.rules.ErrorTriggeringExample;
@@ -357,7 +356,7 @@ public class XMLRuleHandler extends DefaultHandler {
    * 
    * @param patternTokens token list where the match element was used. It is directly changed.
    */
-  protected void processElement(List<PatternToken> patternTokens) {
+  protected static void processElement(List<PatternToken> patternTokens) {
     int counter = 0;
     for (PatternToken pToken : patternTokens) {
         if (pToken.getPhraseName() != null && counter > 0 && pToken.isReferenceElement()) {
@@ -676,12 +675,12 @@ public class XMLRuleHandler extends DefaultHandler {
     if (filterClassName != null && filterArgs != null) {
       if (rule instanceof RegexPatternRule) {
         RegexRuleFilterCreator creator = new RegexRuleFilterCreator();
-        RegexRuleFilter filter = creator.getFilter(filterClassName);
+        RegexRuleFilter filter = RegexRuleFilterCreator.getFilter(filterClassName);
         ((RegexPatternRule) rule).setRegexFilter(filter);
         rule.setFilterArguments(filterArgs);
       } else if (rule instanceof PatternRule || rule instanceof DisambiguationPatternRule) {
         RuleFilterCreator creator = new RuleFilterCreator();
-        RuleFilter filter = creator.getFilter(filterClassName);
+        RuleFilter filter = RuleFilterCreator.getFilter(filterClassName);
         rule.setFilter(filter);
         rule.setFilterArguments(filterArgs);
       } else {

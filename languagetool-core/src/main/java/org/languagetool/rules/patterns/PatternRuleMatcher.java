@@ -200,7 +200,7 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
    * case. If it does not, perform the default conversion to uppercase.
    * @return true, if the match preserves the case of the token.
    */
-  private boolean matchPreservesCase(List<Match> suggestionMatches, String msg) {
+  private static boolean matchPreservesCase(List<Match> suggestionMatches, String msg) {
     if (suggestionMatches != null && !suggestionMatches.isEmpty()) {
       //PatternRule rule = (PatternRule) this.rule;
       //FIXME: this only considers properly the first match in first suggestion.

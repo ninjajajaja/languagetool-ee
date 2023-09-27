@@ -34,7 +34,7 @@ import java.util.Set;
  */
 public class WordCoherencyRule extends AbstractWordCoherencyRule {
 
-  private static final Map<String, Set<String>> wordMap = new WordCoherencyDataLoader().loadWords("/de/coherency.txt");
+  private static final Map<String, Set<String>> wordMap = WordCoherencyDataLoader.loadWords("/de/coherency.txt");
 
   public WordCoherencyRule(ResourceBundle messages) throws IOException {
     super(messages);

@@ -93,7 +93,7 @@ public class DictionarySpellMatchFilterTest {
       new RuleMatch(rule, sentence, 30, 34, "fake msg")
     );
     DictionarySpellMatchFilter filter = new DictionarySpellMatchFilter(new UserConfig());
-    Map<String, List<RuleMatch>> result = filter.getPhrases(matches, aText);
+    Map<String, List<RuleMatch>> result = DictionarySpellMatchFilter.getPhrases(matches, aText);
     assertThat(result.size(), is(3));
     assertTrue(result.containsKey("aa bb"));
     assertTrue(result.containsKey("xx yyy"));

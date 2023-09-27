@@ -57,7 +57,7 @@ public class WhiteSpaceAtBeginOfParagraph extends Rule {
     return messages.getString("whitespace_at_begin_parapgraph_desc");
   }
 
-  private boolean isWhitespaceDel (AnalyzedTokenReadings token) {
+  private static boolean isWhitespaceDel(AnalyzedTokenReadings token) {
     // returns only whitespaces that may be deleted
     // "\u200B" is excluded to prevent function (e.g. page number, page count) in LO/OO
     return token.isWhitespace() && !token.getToken().equals("\u200B") && !token.isLinebreak();

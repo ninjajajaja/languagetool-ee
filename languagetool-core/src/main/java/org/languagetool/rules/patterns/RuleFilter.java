@@ -58,7 +58,7 @@ public abstract class RuleFilter {
     @Override public RuleMatch[] match(AnalyzedSentence sentence) throws IOException { return new RuleMatch[0]; }
   }
 
-  protected String getRequired(String key, Map<String, String> map) {
+  protected static String getRequired(String key, Map<String, String> map) {
     String result = map.get(key);
     if (result == null) {
       throw new IllegalArgumentException("Missing key '" + key + "'");
@@ -66,7 +66,7 @@ public abstract class RuleFilter {
     return result;
   }
 
-  protected String getOptional(String key, Map<String, String> map) {
+  protected static String getOptional(String key, Map<String, String> map) {
     return map.get(key);
   }
 

@@ -357,7 +357,7 @@ public abstract class Rule {
     this.category = Objects.requireNonNull(category, "category cannot be null");
   }
 
-  protected final RuleMatch[] toRuleMatchArray(List<RuleMatch> ruleMatches) {
+  protected static RuleMatch[] toRuleMatchArray(List<RuleMatch> ruleMatches) {
     return ruleMatches.toArray(new RuleMatch[0]);
   }
 

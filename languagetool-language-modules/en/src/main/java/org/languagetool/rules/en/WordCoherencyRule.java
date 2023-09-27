@@ -32,7 +32,7 @@ import org.languagetool.rules.WordCoherencyDataLoader;
  */
 public class WordCoherencyRule extends AbstractWordCoherencyRule {
 
-  private static final Map<String, Set<String>> wordMap = new WordCoherencyDataLoader().loadWords("/en/coherency.txt");
+  private static final Map<String, Set<String>> wordMap = WordCoherencyDataLoader.loadWords("/en/coherency.txt");
 
   public WordCoherencyRule(ResourceBundle messages) throws IOException {
     super(messages);

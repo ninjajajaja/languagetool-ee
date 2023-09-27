@@ -201,19 +201,19 @@ public class UppercaseSentenceStartRule extends TextLevelRule {
     return null;
   }
 
-  protected boolean isUrl(String token) {
+  protected static boolean isUrl(String token) {
     return WordTokenizer.isUrl(token);
   }
 
-  protected boolean isEMail(String token) {
+  protected static boolean isEMail(String token) {
     return WordTokenizer.isEMail(token);
   }
 
-  private boolean isDutchSpecialCase(String word) {
+  private static boolean isDutchSpecialCase(String word) {
     return StringUtils.equalsAny(word, "k", "m", "n", "r", "s", "t");
   }
 
-  private boolean isSentenceEnd(String word) {
+  private static boolean isSentenceEnd(String word) {
     return StringUtils.equalsAny(word, ".", "?", "!", "…");
   }
 

@@ -207,8 +207,8 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     return wordCount;
   }
 
-  protected void addToQueue(AnalyzedTokenReadings token,
-                          Queue<AnalyzedTokenReadings> prevTokens) {
+  protected static void addToQueue(AnalyzedTokenReadings token,
+    Queue<AnalyzedTokenReadings> prevTokens) {
     boolean inserted = prevTokens.offer(token);
     if (!inserted) {
       prevTokens.poll();
@@ -315,7 +315,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     return toRuleMatchArray(ruleMatches);
   }
 
-  protected boolean isException(String matchedText) {
+  protected static boolean isException(String matchedText) {
     return false;
   }
   

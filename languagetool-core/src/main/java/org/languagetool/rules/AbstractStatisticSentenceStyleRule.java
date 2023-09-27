@@ -96,11 +96,11 @@ public abstract class AbstractStatisticSentenceStyleRule extends TextLevelRule {
     return minPercentDefault;
   }
   
-  protected boolean isMark(AnalyzedTokenReadings token) {
+  protected static boolean isMark(AnalyzedTokenReadings token) {
     return MARKS_REGEX.matcher(token.getToken()).matches();
   }
   
-  protected boolean isOpeningQuote(AnalyzedTokenReadings token) {
+  protected static boolean isOpeningQuote(AnalyzedTokenReadings token) {
     return OPENING_QUOTES.matcher(token.getToken()).matches();
   }
 

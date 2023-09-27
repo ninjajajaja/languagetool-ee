@@ -20,7 +20,6 @@ package org.languagetool.rules.patterns;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.languagetool.*;
-import org.languagetool.broker.ResourceDataBroker;
 import org.languagetool.rules.*;
 import org.languagetool.tagging.disambiguation.rules.DisambiguationPatternRule;
 import org.xml.sax.Attributes;
@@ -807,7 +806,7 @@ public class PatternRuleHandler extends XMLRuleHandler {
     }
   }
 
-  String replaceSpacesInRegex(String s) {
+  static String replaceSpacesInRegex(String s) {
     String sb = new String();
     boolean inBracket = false;
     for (int i = 0; i < s.length(); i++) {

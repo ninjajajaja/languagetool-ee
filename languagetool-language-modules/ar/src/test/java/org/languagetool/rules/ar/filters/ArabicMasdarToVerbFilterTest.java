@@ -77,7 +77,7 @@ public class ArabicMasdarToVerbFilterTest {
 
 
   protected static Map<String, List<String>> loadFromPath(String path) {
-    Map<String, List<String>> list = new SimpleReplaceDataLoader().loadWords(path);
+    Map<String, List<String>> list = SimpleReplaceDataLoader.loadWords(path);
     return list;
   }
 

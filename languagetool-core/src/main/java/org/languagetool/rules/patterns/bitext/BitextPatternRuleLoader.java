@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class BitextPatternRuleLoader extends DefaultHandler {
 
-  public final List<BitextPatternRule> getRules(InputStream is, String filename) throws IOException {
+  public static List<BitextPatternRule> getRules(InputStream is, String filename) throws IOException {
     List<BitextPatternRule> rules;
     try {
       BitextPatternRuleHandler handler = new BitextPatternRuleHandler();

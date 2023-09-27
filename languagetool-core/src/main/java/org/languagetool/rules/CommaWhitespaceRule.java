@@ -189,11 +189,11 @@ public class CommaWhitespaceRule extends Rule {
     return toRuleMatchArray(ruleMatches);
   }
 
-  private boolean isDomain(AnalyzedTokenReadings[] tokens, int i) {
+  private static boolean isDomain(AnalyzedTokenReadings[] tokens, int i) {
     return i < tokens.length && tokens[i].getToken().matches("(com|org|net|int|edu|gov|mil|[a-z]{2})");
   }
 
-  private boolean isFileExtension(AnalyzedTokenReadings[] tokens, int i) {
+  private static boolean isFileExtension(AnalyzedTokenReadings[] tokens, int i) {
     return i < tokens.length && tokens[i].getToken().matches("([a-z]{3,4}|[A-Z]{3,4}|ai|mp[34])(-.+)?");
   }
 

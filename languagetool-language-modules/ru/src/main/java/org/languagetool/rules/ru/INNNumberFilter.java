@@ -18,7 +18,6 @@
  */
 package org.languagetool.rules.ru;
 
-import org.apache.commons.lang3.StringUtils;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.rules.RuleMatch;
 import org.languagetool.rules.patterns.RuleFilter;

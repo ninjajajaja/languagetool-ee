@@ -41,7 +41,7 @@ public class ArabicWordCoherencyRule extends AbstractWordCoherencyRule {
 
   private static final String FILE_NAME = "/ar/coherency.txt";
 
-  private static final Map<String, Set<String>> wordMap = new WordCoherencyDataLoader().loadWords(FILE_NAME);
+  private static final Map<String, Set<String>> wordMap = WordCoherencyDataLoader.loadWords(FILE_NAME);
 
   public ArabicWordCoherencyRule(ResourceBundle messages) throws IOException {
     super(messages);

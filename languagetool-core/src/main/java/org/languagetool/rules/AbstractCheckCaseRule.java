@@ -132,7 +132,7 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
     return toRuleMatchArray(ruleMatches);
   }
 
-  private boolean isPunctuationStart(String word) {
+  private static boolean isPunctuationStart(String word) {
     return StringUtils.getDigits(word).length() > 0 // e.g. postal codes
         || StringTools.isPunctuationMark(word) || StringTools.isNotWordCharacter(word);
   }
