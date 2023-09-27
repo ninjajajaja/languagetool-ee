@@ -87,18 +87,18 @@ public class MatchState {
     setToken(tokens[idx]);
     IncludeRange includeSkipped = match.getIncludeSkipped();
     if (next > 1 && includeSkipped != IncludeRange.NONE) {
-      StringBuilder sb = new StringBuilder();
+      String sb = new String();
       if (includeSkipped == IncludeRange.FOLLOWING) {
         formattedToken = null;
       }
       for (int k = index + 1; k < index + next; k++) {
         if (tokens[k].isWhitespaceBefore()
             && !(k == index + 1 && includeSkipped == IncludeRange.FOLLOWING)) {
-          sb.append(' ');
+          sb += ' ';
         }
-        sb.append(tokens[k].getToken());
+        sb += tokens[k].getToken();
       }
-      skippedTokens = sb.toString();
+      skippedTokens = sb;
     } else {
       skippedTokens = "";
     }
@@ -355,7 +355,7 @@ public class MatchState {
         if (posTags.isEmpty()) {
           posTags.add(targetPosTag);
         }
-        StringBuilder sb = new StringBuilder();
+        String sb = new String();
         int posTagLen = posTags.size();
         int l = 0;
         for (String lPosTag : posTags) {
@@ -364,12 +364,12 @@ public class MatchState {
           if (match.setsPos()) {
             lPosTag = synthesizer.getPosTagCorrection(lPosTag);
           }
-          sb.append(lPosTag);
+          sb += lPosTag;
           if (l < posTagLen) {
-            sb.append('|');
+            sb += '|';
           }
         }
-        targetPosTag = sb.toString();
+        targetPosTag = sb;
       }
     }
     return targetPosTag;

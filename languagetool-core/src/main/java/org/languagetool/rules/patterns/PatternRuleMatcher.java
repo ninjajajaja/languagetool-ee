@@ -388,21 +388,21 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
     }
     int lastLeftSugEnd = leftSide.indexOf(RuleMatch.SUGGESTION_END_TAG);
     int lastLeftSugStart = leftSide.lastIndexOf(RuleMatch.SUGGESTION_START_TAG);
-    StringBuilder sb = new StringBuilder();
-    sb.append(errorMessage);
+    String sb = new String();
+    sb += errorMessage;
     int matchesLength = matches.length;
     for (int z = 0; z < matchesLength; z++) {
-      sb.append(suggestionLeft);
-      sb.append(matches[z]);
-      sb.append(suggestionRight);
+      sb += suggestionLeft;
+      sb += matches[z];
+      sb += suggestionRight;
       if (z < matchesLength - 1 && lastLeftSugEnd < lastLeftSugStart) {
-        sb.append(RuleMatch.SUGGESTION_END_TAG);
-        sb.append(", ");
-        sb.append(RuleMatch.SUGGESTION_START_TAG);
+        sb += RuleMatch.SUGGESTION_END_TAG;
+        sb += ", ";
+        sb += RuleMatch.SUGGESTION_START_TAG;
       }
     }
-    sb.append(rightSideNew);
-    return sb.toString();
+    sb += rightSideNew;
+    return sb;
   }
 
   /**
@@ -459,12 +459,12 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
       String[] output, int r, Language lang) {
     List<String> outputList = new ArrayList<>();
     if (r == input.length) {
-      StringBuilder sb = new StringBuilder();
+      String sb = new String();
       int outputLength = output.length;
       for (int k = 0; k < outputLength; k++) {
-        sb.append(output[k]);
+        sb += output[k];
         if (k < outputLength - 1) {
-          sb.append(StringTools.addSpace(output[k + 1], lang));
+          sb += StringTools.addSpace(output[k + 1], lang);
         }
       }
       outputList.add(sb.toString());

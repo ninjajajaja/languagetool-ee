@@ -195,8 +195,8 @@ public class SuggestionsChanges {
         return;
       }
       try {
-        StringBuilder report = new StringBuilder();
-        report.append("Overall report:\n\n");
+        String report = new String();
+        report += "Overall report:\n\n";
 
         SuggestionChangesExperiment best = null;
         int bestId = -1;
@@ -217,15 +217,15 @@ public class SuggestionsChanges {
             bestAccuracy = accuracy;
             bestId = experimentId;
           }
-          report.append(String.format("Experiment #%d (%s): %d / %d correct suggestions -> %f%% accuracy;" +
+          report += (String.format("Experiment #%d (%s): %d / %d correct suggestions -> %f%% accuracy;" +
             " score (less = better): %d; not found: %d; processed %f chars/second.%n",
             experimentId, experiment, correct, total, accuracy, score, notFound, speed));
         }
 
-        report.append(String.format("%nBest experiment: #%d (%s) @ %f%% accuracy%n", bestId, best, bestAccuracy));
+        report += (String.format("%nBest experiment: #%d (%s) @ %f%% accuracy%n", bestId, best, bestAccuracy));
 
         for (SuggestionChangesDataset dataset : config.datasets) {
-          report.append(String.format("%nReport for dataset: %s%n", dataset.name));
+          report += (String.format("%nReport for dataset: %s%n", dataset.name));
           best = null;
           bestAccuracy = 0f;
           bestId = -1;
@@ -246,11 +246,11 @@ public class SuggestionsChanges {
               bestAccuracy = accuracy;
               bestId = experimentId;
             }
-            report.append(String.format("Experiment #%d (%s): %d / %d correct suggestions-> %f%% accuracy;" +
+            report += (String.format("Experiment #%d (%s): %d / %d correct suggestions-> %f%% accuracy;" +
               " score (less = better): %d; not found: %d; processed %f chars/second.%n",
               experimentId, experiment, correct, total, accuracy, score, notFound, speed));
           }
-          report.append(String.format("%nBest experiment: #%d (%s) @ %f%% accuracy%n", bestId, best, bestAccuracy));
+          report += (String.format("%nBest experiment: #%d (%s) @ %f%% accuracy%n", bestId, best, bestAccuracy));
         }
         System.out.println(report);
         reportWriter.write(report.toString());

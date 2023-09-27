@@ -158,12 +158,12 @@ public class PatternRuleHandler extends XMLRuleHandler {
         break;
       case RULE:
         xmlLineNumber = pLocator.getLineNumber();
-        regex = new StringBuilder();
+        regex = new String();
         inRule = true;
-        shortMessage = new StringBuilder();
+        shortMessage = new String();
         message = new StringBuilder();
         suggestionsOutMsg = new StringBuilder();
-        url = new StringBuilder();
+        url = new String();
         id = attrs.getValue(ID);
         name = attrs.getValue(NAME);
         String minPrevMatchesStr = attrs.getValue(MINPREVMATCHES);
@@ -172,7 +172,7 @@ public class PatternRuleHandler extends XMLRuleHandler {
             throw new RuntimeException("Rule group " + ruleGroupId + " has " + MINPREVMATCHES + "=" + ruleGroupMinPrevMatches
                 + ", thus rule " + id + " cannot specify " + MINPREVMATCHES);
           }
-          minPrevMatches = Integer.parseInt(minPrevMatchesStr);  
+          minPrevMatches = Integer.parseInt(minPrevMatchesStr);
         } else {
           minPrevMatches = ruleGroupMinPrevMatches;
         }
@@ -182,7 +182,7 @@ public class PatternRuleHandler extends XMLRuleHandler {
             throw new RuntimeException("Rule group " + ruleGroupId + " has " + DISTANCETOKENS + "=" + ruleGroupDistanceTokens
                 + ", thus rule " + id + " cannot specify " + DISTANCETOKENS);
           }
-          distanceTokens = Integer.parseInt(distanceTokensStr);  
+          distanceTokens = Integer.parseInt(distanceTokensStr);
         } else {
           distanceTokens = ruleGroupDistanceTokens;
         }
@@ -331,25 +331,25 @@ public class PatternRuleHandler extends XMLRuleHandler {
         if (inAntiPattern) {
           if (inRuleGroup && !inRule) {
             inAntiPatternForRuleGroupExample = true;
-            antiPatternForRuleGroupExample = new StringBuilder();
+            antiPatternForRuleGroupExample = new String();
           } else {
             inAntiPatternExample = true;
-            antiPatternExample = new StringBuilder();
+            antiPatternExample = new String();
           }
         } else if ("incorrect".equals(typeVal) || attrs.getValue("correction") != null) {
           inIncorrectExample = true;
-          incorrectExample = new StringBuilder();
+          incorrectExample = new String();
           if (attrs.getValue("correction") != null) {
-            exampleCorrection = new StringBuilder();
-            exampleCorrection.append(attrs.getValue("correction"));
+            exampleCorrection = new String();
+            exampleCorrection += attrs.getValue("correction");
           }
         } else if ("triggers_error".equals(typeVal)) {
           inErrorTriggerExample = true;
-          errorTriggerExample = new StringBuilder();
+          errorTriggerExample = new String();
         } else {
           // no attribute implies the sentence is a correct example
           inCorrectExample = true;
-          correctExample = new StringBuilder();
+          correctExample = new String();
         }
         break;
       case "filter":
@@ -381,19 +381,19 @@ public class PatternRuleHandler extends XMLRuleHandler {
       case "short":
         if (inRule) {
           inShortMessage = true;
-          shortMessage = new StringBuilder();
+          shortMessage = new String();
         } else {
           inShortMessageForRuleGroup = true;
-          shortMessageForRuleGroup = new StringBuilder();
+          shortMessageForRuleGroup = new String();
         }
         break;
       case "url":
         if (inRule) {
           inUrl = true;
-          url = new StringBuilder();
+          url = new String();
         } else {
           inUrlForRuleGroup = true;
-          urlForRuleGroup = new StringBuilder();
+          urlForRuleGroup = new String();
         }
         break;
       case RULEGROUP:
@@ -402,8 +402,8 @@ public class PatternRuleHandler extends XMLRuleHandler {
         ruleGroupDescription = attrs.getValue(NAME);
         ruleGroupDefaultOff = OFF.equals(attrs.getValue(DEFAULT));
         ruleGroupDefaultTempOff = TEMP_OFF.equals(attrs.getValue(DEFAULT));
-        urlForRuleGroup = new StringBuilder();
-        shortMessageForRuleGroup = new StringBuilder();
+        urlForRuleGroup = new String();
+        shortMessageForRuleGroup = new String();
         inRuleGroup = true;
         subId = 0;
         if (attrs.getValue(TYPE) != null) {
@@ -418,11 +418,11 @@ public class PatternRuleHandler extends XMLRuleHandler {
         isGoalSpecificRuleGroupAttribute = attrs.getValue(GOAL_SPECIFIC);
         String minPrevMatchesStr2 = attrs.getValue(MINPREVMATCHES);
         if (minPrevMatchesStr2 != null) {
-          ruleGroupMinPrevMatches = Integer.parseInt(minPrevMatchesStr2);  
+          ruleGroupMinPrevMatches = Integer.parseInt(minPrevMatchesStr2);
         }
         String distanceTokensStr2 = attrs.getValue(DISTANCETOKENS);
         if (distanceTokensStr2 != null) {
-          ruleGroupDistanceTokens = Integer.parseInt(distanceTokensStr2);  
+          ruleGroupDistanceTokens = Integer.parseInt(distanceTokensStr2);
         }
         antipatternForRuleGroupsExamples = new ArrayList<>();
         break;
@@ -434,11 +434,11 @@ public class PatternRuleHandler extends XMLRuleHandler {
           throw new IllegalStateException("'<marker>' may not be nested in rule '" + id + "'");
         }
         if (inIncorrectExample) {
-          incorrectExample.append(MARKER_TAG);
+          incorrectExample += MARKER_TAG;
         } else if (inCorrectExample) {
-          correctExample.append(MARKER_TAG);
+          correctExample += MARKER_TAG;
         } else if (inErrorTriggerExample) {
-          errorTriggerExample.append(MARKER_TAG);
+          errorTriggerExample += MARKER_TAG;
         } else if (inPattern || inAntiPattern) {
           startPos = tokenCounter;
           inMarker = true;
@@ -616,12 +616,12 @@ public class PatternRuleHandler extends XMLRuleHandler {
         inCorrectExample = false;
         inIncorrectExample = false;
         inErrorTriggerExample = false;
-        correctExample = new StringBuilder();
-        incorrectExample = new StringBuilder();
-        errorTriggerExample = new StringBuilder();
+        correctExample = new String();
+        incorrectExample = new String();
+        errorTriggerExample = new String();
         exampleCorrection = null;
-        antiPatternExample = new StringBuilder();
-        antiPatternForRuleGroupExample = new StringBuilder();
+        antiPatternExample = new String();
+        antiPatternForRuleGroupExample = new String();
         inAntiPatternExample = false;
         inAntiPatternForRuleGroupExample = false;
         break;
@@ -658,8 +658,8 @@ public class PatternRuleHandler extends XMLRuleHandler {
         inMatch = false;
         break;
       case RULEGROUP:
-        urlForRuleGroup = new StringBuilder();
-        shortMessageForRuleGroup = new StringBuilder();
+        urlForRuleGroup = new String();
+        shortMessageForRuleGroup = new String();
         inRuleGroup = false;
         ruleGroupIssueType = null;
         rulegroupAntiPatterns.clear();
@@ -678,11 +678,11 @@ public class PatternRuleHandler extends XMLRuleHandler {
         break;
       case MARKER:
         if (inCorrectExample) {
-          correctExample.append("</marker>");
+          correctExample += "</marker>";
         } else if (inIncorrectExample) {
-          incorrectExample.append("</marker>");
+          incorrectExample += "</marker>";
         } else if (inErrorTriggerExample) {
-          errorTriggerExample.append("</marker>");
+          errorTriggerExample += "</marker>";
         } else if (inPattern || inAntiPattern) {
           endPos = tokenCountForMarker;
           inMarker = false;
@@ -729,7 +729,7 @@ public class PatternRuleHandler extends XMLRuleHandler {
    * Create rule from an Element list.
    * In case of OR groups, several rules are created recursively.
    * @since 2.3
-   * 
+   *
    * @param elemList The complete original Element list
    * @param tmpPatternTokens Temporary list being created
    * @param numElement Index of elemList being analyzed
@@ -808,7 +808,7 @@ public class PatternRuleHandler extends XMLRuleHandler {
   }
 
   String replaceSpacesInRegex(String s) {
-    StringBuilder sb = new StringBuilder();
+    String sb = new String();
     boolean inBracket = false;
     for (int i = 0; i < s.length(); i++) {
       char c = s.charAt(i);
@@ -818,12 +818,12 @@ public class PatternRuleHandler extends XMLRuleHandler {
         inBracket = false;
       }
       if (c == ' ' && !inBracket) {
-        sb.append("(?:[\\s\u00A0\u202F]+)");
+        sb += "(?:[\\s\u00A0\u202F]+)";
       } else {
-        sb.append(c);
+        sb += c;
       }
     }
-    return sb.toString();
+    return sb;
   }
 
   protected void prepareRule(AbstractPatternRule rule) {
@@ -927,35 +927,35 @@ public class PatternRuleHandler extends XMLRuleHandler {
   public void characters(char[] buf, int offset, int len) {
     String s = new String(buf, offset, len);
     if (inException) {
-      exceptions.append(s);
+      exceptions += s;
     } else if (inToken) {
-      elements.append(s);
+      elements += s;
     } else if (inCorrectExample) {
-      correctExample.append(s);
+      correctExample += s;
     } else if (inAntiPatternExample) {
-      antiPatternExample.append(s);
+      antiPatternExample += s;
     } else if (inAntiPatternForRuleGroupExample) {
-      antiPatternForRuleGroupExample.append(s);
+      antiPatternForRuleGroupExample += s;
     } else if (inIncorrectExample) {
-      incorrectExample.append(s);
+      incorrectExample += s;
     } else if (inErrorTriggerExample) {
-      errorTriggerExample.append(s);
+      errorTriggerExample += s;
     } else if (inMatch) {
-      match.append(s);
+      match += s;
     } else if (inMessage) {
       message.append(s);
     } else if (inSuggestion) {  //Suggestion outside message
       suggestionsOutMsg.append(s);
     } else if (inShortMessage) {
-      shortMessage.append(s);
+      shortMessage += s;
     } else if (inShortMessageForRuleGroup) {
-      shortMessageForRuleGroup.append(s);
+      shortMessageForRuleGroup += s;
     } else if (inUrl) {
-      url.append(s);
+      url += s;
     } else if (inUrlForRuleGroup) {
-      urlForRuleGroup.append(s);
+      urlForRuleGroup += s;
     } else if (inRegex) {
-      regex.append(s);
+      regex += s;
     }
   }
 

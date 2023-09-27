@@ -193,15 +193,15 @@ public abstract class AbstractCompoundRule extends Rule {
 
   private Map<String, AnalyzedTokenReadings> getStringToTokenMap(Queue<AnalyzedTokenReadings> prevTokens,
                                                                  List<String> stringsToCheck, List<String> origStringsToCheck) {
-    StringBuilder sb = new StringBuilder();
+    String sb = new String();
     Map<String, AnalyzedTokenReadings> stringToToken = new HashMap<>();
     int j = 0;
     boolean isFirstSentStart = false;
     for (AnalyzedTokenReadings atr : prevTokens) {
       if (atr.isWhitespaceBefore()) {
-        sb.append(' ');  
+        sb += ' ';
       }
-      sb.append(atr.getToken());
+      sb += atr.getToken();
       if (j == 0) {
         isFirstSentStart = atr.hasPosTag(JLanguageTool.SENTENCE_START_TAGNAME);
       }
@@ -243,12 +243,12 @@ public abstract class AbstractCompoundRule extends Rule {
 
   public String mergeCompound(String str, boolean uncapitalizeMidWords) {
     String[] stringParts = str.replaceAll("-", " ").split(" ");
-    StringBuilder sb = new StringBuilder();
-    sb.append(stringParts[0]);
+    String sb = new String();
+    sb += stringParts[0];
     for (int k = 1; k < stringParts.length; k++) {
-      sb.append(uncapitalizeMidWords ? StringUtils.uncapitalize(stringParts[k]) : stringParts[k]);
+      sb += (uncapitalizeMidWords ? StringUtils.uncapitalize(stringParts[k]) : stringParts[k]);
     }
-    return sb.toString();
+    return sb;
   }
 
   private static void addToQueue(AnalyzedTokenReadings token, ArrayDeque<AnalyzedTokenReadings> prevTokens) {

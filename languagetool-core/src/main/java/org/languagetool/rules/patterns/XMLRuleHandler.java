@@ -108,17 +108,17 @@ public class XMLRuleHandler extends DefaultHandler {
   protected Language language;
   protected ResourceBundle messages;
 
-  protected StringBuilder correctExample = new StringBuilder();
-  protected StringBuilder antiPatternExample = new StringBuilder();
-  protected StringBuilder antiPatternForRuleGroupExample = new StringBuilder();
-  protected StringBuilder incorrectExample = new StringBuilder();
-  protected StringBuilder errorTriggerExample = new StringBuilder();
-  protected StringBuilder exampleCorrection = null;
+  protected String correctExample = new String();
+  protected String antiPatternExample = new String();
+  protected String antiPatternForRuleGroupExample = new String();
+  protected String incorrectExample = new String();
+  protected String errorTriggerExample = new String();
+  protected String exampleCorrection = null;
   protected StringBuilder message = new StringBuilder();
   protected StringBuilder suggestionsOutMsg = new StringBuilder();
-  protected StringBuilder match = new StringBuilder();
-  protected StringBuilder elements;
-  protected StringBuilder exceptions;
+  protected String match = new String();
+  protected String elements;
+  protected String exceptions;
 
   protected List<CorrectExample> correctExamples = new ArrayList<>();
   protected List<CorrectExample> antipatternExamples = new ArrayList<>();
@@ -227,19 +227,19 @@ public class XMLRuleHandler extends DefaultHandler {
 
   protected boolean inUrl;
   protected boolean inUrlForRuleGroup;
-  protected StringBuilder url = new StringBuilder();
-  protected StringBuilder urlForRuleGroup = new StringBuilder();
+  protected String url = new String();
+  protected String urlForRuleGroup = new String();
   
   protected boolean inRegex;
-  protected StringBuilder regex = new StringBuilder();
+  protected String regex = new String();
   protected RegexpMode regexMode = RegexpMode.SMART;
   protected boolean regexCaseSensitive = false;
   protected int regexpMark = 0;
 
   protected boolean inShortMessage;
   protected boolean inShortMessageForRuleGroup;
-  protected StringBuilder shortMessage = new StringBuilder();
-  protected StringBuilder shortMessageForRuleGroup = new StringBuilder();
+  protected String shortMessage = new String();
+  protected String shortMessageForRuleGroup = new String();
 
   protected boolean inUnification;
   protected boolean inMarker;
@@ -373,7 +373,7 @@ public class XMLRuleHandler extends DefaultHandler {
 
   protected void setMatchElement(Attributes attrs, boolean isSuppressMisspelled) throws SAXException {
     inMatch = true;
-    match = new StringBuilder();
+    match = new String();
     Match.CaseConversion caseConversion = Match.CaseConversion.NONE;
     if (attrs.getValue("case_conversion") != null) {
       caseConversion = Match.CaseConversion.valueOf(attrs
@@ -408,8 +408,8 @@ public class XMLRuleHandler extends DefaultHandler {
       checkRefNumber(refNumber);
       mWorker.setTokenRef(refNumber);
       tokenReference = mWorker;
-      elements.append('\\');
-      elements.append(refNumber);
+      elements += '\\';
+      elements += refNumber;
     }
   }
 
@@ -435,7 +435,7 @@ public class XMLRuleHandler extends DefaultHandler {
 
   protected void setExceptions(Attributes attrs) {
     inException = true;
-    exceptions = new StringBuilder();
+    exceptions = new String();
     resetException();
 
     exceptionStringNegation = YES.equals(attrs.getValue(NEGATE));
@@ -519,7 +519,7 @@ public class XMLRuleHandler extends DefaultHandler {
     if (attrs.getValue(MAX) != null) {
       maxOccurrence = Integer.parseInt(attrs.getValue(MAX));
     }
-    elements = new StringBuilder();
+    elements = new String();
     if (attrs.getValue(POSTAG) != null) {
       posToken = internString(attrs.getValue(POSTAG));
       posRegExp = YES.equals(attrs.getValue(POSTAG_REGEXP));

@@ -433,21 +433,21 @@ public class HunspellRule extends SpellingCheckRule {
   }
 
   protected String getSentenceTextWithoutUrlsAndImmunizedTokens(AnalyzedSentence sentence) {
-    StringBuilder sb = new StringBuilder();
+    String sb = new String();
     AnalyzedTokenReadings[] sentenceTokens = getSentenceWithImmunization(sentence).getTokens();
     for (int i = 1; i < sentenceTokens.length; i++) {
       AnalyzedTokenReadings sentenceTokensI = sentenceTokens[i];
       String token = sentenceTokensI.getToken();
       if (sentenceTokensI.isImmunized() || sentenceTokensI.isIgnoredBySpeller() || isUrl(token) || isEMail(token) || isQuotedCompound(sentence, i, token)) {
         if (isQuotedCompound(sentence, i, token)) {
-          sb.append(' ').append(token.substring(1));
+          sb += (' ' + token.substring(1));
         }
         // replace URLs and immunized tokens with whitespace to ignore them for spell checking:
         else if (token.length() < 20) {
-          sb.append(WHITESPACE_ARRAY[token.length()]);
+          sb += WHITESPACE_ARRAY[token.length()];
         } else {
           for (int j = 0; j < token.length(); j++) {
-            sb.append(' ');
+            sb += ' ';
           }
         }
       } else if (token.length() > 1 && token.codePointCount(0, token.length()) != token.length()) {
@@ -456,12 +456,12 @@ public class HunspellRule extends SpellingCheckRule {
         for (String emoji : emojis) {
           token = StringUtils.replace(token, emoji, WHITESPACE_ARRAY[emoji.length()]);
         }
-        sb.append(token);
+        sb += token;
       } else {
-        sb.append(token);
+        sb += token;
       }
     }
-    return sb.toString();
+    return sb;
   }
 
   protected final void ensureInitialized() throws IOException {

@@ -190,11 +190,11 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
       }
     }
     Supplier<String> lazyFullText = Suppliers.memoize(() -> {
-      StringBuilder fullText = new StringBuilder();
+      String fullText = new String();
       for (AnalyzedSentence aSentence : sentences) {
-        fullText.append(aSentence.getText());
+        fullText += aSentence.getText();
       }
-      return fullText.toString();
+      return fullText;
     });
     if (isSymmetric) {
       SymbolLocator loc = symbolStack.get(ssSize / 2);

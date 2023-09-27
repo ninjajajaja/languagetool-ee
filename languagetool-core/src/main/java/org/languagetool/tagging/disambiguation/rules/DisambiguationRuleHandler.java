@@ -185,7 +185,7 @@ class DisambiguationRuleHandler extends XMLRuleHandler {
         break;
       case MATCH:
         inMatch = true;
-        match = new StringBuilder();
+        match = new String();
         Match.CaseConversion caseConversion = Match.CaseConversion.NONE;
         if (attrs.getValue("case_conversion") != null) {
           caseConversion = Match.CaseConversion.valueOf(attrs
@@ -215,8 +215,8 @@ class DisambiguationRuleHandler extends XMLRuleHandler {
           refNumberSanityCheck(refNumber);
           mWorker.setTokenRef(refNumber);
           tokenReference = mWorker;
-          elements.append('\\');
-          elements.append(refNumber);
+          elements += '\\';
+          elements += refNumber;
         }
         break;
       case RULEGROUP:
@@ -473,11 +473,11 @@ class DisambiguationRuleHandler extends XMLRuleHandler {
   public final void characters(char[] buf, int offset, int len) {
     String s = new String(buf, offset, len);
     if (inException) {
-      exceptions.append(s);
+      exceptions += s;
     } else if (inToken && (inPattern || inAntiPattern)) {
-      elements.append(s);
+      elements += s;
     } else if (inMatch) {
-      match.append(s);
+      match += s;
     } else if (inWord) {
       wd.append(s);
     } else if (inDisambiguation) {
