@@ -31,7 +31,7 @@ import java.util.*;
  */
 public class ConfusionSetLoader {
 
-  private static final String CHARSET = "utf-8";
+  private final String CHARSET = "utf-8";
   
   private final ShortDescriptionProvider wordDefs;
   private final Language lang;

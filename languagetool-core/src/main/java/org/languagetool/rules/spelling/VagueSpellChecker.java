@@ -42,8 +42,8 @@ import java.util.ResourceBundle;
  */
 public class VagueSpellChecker {
 
-  private final static Map<Language, Rule> langToRule = new HashMap<>();
-  private final static Map<Language, Dictionary> langToDict = new HashMap<>();
+  private final Map<Language, Rule> langToRule = new HashMap<>();
+  private final Map<Language, Dictionary> langToDict = new HashMap<>();
   
   public boolean isValidWord(String word, Language lang) {
     Rule rule = langToRule.get(lang);

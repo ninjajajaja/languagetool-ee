@@ -33,7 +33,7 @@ import java.util.*;
 public class PunctuationMarkAtParagraphEnd2 extends TextLevelRule {
 
   // more than this many word tokens needed for a "real" paragraph that requires a period (etc) at the end:
-  private static final int TOKEN_THRESHOLD = 10;
+  private final int TOKEN_THRESHOLD = 10;
   
   private final Language lang;
 

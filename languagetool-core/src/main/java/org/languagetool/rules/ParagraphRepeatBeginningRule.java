@@ -38,7 +38,7 @@ import org.languagetool.tools.Tools;
  */
 public class ParagraphRepeatBeginningRule extends TextLevelRule {
 
-  private static final Pattern QUOTES_REGEX = Pattern.compile("[’'\"„“”»«‚‘›‹()\\[\\]]");
+  private final Pattern QUOTES_REGEX = Pattern.compile("[’'\"„“”»«‚‘›‹()\\[\\]]");
 
   private final Language lang;
 

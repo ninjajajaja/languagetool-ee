@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class CleanOverlappingFilter implements RuleMatchFilter {
 
-  private static final int negativeConstant = Integer.MIN_VALUE + 10000;
+  private final int negativeConstant = Integer.MIN_VALUE + 10000;
 
   private final Language language;
   private final boolean hidePremiumMatches;

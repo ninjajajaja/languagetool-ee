@@ -50,14 +50,14 @@ import java.util.stream.Stream;
 @SuppressWarnings("PublicField")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RemoteRuleConfig {
-  private static final int DEFAULT_PORT = 443;
-  private static final long DEFAULT_BASE_TIMEOUT = 1000;
-  private static final float DEFAULT_TIMEOUT_PER_CHAR = 0;
-  private static final long DEFAULT_DOWN = 5000L;
-  private static final float DEFAULT_FAILURE_RATE_THRESHOLD = 50f;
-  private static final String DEFAULT_SLIDING_WINDOW_TYPE = CircuitBreakerConfig.SlidingWindowType.TIME_BASED.name();
-  private static final int DEFAULT_SLIDING_WINDOW_SIZE = 60;
-  private static final int DEFAULT_MINIMUM_NUMBER_OF_CALLS = 10;
+  private final int DEFAULT_PORT = 443;
+  private final long DEFAULT_BASE_TIMEOUT = 1000;
+  private final float DEFAULT_TIMEOUT_PER_CHAR = 0;
+  private final long DEFAULT_DOWN = 5000L;
+  private final float DEFAULT_FAILURE_RATE_THRESHOLD = 50f;
+  private final String DEFAULT_SLIDING_WINDOW_TYPE = CircuitBreakerConfig.SlidingWindowType.TIME_BASED.name();
+  private final int DEFAULT_SLIDING_WINDOW_SIZE = 60;
+  private final int DEFAULT_MINIMUM_NUMBER_OF_CALLS = 10;
 
 
   private static final LoadingCache<File, List<RemoteRuleConfig>> configCache = CacheBuilder.newBuilder()

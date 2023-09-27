@@ -33,8 +33,8 @@ import java.util.List;
 @Slf4j
 public class ForeignLanguageChecker {
 
-  private static final float ERROR_THRESHOLD = 0.45f;
-  private static final int MIN_SENTENCE_THRESHOLD = 3;
+  private final float ERROR_THRESHOLD = 0.45f;
+  private final int MIN_SENTENCE_THRESHOLD = 3;
   public static final String NO_FOREIGN_LANG_DETECTED = "NO_FOREIGN_LANG_DETECTED";
 
   private final String languageShortCode;

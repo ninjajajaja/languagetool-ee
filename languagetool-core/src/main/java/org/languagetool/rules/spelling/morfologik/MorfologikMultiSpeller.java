@@ -105,7 +105,7 @@ public class MorfologikMultiSpeller {
               return lines;
             }
           });
-  private static final Map<String,Dictionary> dicPathToDict = new HashMap<>();
+  private final Map<String,Dictionary> dicPathToDict = new HashMap<>();
   private static final Map<UserDictCacheKey, Cache<String, Dictionary>> userDictCaches = new HashMap<>();
   private static final Map<UserDictCacheKey, Map<String, Integer>> userDictSizes = new HashMap<>();
   private final List<MorfologikSpeller> spellers;

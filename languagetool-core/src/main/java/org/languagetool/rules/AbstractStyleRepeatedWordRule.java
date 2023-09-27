@@ -42,7 +42,7 @@ import org.languagetool.UserConfig;
  */
 public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
   
-  private static final Pattern OPENING_QUOTES = Pattern.compile("[\"“„»«]");
+  private final Pattern OPENING_QUOTES = Pattern.compile("[\"“„»«]");
   private static final Pattern ENDING_QUOTES = Pattern.compile("[\"“”»«]");
   private static final int MAX_TOKEN_TO_CHECK = 5;
   

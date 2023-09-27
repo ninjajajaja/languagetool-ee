@@ -46,9 +46,9 @@ import java.util.stream.Collectors;
 public class BERTSuggestionRanking extends RemoteRule {
 
   // only for RemoteRuleConfig
-  public static final String RULE_ID = "BERT_SUGGESTION_RANKING";
+  public final String RULE_ID = "BERT_SUGGESTION_RANKING";
 
-  private static final Logger logger = LoggerFactory.getLogger(BERTSuggestionRanking.class);
+  private final Logger logger = LoggerFactory.getLogger(BERTSuggestionRanking.class);
 
   private static final LoadingCache<RemoteRuleConfig, RemoteLanguageModel> models =
     CacheBuilder.newBuilder().build(CacheLoader.from(serviceConfiguration -> {
@@ -114,8 +114,8 @@ public class BERTSuggestionRanking extends RemoteRule {
     return suggestions.subList(0, Math.min(suggestions.size(), suggestionLimit));
   }
 
-  private static final int MIN_WORDS = 8;
-  private static final double MAX_ERROR_RATE = 0.5;
+  private final int MIN_WORDS = 8;
+  private final double MAX_ERROR_RATE = 0.5;
 
   @Override
   protected RemoteRequest prepareRequest(List<AnalyzedSentence> sentences, Long textSessionId) {

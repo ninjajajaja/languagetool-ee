@@ -35,7 +35,7 @@ public abstract class AbstractNumberInWordFilter extends RuleFilter {
 
   protected final Language language;
 
-  public static final Pattern typoPattern = Pattern.compile("[0-9]");
+  public final Pattern typoPattern = Pattern.compile("[0-9]");
 
   protected AbstractNumberInWordFilter(Language language) {
     this.language = language;

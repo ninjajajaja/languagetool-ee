@@ -41,11 +41,11 @@ import org.languagetool.tools.Tools;
  */
 public abstract class AbstractFillerWordsRule extends TextLevelRule {
   
-  public static final String RULE_ID = "FILLER_WORDS";
+  public final String RULE_ID = "FILLER_WORDS";
   
-  private static final int DEFAULT_MIN_PERCENT = 8;
-  private static final Pattern OPENING_QUOTES = Pattern.compile("[\"“„”»«]");
-  private static final Pattern ENDING_QUOTES = Pattern.compile("[\"“”»«]");
+  private final int DEFAULT_MIN_PERCENT = 8;
+  private final Pattern OPENING_QUOTES = Pattern.compile("[\"“„”»«]");
+  private final Pattern ENDING_QUOTES = Pattern.compile("[\"“”»«]");
   private static final boolean DEFAULT_ACTIVATION = false;
 
   private int minPercent = DEFAULT_MIN_PERCENT;

@@ -36,11 +36,11 @@ public class SymSpell implements Serializable {
     All
   }
 
-  private static int defaultMaxEditDistance = 2;
-  private static int defaultPrefixLength = 7;
-  private static int defaultCountThreshold = 1;
-  private static int defaultInitialCapacity = 16;
-  private static int defaultCompactLevel = 5;
+  private int defaultMaxEditDistance = 2;
+  private int defaultPrefixLength = 7;
+  private int defaultCountThreshold = 1;
+  private int defaultInitialCapacity = 16;
+  private int defaultCompactLevel = 5;
   private int initialCapacity;
   private int maxDictionaryEditDistance;
   private int prefixLength; //prefix length  5..7
@@ -733,7 +733,7 @@ public class SymSpell implements Serializable {
   //number of all words in the corpus used to generate the frequency dictionary
   //this is used to calculate the word occurrence probability p from word counts c : p=c/N
   //N equals the sum of all counts c in the dictionary only if the dictionary is complete, but not if the dictionary is truncated or filtered
-  private static long N = 1024908267229L;  // TODO make dynamic man.
+  private long N = 1024908267229L;  // TODO make dynamic man.
 
   class SegmentedSuggestion {
     String segmentedString = "", correctedString = "";

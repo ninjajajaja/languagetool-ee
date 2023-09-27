@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  */
 public abstract class AbstractFutureDateFilter extends RuleFilter {
 
-  private static final Pattern DAY_OF_MONTH_PATTERN = Pattern.compile("(\\d+).*");
+  private final Pattern DAY_OF_MONTH_PATTERN = Pattern.compile("(\\d+).*");
   /**
    * Implement so that "first" returns {@code 1}, second returns {@code 2} etc.
    * @param localizedDayOfMonth name of day of the month or abbreviation thereof

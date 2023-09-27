@@ -42,10 +42,10 @@ import java.util.*;
 public class NgramProbabilityRule extends Rule {
 
   /** @since 3.2 */
-  public static final String RULE_ID = "NGRAM_RULE";
+  public final String RULE_ID = "NGRAM_RULE";
   
-  private static final boolean DEBUG = false;
-  private static final List<Replacement> REPLACEMENTS = Collections.unmodifiableList(Arrays.asList(
+  private final boolean DEBUG = false;
+  private final List<Replacement> REPLACEMENTS = Collections.unmodifiableList(Arrays.asList(
     new Replacement("VBG", "VB"),
     new Replacement("VBG", "VBN"),
     new Replacement("VB", "VBG"),
@@ -64,7 +64,7 @@ public class NgramProbabilityRule extends Rule {
     new Replacement("NN", "NNS")
   ));
 
-  private static final List<AdvancedReplacement> ADV_REPLACEMENTS = Collections.unmodifiableList(Arrays.asList(
+  private final List<AdvancedReplacement> ADV_REPLACEMENTS = Collections.unmodifiableList(Arrays.asList(
     // "$1" is the token in the middle of the ngram:
     /*new AdvancedReplacement(Arrays.asList(
       new PatternTokenBuilder().tokenRegex("a|an|the").negate().build(),

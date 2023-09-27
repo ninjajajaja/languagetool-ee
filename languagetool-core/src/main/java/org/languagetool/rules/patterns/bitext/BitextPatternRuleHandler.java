@@ -36,10 +36,10 @@ import java.util.List;
 
 class BitextPatternRuleHandler extends PatternRuleHandler {
 
-  private static final String SOURCE = "source";
-  private static final String TARGET = "target";
-  private static final String SRC_EXAMPLE = "srcExample";
-  private static final String TRG_EXAMPLE = "trgExample";
+  private final String SOURCE = "source";
+  private final String TARGET = "target";
+  private final String SRC_EXAMPLE = "srcExample";
+  private final String TRG_EXAMPLE = "trgExample";
 
   private final List<BitextPatternRule> rules = new ArrayList<>();
 

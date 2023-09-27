@@ -35,7 +35,7 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
   // The day of the month may contain not only digits but also extra letters
   // such as "22nd" in English or "22-an" in Esperanto. The regexp extracts
   // the numerical part.
-  private static final Pattern DAY_OF_MONTH_PATTERN = Pattern.compile("(\\d+).*");
+  private final Pattern DAY_OF_MONTH_PATTERN = Pattern.compile("(\\d+).*");
 
   /**
    * Return true if the year recently changed (= it is January)

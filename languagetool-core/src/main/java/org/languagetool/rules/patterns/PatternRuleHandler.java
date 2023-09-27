@@ -40,13 +40,13 @@ public class PatternRuleHandler extends XMLRuleHandler {
     return new RuleEntityResolver().resolveEntity(publicId, systemId);
   }
 
-  public static final String TYPE = "type";
+  public final String TYPE = "type";
 
-  static final String MARKER_TAG = "<marker>";
-  static final String RAW_TAG = "raw_pos";
+  final String MARKER_TAG = "<marker>";
+  final String RAW_TAG = "raw_pos";
   static final String PLEASE_SPELL_ME = "<pleasespellme/>";
 
-  private static final String EXTERNAL = "external";
+  private final String EXTERNAL = "external";
 
   protected final String sourceFile;
 

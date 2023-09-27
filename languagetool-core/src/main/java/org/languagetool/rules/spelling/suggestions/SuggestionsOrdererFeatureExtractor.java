@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
  */
 public class SuggestionsOrdererFeatureExtractor implements SuggestionsOrderer {
 
-  private static final Logger logger = LoggerFactory.getLogger(SuggestionsOrdererFeatureExtractor.class);
+  private final Logger logger = LoggerFactory.getLogger(SuggestionsOrdererFeatureExtractor.class);
 
   protected final Language language;
   protected final LanguageModel languageModel;

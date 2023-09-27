@@ -39,14 +39,14 @@ import java.util.regex.Pattern;
  */
 public class RegexPatternRule extends AbstractPatternRule implements RuleMatcher {
 
-  private static final Pattern suggestionPattern = Pattern.compile("<suggestion>(.*?)</suggestion>");  // TODO: this needs to be cleaned up, there should be no need to parse this?
-  private static final Pattern matchPattern = Pattern.compile("\\\\\\d");
+  private final Pattern suggestionPattern = Pattern.compile("<suggestion>(.*?)</suggestion>");  // TODO: this needs to be cleaned up, there should be no need to parse this?
+  private final Pattern matchPattern = Pattern.compile("\\\\\\d");
 
   // in suggestions tokens are numbered from 1, anywhere else tokens are numbered from 0.
   // see: https://dev.languagetool.org/development-overview
   // But most of the rules tend to use 1 to refer the first capturing group, so keeping that behavior as default
-  private static final int MATCHES_IN_SUGGESTIONS_NUMBERED_FROM = 0;
-  public static final int MAX_SENT_LENGTH = 2000;
+  private final int MATCHES_IN_SUGGESTIONS_NUMBERED_FROM = 0;
+  public final int MAX_SENT_LENGTH = 2000;
 
   private final Pattern pattern;
   private final int markGroup;
