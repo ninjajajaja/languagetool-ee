@@ -171,7 +171,7 @@ public class RuleMatch implements Comparable<RuleMatch> {
     }
     this.patternPosition = new PatternPosition(patternFromPos, patternToPos);
     this.offsetPosition = new OffsetPosition(fromPos, toPos);
-    this.message = Objects.requireNonNull(message);
+    this.message = message != null ? message : "message";
     this.shortMessage = shortMessage;
     this.sentence = sentence;
     if (setOriginalErrorStr) {

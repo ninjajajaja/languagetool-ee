@@ -55,6 +55,16 @@ class SuggestionChangesTestConfig {
 
 @SuppressWarnings("ALL")
 class SuggestionChangesDataset {
+
+  public SuggestionChangesDataset(String name, String path, String type, float sampleRate, boolean enforceCorrect, boolean enforceAcceptLanguage) {
+    this.name = name;
+    this.path = path;
+    this.type = type;
+    this.sampleRate = sampleRate;
+    this.enforceCorrect = enforceCorrect;
+    this.enforceAcceptLanguage = enforceAcceptLanguage;
+  }
+
   public String name;
   public String path;
   public String type; // dump | artificial; different columns in CSV file
@@ -77,6 +87,12 @@ class SuggestionChangesDataset {
 
 @SuppressWarnings("ALL")
 class SuggestionChangesExperimentRuns {
+
+  public SuggestionChangesExperimentRuns(String name, Map<String, List<Object>> parameters) {
+    this.name = name;
+    this.parameters = parameters;
+  }
+
   public String name;
   public Map<String, List<Object>> parameters;
 

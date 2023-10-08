@@ -88,8 +88,10 @@ public abstract class AbstractStatisticStyleRule extends TextLevelRule {
 
   public AbstractStatisticStyleRule(ResourceBundle messages, Language lang, UserConfig userConfig, int minPercent, boolean defaultActive) {
     super(messages);
-    super.setCategory(new Category(new CategoryId("CREATIVE_WRITING"), 
+    if (messages != null) {
+      super.setCategory(new Category(new CategoryId("CREATIVE_WRITING"),
         messages.getString("category_creative_writing"), Location.INTERNAL, false));
+    }
     if (!defaultActive) {
       setDefaultOff();
     }

@@ -98,7 +98,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
   public AbstractSimpleReplaceRule2(ResourceBundle messages, Language language) {
     super(messages);
     this.language = Objects.requireNonNull(language);
-    super.setCategory(Categories.MISC.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
   }
 
   /**
@@ -123,7 +123,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     } catch (ExecutionException e) {
       throw new RuntimeException(e);
     }
-  }
+ }
 
   /**
    * Load the list of words.

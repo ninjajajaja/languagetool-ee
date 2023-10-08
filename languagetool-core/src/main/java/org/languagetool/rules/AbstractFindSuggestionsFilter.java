@@ -63,15 +63,11 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
     String removeSuggestionsRegexp = getOptional("removeSuggestionsRegexp", arguments);
     // suppress match if there are no suggestions
     String suppressMatch = getOptional("suppressMatch", arguments);
-    boolean bSuppressMatch = false;
-    if (suppressMatch != null && suppressMatch.equalsIgnoreCase("true")) {
-      bSuppressMatch = true;
-    }
-    
+    boolean bSuppressMatch = bSuppressMatch(suppressMatch);
     // diacriticsMode: return only changes in diacritics. If there is none, the
     // match is removed.
     String mode = getOptional("Mode", arguments);
-    boolean diacriticsMode = (mode != null) && mode.equals("diacritics");
+    boolean diacriticsMode = diacriticsMode(mode);
     boolean generateSuggestions = true;
     Pattern regexpPattern = null;
     Synthesizer synth = getSynthesizer();
@@ -250,6 +246,18 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
       ruleMatch.setSuggestedReplacements(definitiveReplacements.stream().distinct().collect(Collectors.toList()));
     }
     return ruleMatch;
+  }
+
+  public boolean bSuppressMatch(String suppressMatch) {
+    boolean bSuppressMatch = false;
+    if (suppressMatch != null && suppressMatch.equalsIgnoreCase("true")) {
+      bSuppressMatch = true;
+    }
+    return bSuppressMatch;
+  }
+
+  public boolean diacriticsMode(String mode) {
+    return (mode != null) && mode.equals("diacritics");
   }
 
   protected boolean isSuggestionException(AnalyzedTokenReadings analyzedSuggestion) {

@@ -40,28 +40,35 @@ public class PatternTokenTest {
     assertTrue(patternToken.isSentenceStart());
     patternToken.setPosToken(new PatternToken.PosToken(SENTENCE_START_TAGNAME, true, true));
     assertFalse(patternToken.isSentenceStart());
+    patternToken.toString();
 
     PatternToken patternToken2 = new PatternToken("bla|blah", false, true, false);
     patternToken2.setPosToken(new PatternToken.PosToken("foo", true, true));
     assertFalse(patternToken2.isSentenceStart());
+    patternToken2.toString();
   }
 
   @Test
   public void testUnknownTag() {
     PatternToken patternToken = new PatternToken("", false, false, false);
     patternToken.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG, false, false));
+    patternToken.toString();
 
     PatternToken patternToken2 = new PatternToken("", false, false, false);
     patternToken2.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG, false, true));
+    patternToken2.toString();
 
     PatternToken patternToken3 = new PatternToken("", false, false, false);
     patternToken3.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG + "|VBG", true, false));
+    patternToken3.toString();
 
     PatternToken patternToken4 = new PatternToken("", false, false, false);
     patternToken4.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG + "|VBG", true, true));
+    patternToken4.toString();
 
     PatternToken patternToken5 = new PatternToken("\\p{Ll}+", false, true, false);
     patternToken5.setPosToken(new PatternToken.PosToken(UNKNOWN_TAG, false, false));
+    patternToken5.toString();
 
     AnalyzedToken an = new AnalyzedToken("schword", null, null);
     assertTrue(patternToken.isMatched(an));
@@ -89,10 +96,12 @@ public class PatternTokenTest {
     PatternToken patternToken6 = new PatternToken("\\p{Ll}+", false, true, false);
     patternToken6.setPosToken(new PatternToken.PosToken(SENTENCE_END_TAGNAME, false, false));
     assertTrue(patternToken6.isMatched(anSentEnd));
+    patternToken6.toString();
 
     PatternToken patternToken7 = new PatternToken("\\p{Ll}+", false, true, false);
     patternToken7.setPosToken(new PatternToken.PosToken(SENTENCE_END_TAGNAME + "|BLABLA", true, false));
     assertTrue(patternToken7.isMatched(anSentEnd));
+    patternToken7.toString();
 
     // if the AnalyzedToken is in the set of readings that have
     //non-null tags...
@@ -154,27 +163,34 @@ public class PatternTokenTest {
   public void testFormHints() {
     PatternToken token = new PatternTokenBuilder().tokenRegex("an?|the|th[eo]se").build();
     assertEquals(Sets.newHashSet("a", "an", "the", "these", "those"), token.calcFormHints());
+    token.toString();
 
     token = new PatternTokenBuilder().token("foo").build();
     assertEquals(Sets.newHashSet("foo"), token.calcFormHints());
+    token.toString();
 
     token = new PatternTokenBuilder().tokenRegex("(foo)?.*").build();
     assertNull(token.calcFormHints());
+    token.toString();
 
     token = new PatternTokenBuilder().csTokenRegex("a|b").build();
     assertEquals(Sets.newHashSet("a", "b"), token.calcFormHints());
+    token.toString();
 
     token = new PatternTokenBuilder().token("a").min(0).build();
     assertNull(token.calcFormHints());
+    token.toString();
 
     token = new PatternTokenBuilder().tokenRegex("an|the").build();
     token.setOrGroupElement(new PatternTokenBuilder().tokenRegex("foo|bar").build());
     assertEquals(Sets.newHashSet("an", "the", "foo", "bar"), token.calcFormHints());
     token.setOrGroupElement(new PatternTokenBuilder().tokenRegex("foo.*|bar").build());
     assertNull(token.calcFormHints());
+    token.toString();
 
     token = new PatternTokenBuilder().tokenRegex("an|the").build();
     token.setAndGroupElement(new PatternTokenBuilder().tokenRegex("foo|an").build());
     assertEquals(Sets.newHashSet("an"), token.calcFormHints());
+    token.toString();
   }
 }

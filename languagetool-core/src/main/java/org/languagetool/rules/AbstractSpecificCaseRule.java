@@ -55,9 +55,9 @@ public abstract class AbstractSpecificCaseRule extends Rule {
    */
   public AbstractSpecificCaseRule(ResourceBundle messages) {
     super(messages);
-    super.setCategory(Categories.CASING.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.CASING.getCategory(messages));
     setLocQualityIssueType(ITSIssueType.Misspelling);
-    loadPhrases();
+    //loadPhrases();
   }
   
   /**

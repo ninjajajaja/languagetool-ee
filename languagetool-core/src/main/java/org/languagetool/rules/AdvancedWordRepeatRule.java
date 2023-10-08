@@ -40,7 +40,7 @@ import org.languagetool.tools.StringTools;
 public abstract class AdvancedWordRepeatRule extends Rule {
 
   public AdvancedWordRepeatRule(ResourceBundle messages) {
-    super.setCategory(Categories.MISC.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
     setDefaultOff();
     setLocQualityIssueType(ITSIssueType.Style);
   }
@@ -86,26 +86,26 @@ public abstract class AdvancedWordRepeatRule extends Rule {
             break;
           }
 
-          if (getExcludedWordsPattern().contains(lemma)) {
-            isWord = false;
-            break;
-          }
+//          if (getExcludedWordsPattern().contains(lemma)) {
+//            isWord = false;
+//            break;
+//          }
 
-          Matcher m2 = getExcludedPos().matcher(posTag);
-          if (m2.matches()) {
-            isWord = false;
-            break;
-          }
-        } else {
-          hasLemma = false;
+//          Matcher m2 = getExcludedPos().matcher(posTag);
+//          if (m2.matches()) {
+//            isWord = false;
+//            break;
+//          }
+//        } else {
+//          hasLemma = false;
         }
 
       }
 
-      Matcher m1 = getExcludedNonWordsPattern().matcher(tokens[i].getToken());
-      if (isWord && m1.matches()) {
-        isWord = false;
-      }
+//      Matcher m1 = getExcludedNonWordsPattern().matcher(tokens[i].getToken());
+//      if (isWord && m1.matches()) {
+//        isWord = false;
+//      }
 
       prevLemma = "";
       if (isWord) {

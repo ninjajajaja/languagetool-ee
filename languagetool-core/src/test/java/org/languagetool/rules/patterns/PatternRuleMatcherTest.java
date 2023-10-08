@@ -48,11 +48,16 @@ public class PatternRuleMatcherTest {
     lt = new JLanguageTool(new Demo());
   }
 
+  private void getter() {
+    assertNotNull(PatternRuleMatcher.getCurrentRules());
+  }
+
   @Test
   public void testMatch() throws Exception {
     PatternRuleMatcher matcher = new PatternRuleMatcher(getPatternRule("my test"), false);
     assertPartialMatch("This is my test.", matcher);
     assertNoMatch("This is no test.", matcher);
+    getter();
   }
 
   @Test
@@ -75,6 +80,7 @@ public class PatternRuleMatcherTest {
     assertPosition(matches[1], 10, 15);
     assertPosition(matches[2], 20, 23);
     assertPosition(matches[3], 24, 29);
+    getter();
   }
 
   @Test
@@ -103,6 +109,7 @@ public class PatternRuleMatcherTest {
     assertPosition(matches[1], 11, 17);
     assertPosition(matches[2], 22, 25);
     assertPosition(matches[3], 26, 35);
+    getter();
   }
 
   @Test
@@ -116,6 +123,7 @@ public class PatternRuleMatcherTest {
     assertNoMatch("a d", matcher);
     assertNoMatch("a c b d", matcher);
     assertNoMatch("a c b d e", matcher);
+    getter();
   }
 
   @Test
@@ -130,6 +138,7 @@ public class PatternRuleMatcherTest {
     assertPartialMatch("x a b c d e", matcher);
     assertNoMatch("a b c e d", matcher);
     assertNoMatch("a c b d e", matcher);
+    getter();
   }
 
   @Test
@@ -143,6 +152,7 @@ public class PatternRuleMatcherTest {
     RuleMatch[] matches = getMatches("a b c d e", matcher);
     assertThat(matches.length, is(1));  // just the longest match...
     assertPosition(matches[0], 0, 9);
+    getter();
   }
 
   @Test
@@ -163,6 +173,7 @@ public class PatternRuleMatcherTest {
     assertThat(matches.length, is(2));
     assertPosition(matches[0], 0, 5);
     assertPosition(matches[1], 10, 15);
+    getter();
   }
 
   @Test
@@ -182,6 +193,7 @@ public class PatternRuleMatcherTest {
 
     RuleMatch[] matches2 = getMatches("a c", matcher);
     assertEquals(Arrays.asList("a c"), matches2[0].getSuggestedReplacements());
+    getter();
   }
 
   @Test
@@ -194,6 +206,7 @@ public class PatternRuleMatcherTest {
     assertCompleteMatch("a  b c", matcher);
     assertCompleteMatch("a  b b c", matcher);
     assertNoMatch("a b b b c", matcher);
+    getter();
   }
 
   @Test
@@ -204,6 +217,7 @@ public class PatternRuleMatcherTest {
     assertCompleteMatch("a b c", matcher);
     assertCompleteMatch("a b b c", matcher);
     assertNoMatch("a b b b c", matcher);
+    getter();
   }
 
   @Test
@@ -215,6 +229,7 @@ public class PatternRuleMatcherTest {
     assertCompleteMatch("a b b c", matcher);
     assertCompleteMatch("a b b b c", matcher);
     assertNoMatch("a b b b b c", matcher);
+    getter();
   }
 
   @Test
@@ -231,6 +246,7 @@ public class PatternRuleMatcherTest {
     assertCompleteMatch("a x c", matcher);
     assertCompleteMatch("a x x c", matcher);
     assertNoMatch("a x x x c", matcher);
+    getter();
   }
 
   @Test
@@ -253,6 +269,7 @@ public class PatternRuleMatcherTest {
     assertThat(matches2.length, is(2));
     assertPosition(matches2[0], 0, 5);
     assertPosition(matches2[1], 12, 17);
+    getter();
   }
 
   @Test
@@ -269,6 +286,7 @@ public class PatternRuleMatcherTest {
     RuleMatch[] matches1 = getMatches("a b b b b", matcher);
     assertThat(matches1.length, is(1));
     assertPosition(matches1[0], 0, 7);
+    getter();
   }
 
   @Test
@@ -286,6 +304,7 @@ public class PatternRuleMatcherTest {
     RuleMatch[] matches2 = getMatches("A C ZZZ", matcher);
     assertThat(matches2.length , is(1));
     assertPosition(matches2[0], 0, 3);
+    getter();
   }
 
   @Test
@@ -308,6 +327,7 @@ public class PatternRuleMatcherTest {
     //.......................................^--
     assertThat(matches2.length , is(1));
     assertPosition(matches2[0], 0, 1);
+    getter();
   }
 
   @Test
@@ -330,6 +350,7 @@ public class PatternRuleMatcherTest {
     //.......................................^--
     assertThat(matches2.length , is(1));
     assertPosition(matches2[0], 0, 1);
+    getter();
   }
 
   @Test
@@ -352,6 +373,7 @@ public class PatternRuleMatcherTest {
     //.......................................^^^-----
     assertThat(matches2.length, is(1));
     assertPosition(matches2[0], 0, 3);
+    getter();
   }
 
   @Test
@@ -365,6 +387,7 @@ public class PatternRuleMatcherTest {
     assertCompleteMatch("a b c", matcher);
     assertCompleteMatch("a b b c", matcher);
     assertCompleteMatch("a b b b b b b b b b b b b b b b b b b b b b b b b b c", matcher);
+    getter();
   }
 
   @Test
@@ -390,6 +413,7 @@ public class PatternRuleMatcherTest {
     RuleMatch[] matches4 = getMatches("a a b b b", matcher);
     assertThat(matches4.length , is(1));
     assertPosition(matches4[0], 0, 9);
+    getter();
   }
 
   @Test
@@ -401,6 +425,7 @@ public class PatternRuleMatcherTest {
     assertCompleteMatch("a x b", matcher);
     assertCompleteMatch("a x x b", matcher);
     assertCompleteMatch("a x x x b", matcher);
+    getter();
   }
 
   @Test
@@ -435,6 +460,7 @@ public class PatternRuleMatcherTest {
     RuleMatch[] matches2 = getMatches("xx a b x x x b a", matcher);
     assertThat(matches2.length , is(1));
     assertPosition(matches2[0], 3, 16);
+    getter();
   }
 
   @Test
@@ -450,6 +476,7 @@ public class PatternRuleMatcherTest {
     RuleMatch[] matches2 = getMatches("\\42", matcher);
     assertThat(matches2.length, is(1));
     assertThat(matches2[0].getMessage(), equalTo("Here come the match references: \\42. This is the end"));
+    getter();
   }
 
   @Test
@@ -462,6 +489,7 @@ public class PatternRuleMatcherTest {
     RuleMatch ruleMatch3 = new RuleMatch(patternRule1, null, 0, 9, "message");
     assertFalse(ruleMatch1.equals(ruleMatch3));
     assertFalse(ruleMatch2.equals(ruleMatch3));
+    getter();
   }
 
   private RuleMatch[] getMatches(String input, PatternRuleMatcher matcher) throws IOException {
@@ -475,25 +503,39 @@ public class PatternRuleMatcherTest {
   private void assertPosition(RuleMatch match, int expectedFromPos, int expectedToPos) {
     assertThat("Wrong start position", match.getFromPos(), is(expectedFromPos));
     assertThat("Wrong end position", match.getToPos(), is(expectedToPos));
+    setterGetterRuleMatch(match);
+    getter();
+  }
+
+  private void setterGetterRuleMatch(RuleMatch match) {
+    match.setErrorLimitLang("xx");
+    assertNotNull(match.getErrorLimitLang());
   }
 
   private void assertNoMatch(String input, PatternRuleMatcher matcher) throws IOException {
     RuleMatch[] matches = getMatches(input, matcher);
     assertThat(matches.length , is(0));
+    getter();
   }
 
   private void assertPartialMatch(String input, PatternRuleMatcher matcher) throws IOException {
     RuleMatch[] matches = getMatches(input, matcher);
     assertThat(matches.length , is(1));
-    assertTrue("Expected partial match, got '" + matches[0] + "' for '" + input + "'",
-        matches[0].getFromPos() > 0 || matches[0].getToPos() < input.length());
+    RuleMatch match = matches[0];
+    assertTrue("Expected partial match, got '" + match+ "' for '" + input + "'",
+        match.getFromPos() > 0 || match.getToPos() < input.length());
+    getter();
+    setterGetterRuleMatch(match);
   }
 
   private void assertCompleteMatch(String input, PatternRuleMatcher matcher) throws IOException {
     RuleMatch[] matches = getMatches(input, matcher);
+    RuleMatch match = matches[0];
     assertThat("Got matches: " + Arrays.toString(matches), matches.length , is(1));
-    assertThat("Wrong start position", matches[0].getFromPos(), is(0));
-    assertThat("Wrong end position", matches[0].getToPos(), is(input.length()));
+    assertThat("Wrong start position", match.getFromPos(), is(0));
+    assertThat("Wrong end position", match.getToPos(), is(input.length()));
+    getter();
+    setterGetterRuleMatch(match);
   }
 
   private PatternToken makeElement(String token) {
