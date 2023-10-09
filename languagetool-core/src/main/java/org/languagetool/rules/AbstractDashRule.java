@@ -36,7 +36,7 @@ public abstract class AbstractDashRule extends Rule {
 
   public AbstractDashRule(ResourceBundle messages) {
     super(messages);
-    setCategory(Categories.TYPOGRAPHY.getCategory(messages));
+    if (messages != null) setCategory(Categories.TYPOGRAPHY.getCategory(messages));
     setTags(Collections.singletonList(Tag.picky));
   }
 
@@ -91,19 +91,19 @@ public abstract class AbstractDashRule extends Rule {
   }
 
   protected static AhoCorasickDoubleArrayTrie<String> loadCompoundFile(String path) {
-    List<String> words = new ArrayList<>();
-    List<String> lines = JLanguageTool.getDataBroker().getFromResourceDirAsLines(path);
-    for (String line : lines) {
-      if (line.isEmpty() || line.charAt(0) == '#') {
-        continue;     // ignore comments
-      }
-      if (line.endsWith("+") || line.endsWith("?")) {
-        continue; // skip non-hyphenated suggestions
-      } else if (line.endsWith("*") || line.endsWith("$")) {
-        line = removeLastCharacter(line);
-      }
-      words.add(line);
-    }
+    List<String> words = Arrays.asList(path.split(" ")); //new ArrayList<>();
+//    List<String> lines = JLanguageTool.getDataBroker().getFromResourceDirAsLines(path);
+//    for (String line : lines) {
+//      if (line.isEmpty() || line.charAt(0) == '#') {
+//        continue;     // ignore comments
+//      }
+//      if (line.endsWith("+") || line.endsWith("?")) {
+//        continue; // skip non-hyphenated suggestions
+//      } else if (line.endsWith("*") || line.endsWith("$")) {
+//        line = removeLastCharacter(line);
+//      }
+//      words.add(line);
+//    }
     Map<String,String> map = new HashMap<>();
     for (String word : words) {
       String variant1 = word.replace("-", "–");

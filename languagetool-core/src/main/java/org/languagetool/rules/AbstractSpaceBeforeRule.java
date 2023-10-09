@@ -66,6 +66,7 @@ public abstract class AbstractSpaceBeforeRule extends Rule {
 
     for (int i = 1; i < tokens.length; i++) {
       String token = tokens[i].getToken();
+      int pos = tokens[i].getStartPos();
       if (getConjunctions() != null) {
         Matcher matcher = getConjunctions().matcher(token);
         if (matcher.matches()) {
@@ -73,7 +74,6 @@ public abstract class AbstractSpaceBeforeRule extends Rule {
           if (!(previousToken.equals(" ") || previousToken.equals("("))) {
             String replacement = " " + token;
             String msg = getSuggestion();
-            int pos = tokens[i].getStartPos();
             RuleMatch potentialRuleMatch = new RuleMatch(this, sentence, pos, pos
               + token.length(), msg, getShort());
             potentialRuleMatch.setSuggestedReplacement(replacement);

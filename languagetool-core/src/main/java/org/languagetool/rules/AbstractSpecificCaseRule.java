@@ -43,7 +43,7 @@ public abstract class AbstractSpecificCaseRule extends Rule {
   // and as values the special case phrases properly spelled:
   private static final Map<String,String> lcToProperSpelling = new THashMap<>();
   // the phrases that will be detected by the rule:
-  private static Set<String> phrases;
+  public static Set<String> phrases;
   private static int maxLen;
 
   // used to speed up the server as the phrases are loaded in every initialization:
@@ -101,7 +101,7 @@ public abstract class AbstractSpecificCaseRule extends Rule {
     initializeLcToProperSpellingMap();
   }
 
-  synchronized static private void initializeLcToProperSpellingMap() {
+  synchronized static public void initializeLcToProperSpellingMap() {
     for (String phrase : phrases) {
       lcToProperSpelling.put(phrase.toLowerCase(), phrase);
     }

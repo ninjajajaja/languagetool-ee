@@ -52,10 +52,13 @@ public class AdvancedWordRepeatRuleTest extends TestCase {
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
-        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
-        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
-        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
-        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
+        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", null)),
+        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", null)),
+        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", null)),
+        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", null)),
+        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", null)),
+        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", null)),
+        new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", null)),
       }
     );
 

@@ -1,26 +1,68 @@
 package org.languagetool.rules;
 
-import java.util.HashSet;
-import junit.framework.TestCase;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import org.junit.Before;
+import org.junit.Test;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.AnalyzedTokenReadings;
+import org.languagetool.language.Demo;
 
-public class AbstractSpecificCaseRuleTest extends TestCase {
+public class SimpleReplaceRule2Test {
 
-  AbstractSpecificCaseRule specificCaseRule;
+  AbstractSimpleReplaceRule2 rule;
 
-  public void setUp() throws Exception {
-    specificCaseRule = new AbstractSpecificCaseRule(null) {
+  @Before
+  public void setup() {
+    rule = new AbstractSimpleReplaceRule2(null, new Demo()) {
       @Override
-      public String getPhrasesPath() {
+      public List<String> getFileNames() {
         return null;
+      }
+
+      @Override
+      public String getId() {
+        return null;
+      }
+
+      @Override
+      public String getDescription() {
+        return null;
+      }
+
+      @Override
+      public String getShort() {
+        return null;
+      }
+
+      @Override
+      public String getMessage() {
+        return null;
+      }
+
+      @Override
+      public Locale getLocale() {
+        return null;
+      }
+
+      public List<Map<String, SuggestionWithMessage>> getWrongWords(boolean checkingCase) {
+        Map m = new HashMap<String, SuggestionWithMessage>();
+        m.put("aa",new SuggestionWithMessage("a"));
+        m.put("bb",new SuggestionWithMessage("b"));
+        m.put("cc",new SuggestionWithMessage("c"));
+        return Arrays.asList(m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m);
       }
     };
   }
 
-  public void testMatch() {
-    specificCaseRule.match(new AnalyzedSentence(
+  @Test
+  public void testMatch() throws IOException {
+    rule.match(new AnalyzedSentence(
       new AnalyzedTokenReadings[]{
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
@@ -65,32 +107,5 @@ public class AbstractSpecificCaseRuleTest extends TestCase {
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
       }
     ));
-  }
-
-  public void testInitializeLcToProperSpellingMap() {
-    specificCaseRule.phrases = new HashSet<>();
-    specificCaseRule.phrases.add("hi");
-    specificCaseRule.phrases.add("hello");
-    specificCaseRule.phrases.add("goodbye");
-    specificCaseRule.phrases.add("welcome");
-    specificCaseRule.phrases.add("howdy");
-    specificCaseRule.phrases.add("greetings");
-    specificCaseRule.phrases.add("hey");
-    specificCaseRule.phrases.add("salutations");
-    specificCaseRule.phrases.add("hola");
-    specificCaseRule.phrases.add("bonjour");
-    specificCaseRule.phrases.add("ciao");
-    specificCaseRule.phrases.add("namaste");
-    specificCaseRule.phrases.add("aloha");
-    specificCaseRule.phrases.add("shalom");
-    specificCaseRule.phrases.add("konichiwa");
-    specificCaseRule.phrases.add("hail");
-    specificCaseRule.phrases.add("yo");
-    specificCaseRule.phrases.add("sup");
-    specificCaseRule.phrases.add("how's it going");
-    specificCaseRule.phrases.add("what's up");
-    specificCaseRule.phrases.add("hiya");
-    specificCaseRule.phrases.add("how are you");
-    specificCaseRule.initializeLcToProperSpellingMap();
   }
 }

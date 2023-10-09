@@ -157,7 +157,7 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
 //          if (lemma != null) {
 //            if (wordMap.containsKey(lemma)) {
 //              int num = wordMap.get(lemma) + 1;
-//              wordMap.put(lemma, num);
+              wordMap.put(token.getToken(), 0);
 //            } else {
 //              wordMap.put(lemma, 1);
 //            }

@@ -1,26 +1,34 @@
 package org.languagetool.rules;
 
-import java.util.HashSet;
+import static tech.units.indriya.unit.Units.METRE;
+
+import java.io.IOException;
+import javax.measure.Unit;
 import junit.framework.TestCase;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.AnalyzedTokenReadings;
 
-public class AbstractSpecificCaseRuleTest extends TestCase {
+public class AbstractUnitConversionRuleTest extends TestCase {
 
-  AbstractSpecificCaseRule specificCaseRule;
+  AbstractUnitConversionRule rule;
 
   public void setUp() throws Exception {
-    specificCaseRule = new AbstractSpecificCaseRule(null) {
+    rule = new AbstractUnitConversionRule(null) {
       @Override
-      public String getPhrasesPath() {
+      public String getId() {
+        return null;
+      }
+
+      @Override
+      public String getDescription() {
         return null;
       }
     };
   }
 
-  public void testMatch() {
-    specificCaseRule.match(new AnalyzedSentence(
+  public void testMatch() throws IOException {
+    rule.match(new AnalyzedSentence(
       new AnalyzedTokenReadings[]{
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
         new AnalyzedTokenReadings(new AnalyzedToken("token", "posTag", "lemma")),
@@ -67,30 +75,9 @@ public class AbstractSpecificCaseRuleTest extends TestCase {
     ));
   }
 
-  public void testInitializeLcToProperSpellingMap() {
-    specificCaseRule.phrases = new HashSet<>();
-    specificCaseRule.phrases.add("hi");
-    specificCaseRule.phrases.add("hello");
-    specificCaseRule.phrases.add("goodbye");
-    specificCaseRule.phrases.add("welcome");
-    specificCaseRule.phrases.add("howdy");
-    specificCaseRule.phrases.add("greetings");
-    specificCaseRule.phrases.add("hey");
-    specificCaseRule.phrases.add("salutations");
-    specificCaseRule.phrases.add("hola");
-    specificCaseRule.phrases.add("bonjour");
-    specificCaseRule.phrases.add("ciao");
-    specificCaseRule.phrases.add("namaste");
-    specificCaseRule.phrases.add("aloha");
-    specificCaseRule.phrases.add("shalom");
-    specificCaseRule.phrases.add("konichiwa");
-    specificCaseRule.phrases.add("hail");
-    specificCaseRule.phrases.add("yo");
-    specificCaseRule.phrases.add("sup");
-    specificCaseRule.phrases.add("how's it going");
-    specificCaseRule.phrases.add("what's up");
-    specificCaseRule.phrases.add("hiya");
-    specificCaseRule.phrases.add("how are you");
-    specificCaseRule.initializeLcToProperSpellingMap();
+  public void testGetMetricEquivalent() {
+    for (double d = 0.0; d < 10; d++) {
+      rule.getMetricEquivalent(d, METRE);
+    }
   }
 }
