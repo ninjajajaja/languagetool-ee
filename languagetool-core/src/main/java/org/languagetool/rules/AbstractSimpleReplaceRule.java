@@ -93,7 +93,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
 
   public AbstractSimpleReplaceRule(ResourceBundle messages) {
     super(messages);
-    super.setCategory(Categories.MISC.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
   }
 
   @Override
@@ -213,7 +213,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
     return tokenReadings.isTagged();
   }
 
-  protected RuleMatch createRuleMatch(AnalyzedTokenReadings tokenReadings,
+  public RuleMatch createRuleMatch(AnalyzedTokenReadings tokenReadings,
                                       List<String> replacements, AnalyzedSentence sentence, String originalTokenStr) {
     String tokenString = tokenReadings.getToken();
     int pos = tokenReadings.getStartPos();
@@ -225,15 +225,19 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
       potentialRuleMatch.setSpecificRuleId(StringTools.toId(getId() + "_" + originalTokenStr));
     }
     if (!isCaseSensitive() && StringTools.startsWithUppercase(tokenString)) {
-      int replacementsSize = replacements.size();
-      for (int i = 0; i < replacementsSize; i++) {
-        replacements.set(i, StringTools.uppercaseFirstChar(replacements.get(i)));
-      }
+    setReplacements(replacements);
     }
 
     potentialRuleMatch.setSuggestedReplacements(replacements);
 
     return potentialRuleMatch;
+  }
+
+  public void setReplacements(List<String> replacements) {
+    int replacementsSize = replacements.size();
+    for (int i = 0; i < replacementsSize; i++) {
+      replacements.set(i, StringTools.uppercaseFirstChar(replacements.get(i)));
+    }
   }
 
   /**

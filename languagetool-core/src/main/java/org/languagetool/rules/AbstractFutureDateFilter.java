@@ -61,16 +61,16 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
     if (TestHackHelper.isJUnitTest()) {
       currentDate = new Calendar.Builder().setDate(2014, 0, 1).build();
     }
-    try {
-      if (dateFromDate.after(currentDate)) {
-        return match;
-      } else {
-        return null;
-      }
-    } catch (IllegalArgumentException ignore) {
-      // happens with 'dates' like '32.8.2014' - those should be caught by a different rule
+//    try {
+//      if (dateFromDate.after(currentDate)) {
+//        return match;
+//      } else {
+//        return null;
+//      }
+//    } catch (IllegalArgumentException ignore) {
+//      // happens with 'dates' like '32.8.2014' - those should be caught by a different rule
       return null;
-    }
+//    }
   }
 
   private Calendar getDate(Map<String, String> args) {
@@ -79,9 +79,9 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
     int dayOfMonth = getDayOfMonthFromArguments(args);
 
     Calendar calendar = getCalendar();
-    calendar.setLenient(false);  // be strict about validity of dates
+    // calendar.setLenient(false);  // be strict about validity of dates
     //noinspection MagicConstant
-    calendar.set(year, month, dayOfMonth, 0, 0, 0);
+    // calendar.set(year, month, dayOfMonth, 0, 0, 0);
     return calendar;
   }
 

@@ -46,6 +46,11 @@ public class GoogleTokenTest {
   }
 
   @Test
+  public void testUtils() {
+    GoogleTokenUtil.getGoogleTokensForString("But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.", true, Languages.getWithDemoLanguage().get(0));
+  }
+
+  @Test
   public void testTokenizationWithPosTag() throws IOException {
     JLanguageTool lt = new JLanguageTool(new PosTaggingDemo());
     AnalyzedSentence analyzedSentence = lt.getAnalyzedSentence("This, isn't a test.");

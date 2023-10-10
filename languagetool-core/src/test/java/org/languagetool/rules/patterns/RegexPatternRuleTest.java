@@ -57,6 +57,11 @@ public class RegexPatternRuleTest {
     assertThat(matches3[1].getToPos(), is(27));
     assertThat(matches3[1].getMessage(), is("msg: <suggestion>a suggestion fou</suggestion>"));
     assertThat(matches3[1].getSuggestedReplacements().toString(), is("[a suggestion fou, another suggestion bar]"));
+    getter((RegexPatternRule) rule);
+  }
+
+  private void getter(RegexPatternRule rpr) {
+    assertNotNull(rpr.getPattern());
   }
  
   @Test
@@ -68,5 +73,6 @@ public class RegexPatternRuleTest {
     assertThat(matches2.length, is(1));
     assertThat(matches2[0].getFromPos(), is(8));
     assertThat(matches2[0].getToPos(), is(11));
+    getter((RegexPatternRule) rule);
  }
 }

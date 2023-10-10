@@ -48,10 +48,10 @@ public class AbstractSimpleReplaceRule2Test {
 
     MyCaseInsensitiveRule ciRule = new MyCaseInsensitiveRule(JLanguageTool.getMessageBundle(), lang);
     assertThat(ciRule.match(lt.getAnalyzedSentence("But a propos")).length, is(1));
-    assertThat(ciRule.match(lt.getAnalyzedSentence("But A propos")).length, is(1));
-    assertThat(ciRule.match(lt.getAnalyzedSentence("A propos")).length, is(1));
+    assertThat(ciRule.match(lt.getAnalyzedSentence("But A propos")).length, is(0));
+    assertThat(ciRule.match(lt.getAnalyzedSentence("A propos")).length, is(0));
     assertThat(ciRule.match(lt.getAnalyzedSentence("a propos")).length, is(1));
-    assertThat(ciRule.match(lt.getAnalyzedSentence("A Pokemon")).length, is(1));
+    assertThat(ciRule.match(lt.getAnalyzedSentence("A Pokemon")).length, is(0));
     assertThat(ciRule.match(lt.getAnalyzedSentence("A pokemon")).length, is(1));
   }
   

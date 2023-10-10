@@ -227,7 +227,7 @@ public class ReadabilityRule extends TextLevelRule {
    * A hyphenation service should be used if available (e.g. from LO extension)
    * Has to be overridden for every language
    */
-  protected int simpleSyllablesCount(String word) {
+  public int simpleSyllablesCount(String word) {
     if (word.length() == 0) {
       return 0;
     }

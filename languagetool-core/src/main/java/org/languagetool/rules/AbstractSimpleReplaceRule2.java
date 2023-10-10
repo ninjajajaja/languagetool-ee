@@ -98,7 +98,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
   public AbstractSimpleReplaceRule2(ResourceBundle messages, Language language) {
     super(messages);
     this.language = Objects.requireNonNull(language);
-    super.setCategory(Categories.MISC.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
   }
 
   /**
@@ -123,7 +123,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     } catch (ExecutionException e) {
       throw new RuntimeException(e);
     }
-  }
+ }
 
   /**
    * Load the list of words.
@@ -260,10 +260,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
         if (getCaseSensitivy() == CaseSensitivy.CSExceptAtSentenceStart && i - crtWordCount == 0) {  // at sentence start, words can be uppercase
           crtMatch = wrongWords.get(crtWordCount - 1).get(crt.toLowerCase(getLocale()));
         } else {
-          boolean caseSen = getCaseSensitivy() == CaseSensitivy.CS || getCaseSensitivy() == CaseSensitivy.CSExceptAtSentenceStart;
-          crtMatch = caseSen ?
-            wrongWords.get(crtWordCount - 1).get(crt) :
-            wrongWords.get(crtWordCount - 1).get(crt.toLowerCase(getLocale()));
+          crtMatch = wrongWords.get(crtWordCount - 1).get(crt);
         }
         if (crtMatch != null) {
           List<String> replacements = Arrays.asList(crtMatch.getSuggestion().split("\\|"));
@@ -330,7 +327,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     final boolean checkingCase;
 
     PathsAndLanguage(List<String> fileNames, Language language, boolean caseSensitive, boolean checkingCase) {
-      this.paths = Objects.requireNonNull(fileNames);
+      this.paths = fileNames;
       this.lang = Objects.requireNonNull(language);
       this.caseSensitive = caseSensitive;
       this.checkingCase = checkingCase;

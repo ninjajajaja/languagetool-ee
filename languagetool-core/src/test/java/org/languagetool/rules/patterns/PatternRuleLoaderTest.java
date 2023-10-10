@@ -101,6 +101,11 @@ public class PatternRuleLoaderTest {
     }
     Rule nextRule = getRuleById("DEMO_CHUNK_RULE", rules);
     assertNull("http://fake-server.org/rule-group-url", nextRule.getUrl());
+    setter(prg);
+  }
+
+  private void setter(PatternRuleLoader prl) {
+    prl.setRelaxedMode(false);
   }
 
   @Test
@@ -143,6 +148,7 @@ public class PatternRuleLoaderTest {
     assertFalse(rule15.isPremium());
     Rule rule16 = getRuleById("F-P_C-NP_RG-NP_R-P", rulesInPremiumFile);
     assertTrue(rule16.isPremium());
+    setter(prg);
   }
   
   @Test
@@ -223,6 +229,7 @@ public class PatternRuleLoaderTest {
 
     Rule isGoalSpecificFromCategoryRule = getRuleById("IS_GOAL_SPECIFIC_FROM_CATEGORY", styleRules);
     assertTrue(isGoalSpecificFromCategoryRule.isGoalSpecific());
+    setter(prg);
   }
 
   private Set<String> getCategoryNames(List<AbstractPatternRule> rules) {

@@ -216,7 +216,7 @@ public abstract class CompoundAwareHunspellRule extends HunspellRule {
   }
 
   @Override
-  protected List<String> sortSuggestionByQuality(String misspelling, List<String> suggestions) {
+  public List<String> sortSuggestionByQuality(String misspelling, List<String> suggestions) {
     List<String> result = new ArrayList<>();
     for (String suggestion : suggestions) {
       if (StringUtils.remove(suggestion, ' ').equals(misspelling)

@@ -39,8 +39,7 @@ public class AddCommasFilter extends RuleFilter {
    
     // for patterns ", aun así" suggest "; aun así," and ", aun así,"
     String suggestSemicolon = getOptional("suggestSemicolon", arguments);
-    boolean bSuggestSemicolon = "true".equalsIgnoreCase(suggestSemicolon);
-
+    boolean bSuggestSemicolon = bSuggestSemicolon(suggestSemicolon);
     AnalyzedTokenReadings[] tokens = match.getSentence().getTokensWithoutWhitespace();
     int postagFrom = 1;
     while (postagFrom < tokens.length && tokens[postagFrom].getStartPos() < match.getFromPos()) {
@@ -89,6 +88,10 @@ public class AddCommasFilter extends RuleFilter {
           ", " + match.getSentence().getText().substring(match.getFromPos(), match.getToPos()) + ",");
     }
     return newMatch;
+  }
+
+  public boolean bSuggestSemicolon(String suggestSemicolon) {
+    return "true".equalsIgnoreCase(suggestSemicolon);
   }
 
 }

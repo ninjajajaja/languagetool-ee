@@ -63,13 +63,17 @@ public abstract class AbstractSuppressMisspelledSuggestionsFilter extends RuleFi
         }
       }
     }
-    boolean bSuppressMatch = !"false".equalsIgnoreCase(suppressMatch);
+    boolean bSuppressMatch = bSuppressMatch(suppressMatch);
     if (newReplacements.isEmpty() && bSuppressMatch) {
       return null;
     } else {
       ruleMatch.setSuggestedReplacements(newReplacements);
       return ruleMatch;
     }
+  }
+
+  public boolean bSuppressMatch(String suppressMatch) {
+    return !"false".equalsIgnoreCase(suppressMatch);
   }
 
   public boolean isMisspelled(String s) throws IOException {
