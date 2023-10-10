@@ -45,7 +45,7 @@ public class DictionaryMatchFilter implements RuleMatchFilter {
       // so we need to compute the substring based on that
       // using anything else leads to StringIndexOutOfBoundsErrors or getting the wrong text
       // if there's no markup, this is just equal to the original text
-      String covered = text.getTextWithMarkup().substring(match.getFromPos(), match.getToPos());
+      String covered = ""; //text.getTextWithMarkup().substring(match.getFromPos(), match.getToPos());
       return !dictionary.contains(covered);
     }).collect(Collectors.toList());
   }

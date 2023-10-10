@@ -18,6 +18,8 @@
  */
 package org.languagetool.rules.patterns;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -30,6 +32,43 @@ public class RuleFilterCreatorTest {
   public void testMockFilter() throws Exception {
     RuleFilter filter = RuleFilterCreator.getFilter(MockFilter.class.getName());
     assertNotNull(filter);
+    testGetRequired(filter);
+  }
+
+  private void testGetRequired(RuleFilter filter) {
+    Map m = new HashMap<String,String>();
+    m.put("apple", "banana");
+    m.put("carrot", "dog");
+    m.put("elephant", "fountain");
+    m.put("grape", "house");
+    m.put("icecream", "jacket");
+    m.put("kangaroo", "lemon");
+    m.put("mountain", "noodle");
+    m.put("ocean", "penguin");
+    m.put("quokka", "rainbow");
+    m.put("sunflower", "turtle");
+    m.put("coffee", "keyboard");
+    m.put("notebook", "piano");
+    m.put("umbrella", "volcano");
+    m.put("waterfall", "xylophone");
+    m.put("zebra", "giraffe");
+    m.put("butterfly", "flower");
+    m.put("rain", "sun");
+    m.put("moon", "star");
+    m.put("planet", "galaxy");
+    m.put("oxygen", "carbon");
+    filter.getRequired("planet", m);
+    filter.getRequired("planet", m);
+    filter.getRequired("planet", m);
+    filter.getRequired("planet", m);
+    filter.getRequired("planet", m);
+    filter.getRequired("planet", m);
+    filter.getRequired("planet", m);
+    filter.getOptional("planet", m);
+    filter.getOptional("planet", m);
+    filter.getOptional("a", m);
+    filter.getOptional("a", m);
+    filter.getOptional("a", m);
   }
 
   @Test(expected = RuntimeException.class)

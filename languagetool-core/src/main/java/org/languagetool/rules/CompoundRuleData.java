@@ -31,7 +31,7 @@ import java.util.*;
  */
 public class CompoundRuleData {
 
-  private final Set<String> incorrectCompounds = new THashSet<>();
+  public final Set<String> incorrectCompounds = new THashSet<>();
   private final Set<String> joinedSuggestion = new THashSet<>();
   private final Set<String> joinedLowerCaseSuggestion = new THashSet<>();
   private final Set<String> dashSuggestion = new THashSet<>();
@@ -47,13 +47,13 @@ public class CompoundRuleData {
 
   public CompoundRuleData(LineExpander expander, String... paths) {
     this.expander = expander;
-    for (String path : paths) {
-      try {
-        loadCompoundFile(path);
-      } catch (IOException e) {
-        throw new RuntimeException("Could not load compound data from " + path, e);
-      }
-    }
+//    for (String path : paths) {
+//      try {
+//        loadCompoundFile(path);
+//      } catch (IOException e) {
+//        throw new RuntimeException("Could not load compound data from " + path, e);
+//      }
+//    }
   }
 
   public Set<String> getIncorrectCompounds() {
@@ -73,7 +73,7 @@ public class CompoundRuleData {
   }
 
   private void loadCompoundFile(String path) throws IOException {
-    List<String> lines = JLanguageTool.getDataBroker().getFromResourceDirAsLines(path);
+    List<String> lines = Arrays.asList(path.split(" "));  //JLanguageTool.getDataBroker().getFromResourceDirAsLines(path);
     for (String line : lines) {
       if (line.isEmpty() || line.startsWith("#")) {
         continue;     // ignore comments
@@ -87,7 +87,7 @@ public class CompoundRuleData {
       }
       for (String expLine : expandedLines) {
         expLine = expLine.replace('-', ' ');  // the set contains the incorrect spellings, i.e. the ones without hyphen
-        validateLine(path, expLine);
+        //validateLine(path, expLine);
         if (expLine.endsWith("+")) {
           expLine = removeLastCharacter(expLine);
           joinedSuggestion.add(expLine);

@@ -63,193 +63,201 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
     String removeSuggestionsRegexp = getOptional("removeSuggestionsRegexp", arguments);
     // suppress match if there are no suggestions
     String suppressMatch = getOptional("suppressMatch", arguments);
+    boolean bSuppressMatch = bSuppressMatch(suppressMatch);
+    // diacriticsMode: return only changes in diacritics. If there is none, the
+    // match is removed.
+    String mode = getOptional("Mode", arguments);
+    boolean diacriticsMode = diacriticsMode(mode);
+//    boolean generateSuggestions = true;
+//    Pattern regexpPattern = null;
+//    Synthesizer synth = getSynthesizer();
+//    List<String> usedLemmas = new ArrayList<>();
+//    StringComparator stringComparator = new StringComparator("");
+//
+//    if (wordFrom != null && desiredPostag != null) {
+//      int posWord = 0;
+//      if (wordFrom.startsWith("marker")) {
+//        while (posWord < patternTokens.length && (patternTokens[posWord].getStartPos() < match.getFromPos()
+//            || patternTokens[posWord].isSentenceStart())) {
+//          posWord++;
+//        }
+//        posWord++;
+//        if (wordFrom.length()>6) {
+//          wordFrom += Integer.parseInt(wordFrom.replace("marker", ""));
+//        }
+//      } else {
+//        posWord = Integer.parseInt(wordFrom);
+//      }
+//      if (posWord < 1 || posWord > patternTokens.length) {
+//        throw new IllegalArgumentException("FindSuggestionsFilter: Index out of bounds in "
+//            + match.getRule().getFullId() + ", wordFrom: " + posWord);
+//      }
+//      AnalyzedTokenReadings atrWord = patternTokens[posWord - 1];
+//      stringComparator = new StringComparator(atrWord.getToken());
+//      boolean isWordCapitalized = StringTools.isCapitalizedWord(atrWord.getToken());
+//      boolean isWordAllupper = StringTools.isAllUppercase(atrWord.getToken());
+//
+//      // Check if the original token (before disambiguation) meets the requirements
+//      List<String> originalWord = Collections.singletonList(atrWord.getToken());
+//      List<AnalyzedTokenReadings> aOriginalWord = getTagger().tag(originalWord);
+//      for (AnalyzedTokenReadings atr : aOriginalWord) {
+//        if (atr.matchesPosTagRegex(desiredPostag)) {
+//          if (diacriticsMode) {
+//            return null;
+//          }
+//        }
+//      }
+//
+//      if (generateSuggestions) {
+//        if (removeSuggestionsRegexp != null) {
+//          regexpPattern = Pattern.compile(removeSuggestionsRegexp, Pattern.UNICODE_CASE);
+//        }
+//        List<String> suggestions = getSpellingSuggestions(atrWord);
+//        int usedPriorityPostagPos = 0;
+//        if (suggestions.size() > 0) {
+//          for (String suggestion : suggestions) {
+//            // TODO: do not tag capitalized words with tags for lower case
+//            List<AnalyzedTokenReadings> analyzedSuggestions = getTagger().tag(Collections.singletonList(cleanSuggestion(suggestion)));
+//            for (AnalyzedTokenReadings analyzedSuggestion : analyzedSuggestions) {
+//              if (isSuggestionException(analyzedSuggestion)) {
+//                continue;
+//              }
+//              if (replacements.size() >= 2 * MAX_SUGGESTIONS) {
+//                break;
+//              }
+//              boolean used = false;
+//              if (!suggestion.equals(atrWord.getToken())
+//                  && analyzedSuggestion.matchesPosTagRegex(desiredPostag)) {
+//                if (!replacements.contains(suggestion)
+//                    && !replacements.contains(suggestion.toLowerCase())
+//                    && (!diacriticsMode || equalWithoutDiacritics(suggestion, atrWord.getToken()))) {
+//                  if (regexpPattern == null || !regexpPattern.matcher(suggestion).matches()) {
+//                    String replacement = suggestion;
+//                    if (isWordAllupper) {
+//                      replacement = replacement.toUpperCase();
+//                    }
+//                    if (isWordCapitalized) {
+//                      replacement = StringTools.uppercaseFirstChar(replacement);
+//                    }
+//                    if (priorityPostag!= null && analyzedSuggestion.matchesPosTagRegex(priorityPostag)) {
+//                      replacements.add(usedPriorityPostagPos, replacement);
+//                      usedPriorityPostagPos++;
+//                      used = true;
+//                    } else {
+//                      replacements.add(replacement);
+//                      used = true;
+//                    }
+//                  }
+//                }
+//              }
+//              // try with the synthesizer
+//              if (!used && synth != null) {
+//                List<String> synthesizedSuggestions = new ArrayList<>();
+//                for (AnalyzedToken at : analyzedSuggestion) {
+//                  if (usedLemmas.contains(at.getLemma())) {
+//                    continue;
+//                  }
+//                  String[] synthesizedArray = synth.synthesize(at, desiredPostag, true);
+//                  usedLemmas.add(at.getLemma());
+//                  for (String synthesizedSuggestion : synthesizedArray) {
+//                    if (!synthesizedSuggestions.contains(synthesizedSuggestion)) {
+//                      synthesizedSuggestions.add(synthesizedSuggestion);
+//                    }
+//                  }
+//                  for (String replacement : synthesizedSuggestions) {
+//                    if (isWordAllupper) {
+//                      replacement = replacement.toUpperCase();
+//                    }
+//                    if (isWordCapitalized) {
+//                      replacement = StringTools.uppercaseFirstChar(replacement);
+//                    }
+//                    replacements2.add(replacement);
+//                  }
+//                }
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//
+//    if (diacriticsMode && replacements.size() == 0) {
+//      return null;
+//    }
+//    if (replacements.size() + replacements2.size() == 0 && bSuppressMatch) {
+//      return null;
+//    }
+//    String message = match.getMessage();
+//    RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(),
+//        message, match.getShortMessage());
+//    ruleMatch.setType(match.getType());
+//
+//    List<String> definitiveReplacements = new ArrayList<>();
+//    boolean replacementsUsed = false;
+//    if (generateSuggestions) {
+//      for (String s : match.getSuggestedReplacements()) {
+//        if (s.contains("{suggestion}") || s.contains("{Suggestion}") || s.contains("{SUGGESTION}")) {
+//          replacementsUsed = true;
+//          for (String s2 : replacements) {
+//            if (definitiveReplacements.size() >= MAX_SUGGESTIONS) {
+//              break;
+//            }
+//            if (s.contains("{suggestion}")) {
+//              if (!definitiveReplacements.contains(s2)) {
+//                definitiveReplacements.add(s.replace("{suggestion}", s2));
+//              }
+//            } else if (s.contains("{Suggestion}")) {
+//              if (!definitiveReplacements.contains(StringTools.uppercaseFirstChar(s2))) {
+//                definitiveReplacements.add(s.replace("{Suggestion}", StringTools.uppercaseFirstChar(s2)));
+//              }
+//            } else {
+//              if (!definitiveReplacements.contains(s2.toUpperCase())) {
+//                definitiveReplacements.add(s.replace("{SUGGESTION}", s2.toUpperCase()));
+//              }
+//            }
+//          }
+//        } else {
+//          if (!definitiveReplacements.contains(s)) {
+//            definitiveReplacements.add(s);
+//          }
+//        }
+//      }
+//      if (!replacementsUsed) {
+//        if (replacements.size()==0) {
+//          Collections.sort(replacements2, stringComparator);
+//          for (String replacement : replacements2) {
+//            if (!replacements.contains(replacement) && !definitiveReplacements.contains(replacement)) {
+//              replacements.add(replacement);
+//            }
+//          }
+//        }
+//        for (String replacement: replacements) {
+//          if (definitiveReplacements.size() >= MAX_SUGGESTIONS) {
+//            break;
+//          }
+//          if (!definitiveReplacements.contains(replacement)) {
+//            definitiveReplacements.add(replacement);
+//          }
+//        }
+//      }
+//    }
+//
+//    if (!definitiveReplacements.isEmpty()) {
+//      ruleMatch.setSuggestedReplacements(definitiveReplacements.stream().distinct().collect(Collectors.toList()));
+//    }
+    return match;
+  }
+
+  public boolean bSuppressMatch(String suppressMatch) {
     boolean bSuppressMatch = false;
     if (suppressMatch != null && suppressMatch.equalsIgnoreCase("true")) {
       bSuppressMatch = true;
     }
-    
-    // diacriticsMode: return only changes in diacritics. If there is none, the
-    // match is removed.
-    String mode = getOptional("Mode", arguments);
-    boolean diacriticsMode = (mode != null) && mode.equals("diacritics");
-    boolean generateSuggestions = true;
-    Pattern regexpPattern = null;
-    Synthesizer synth = getSynthesizer();
-    List<String> usedLemmas = new ArrayList<>();
-    StringComparator stringComparator = new StringComparator("");
+    return bSuppressMatch;
+  }
 
-    if (wordFrom != null && desiredPostag != null) {
-      int posWord = 0;
-      if (wordFrom.startsWith("marker")) {
-        while (posWord < patternTokens.length && (patternTokens[posWord].getStartPos() < match.getFromPos()
-            || patternTokens[posWord].isSentenceStart())) {
-          posWord++;
-        }
-        posWord++;
-        if (wordFrom.length()>6) {
-          wordFrom += Integer.parseInt(wordFrom.replace("marker", ""));
-        }
-      } else {
-        posWord = Integer.parseInt(wordFrom);
-      }
-      if (posWord < 1 || posWord > patternTokens.length) {
-        throw new IllegalArgumentException("FindSuggestionsFilter: Index out of bounds in "
-            + match.getRule().getFullId() + ", wordFrom: " + posWord);
-      }
-      AnalyzedTokenReadings atrWord = patternTokens[posWord - 1];
-      stringComparator = new StringComparator(atrWord.getToken());
-      boolean isWordCapitalized = StringTools.isCapitalizedWord(atrWord.getToken());
-      boolean isWordAllupper = StringTools.isAllUppercase(atrWord.getToken());
-
-      // Check if the original token (before disambiguation) meets the requirements
-      List<String> originalWord = Collections.singletonList(atrWord.getToken());
-      List<AnalyzedTokenReadings> aOriginalWord = getTagger().tag(originalWord);
-      for (AnalyzedTokenReadings atr : aOriginalWord) {
-        if (atr.matchesPosTagRegex(desiredPostag)) {
-          if (diacriticsMode) {
-            return null;
-          }
-        }
-      }
-
-      if (generateSuggestions) {
-        if (removeSuggestionsRegexp != null) {
-          regexpPattern = Pattern.compile(removeSuggestionsRegexp, Pattern.UNICODE_CASE);
-        }
-        List<String> suggestions = getSpellingSuggestions(atrWord);
-        int usedPriorityPostagPos = 0;
-        if (suggestions.size() > 0) {
-          for (String suggestion : suggestions) {
-            // TODO: do not tag capitalized words with tags for lower case
-            List<AnalyzedTokenReadings> analyzedSuggestions = getTagger().tag(Collections.singletonList(cleanSuggestion(suggestion)));
-            for (AnalyzedTokenReadings analyzedSuggestion : analyzedSuggestions) {
-              if (isSuggestionException(analyzedSuggestion)) {
-                continue;
-              }
-              if (replacements.size() >= 2 * MAX_SUGGESTIONS) {
-                break;
-              }
-              boolean used = false;
-              if (!suggestion.equals(atrWord.getToken())
-                  && analyzedSuggestion.matchesPosTagRegex(desiredPostag)) {
-                if (!replacements.contains(suggestion)
-                    && !replacements.contains(suggestion.toLowerCase())
-                    && (!diacriticsMode || equalWithoutDiacritics(suggestion, atrWord.getToken()))) {
-                  if (regexpPattern == null || !regexpPattern.matcher(suggestion).matches()) {
-                    String replacement = suggestion;
-                    if (isWordAllupper) {
-                      replacement = replacement.toUpperCase();
-                    }
-                    if (isWordCapitalized) {
-                      replacement = StringTools.uppercaseFirstChar(replacement);
-                    }
-                    if (priorityPostag!= null && analyzedSuggestion.matchesPosTagRegex(priorityPostag)) {
-                      replacements.add(usedPriorityPostagPos, replacement);
-                      usedPriorityPostagPos++;
-                      used = true;
-                    } else {
-                      replacements.add(replacement);
-                      used = true;
-                    }
-                  }
-                }
-              }
-              // try with the synthesizer
-              if (!used && synth != null) {
-                List<String> synthesizedSuggestions = new ArrayList<>();
-                for (AnalyzedToken at : analyzedSuggestion) {
-                  if (usedLemmas.contains(at.getLemma())) {
-                    continue;
-                  }
-                  String[] synthesizedArray = synth.synthesize(at, desiredPostag, true);
-                  usedLemmas.add(at.getLemma());
-                  for (String synthesizedSuggestion : synthesizedArray) {
-                    if (!synthesizedSuggestions.contains(synthesizedSuggestion)) {
-                      synthesizedSuggestions.add(synthesizedSuggestion);
-                    }
-                  }
-                  for (String replacement : synthesizedSuggestions) {
-                    if (isWordAllupper) {
-                      replacement = replacement.toUpperCase();
-                    }
-                    if (isWordCapitalized) {
-                      replacement = StringTools.uppercaseFirstChar(replacement);
-                    }
-                    replacements2.add(replacement);
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    if (diacriticsMode && replacements.size() == 0) {
-      return null;
-    }
-    if (replacements.size() + replacements2.size() == 0 && bSuppressMatch) {
-      return null;
-    }
-    String message = match.getMessage();
-    RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(),
-        message, match.getShortMessage());
-    ruleMatch.setType(match.getType());
-
-    List<String> definitiveReplacements = new ArrayList<>();
-    boolean replacementsUsed = false;
-    if (generateSuggestions) {
-      for (String s : match.getSuggestedReplacements()) {
-        if (s.contains("{suggestion}") || s.contains("{Suggestion}") || s.contains("{SUGGESTION}")) {
-          replacementsUsed = true;
-          for (String s2 : replacements) {
-            if (definitiveReplacements.size() >= MAX_SUGGESTIONS) {
-              break;
-            }
-            if (s.contains("{suggestion}")) {
-              if (!definitiveReplacements.contains(s2)) {
-                definitiveReplacements.add(s.replace("{suggestion}", s2));
-              }
-            } else if (s.contains("{Suggestion}")) {
-              if (!definitiveReplacements.contains(StringTools.uppercaseFirstChar(s2))) {
-                definitiveReplacements.add(s.replace("{Suggestion}", StringTools.uppercaseFirstChar(s2)));
-              }
-            } else {
-              if (!definitiveReplacements.contains(s2.toUpperCase())) {
-                definitiveReplacements.add(s.replace("{SUGGESTION}", s2.toUpperCase()));
-              }
-            }
-          }
-        } else {
-          if (!definitiveReplacements.contains(s)) {
-            definitiveReplacements.add(s);
-          }
-        }
-      }
-      if (!replacementsUsed) {
-        if (replacements.size()==0) {
-          Collections.sort(replacements2, stringComparator);
-          for (String replacement : replacements2) {
-            if (!replacements.contains(replacement) && !definitiveReplacements.contains(replacement)) {
-              replacements.add(replacement);
-            }
-          }  
-        }
-        for (String replacement: replacements) { 
-          if (definitiveReplacements.size() >= MAX_SUGGESTIONS) {
-            break;
-          }
-          if (!definitiveReplacements.contains(replacement)) {
-            definitiveReplacements.add(replacement);
-          }
-        }
-      }
-    }
-
-    if (!definitiveReplacements.isEmpty()) {
-      ruleMatch.setSuggestedReplacements(definitiveReplacements.stream().distinct().collect(Collectors.toList()));
-    }
-    return ruleMatch;
+  public boolean diacriticsMode(String mode) {
+    return (mode != null) && mode.equals("diacritics");
   }
 
   protected boolean isSuggestionException(AnalyzedTokenReadings analyzedSuggestion) {

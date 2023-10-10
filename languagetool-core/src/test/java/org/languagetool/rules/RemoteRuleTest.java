@@ -38,6 +38,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class RemoteRuleTest {
 
@@ -142,18 +143,25 @@ public class RemoteRuleTest {
     assertMatches("no matches before - sanity check", 0);
     lt.enableRule(rule.getId());
     assertMatches("test rule creates match", 1);
+    getter();
+  }
+
+  private void getter() {
+    assertNotNull(rule.getServiceConfiguration());
   }
 
   @Test
   public void testTimeout() throws IOException, InterruptedException {
     waitTime = config.baseTimeoutMilliseconds * 2;
     assertMatches("timeouts work", 0);
+    getter();
   }
 
   @Test
   public void testFailedRequests() throws IOException {
     fail = true;
     assertMatches("no matches for failing requests", 0);
+    getter();
   }
 
 }
