@@ -13,7 +13,7 @@ public class FalseFriendRuleHandlerTest extends TestCase {
 
     ffrh.inToken = true;
     ffrh.inPattern = true;
-    ffrh.elements = new StringBuilder();
+    ffrh.elements = new String();
     for (int i = 0; i < 50; i++) {
       ffrh.characters(new char[]{ 'a', 'b', 'c', 'd'}, 0, 3);
     }
