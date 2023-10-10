@@ -43,7 +43,7 @@ public class CachingWordListLoader {
       .expireAfterWrite(10, TimeUnit.MINUTES)
       .build(new CacheLoader<String, List<String>>() {
         @Override
-        public List<String> load(@NotNull String fileInClassPath) throws IOException {
+        public List<String> load(@NotNull String fileInClassPath) {
           List<String> result = new ArrayList<>();
           if (!JLanguageTool.getDataBroker().resourceExists(fileInClassPath)) {
             return result;

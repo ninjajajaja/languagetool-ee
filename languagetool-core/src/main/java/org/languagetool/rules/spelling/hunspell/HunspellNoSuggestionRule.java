@@ -59,7 +59,7 @@ public class HunspellNoSuggestionRule extends HunspellRule {
   }
 
   @Override
-  public List<String> getSuggestions(String word) throws IOException {
+  public List<String> getSuggestions(String word) {
     return new ArrayList<>();
   }
   

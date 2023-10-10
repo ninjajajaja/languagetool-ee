@@ -58,7 +58,7 @@ public abstract class AbstractDashRule extends Rule {
   }
 
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     List<RuleMatch> matches = new ArrayList<>();
     String text = sentence.getText();
     List<AhoCorasickDoubleArrayTrie.Hit<String>> hits = getCompoundsData().parseText(text);

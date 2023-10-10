@@ -75,7 +75,7 @@ public class MorfologikSpeller {
    * Creates a speller with a maximum edit distance of one.
    * @param fileInClassPath path in classpath to morfologik dictionary
    */
-  public MorfologikSpeller(String fileInClassPath) throws IOException {
+  public MorfologikSpeller(String fileInClassPath) {
     this(fileInClassPath, 1);
   }
 

@@ -63,7 +63,7 @@ public class WordRepeatBeginningRule extends TextLevelRule {
   }
 
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     String lastToken = "";
     String beforeLastToken = "";
     List<RuleMatch> ruleMatches = new ArrayList<>();

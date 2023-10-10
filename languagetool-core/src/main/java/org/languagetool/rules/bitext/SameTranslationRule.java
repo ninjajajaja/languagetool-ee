@@ -54,7 +54,7 @@ public class SameTranslationRule extends BitextRule {
 
   @Override
   public RuleMatch[] match(AnalyzedSentence sourceText,
-      AnalyzedSentence targetText) throws IOException {
+      AnalyzedSentence targetText) {
 
     //This is just heuristics, checking word count
     if (sourceText.getTokensWithoutWhitespace().length > 3 

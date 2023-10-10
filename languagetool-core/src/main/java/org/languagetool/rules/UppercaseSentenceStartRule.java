@@ -96,7 +96,7 @@ public class UppercaseSentenceStartRule extends TextLevelRule {
   }
 
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     String lastParagraphString = "";
     List<RuleMatch> ruleMatches = new ArrayList<>();
     if (sentences.size() == 1 && sentences.get(0).getTokens().length == 2) {

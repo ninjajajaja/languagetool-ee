@@ -86,7 +86,7 @@ public class LongSentenceRule extends TextLevelRule {
   }
 
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     int pos = 0;
     for (AnalyzedSentence sentence : sentences) {

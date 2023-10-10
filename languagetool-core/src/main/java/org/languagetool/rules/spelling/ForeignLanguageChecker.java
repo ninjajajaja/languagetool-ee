@@ -49,7 +49,7 @@ public class ForeignLanguageChecker {
     this.preferredLanguages = Collections.unmodifiableList(preferredLanguages);
   }
 
-  public String check(int matchesSoFar) throws IOException {
+  public String check(int matchesSoFar) {
     float errorRatio = (float) matchesSoFar / sentenceLength;
     if (sentenceLength >= MIN_SENTENCE_THRESHOLD && errorRatio >= ERROR_THRESHOLD) {
       LanguageIdentifier langIdent = LanguageIdentifierService.INSTANCE.getInitialized();

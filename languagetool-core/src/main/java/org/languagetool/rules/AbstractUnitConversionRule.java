@@ -550,7 +550,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
   }
 
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     List<RuleMatch> matches = new ArrayList<>();
     List<Map.Entry<Integer, Integer>> ignoreRanges = new LinkedList<>();
 

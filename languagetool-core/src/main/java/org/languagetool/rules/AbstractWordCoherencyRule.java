@@ -51,7 +51,7 @@ public abstract class AbstractWordCoherencyRule extends TextLevelRule {
    */
   protected abstract String getMessage(String word1, String word2);
   
-  public AbstractWordCoherencyRule(ResourceBundle messages) throws IOException {
+  public AbstractWordCoherencyRule(ResourceBundle messages) {
     if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
   }
   

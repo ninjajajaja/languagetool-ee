@@ -57,7 +57,7 @@ public class DifferentLengthRule extends BitextRule {
 
   @Override
   public RuleMatch[] match(AnalyzedSentence sourceText,
-      AnalyzedSentence targetText) throws IOException {
+      AnalyzedSentence targetText) {
    
     if (isLengthDifferent(sourceText.getText(), targetText.getText())) {
       AnalyzedTokenReadings[] tokens = targetText.getTokens();

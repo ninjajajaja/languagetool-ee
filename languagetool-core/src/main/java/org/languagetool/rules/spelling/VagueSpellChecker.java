@@ -101,7 +101,7 @@ public class VagueSpellChecker {
     }
 
     @Override
-    public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+    public RuleMatch[] match(AnalyzedSentence sentence) {
       throw new RuntimeException("not implemented");
     }
 
