@@ -205,7 +205,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
   }
 
   protected AbstractUnitConversionRule(ResourceBundle messages) {
-    setCategory(Categories.STYLE.getCategory(messages));
+    if (messages != null) setCategory(Categories.STYLE.getCategory(messages));
     setLocQualityIssueType(ITSIssueType.Style);
 
     addUnit("kg", KILOGRAM, "kg", 1e0, true);

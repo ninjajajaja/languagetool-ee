@@ -33,9 +33,9 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
   // Definitions of values in XML files:
   private static final String TRANSLATION = "translation";
 
-  private final ResourceBundle englishMessages;
-  private final ResourceBundle messages;
-  private final MessageFormat formatter;
+  private ResourceBundle englishMessages = null;
+  private ResourceBundle messages = null;
+  private MessageFormat formatter = null;
   private final Language textLanguage;
   private final Language motherTongue;
   public final Map<String, List<String>> suggestionMap = new HashMap<>();  // rule ID -> list of translations
@@ -51,10 +51,12 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
   private boolean inTranslation;
 
   FalseFriendRuleHandler(Language textLanguage, Language motherTongue, String falseFriendHint) {
-    englishMessages = ResourceBundleTools.getMessageBundle(Languages.getLanguageForShortCode("en-US"));
-    messages = ResourceBundleTools.getMessageBundle(motherTongue);
-    formatter = new MessageFormat("");
-    formatter.setLocale(motherTongue.getLocale());
+    if (textLanguage != null) {
+      englishMessages = ResourceBundleTools.getMessageBundle(Languages.getLanguageForShortCode("en-US"));
+      messages = ResourceBundleTools.getMessageBundle(motherTongue);
+      formatter = new MessageFormat("");
+      formatter.setLocale(motherTongue.getLocale());
+    }
     this.textLanguage = textLanguage;
     this.motherTongue = motherTongue;
     this.falseFriendHint = falseFriendHint;

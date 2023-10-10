@@ -69,7 +69,33 @@ public class BitextPatternRuleTest {
   private void testBitextRulesFromXML(List<BitextPatternRule> rules, JLanguageTool lt, Language lang) throws IOException {
     for (BitextPatternRule rule : rules) {
       testBitextRule(rule, lang, lt);
+      testGetters(rule);
     }
+  }
+
+  private void testGetters(BitextPatternRule rule) {
+    assertNotNull(rule.getTrgRule());
+    assertNotNull(rule.getSrcRule());
+    assertNotNull(rule.getCorrectBitextExamples());
+    assertNotNull(rule.getMessage());
+    assertNotNull(rule.getIncorrectBitextExamples());
+    assertNotNull(rule.getDescription());
+    assertNotNull(rule.getId());
+    assertNotNull(rule.getSourceLanguage());
+    assertNotNull(rule.getAntiPatterns());
+    assertNotNull(rule.getCategory());
+    assertNotNull(rule.getConfigureText());
+    assertNotNull(rule.getDefaultValue());
+    assertNotNull(rule.getDistanceTokens());
+    assertNotNull(rule.getErrorTriggeringExamples());
+    assertNotNull(rule.getLocQualityIssueType());
+    assertNotNull(rule.getMaxConfigurableValue());
+    assertNotNull(rule.getMinConfigurableValue());
+    assertNotNull(rule.getSourceFile());
+    assertNotNull(rule.getSubId());
+    assertNotNull(rule.getTags());
+    assertNotNull(rule.getUrl());
+    assertNotNull(rule.getToneTags());
   }
 
   private String cleanSentence(String str) {

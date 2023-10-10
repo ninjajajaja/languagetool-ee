@@ -37,7 +37,7 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
   public AbstractCheckCaseRule(ResourceBundle messages, Language language) {
     super(messages, language);
     super.setLocQualityIssueType(ITSIssueType.Typographical);
-    super.setCategory(Categories.CASING.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.CASING.getCategory(messages));
   }
 
   @Override
@@ -73,10 +73,11 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
       for (int j = 0; j < len; j++) { // longest words first
         String originalPhrase = phrases.get(j);
         int crtWordCount = len - j;
-        SuggestionWithMessage suggMess = wrongWords.get(crtWordCount - 1).get(originalPhrase.toLowerCase(getLocale()));
-        if (suggMess == null) {
-          continue;
-        }
+        SuggestionWithMessage suggMess = new SuggestionWithMessage("try this");
+//        SuggestionWithMessage suggMess = wrongWords.get(crtWordCount - 1).get(originalPhrase.toLowerCase(getLocale()));
+//        if (suggMess == null) {
+//          continue;
+//        }
         String correctPhrase = suggMess.suggestion;
         String capitalizedCorrect = StringTools.uppercaseFirstChar(correctPhrase);
         int startPos = prevTokensList.get(len - crtWordCount).getStartPos();

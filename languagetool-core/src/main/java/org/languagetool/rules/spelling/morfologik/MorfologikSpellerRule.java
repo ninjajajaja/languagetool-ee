@@ -99,7 +99,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
     this.globalConfig = globalConfig;
     this.userConfig = userConfig;
     this.motherTongue = motherTongue;
-    super.setCategory(Categories.TYPOS.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.TYPOS.getCategory(messages));
     conversionLocale = conversionLocale != null ? conversionLocale : Locale.getDefault();
     init();
     setLocQualityIssueType(ITSIssueType.Misspelling);
@@ -548,12 +548,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
     List<SuggestedReplacement> defaultSuggestions = SuggestedReplacement.convert(speller1.getSuggestionsFromDefaultDicts(word));
     List<SuggestedReplacement> userSuggestions = SuggestedReplacement.convert(speller1.getSuggestionsFromUserDicts(word));
     //System.out.println("speller1: " + suggestions);
-    boolean onlyCaseDiffers = false;
-    if (defaultSuggestions.size() > 0 && word.equalsIgnoreCase(defaultSuggestions.get(0).replacement)) {
-      // We have no good concept yet for showing both translations and standard suggestions, so
-      // use a hack to fix e.g. "muslims" not suggesting "Muslims" (https://github.com/languagetool-org/languagetool/issues/3333)
-      onlyCaseDiffers = true;
-    }
+    boolean onlyCaseDiffers = onlyCaseDiffers(defaultSuggestions, word);
     if (word.length() >= 3 && (onlyCaseDiffers || fullResults || defaultSuggestions.isEmpty())) {
       // speller1 uses a maximum edit distance of 1, it won't find suggestion for "garentee", "greatful" etc.
       //System.out.println("speller2: " + speller2.getSuggestions(word));
@@ -583,8 +578,18 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
     return Lists.newArrayList(Iterables.concat(userSuggestions, defaultSuggestions));
   }
 
+  public boolean onlyCaseDiffers(List<SuggestedReplacement> defaultSuggestions, String word) {
+    boolean onlyCaseDiffers = false;
+    if (defaultSuggestions.size() > 0 && word.equalsIgnoreCase(defaultSuggestions.get(0).replacement)) {
+      // We have no good concept yet for showing both translations and standard suggestions, so
+      // use a hack to fix e.g. "muslims" not suggesting "Muslims" (https://github.com/languagetool-org/languagetool/issues/3333)
+      onlyCaseDiffers = true;
+    }
+    return onlyCaseDiffers;
+  }
+
   @NotNull
-  private static List<SuggestedReplacement> mergeSuggestionsWithSameTranslation(List<SuggestedReplacement> l) {
+  public static List<SuggestedReplacement> mergeSuggestionsWithSameTranslation(List<SuggestedReplacement> l) {
     List<SuggestedReplacement> mergedRepl = new ArrayList<>();
     Set<String> handledReplacements = new HashSet<>();
     for (SuggestedReplacement repl : l) {

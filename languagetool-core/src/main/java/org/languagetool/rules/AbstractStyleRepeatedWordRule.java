@@ -156,7 +156,7 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
   /*
    * listings are excluded
    */
-  private static boolean hasBreakToken(AnalyzedTokenReadings[] tokens) {
+  public static boolean hasBreakToken(AnalyzedTokenReadings[] tokens) {
     for (int i = 0; i < tokens.length && i < MAX_TOKEN_TO_CHECK; i++) {
       if (tokens[i].getToken().equals("-") || tokens[i].getToken().equals("—") || tokens[i].getToken().equals("–")) {
         return true;

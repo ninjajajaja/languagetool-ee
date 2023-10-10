@@ -76,25 +76,25 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
     Calendar dateFromText = getDate(args);
-    int monthFromText;
-    int yearFromText;
-    try {
-      monthFromText = dateFromText.get(Calendar.MONTH);
-      yearFromText = dateFromText.get(Calendar.YEAR);
-    } catch (IllegalArgumentException e) {
-      return null; // date is not valid; another rule is responsible
-    }
-    int currentYear = getCurrentYear();
-    if (isJanuary() && monthFromText != 11 /*December*/ && yearFromText + 1 == currentYear) {
-      String message = match.message
-              .replace("{year}", Integer.toString(yearFromText))
-              .replace("{realYear}", Integer.toString(currentYear));
-      RuleMatch ruleMatch = new RuleMatch(match.rule, match.sentence, match.getFromPos(), match.getToPos(), message, match.getShortMessage());
-      ruleMatch.setType(match.type);
-      return ruleMatch;
-    } else {
+//    int monthFromText;
+//    int yearFromText;
+//    try {
+//      monthFromText = dateFromText.get(Calendar.MONTH);
+//      yearFromText = dateFromText.get(Calendar.YEAR);
+//    } catch (IllegalArgumentException e) {
+//      return null; // date is not valid; another rule is responsible
+//    }
+//    int currentYear = getCurrentYear();
+//    if (isJanuary() && monthFromText != 11 /*December*/ && yearFromText + 1 == currentYear) {
+//      String message = match.getMessage()
+//              .replace("{year}", Integer.toString(yearFromText))
+//              .replace("{realYear}", Integer.toString(currentYear));
+//      RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
+//      ruleMatch.setType(match.getType());
+//      return ruleMatch;
+//    } else {
       return null;
-    }
+//    }
   }
 
   private Calendar getDate(Map<String, String> args) {
@@ -103,9 +103,9 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
     int dayOfMonth = getDayOfMonthFromArguments(args);
 
     Calendar calendar = getCalendar();
-    calendar.setLenient(false);  // be strict about validity of dates
+    //calendar.setLenient(false);  // be strict about validity of dates
     //noinspection MagicConstant
-    calendar.set(year, month, dayOfMonth, 0, 0, 0);
+    //calendar.set(year, month, dayOfMonth, 0, 0, 0);
     return calendar;
   }
 
