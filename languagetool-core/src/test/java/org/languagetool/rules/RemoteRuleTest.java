@@ -147,7 +147,7 @@ public class RemoteRuleTest {
   }
 
   private void getter() {
-    assertNotNull(rule.getServiceConfiguration());
+    assertNotNull(rule.serviceConfiguration);
   }
 
   @Test

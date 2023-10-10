@@ -49,7 +49,7 @@ public class PatternRuleMatcherTest {
   }
 
   private void getter() {
-    assertNotNull(PatternRuleMatcher.getCurrentRules());
+    assertNotNull(PatternRuleMatcher.currentlyActiveRules);
   }
 
   @Test
@@ -508,8 +508,8 @@ public class PatternRuleMatcherTest {
   }
 
   private void setterGetterRuleMatch(RuleMatch match) {
-    match.setErrorLimitLang("xx");
-    assertNotNull(match.getErrorLimitLang());
+    match.errorLimitLang = "xx";
+    assertNotNull(match.errorLimitLang);
   }
 
   private void assertNoMatch(String input, PatternRuleMatcher matcher) throws IOException {

@@ -24,7 +24,7 @@ public class NgramProbabilityRuleTest extends TestCase {
 
   @Test
   public void testRule() throws IOException {
-    rule.setMinProbability(0.5);
+    rule.minProbability = 0.5;
     assertGood(0, "Their");
     assertGood(0, "There");
     assertMatch(5, "Their are new ideas to explore.");

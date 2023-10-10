@@ -42,7 +42,7 @@ public class MorfologikSpellerRuleTest extends TestCase {
         return null;
       }
     };
-    morfologikSpellerRule.setLocale(Locale.GERMAN);
+    morfologikSpellerRule.conversionLocale = Locale.GERMAN;
 
     assertFalse(morfologikSpellerRule.onlyCaseDiffers(Collections.emptyList(), "word"));
     assertFalse(morfologikSpellerRule.onlyCaseDiffers(Collections.emptyList(), "Word"));

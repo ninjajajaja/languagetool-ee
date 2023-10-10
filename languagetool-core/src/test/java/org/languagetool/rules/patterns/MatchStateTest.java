@@ -64,9 +64,9 @@ public class MatchStateTest {
   }
 
   private void getter(MatchState ms) {
-    Match m = ms.getMatch();
+    Match m = ms.match;
     assertNotNull(m);
-    ms.setToken(new AnalyzedTokenReadings(new AnalyzedToken("lemma", m.getPosTag(), "lemma"), 0));
+    ms.setToken(new AnalyzedTokenReadings(new AnalyzedToken("lemma", m.posTag, "lemma"), 0));
     ms.filterReadings();
   }
 

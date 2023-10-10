@@ -50,7 +50,7 @@ public class SymSpellRuleTest extends TestCase {
         new AnalyzedTokenReadings(new AnalyzedToken("eh", "posTag", "lemma"))
       }
       ));
-    ssr.setConsiderIgnoreWords(false);
+    ssr.considerIgnoreWords = false;
   }
 
   public void testSymspell() {

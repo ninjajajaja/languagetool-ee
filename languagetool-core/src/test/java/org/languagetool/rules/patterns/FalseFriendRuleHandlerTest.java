@@ -9,7 +9,7 @@ public class FalseFriendRuleHandlerTest extends TestCase {
   public void testGetSuggestionMap() {
 
     FalseFriendRuleHandler ffrh = new FalseFriendRuleHandler(null, null, "hint");
-    assertNotNull(ffrh.getSuggestionMap());
+    assertNotNull(ffrh.suggestionMap);
 
     ffrh.inToken = true;
     ffrh.inPattern = true;

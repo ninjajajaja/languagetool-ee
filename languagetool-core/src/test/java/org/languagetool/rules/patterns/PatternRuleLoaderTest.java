@@ -105,7 +105,7 @@ public class PatternRuleLoaderTest {
   }
 
   private void setter(PatternRuleLoader prl) {
-    prl.setRelaxedMode(false);
+    prl.relaxedMode = false;
   }
 
   @Test

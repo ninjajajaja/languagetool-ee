@@ -76,12 +76,12 @@ public class BitextPatternRuleTest {
   private void testGetters(BitextPatternRule rule) {
     assertNotNull(rule.getTrgRule());
     assertNotNull(rule.getSrcRule());
-    assertNotNull(rule.getCorrectBitextExamples());
+    assertNotNull(rule.correctExamples);
     assertNotNull(rule.getMessage());
-    assertNotNull(rule.getIncorrectBitextExamples());
+    assertNotNull(rule.incorrectExamples);
     assertNotNull(rule.getDescription());
     assertNotNull(rule.getId());
-    assertNotNull(rule.getSourceLanguage());
+    assertNotNull(rule.sourceLanguage);
     assertNotNull(rule.getAntiPatterns());
     assertNotNull(rule.getCategory());
     assertNotNull(rule.getConfigureText());

@@ -62,12 +62,12 @@ public class SameTranslationRuleTest {
   }
 
   private void testGetters(SameTranslationRule rule) {
-    assertNull(rule.getCorrectBitextExamples());
+    assertNull(rule.correctExamples);
     assertNotNull(rule.getMessage());
-    assertNull(rule.getIncorrectBitextExamples());
+    assertNull(rule.incorrectExamples);
     assertNotNull(rule.getDescription());
     assertNotNull(rule.getId());
-    assertNotNull(rule.getSourceLanguage());
+    assertNotNull(rule.sourceLanguage);
     assertNotNull(rule.getAntiPatterns());
     assertNotNull(rule.getCategory());
     assertNotNull(rule.getConfigureText());

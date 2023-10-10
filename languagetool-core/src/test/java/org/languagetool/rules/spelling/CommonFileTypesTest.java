@@ -5,6 +5,6 @@ import junit.framework.TestCase;
 public class CommonFileTypesTest extends TestCase {
 
   public void testGetSuffixPattern() {
-    assertNotNull(CommonFileTypes.getSuffixPattern());
+    assertNotNull(CommonFileTypes.suffixPattern);
   }
 }

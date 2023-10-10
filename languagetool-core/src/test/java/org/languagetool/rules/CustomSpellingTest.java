@@ -40,7 +40,7 @@ public class CustomSpellingTest {
     assertThat(rule.match(lt.getAnalyzedSentence("das ist ihfsdsdfi")).length, is(1));
     assertThat(rule.match(lt.getAnalyzedSentence("das ist auchokay")).length, is(0));  // listed in spelling_custom.txt
     assertThat(rule.match(lt.getAnalyzedSentence("das ist falsch")).length, is(1));    // listed in prohibit_custom.txt
-    assertNotNull(rule.getActiveChecks());
+    assertNotNull(rule.activeChecks);
   }
   
 }

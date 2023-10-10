@@ -61,7 +61,7 @@ public class RegexPatternRuleTest {
   }
 
   private void getter(RegexPatternRule rpr) {
-    assertNotNull(rpr.getPattern());
+    assertNotNull(rpr.pattern);
   }
  
   @Test

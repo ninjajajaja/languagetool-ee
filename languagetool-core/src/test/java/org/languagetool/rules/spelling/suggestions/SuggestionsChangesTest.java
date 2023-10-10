@@ -23,9 +23,9 @@ public class SuggestionsChangesTest extends TestCase {
     }
     SuggestionsChanges.init(sctc, null);
     SuggestionsChanges sc = SuggestionsChanges.getInstance();
-    sc.setCurrentExperiment(null);
-    assertNull(sc.getCurrentExperiment());
-    assertNotNull(sc.getConfig());
-    assertNotNull(sc.getExperiments());
+    sc.currentExperiment = null;
+    assertNull(sc.currentExperiment);
+    assertNotNull(sc.config);
+    assertNotNull(sc.experiments);
   }
 }

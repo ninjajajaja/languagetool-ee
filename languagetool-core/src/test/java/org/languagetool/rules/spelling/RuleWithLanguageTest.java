@@ -8,7 +8,7 @@ public class RuleWithLanguageTest extends TestCase {
   public void testGetRuleGetLanguage() {
 
     RuleWithLanguage rwl = new RuleWithLanguage(new SymSpellRule(null, null, null), new Demo());
-    assertNotNull(rwl.getRule());
-    assertNotNull(rwl.getLanguage());
+    assertNotNull(rwl.rule);
+    assertNotNull(rwl.language);
   }
 }
