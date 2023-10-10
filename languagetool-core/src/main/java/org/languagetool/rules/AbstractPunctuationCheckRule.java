@@ -36,7 +36,7 @@ public abstract class AbstractPunctuationCheckRule extends Rule {
 
   public AbstractPunctuationCheckRule(ResourceBundle messages) {
     super(messages);
-    super.setCategory(Categories.PUNCTUATION.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.PUNCTUATION.getCategory(messages));
   }
 
   @Override

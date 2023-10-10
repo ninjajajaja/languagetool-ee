@@ -44,7 +44,7 @@ public final class AnalyzedTokenReadings implements Iterable<AnalyzedToken> {
   private static final Logger logger = LoggerFactory.getLogger(AnalyzedTokenReadings.class);
   private static final Pattern NON_WORD_REGEX = Pattern.compile("[.?!…:;,~’'\"„“”»«‚‘›‹()\\[\\]\\-–—*×∗·+÷/=]");
 
-  private final boolean isWhitespace;
+  public boolean isWhitespace;
   private final boolean isLinebreak;
   private final boolean isSentStart;
   private final boolean isPosTagUnknown;

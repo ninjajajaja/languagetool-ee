@@ -58,7 +58,7 @@ public abstract class AbstractFillerWordsRule extends TextLevelRule {
   
   public AbstractFillerWordsRule(ResourceBundle messages, Language lang, UserConfig userConfig, boolean defaultActive) {
     super(messages);
-    super.setCategory(new Category(new CategoryId("CREATIVE_WRITING"), 
+    if (messages != null) super.setCategory(new Category(new CategoryId("CREATIVE_WRITING"),
         messages.getString("category_creative_writing"), Location.INTERNAL, false));
     this.lang = lang;
     if (!defaultActive) {

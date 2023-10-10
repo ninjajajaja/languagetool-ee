@@ -148,7 +148,7 @@ public class PortugueseReadabilityRule extends ReadabilityRule {
   }
   
   @Override
-  protected int simpleSyllablesCount(String word) {
+  public int simpleSyllablesCount(String word) {
     if (word.length() == 0) {
       return 0;
     }

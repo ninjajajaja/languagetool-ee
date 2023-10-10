@@ -18,5 +18,42 @@
  */
 package org.languagetool.rules.spelling.morfologik;
 
-public class MorfologikSpellerRuleTest {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import junit.framework.TestCase;
+import org.languagetool.language.Demo;
+import org.languagetool.rules.SuggestedReplacement;
+
+public class MorfologikSpellerRuleTest extends TestCase {
+
+  public void testMorfologikSpellerRule() throws IOException {
+    MorfologikSpellerRule morfologikSpellerRule = new MorfologikSpellerRule(null, new Demo(), null) {
+      @Override
+      public String getFileName() {
+        return null;
+      }
+
+      @Override
+      public String getId() {
+        return null;
+      }
+    };
+    morfologikSpellerRule.setLocale(Locale.GERMAN);
+
+    assertFalse(morfologikSpellerRule.onlyCaseDiffers(Collections.emptyList(), "word"));
+    assertFalse(morfologikSpellerRule.onlyCaseDiffers(Collections.emptyList(), "Word"));
+    assertTrue(morfologikSpellerRule.onlyCaseDiffers(Arrays.asList(new SuggestedReplacement("Word")), "word"));
+    assertTrue(morfologikSpellerRule.onlyCaseDiffers(Arrays.asList(new SuggestedReplacement("word")), "word"));
+
+    List<SuggestedReplacement> suggRepls = new ArrayList<SuggestedReplacement>();
+    for (int i = 0; i < 30; i++) suggRepls.add(new SuggestedReplacement("replacement"+i, "short description"+i, "suffix"+i));
+    for (int i = 0; i < 30; i++) suggRepls.add(new SuggestedReplacement("replacement"+i, "short description"+i, "suffix"+i));
+    MorfologikSpellerRule.mergeSuggestionsWithSameTranslation(suggRepls);
+
+  }
+
 }

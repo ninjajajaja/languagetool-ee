@@ -19,9 +19,12 @@
 package org.languagetool.rules.patterns;
 
 import org.junit.Test;
+import org.languagetool.AnalyzedToken;
+import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.FakeLanguage;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
@@ -54,6 +57,17 @@ public class MatchStateTest {
     assertThat(startLower.convertCase("xxx", "Yyy", new FakeLanguage("en")), is("xxx"));
     assertThat(startLower.convertCase("XXX", "Yyy", new FakeLanguage("en")), is("xXX"));
     assertThat(startLower.convertCase("Xxx", "Yyy", new FakeLanguage("en")), is("xxx"));
+
+    getter(startLower);
+    getter(startUpper);
+    getter(preserve);
+  }
+
+  private void getter(MatchState ms) {
+    Match m = ms.getMatch();
+    assertNotNull(m);
+    ms.setToken(new AnalyzedTokenReadings(new AnalyzedToken("lemma", m.getPosTag(), "lemma"), 0));
+    ms.filterReadings();
   }
 
   private MatchState getMatchState(Match.CaseConversion conversion) {

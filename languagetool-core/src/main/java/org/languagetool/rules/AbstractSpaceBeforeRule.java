@@ -38,7 +38,7 @@ public abstract class AbstractSpaceBeforeRule extends Rule {
   protected abstract Pattern getConjunctions();
 
   public AbstractSpaceBeforeRule(ResourceBundle messages, Language language) {
-    super.setCategory(Categories.MISC.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
   }
 
   @Override
@@ -67,17 +67,19 @@ public abstract class AbstractSpaceBeforeRule extends Rule {
     for (int i = 1; i < tokens.length; i++) {
       AnalyzedTokenReadings tokensI = tokens[i];
       String token = tokensI.getToken();
-      Matcher matcher = getConjunctions().matcher(token);
-      if (matcher.matches()) {
-        String previousToken = tokens[i - 1].getToken();
-        if (!(previousToken.equals(" ") || previousToken.equals("("))) {
-          String replacement = " " + token;
-          String msg = getSuggestion();
-          int pos = tokensI.getStartPos();
-          RuleMatch potentialRuleMatch = new RuleMatch(this, sentence, pos, pos
+      int pos = tokensI.getStartPos();
+      if (getConjunctions() != null) {
+        Matcher matcher = getConjunctions().matcher(token);
+        if (matcher.matches()) {
+          String previousToken = tokens[i - 1].getToken();
+          if (!(previousToken.equals(" ") || previousToken.equals("("))) {
+            String replacement = " " + token;
+            String msg = getSuggestion();
+            RuleMatch potentialRuleMatch = new RuleMatch(this, sentence, pos, pos
               + token.length(), msg, getShort());
-          potentialRuleMatch.setSuggestedReplacement(replacement);
-          ruleMatches.add(potentialRuleMatch);
+            potentialRuleMatch.setSuggestedReplacement(replacement);
+            ruleMatches.add(potentialRuleMatch);
+          }
         }
       }
     }

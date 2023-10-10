@@ -18,6 +18,11 @@
  */
 package org.languagetool.rules;
 
+import java.util.ArrayDeque;
+import java.util.List;
+import java.util.Queue;
+import org.languagetool.AnalyzedToken;
+import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.JLanguageTool;
 
 import java.io.IOException;

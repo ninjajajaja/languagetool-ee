@@ -48,7 +48,7 @@ public class SymSpell implements Serializable {
   private int compactMask;
   private EditDistance.DistanceAlgorithm distanceAlgorithm = EditDistance.DistanceAlgorithm.Damerau;
   private int maxLength;
-  private Map<Integer, String[]> deletes;
+  private Map<Integer, String[]> deletes = new HashMap<>();
   // Dictionary of unique correct spelling words, and the frequency count for each word.
   private Map<String, Long> words;
   // Dictionary of unique words that are below the count threshold for being considered correct spellings.
@@ -131,7 +131,7 @@ public class SymSpell implements Serializable {
     } else if (count < countThreshold) {
       // new or existing below threshold word
       belowThresholdWords.put(key, count);
-      return false;
+      // return false;
     }
 
     // what we have at this point is a new, above threshold word

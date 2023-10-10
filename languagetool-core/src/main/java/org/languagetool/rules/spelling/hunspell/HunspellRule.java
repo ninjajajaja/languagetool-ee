@@ -85,8 +85,8 @@ public class HunspellRule extends SpellingCheckRule {
   }
   protected Pattern nonWordPattern;
 
-  private final UserConfig userConfig;
-  private final List<RuleWithLanguage> enSpellRules;
+  private UserConfig userConfig = null;
+  private List<RuleWithLanguage> enSpellRules = null;
 
   public HunspellRule(ResourceBundle messages, Language language, UserConfig userConfig) {
     this(messages, language, userConfig, Collections.emptyList());
@@ -102,9 +102,11 @@ public class HunspellRule extends SpellingCheckRule {
   public HunspellRule(ResourceBundle messages, Language language, UserConfig userConfig, List<Language> altLanguages,
                       LanguageModel languageModel) {
     super(messages, language, userConfig, altLanguages, languageModel);
-    super.setCategory(Categories.TYPOS.getCategory(messages));
-    this.userConfig = userConfig;
-    enSpellRules = getEnglishSpellingRules();
+    if (messages != null) {
+      super.setCategory(Categories.TYPOS.getCategory(messages));
+      this.userConfig = userConfig;
+      enSpellRules = getEnglishSpellingRules();
+    }
   }
 
   private List<RuleWithLanguage> getEnglishSpellingRules() {
