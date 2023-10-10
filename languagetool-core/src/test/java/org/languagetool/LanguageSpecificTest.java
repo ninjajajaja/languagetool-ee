@@ -138,7 +138,7 @@ public class LanguageSpecificTest {
     }
     System.out.println("Testing coherency.txt...");
     System.out.println("Checking " + path + "...");
-    Map<String, THashSet<String>> map = loader.loadWords(path);
+    Hashtable<String, Set<String>> map = loader.loadWords(path);
     Set<String> invalid = new HashSet<>();
     Synthesizer synthesizer = lang.getSynthesizer();
     for (String key : map.keySet()) {

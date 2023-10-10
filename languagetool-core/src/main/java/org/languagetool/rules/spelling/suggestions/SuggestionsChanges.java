@@ -88,7 +88,9 @@ public class SuggestionsChanges {
 
     if (current.isEmpty()) {
       for (Object value : params) {
-        result.add((Hashtable<String, Object>) new Hashtable<String, Object>().put(name, value));
+        Hashtable newEntry = new Hashtable();
+        newEntry.putAll(Collections.singletonMap(name, value));
+        result.add(newEntry);
       }
     } else {
       for (Hashtable<String, Object> entry : current) {

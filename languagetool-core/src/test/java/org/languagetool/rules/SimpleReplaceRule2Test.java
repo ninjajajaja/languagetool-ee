@@ -3,6 +3,7 @@ package org.languagetool.rules;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,8 +51,8 @@ public class SimpleReplaceRule2Test {
         return null;
       }
 
-      public List<Map<String, SuggestionWithMessage>> getWrongWords(boolean checkingCase) {
-        Map m = new HashMap<String, SuggestionWithMessage>();
+      public List<Hashtable<String, SuggestionWithMessage>> getWrongWords(boolean checkingCase) {
+        Hashtable m = new Hashtable<String, SuggestionWithMessage>();
         m.put("aa",new SuggestionWithMessage("a"));
         m.put("bb",new SuggestionWithMessage("b"));
         m.put("cc",new SuggestionWithMessage("c"));

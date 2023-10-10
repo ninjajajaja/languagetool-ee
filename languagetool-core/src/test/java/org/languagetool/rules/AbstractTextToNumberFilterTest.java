@@ -2,6 +2,7 @@ package org.languagetool.rules;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import junit.framework.TestCase;
 import org.languagetool.AnalyzedSentence;
@@ -93,7 +94,7 @@ public class AbstractTextToNumberFilterTest extends TestCase {
 
   public void testAcceptRuleMatch() throws IOException {
     RuleMatch ruleMatch = new RuleMatch(new FakeRule(), 0, 10, "message");
-    Map map = new HashMap<String, String>();
+    Hashtable map = new Hashtable<String, String>();
     filter.acceptRuleMatch(ruleMatch, map, 0, new AnalyzedTokenReadings[]{
       new AnalyzedTokenReadings(new AnalyzedToken("cien", "posTag", "lemma"), 0),
       new AnalyzedTokenReadings(new AnalyzedToken("mil", "posTag", "lemma"), 1),

@@ -3,6 +3,7 @@ package org.languagetool.rules;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
@@ -19,8 +20,8 @@ public class AbstractRepeatedWordsRuleTest extends TestCase {
   public void setUp() throws Exception {
     rule = new AbstractRepeatedWordsRule(null, new Demo()) {
       @Override
-      protected Map<String, SynonymsData> getWordsToCheck() {
-        Map map = new HashMap();
+      protected Hashtable<String, SynonymsData> getWordsToCheck() {
+        Hashtable map = new Hashtable();
         List<String> l = Arrays.asList("lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma", "lemma");
         map.put("a", new SynonymsData(l, "posTag", "chunk"));
         map.put("b", new SynonymsData(l, "posTag", "chunk"));

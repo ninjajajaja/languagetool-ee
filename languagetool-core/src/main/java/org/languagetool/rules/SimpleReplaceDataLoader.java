@@ -57,7 +57,7 @@ public final class SimpleReplaceDataLoader {
 //        String[] wrongForms = parts[0].split("\\|");
 //        List<String> replacements = Arrays.asList(parts[1].split("\\|"));
         for (String wrongForm : wrongForms) {
-          map.put(wrongForm, null); //replacements);
+          map.put(wrongForm, Collections.emptyList()); //replacements);
         }
 //      }
 //    }

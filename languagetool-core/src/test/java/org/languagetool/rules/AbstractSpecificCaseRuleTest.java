@@ -1,5 +1,6 @@
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import java.util.HashSet;
 import junit.framework.TestCase;
 import org.languagetool.AnalyzedSentence;
@@ -68,7 +69,7 @@ public class AbstractSpecificCaseRuleTest extends TestCase {
   }
 
   public void testInitializeLcToProperSpellingMap() {
-    specificCaseRule.phrases = new HashSet<>();
+    specificCaseRule.phrases = new THashSet<>();
     specificCaseRule.phrases.add("hi");
     specificCaseRule.phrases.add("hello");
     specificCaseRule.phrases.add("goodbye");

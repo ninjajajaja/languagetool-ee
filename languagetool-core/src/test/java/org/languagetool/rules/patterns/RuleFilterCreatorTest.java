@@ -19,6 +19,7 @@
 package org.languagetool.rules.patterns;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import org.junit.Test;
 
@@ -36,7 +37,7 @@ public class RuleFilterCreatorTest {
   }
 
   private void testGetRequired(RuleFilter filter) {
-    Map m = new HashMap<String,String>();
+    Hashtable m = new Hashtable<String,String>();
     m.put("apple", "banana");
     m.put("carrot", "dog");
     m.put("elephant", "fountain");

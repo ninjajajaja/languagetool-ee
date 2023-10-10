@@ -1,6 +1,7 @@
 package org.languagetool.rules;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import junit.framework.TestCase;
 
@@ -8,7 +9,7 @@ public class YMDDateHelperTest extends TestCase {
 
   public void testHelper() {
     YMDDateHelper helper = new YMDDateHelper();
-    Map map = new HashMap<String,String>();
+    Hashtable map = new Hashtable<String,String>();
     map.put("date", "2023-01-01");
     map.put("year", "2020");
     map.put("month", "6");
