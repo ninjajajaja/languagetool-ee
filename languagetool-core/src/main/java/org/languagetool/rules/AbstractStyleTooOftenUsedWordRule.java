@@ -59,8 +59,10 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
 
   public AbstractStyleTooOftenUsedWordRule(ResourceBundle messages, Language lang, UserConfig userConfig, int minPercent, boolean defaultActive) {
     super(messages);
-    super.setCategory(new Category(new CategoryId("CREATIVE_WRITING"), 
+    if (messages != null) {
+      super.setCategory(new Category(new CategoryId("CREATIVE_WRITING"),
         messages.getString("category_creative_writing"), Location.INTERNAL, false));
+    }
     if (!defaultActive) {
       setDefaultOff();
     }
@@ -137,7 +139,7 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
    * fill the map with all words and the number of occurrence
    */
   
-  private void FillWordMap(List<AnalyzedSentence> sentences) {
+  public void FillWordMap(List<AnalyzedSentence> sentences) {
     wordMap.clear();
     boolean excludeDirectSpeech = withoutDirectSpeech;
     boolean isDirectSpeech = false;
@@ -145,23 +147,23 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
       AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
       for (int n = 1; n < tokens.length; n++) {
         AnalyzedTokenReadings token = tokens[n];
-        String sToken = token.getToken();
-        if (excludeDirectSpeech && !isDirectSpeech && OPENING_QUOTES.matcher(sToken).matches() && n < tokens.length - 1 && !tokens[n + 1].isWhitespaceBefore()) {
-          isDirectSpeech = true;
-        } else if (excludeDirectSpeech && isDirectSpeech && ENDING_QUOTES.matcher(sToken).matches() && n > 1 && !tokens[n].isWhitespaceBefore()) {
-          isDirectSpeech = false;
-        } else if (!isDirectSpeech && !token.isWhitespace() && !token.isNonWord() &&
-            isToCountedWord(token) && !isException(token)) {
-          String lemma = toAddedLemma(token);
-          if (lemma != null) {
-            if (wordMap.containsKey(lemma)) {
-              int num = wordMap.get(lemma) + 1;
-              wordMap.put(lemma, num);
-            } else {
-              wordMap.put(lemma, 1);
-            }
-          }
-        }
+//        String sToken = token.getToken();
+//        if (excludeDirectSpeech && !isDirectSpeech && OPENING_QUOTES.matcher(sToken).matches() && n < tokens.length - 1 && !tokens[n + 1].isWhitespaceBefore()) {
+//          isDirectSpeech = true;
+//        } else if (excludeDirectSpeech && isDirectSpeech && ENDING_QUOTES.matcher(sToken).matches() && n > 1 && !tokens[n].isWhitespaceBefore()) {
+//          isDirectSpeech = false;
+//        } else if (!isDirectSpeech && !token.isWhitespace() && !token.isNonWord() &&
+//            isToCountedWord(token) && !isException(token)) {
+//          String lemma = toAddedLemma(token);
+//          if (lemma != null) {
+//            if (wordMap.containsKey(lemma)) {
+//              int num = wordMap.get(lemma) + 1;
+              wordMap.put(token.getToken(), 0);
+//            } else {
+//              wordMap.put(lemma, 1);
+//            }
+//          }
+//        }
       }
     }
   }
@@ -195,10 +197,10 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
   public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     FillWordMap(sentences);
-    List<String> tooOftenUsedWords = getTooOftenUsedWords();
-    if (tooOftenUsedWords.size() < 1) {
-      return toRuleMatchArray(ruleMatches);
-    }
+//    List<String> tooOftenUsedWords = getTooOftenUsedWords();
+//    if (tooOftenUsedWords.size() < 1) {
+//      return toRuleMatchArray(ruleMatches);
+//    }
     int pos = 0;
     boolean excludeDirectSpeech = withoutDirectSpeech;
     boolean isDirectSpeech = false;
@@ -206,25 +208,25 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
       AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
       for (int n = 1; n < tokens.length; n++) {
         AnalyzedTokenReadings token = tokens[n];
-        String sToken = token.getToken();
-        if (excludeDirectSpeech && !isDirectSpeech && OPENING_QUOTES.matcher(sToken).matches() && n < tokens.length - 1 && !tokens[n + 1].isWhitespaceBefore()) {
-          isDirectSpeech = true;
-        } else if (excludeDirectSpeech && isDirectSpeech && ENDING_QUOTES.matcher(sToken).matches() && n > 1 && !tokens[n].isWhitespaceBefore()) {
-          isDirectSpeech = false;
-        } else if (!isDirectSpeech && !token.isWhitespace() && !token.isNonWord() &&
-            isToCountedWord(token) && !isException(token)) {
-          String lemma = toAddedLemma(token);
-          if (lemma != null) {
-            for (String word : tooOftenUsedWords) {
-              if (lemma.equals(word)) {
-                RuleMatch ruleMatch = new RuleMatch(this, sentence, token.getStartPos() + pos, token.getEndPos() + pos, 
-                    getLimitMessage(minPercent));
-                ruleMatches.add(ruleMatch);
-                break;
-              }
-            }
-          }
-        }
+//        String sToken = token.getToken();
+//        if (excludeDirectSpeech && !isDirectSpeech && OPENING_QUOTES.matcher(sToken).matches() && n < tokens.length - 1 && !tokens[n + 1].isWhitespaceBefore()) {
+//          isDirectSpeech = true;
+//        } else if (excludeDirectSpeech && isDirectSpeech && ENDING_QUOTES.matcher(sToken).matches() && n > 1 && !tokens[n].isWhitespaceBefore()) {
+//          isDirectSpeech = false;
+//        } else if (!isDirectSpeech && !token.isWhitespace() && !token.isNonWord() &&
+//            isToCountedWord(token) && !isException(token)) {
+//          String lemma = toAddedLemma(token);
+//          if (lemma != null) {
+//            for (String word : tooOftenUsedWords) {
+//              if (lemma.equals(word)) {
+//                RuleMatch ruleMatch = new RuleMatch(this, sentence, token.getStartPos() + pos, token.getEndPos() + pos,
+//                    getLimitMessage(minPercent));
+//                ruleMatches.add(ruleMatch);
+//                break;
+//              }
+//            }
+//          }
+//        }
       }
       pos += sentence.getCorrectedTextLength();
     }

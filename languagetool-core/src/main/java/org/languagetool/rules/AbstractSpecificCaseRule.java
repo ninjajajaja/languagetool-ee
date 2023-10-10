@@ -44,7 +44,7 @@ public abstract class AbstractSpecificCaseRule extends Rule {
   // and as values the special case phrases properly spelled:
   private static final Hashtable<String,String> lcToProperSpelling = new Hashtable<>();
   // the phrases that will be detected by the rule:
-  private static THashSet<String> phrases;
+  public static THashSet<String> phrases;
   private static int maxLen;
 
   // used to speed up the server as the phrases are loaded in every initialization:
@@ -56,9 +56,9 @@ public abstract class AbstractSpecificCaseRule extends Rule {
    */
   public AbstractSpecificCaseRule(ResourceBundle messages) {
     super(messages);
-    super.setCategory(Categories.CASING.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.CASING.getCategory(messages));
     setLocQualityIssueType(ITSIssueType.Misspelling);
-    loadPhrases();
+    //loadPhrases();
   }
   
   /**
@@ -102,7 +102,7 @@ public abstract class AbstractSpecificCaseRule extends Rule {
     initializeLcToProperSpellingMap();
   }
 
-  synchronized static private void initializeLcToProperSpellingMap() {
+  synchronized static public void initializeLcToProperSpellingMap() {
     for (String phrase : phrases) {
       lcToProperSpelling.put(phrase.toLowerCase(), phrase);
     }

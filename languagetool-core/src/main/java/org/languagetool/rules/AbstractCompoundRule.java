@@ -78,7 +78,7 @@ public abstract class AbstractCompoundRule extends Rule {
   public AbstractCompoundRule(ResourceBundle messages, Language lang, UserConfig userConfig,
                               String withHyphenMessage, String withoutHyphenMessage, String withOrWithoutHyphenMessage,
                               String shortMessage) throws IOException {
-    super.setCategory(Categories.MISC.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
     this.withHyphenMessage = withHyphenMessage;
     this.withoutHyphenMessage = withoutHyphenMessage;
     this.withOrWithoutHyphenMessage = withOrWithoutHyphenMessage;
@@ -188,7 +188,7 @@ public abstract class AbstractCompoundRule extends Rule {
     return newReplacements;
   }
 
-  private Hashtable<String, AnalyzedTokenReadings> getStringToTokenMap(Queue<AnalyzedTokenReadings> prevTokens,
+  public Hashtable<String, AnalyzedTokenReadings> getStringToTokenMap(Queue<AnalyzedTokenReadings> prevTokens,
                                                                  List<String> stringsToCheck, List<String> origStringsToCheck) {
     StringBuilder sb = new StringBuilder();
     Hashtable<String, AnalyzedTokenReadings> stringToToken = new Hashtable<>();

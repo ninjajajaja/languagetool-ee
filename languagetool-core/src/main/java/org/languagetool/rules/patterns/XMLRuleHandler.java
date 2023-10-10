@@ -117,7 +117,7 @@ public class XMLRuleHandler extends DefaultHandler {
   protected StringBuilder message = new StringBuilder();
   protected StringBuilder suggestionsOutMsg = new StringBuilder();
   protected StringBuilder match = new StringBuilder();
-  protected StringBuilder elements;
+  public StringBuilder elements;
   protected StringBuilder exceptions;
 
   protected List<CorrectExample> correctExamples = new ArrayList<>();
@@ -126,7 +126,7 @@ public class XMLRuleHandler extends DefaultHandler {
   protected List<IncorrectExample> incorrectExamples = new ArrayList<>();
   protected List<ErrorTriggeringExample> errorTriggeringExamples = new ArrayList<>();
 
-  protected boolean inPattern;
+  public boolean inPattern;
   protected boolean inCorrectExample;
   protected boolean inIncorrectExample;
   protected boolean inErrorTriggerExample;
@@ -136,7 +136,7 @@ public class XMLRuleHandler extends DefaultHandler {
   protected boolean inSuggestion;
   protected boolean inMatch;
   protected boolean inRuleGroup;
-  protected boolean inToken;
+  public boolean inToken;
   protected boolean inException;
   protected boolean inPhrases;
   protected boolean inAndGroup;

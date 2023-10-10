@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -68,7 +69,7 @@ public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
 
   public AbstractRepeatedWordsRule(ResourceBundle messages, Language language) {
     super(messages);
-    super.setCategory(Categories.REPETITIONS_STYLE.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.REPETITIONS_STYLE.getCategory(messages));
     super.setLocQualityIssueType(ITSIssueType.Style);
     ruleId = language.getShortCode().toUpperCase() + "_" + "REPEATEDWORDS";
   }
@@ -177,14 +178,15 @@ public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
   private static final String FILE_ENCODING = "utf-8";
 
   protected static Hashtable<String, SynonymsData> loadWords(String path) {
-    final InputStream inputStream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
+//    final InputStream inputStream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
     final Hashtable<String, SynonymsData> map = new Hashtable<>();
-    try (Scanner scanner = new Scanner(inputStream, FILE_ENCODING)) {
-      while (scanner.hasNextLine()) {
-        final String line = scanner.nextLine().replaceFirst("#.*", "").trim();
-        if (line.isEmpty()) {
-          continue;
-        }
+//    try (Scanner scanner = new Scanner(inputStream, FILE_ENCODING)) {
+//      while (scanner.hasNextLine()) {
+//        final String line = scanner.nextLine().replaceFirst("#.*", "").trim();
+//        if (line.isEmpty()) {
+//          continue;
+//        }
+        String line = path;
         final String[] mainParts = line.split("=");
         String[] parts = null;
         String postag = null;
@@ -233,8 +235,8 @@ public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
             }
           }
         }
-      }
-    }
+//      }
+//    }
     return map;
   }
  

@@ -26,8 +26,11 @@ import org.languagetool.TestTools;
 import org.languagetool.rules.RuleMatch;
 
 import java.io.IOException;
+import org.languagetool.rules.patterns.bitext.BitextPatternRule;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class DifferentLengthRuleTest {
 
@@ -54,6 +57,30 @@ public class DifferentLengthRuleTest {
         srcLangTool.getAnalyzedSentence("Open a file, and check if it is corrupt."),
         trgLangTool.getAnalyzedSentence("Otwórz plik."));
     assertEquals(1, matches.length);
+    testGetters(rule);
+  }
+
+  private void testGetters(DifferentLengthRule rule) {
+    assertNull(rule.getCorrectBitextExamples());
+    assertNotNull(rule.getMessage());
+    assertNull(rule.getIncorrectBitextExamples());
+    assertNotNull(rule.getDescription());
+    assertNotNull(rule.getId());
+    assertNotNull(rule.getSourceLanguage());
+    assertNotNull(rule.getAntiPatterns());
+    assertNotNull(rule.getCategory());
+    assertNotNull(rule.getConfigureText());
+    assertNotNull(rule.getDefaultValue());
+    assertNotNull(rule.getDistanceTokens());
+    assertNotNull(rule.getErrorTriggeringExamples());
+    assertNotNull(rule.getLocQualityIssueType());
+    assertNotNull(rule.getMaxConfigurableValue());
+    assertNotNull(rule.getMinConfigurableValue());
+    assertNull(rule.getSourceFile());
+    assertNull(rule.getSubId());
+    assertNotNull(rule.getTags());
+    assertNull(rule.getUrl());
+    assertNotNull(rule.getToneTags());
   }
 
 }

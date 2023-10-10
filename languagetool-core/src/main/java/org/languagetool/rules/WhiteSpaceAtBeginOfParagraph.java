@@ -35,7 +35,7 @@ public class WhiteSpaceAtBeginOfParagraph extends Rule {
 
   public WhiteSpaceAtBeginOfParagraph(ResourceBundle messages, boolean defaultActive) {
     super(messages);
-    super.setCategory(Categories.STYLE.getCategory(messages));
+    if (messages != null) super.setCategory(Categories.STYLE.getCategory(messages));
     if (!defaultActive) {
       setDefaultOff();
     }
@@ -71,7 +71,7 @@ public class WhiteSpaceAtBeginOfParagraph extends Rule {
     for (i = 1; i < tokens.length && isWhitespaceDel(tokens[i]); i++);
     if (i > 1 && i < tokens.length && !tokens[i].isLinebreak()) {
       RuleMatch ruleMatch = new RuleMatch(this, sentence, tokens[1].getStartPos(),
-              tokens[i].getEndPos(), messages.getString("whitespace_at_begin_parapgraph_msg"));
+              tokens[i].getEndPos(), "whitespace_at_begin_parapgraph_msg");
       ruleMatch.setSuggestedReplacement(tokens[i].getToken());
       ruleMatches.add(ruleMatch);
     }

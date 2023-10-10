@@ -58,7 +58,7 @@ public class SuggestionsChanges {
 
   private SuggestionChangesExperiment currentExperiment = null;
 
-  private SuggestionsChanges(SuggestionChangesTestConfig config, BufferedWriter reportWriter) {
+  SuggestionsChanges(SuggestionChangesTestConfig config, BufferedWriter reportWriter) {
     this.config = config;
     experiments = generateExperiments(config.experiments);
 
@@ -189,10 +189,10 @@ public class SuggestionsChanges {
 
     @Override
     public void run() {
-      if (reportWriter == null) {
-        return;
-      }
-      try {
+      //if (reportWriter == null) {
+      //  return;
+      //}
+      //try {
         StringBuilder report = new StringBuilder();
         report.append("Overall report:\n\n");
 
@@ -251,11 +251,11 @@ public class SuggestionsChanges {
           report.append(String.format("%nBest experiment: #%d (%s) @ %f%% accuracy%n", bestId, best, bestAccuracy));
         }
         System.out.println(report);
-        reportWriter.write(report.toString());
-        reportWriter.close();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
+        //reportWriter.write(report.toString());
+        //reportWriter.close();
+        // } catch (IOException e) {
+        //throw new RuntimeException(e);
+      //}
     }
   }
 

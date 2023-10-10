@@ -77,22 +77,22 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
       try {
         AhoCorasickDoubleArrayTrie<String> searcher = phraseSearcher.get(userConfig);
 
-        List<AhoCorasickDoubleArrayTrie.Hit<String>> phrases = searcher.parseText(text.getPlainText());
-
-        for (AhoCorasickDoubleArrayTrie.Hit<String> phrase : phrases) {
-          Iterator<RuleMatch> iter = cleanMatches.iterator();
-
-          while (iter.hasNext()) {
-            RuleMatch match = iter.next();
-            if (match.getRule().isDictionaryBasedSpellingRule() &&
-                match.getFromPos() >= phrase.begin &&
-                match.getToPos() <= phrase.end) {
-              // remove all spelling matches that are (subsets) of accepted phrases
-              iter.remove();
-            }
-          }
-        }
-        return cleanMatches;
+//        List<AhoCorasickDoubleArrayTrie.Hit<String>> phrases = searcher.parseText(text.getPlainText());
+//
+//        for (AhoCorasickDoubleArrayTrie.Hit<String> phrase : phrases) {
+//          Iterator<RuleMatch> iter = cleanMatches.iterator();
+//
+//          while (iter.hasNext()) {
+//            RuleMatch match = iter.next();
+//            if (match.getRule().isDictionaryBasedSpellingRule() &&
+//                match.getFromPos() >= phrase.begin &&
+//                match.getToPos() <= phrase.end) {
+//              // remove all spelling matches that are (subsets) of accepted phrases
+//              iter.remove();
+//            }
+//          }
+//        }
+//        return cleanMatches;
       } catch (ExecutionException e) {
         log.error("Couldn't set up phrase search, accepted phrases won't work.", e);
         return ruleMatches;

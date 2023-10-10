@@ -29,8 +29,11 @@ import org.languagetool.rules.RuleMatch;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import org.languagetool.rules.patterns.bitext.BitextPatternRule;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class ConfusionProbabilityRuleTest {
@@ -57,6 +60,28 @@ public class ConfusionProbabilityRuleTest {
     assertGood("Their are new ideas to explore.", ruleWithException);
     assertGood("\"Their are new ideas to explore.\"", ruleWithException);
     assertGood("But İm dabei gut auszusehen.");
+
+    testGetters(ruleWithException);
+  }
+
+  private void testGetters(ConfusionProbabilityRule rule) {
+    assertNull(rule.getDescription());
+    assertNotNull(rule.getId());
+    assertNotNull(rule.getAntiPatterns());
+    assertNotNull(rule.getCategory());
+    assertNotNull(rule.getConfigureText());
+    assertNotNull(rule.getDefaultValue());
+    assertNotNull(rule.getDistanceTokens());
+    assertNotNull(rule.getErrorTriggeringExamples());
+    assertNotNull(rule.getLocQualityIssueType());
+    assertNotNull(rule.getMaxConfigurableValue());
+    assertNotNull(rule.getMinConfigurableValue());
+    assertNull(rule.getSourceFile());
+    assertNull(rule.getSubId());
+    assertNotNull(rule.getTags());
+    assertNull(rule.getUrl());
+    assertNotNull(rule.getToneTags());
+    assertNotNull(rule.getFilenames());
   }
 
   @Test

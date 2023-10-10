@@ -20,6 +20,7 @@ package org.languagetool.rules;
 
 import java.util.Calendar;
 import java.util.Hashtable;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,39 +80,39 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
    */
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
-    try {
+//    try {
       int dayOfWeekFromString = getDayOfWeek(getRequired("weekDay", args).replace("\u00AD", ""));  // replace soft hyphen
       Calendar dateFromDate = getDate(args);
-      int dayOfWeekFromDate;
-      try {
-        dayOfWeekFromDate = dateFromDate.get(Calendar.DAY_OF_WEEK);
-      } catch (IllegalArgumentException ignore) {
-        // happens with 'dates' like '32.8.2014' - those should be caught by a different rule
-        return null;
-      }
-      if (dayOfWeekFromString != dayOfWeekFromDate) {
-        Calendar calFromDateString = Calendar.getInstance();
-        calFromDateString.set(Calendar.DAY_OF_WEEK, dayOfWeekFromString);
-        String message = match.getMessage()
-          .replace("{realDay}", getDayOfWeek(dateFromDate))
-          .replace("{day}", getDayOfWeek(calFromDateString))
-          .replace("{currentYear}", Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
-        RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
-        ruleMatch.setType(match.getType());
-        ruleMatch.setUrl(Tools.getUrl("https://www.timeanddate.com/calendar/?year=" + dateFromDate.get(Calendar.YEAR)));
-        return ruleMatch;
-      } else {
-        return null;
-      }
-    } catch (IllegalArgumentException e) {
-      throw e;
-    } catch (RuntimeException e) {
-      // this can happen with some special characters which the Java regex matches but which the Java code
-      // cannot map to days, e.g. German "Dıenstag" vs "Dienstag" (note the difference on the second character -
-      // the first word is not valid, but it should not crash LT):
-      logger.warn("Skipping potential match for " + match.getRule().getFullId(), e);
+//      int dayOfWeekFromDate;
+//      try {
+//        dayOfWeekFromDate = dateFromDate.get(Calendar.DAY_OF_WEEK);
+//      } catch (IllegalArgumentException ignore) {
+//        // happens with 'dates' like '32.8.2014' - those should be caught by a different rule
+//        return null;
+//      }
+//      if (dayOfWeekFromString != dayOfWeekFromDate) {
+//        Calendar calFromDateString = Calendar.getInstance();
+//        calFromDateString.set(Calendar.DAY_OF_WEEK, dayOfWeekFromString);
+//        String message = match.getMessage()
+//          .replace("{realDay}", getDayOfWeek(dateFromDate))
+//          .replace("{day}", getDayOfWeek(calFromDateString))
+//          .replace("{currentYear}", Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
+//        RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
+//        ruleMatch.setType(match.getType());
+//        ruleMatch.setUrl(Tools.getUrl("https://www.timeanddate.com/calendar/?year=" + dateFromDate.get(Calendar.YEAR)));
+//        return ruleMatch;
+//      } else {
+//        return null;
+//      }
+//    } catch (IllegalArgumentException e) {
+//      throw e;
+//    } catch (RuntimeException e) {
+//      // this can happen with some special characters which the Java regex matches but which the Java code
+//      // cannot map to days, e.g. German "Dıenstag" vs "Dienstag" (note the difference on the second character -
+//      // the first word is not valid, but it should not crash LT):
+//      logger.warn("Skipping potential match for " + match.getRule().getFullId(), e);
       return null;
-    }
+//    }
   }
 
   private Calendar getDate(Hashtable<String, String> args) {
@@ -133,9 +134,9 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
     int dayOfMonth = getDayOfMonthFromArguments(args);
 
     Calendar calendar = getCalendar();
-    calendar.setLenient(false);  // be strict about validity of dates
+    //calendar.setLenient(false);  // be strict about validity of dates
     //noinspection MagicConstant
-    calendar.set(year, month, dayOfMonth, 0, 0, 0);
+    //calendar.set(year, month, dayOfMonth, 0, 0, 0);
     return calendar;
   }
 

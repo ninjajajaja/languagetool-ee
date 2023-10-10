@@ -1872,7 +1872,7 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
   }
 
   @Override
-  protected List<String> sortSuggestionByQuality(String misspelling, List<String> suggestions) {
+  public List<String> sortSuggestionByQuality(String misspelling, List<String> suggestions) {
     // filter some undesired inflected forms
     List<String> filteredSuggestions = new ArrayList<>();
     List<AnalyzedTokenReadings> readingsList = new ArrayList<>();

@@ -42,8 +42,8 @@ public class UserConfig {
     return abTestEnabled;
   }
 
-  private final List<String> userSpecificSpellerWords;
-  private final THashSet<String> acceptedPhrases;
+  public final List<String> userSpecificSpellerWords;
+  public final THashSet<String> acceptedPhrases;
   private final List<Rule> userSpecificRules;
   private final int maxSpellingSuggestions;
   private final Long userDictCacheSize;

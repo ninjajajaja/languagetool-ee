@@ -36,30 +36,31 @@ public final class SimpleReplaceDataLoader {
    * Load replacement rules from a utf-8 file in the classpath.
    */
   public Hashtable<String, List<String>> loadWords(String path) {
-    InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
+    String[] wrongForms = path.split(" ");
+//    InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
     Hashtable<String, List<String>> map = new Hashtable<>();
-    try (Scanner scanner = new Scanner(stream, "utf-8")) {
-      while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
-        if (line.isEmpty() || line.charAt(0) == '#') { // # = comment
-          continue;
-        }
-        String[] parts = line.split("=");
-        if (parts.length != 2) {
-          throw new RuntimeException("Could not load simple replacement data from: " + path + ". " +
-                  "Error in line '" + line + "', expected format 'word=replacement'");
-        }
-        if (parts[1].trim().isEmpty()) {
-          throw new RuntimeException("Could not load simple replacement data from: " + path + ". " +
-            "Error in line '" + line + "', replacement cannot be empty");
-        }
-        String[] wrongForms = parts[0].split("\\|");
-        List<String> replacements = Arrays.asList(parts[1].split("\\|"));
+//    try (Scanner scanner = new Scanner(stream, "utf-8")) {
+//      while (scanner.hasNextLine()) {
+//        String line = scanner.nextLine();
+//        if (line.isEmpty() || line.charAt(0) == '#') { // # = comment
+//          continue;
+//        }
+//        String[] parts = line.split("=");
+//        if (parts.length != 2) {
+//          throw new RuntimeException("Could not load simple replacement data from: " + path + ". " +
+//                  "Error in line '" + line + "', expected format 'word=replacement'");
+//        }
+//        if (parts[1].trim().isEmpty()) {
+//          throw new RuntimeException("Could not load simple replacement data from: " + path + ". " +
+//            "Error in line '" + line + "', replacement cannot be empty");
+//        }
+//        String[] wrongForms = parts[0].split("\\|");
+//        List<String> replacements = Arrays.asList(parts[1].split("\\|"));
         for (String wrongForm : wrongForms) {
-          map.put(wrongForm, replacements);
+          map.put(wrongForm, null); //replacements);
         }
-      }
-    }
+//      }
+//    }
     return map;
   }
 

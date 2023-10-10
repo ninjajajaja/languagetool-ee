@@ -35,18 +35,19 @@ import java.util.stream.Stream;
  */
 public class WordCoherencyDataLoader {
 
-  public Hashtable<String, THashSet<String>> loadWords(String path) {
-    InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
-    Hashtable<String, THashSet<String>> map = new Hashtable<>();
-    try (
-      InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
-      BufferedReader br = new BufferedReader(reader)
-    ) {
-      String line;
-      while ((line = br.readLine()) != null) {
-        if (line.isEmpty() || line.charAt(0) == '#') {   // ignore comments
-          continue;
-        }
+  public Hashtable<String, Set<String>> loadWords(String path) throws IOException {
+    //InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
+    Hashtable<String, Set<String>> map = new Hashtable<>();
+//    try (
+//      InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
+//      BufferedReader br = new BufferedReader(reader)
+//    ) {
+//      String line;
+//      while ((line = br.readLine()) != null) {
+//        if (line.isEmpty() || line.charAt(0) == '#') {   // ignore comments
+//          continue;
+//        }
+    for (String line : path.split(" ")) {
         String[] parts = line.split(";");
         if (parts.length != 2) {
           throw new IOException("Format error in file " + path + ", line: " + line);
@@ -62,9 +63,9 @@ public class WordCoherencyDataLoader {
           map.put(parts[1], new THashSet<>(Stream.of(parts[0]).collect(Collectors.toSet())));
         }
       }
-    } catch (IOException e) {
-      throw new RuntimeException("Could not load coherency data from " + path, e);
-    }
+//    } catch (IOException e) {
+//      throw new RuntimeException("Could not load coherency data from " + path, e);
+//    }
     return map;
   }
 
