@@ -72,7 +72,7 @@ public class CompoundRuleData {
 	return Collections.unmodifiableSet(joinedLowerCaseSuggestion);
   }
 
-  private void loadCompoundFile(String path) throws IOException {
+  private void loadCompoundFile(String path) {
     List<String> lines = Arrays.asList(path.split(" "));  //JLanguageTool.getDataBroker().getFromResourceDirAsLines(path);
     for (String line : lines) {
       if (line.isEmpty() || line.startsWith("#")) {

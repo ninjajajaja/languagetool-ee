@@ -59,7 +59,7 @@ public class SymSpellRule extends SpellingCheckRule {
     .expireAfterAccess(30, TimeUnit.MINUTES)
     .build(new CacheLoader<Language, Set<String>>() {
       @Override
-      public Set<String> load(Language lang) throws Exception {
+      public Set<String> load(Language lang) {
         return getWordList(lang, "ignore.txt");
       }
     });
@@ -98,7 +98,7 @@ public class SymSpellRule extends SpellingCheckRule {
     .expireAfterAccess(30, TimeUnit.MINUTES)
     .build(new CacheLoader<Language, Set<String>>() {
       @Override
-      public Set<String> load(Language lang) throws Exception {
+      public Set<String> load(Language lang) {
         return getWordList(lang, "probibit.txt");
       }
     });
@@ -243,7 +243,7 @@ public class SymSpellRule extends SpellingCheckRule {
   }
 
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     List<RuleMatch> matches = new ArrayList<>();
     Set<String> ignoredWords = new HashSet<String>();
     ignoredWords.add("ah");

@@ -344,7 +344,7 @@ public class XMLRuleHandler extends DefaultHandler {
     phrasePatternTokens.clear();
   }
 
-  protected void startPattern(Attributes attrs) throws SAXException {
+  protected void startPattern(Attributes attrs) {
     tokenCounter = 0;
     inPattern = true;
     caseSensitive = YES.equals(attrs.getValue(CASE_SENSITIVE));

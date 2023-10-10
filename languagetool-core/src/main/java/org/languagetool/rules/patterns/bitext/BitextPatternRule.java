@@ -73,7 +73,7 @@ public class BitextPatternRule extends BitextRule {
    * Use {@link #match(org.languagetool.AnalyzedSentence, org.languagetool.AnalyzedSentence)} instead.
    */
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     return new RuleMatch[0];
   }
 

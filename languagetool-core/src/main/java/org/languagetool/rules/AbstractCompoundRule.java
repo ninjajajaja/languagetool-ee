@@ -28,7 +28,6 @@ import org.languagetool.LinguServices;
 import org.languagetool.UserConfig;
 import org.languagetool.tools.StringTools;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -68,7 +67,7 @@ public abstract class AbstractCompoundRule extends Rule {
    * @since 3.0
    */
   public AbstractCompoundRule(ResourceBundle messages, Language lang, UserConfig userConfig,
-                              String withHyphenMessage, String withoutHyphenMessage, String withOrWithoutHyphenMessage) throws IOException {
+                              String withHyphenMessage, String withoutHyphenMessage, String withOrWithoutHyphenMessage) {
     this(messages, lang, userConfig, withHyphenMessage, withoutHyphenMessage, withOrWithoutHyphenMessage, null);
   }
 
@@ -77,7 +76,7 @@ public abstract class AbstractCompoundRule extends Rule {
    */
   public AbstractCompoundRule(ResourceBundle messages, Language lang, UserConfig userConfig,
                               String withHyphenMessage, String withoutHyphenMessage, String withOrWithoutHyphenMessage,
-                              String shortMessage) throws IOException {
+                              String shortMessage) {
     if (messages != null) super.setCategory(Categories.MISC.getCategory(messages));
     this.withHyphenMessage = withHyphenMessage;
     this.withoutHyphenMessage = withoutHyphenMessage;
@@ -93,7 +92,7 @@ public abstract class AbstractCompoundRule extends Rule {
   }
 
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     AnalyzedTokenReadings[] tokens = getSentenceWithImmunization(sentence).getTokensWithoutWhitespace();
 
@@ -180,7 +179,7 @@ public abstract class AbstractCompoundRule extends Rule {
     return toRuleMatchArray(ruleMatches);
   }
 
-  protected List<String> filterReplacements(List<String> replacements, String original) throws IOException {
+  protected List<String> filterReplacements(List<String> replacements, String original) {
     List<String> newReplacements = new ArrayList<String>();
     for (String replacement : replacements) {
       String newReplacement = replacement.replaceAll("\\-\\-+", "-");
@@ -258,14 +257,14 @@ public abstract class AbstractCompoundRule extends Rule {
     prevTokens.offer(token);
   }
   
-  private boolean isCorrectSpell(String word) throws IOException {
+  private boolean isCorrectSpell(String word) {
     if (linguServices == null) {
       return !isMisspelled(word);
     }
     return linguServices.isCorrectSpell(word, lang);
   }
   
-  public boolean isMisspelled(String word) throws IOException {
+  public boolean isMisspelled(String word) {
     return false;
   }
 

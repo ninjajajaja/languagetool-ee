@@ -53,7 +53,7 @@ public class FakeRule extends Rule {
   }
 
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     return new RuleMatch[0];
   }
 

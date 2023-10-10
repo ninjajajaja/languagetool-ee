@@ -56,7 +56,7 @@ public class SentenceWhitespaceRule extends TextLevelRule {
   }
 
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     boolean isFirstSentence = true;
     boolean prevSentenceEndsWithWhitespace = false;
     boolean prevSentenceEndsWithNumber = false;

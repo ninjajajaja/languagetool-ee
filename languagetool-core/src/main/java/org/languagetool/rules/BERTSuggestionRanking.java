@@ -164,7 +164,7 @@ public class BERTSuggestionRanking extends RemoteRule {
   }
 
   @Override
-  protected Callable<RemoteRuleResult> executeRequest(RemoteRequest request, long timeoutMilliseconds) throws TimeoutException {
+  protected Callable<RemoteRuleResult> executeRequest(RemoteRequest request, long timeoutMilliseconds) {
     return () -> {
       if (model == null) {
         return fallbackResults(request);
