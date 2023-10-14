@@ -21,12 +21,13 @@
 
 package org.languagetool.rules.spelling.suggestions;
 
+import gnu.trove.THashMap;
+import java.util.Hashtable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings("ALL")
 class SuggestionChangesTestConfig {
@@ -88,13 +89,13 @@ class SuggestionChangesDataset {
 @SuppressWarnings("ALL")
 class SuggestionChangesExperimentRuns {
 
-  public SuggestionChangesExperimentRuns(String name, Map<String, List<Object>> parameters) {
+  public SuggestionChangesExperimentRuns(String name, Hashtable<String, List<Object>> parameters) {
     this.name = name;
     this.parameters = parameters;
   }
 
   public String name;
-  public Map<String, List<Object>> parameters;
+  public Hashtable<String, List<Object>> parameters;
 
   @Override
   public String toString() {
@@ -108,9 +109,9 @@ class SuggestionChangesExperimentRuns {
 @SuppressWarnings("ALL")
 public class SuggestionChangesExperiment {
   public String name;
-  public Map<String, Object> parameters;
+  public Hashtable<String, Object> parameters;
 
-  public SuggestionChangesExperiment(String name, Map<String, Object> parameters) {
+  public SuggestionChangesExperiment(String name, Hashtable<String, Object> parameters) {
     this.name = name;
     this.parameters = parameters;
   }

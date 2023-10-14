@@ -22,6 +22,7 @@ package org.languagetool.rules;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -47,7 +48,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
   abstract protected Synthesizer getSynthesizer();
 
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) throws IOException {
     
 //    if (match.getSentence().getText().contains("Jo pensem")) {

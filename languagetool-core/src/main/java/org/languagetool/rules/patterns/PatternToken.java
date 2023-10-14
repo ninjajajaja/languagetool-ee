@@ -19,6 +19,7 @@
 package org.languagetool.rules.patterns;
 
 import com.google.common.collect.ObjectArrays;
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -594,7 +595,7 @@ public class PatternToken implements Cloneable {
     return rareFields != null && rareFields.unificationFeatures != null;
   }
 
-  public void setUnification(Map<String, List<String>> uniFeatures) {
+  public void setUnification(Hashtable<String, List<String>> uniFeatures) {
     initRareFields().unificationFeatures = Objects.requireNonNull(uniFeatures);
   }
 
@@ -604,7 +605,7 @@ public class PatternToken implements Cloneable {
    * @since 1.0.1
    */
   @Nullable
-  public Map<String, List<String>> getUniFeatures() {
+  public Hashtable<String, List<String>> getUniFeatures() {
     return rareFields == null ? null : rareFields.unificationFeatures;
   }
 
@@ -702,7 +703,7 @@ public class PatternToken implements Cloneable {
    * This is used internally for performance optimizations.
    */
   @Nullable
-  Set<String> calcFormHints() {
+  THashSet<String> calcFormHints() {
     return calcStringHints(false);
   }
 
@@ -711,18 +712,18 @@ public class PatternToken implements Cloneable {
    * This is used internally for performance optimizations.
    */
   @Nullable
-  Set<String> calcLemmaHints() {
+  THashSet<String> calcLemmaHints() {
     return calcStringHints(true);
   }
 
-  private Set<String> calcStringHints(boolean inflected) {
-    Set<String> result = inflected == isInflected() ? calcOwnPossibleStringValues() : null;
+  private THashSet<String> calcStringHints(boolean inflected) {
+    THashSet<String> result = inflected == isInflected() ? calcOwnPossibleStringValues() : null;
     if (result == null) return null;
 
     List<PatternToken> andGroupList = rareFields == null ? null : rareFields.andGroupList;
     List<PatternToken> orGroupList = rareFields == null ? null : rareFields.orGroupList;
     if (andGroupList != null) {
-      result = new HashSet<>(result);
+      // result = new THashSet(result);
 
       for (PatternToken token : andGroupList) {
         Set<String> hints = token.calcStringHints(inflected);
@@ -731,10 +732,10 @@ public class PatternToken implements Cloneable {
         }
       }
     } else if (orGroupList != null) {
-      result = new HashSet<>(result);
+      // result = new THashSet<>(result);
 
       for (PatternToken token : orGroupList) {
-        Set<String> hints = token.calcStringHints(inflected);
+        THashSet<String> hints = token.calcStringHints(inflected);
         if (hints == null) return null;
 
         result.addAll(hints);
@@ -745,7 +746,7 @@ public class PatternToken implements Cloneable {
   }
 
   @Nullable
-  private Set<String> calcOwnPossibleStringValues() {
+  private THashSet<String> calcOwnPossibleStringValues() {
     if (getNegation() || !hasStringThatMustMatch()) {
       return null;
     }
@@ -820,7 +821,7 @@ public class PatternToken implements Cloneable {
     @NotNull
     private PatternToken[] previousExceptions = EMPTY_ARRAY;
 
-    private Map<String, List<String>> unificationFeatures;
+    private Hashtable<String, List<String>> unificationFeatures;
 
     /** String ID of the phrase the element is in. **/
     private String phraseName;

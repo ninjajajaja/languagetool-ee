@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import org.languagetool.Language;
 import org.languagetool.rules.patterns.RuleSet;
 
@@ -32,7 +33,7 @@ import java.util.Set;
 public class LanguageDependentFilter implements RuleMatchFilter {
 
   protected Language language;
-  protected Set<String> enabledRules; 
+  protected THashSet<String> enabledRules;
 
   public LanguageDependentFilter(Language lang, RuleSet rules) {
     language = lang;

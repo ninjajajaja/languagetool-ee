@@ -21,6 +21,7 @@
 
 package org.languagetool.rules.spelling.morfologik.suggestions_ordering;
 
+import java.util.Hashtable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -264,7 +265,7 @@ public final class DetailedDamerauLevenstheinDistance {
     int inf = s1.length() + s2.length();
 
     // Create and initialize the character array indices
-    HashMap<Character, Integer> da = new HashMap<Character, Integer>();
+    Hashtable<Character, Integer> da = new Hashtable<>();
 
     for (int d = 0; d < s1.length(); d++) {
       da.put(s1.charAt(d), 0);

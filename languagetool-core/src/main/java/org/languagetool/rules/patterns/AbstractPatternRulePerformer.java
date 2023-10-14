@@ -40,8 +40,8 @@ public abstract class AbstractPatternRulePerformer {
   private final List<PatternTokenMatcher> patternTokenMatchers;
   private final int patternSize;
   private final int minOccurCorrection;
-  private final @Nullable Map<PatternToken, List<List<AnalyzedToken>>> toUnify;
-  private final @Nullable Map<PatternToken, List<AnalyzedTokenReadings>> neutralReadings;
+  private final @Nullable Hashtable<PatternToken, List<List<AnalyzedToken>>> toUnify;
+  private final @Nullable Hashtable<PatternToken, List<AnalyzedTokenReadings>> neutralReadings;
 
   protected AbstractPatternRulePerformer(AbstractTokenBasedRule rule, Unifier unifier) {
     this.rule = Objects.requireNonNull(rule);
@@ -49,8 +49,8 @@ public abstract class AbstractPatternRulePerformer {
     patternTokenMatchers = createElementMatchers();
     patternSize = patternTokenMatchers.size();
     minOccurCorrection = getMinOccurrenceCorrection();
-    toUnify = rule.isTestUnification() ? new HashMap<>() : null;
-    neutralReadings = rule.isTestUnification() ? new HashMap<>() : null;
+    toUnify = rule.isTestUnification() ? new Hashtable<>() : null;
+    neutralReadings = rule.isTestUnification() ? new Hashtable<>() : null;
   }
 
   private List<PatternTokenMatcher> createElementMatchers() {

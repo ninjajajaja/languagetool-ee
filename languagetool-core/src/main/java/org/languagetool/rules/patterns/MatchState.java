@@ -19,6 +19,7 @@
  */
 package org.languagetool.rules.patterns;
 
+import gnu.trove.THashSet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -232,7 +233,7 @@ public class MatchState {
         if (synthesizer == null) {
           formattedString[0] = formattedToken.getToken();
         } else if (match.postagRegexp) {
-          TreeSet<String> wordForms = new TreeSet<>();
+          THashSet<String> wordForms = new THashSet<>();
           boolean oneForm = false;
           for (int k = 0; k < readingCount; k++) {
             if (formattedToken.getAnalyzedToken(k).getLemma() == null) {

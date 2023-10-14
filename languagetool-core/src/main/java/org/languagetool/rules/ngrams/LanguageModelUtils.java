@@ -67,19 +67,19 @@ public final class LanguageModelUtils {
     if (pos == -1) {
       throw new RuntimeException(String.format("Token not found: '%s' in tokens %s", token, tokens));
     }
-    List<T> result = new ArrayList<T>();
+    LinkedList<T> result = new LinkedList<>();
     for (int i = 1, added = 0; added < toLeft; i++) {
       if (pos - i < 0) {
         // So if we're at the beginning of the sentence, just use the first tokens:
         result.clear();
         result.addAll(newTokens);
         for (int j = pos - 1; j >= 0; j--) {
-          result.add(0, tokens.get(j));
+          result.addFirst(tokens.get(j));
         }
         return result;
       } else {
         if (!isWhitespace.test(tokens.get(pos - i))) {
-          result.add(0, tokens.get(pos - i));
+          result.addFirst(tokens.get(pos - i));
           added++;
         }
       }

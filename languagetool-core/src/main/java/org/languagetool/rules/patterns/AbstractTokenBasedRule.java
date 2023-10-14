@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.patterns;
 
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedSentence;
@@ -42,7 +43,7 @@ public abstract class AbstractTokenBasedRule extends AbstractPatternRule {
   protected AbstractTokenBasedRule(String id, String description, Language language, List<PatternToken> patternTokens, boolean getUnified) {
     super(id, description, language, patternTokens, getUnified);
 
-    Set<TokenHint> tokenHints = new HashSet<>();
+    THashSet<TokenHint> tokenHints = new THashSet<>();
     TokenHint anchorHint = null;
 
     boolean fixedOffset = true;
@@ -51,7 +52,7 @@ public abstract class AbstractTokenBasedRule extends AbstractPatternRule {
       PatternToken token = patternTokens.get(i);
 
       boolean inflected = false;
-      Set<String> hints = token.calcFormHints();
+      THashSet<String> hints = token.calcFormHints();
       if (hints == null) {
         inflected = true;
         hints = token.calcLemmaHints();
@@ -100,7 +101,7 @@ public abstract class AbstractTokenBasedRule extends AbstractPatternRule {
     final String[] lowerCaseValues;
     final int tokenIndex;
 
-    private TokenHint(boolean inflected, Set<String> possibleValues, int tokenIndex) {
+    private TokenHint(boolean inflected, THashSet<String> possibleValues, int tokenIndex) {
       this.inflected = inflected;
       this.tokenIndex = tokenIndex;
       lowerCaseValues = possibleValues.stream().map(String::toLowerCase).distinct().toArray(String[]::new);
@@ -142,7 +143,7 @@ public abstract class AbstractTokenBasedRule extends AbstractPatternRule {
         }
       }
       if (result == null) return Collections.emptyList();
-      return needMerge ? new ArrayList<>(new TreeSet<>(result)) : result;
+      return needMerge ? new ArrayList<>(new THashSet<>(result)) : result;
     }
 
     private boolean canBeIgnoredFor(AnalyzedSentence sentence) {

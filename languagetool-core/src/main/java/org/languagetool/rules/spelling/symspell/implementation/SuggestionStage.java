@@ -23,6 +23,7 @@ package org.languagetool.rules.spelling.symspell.implementation;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /// <summary>An intentionally opacque class used to temporarily stage
@@ -31,7 +32,7 @@ import java.util.Map;
 /// of time can be achieved, as well as a reduction in final memory usage.</summary>
 public class SuggestionStage {
     public SuggestionStage(int initialCapacity) {
-        deletes = new HashMap<>(initialCapacity);
+        deletes = new Hashtable<>(initialCapacity);
         nodes = new ChunkArray<>(initialCapacity * 2);
     }
 
@@ -51,7 +52,7 @@ public class SuggestionStage {
             this.first = first;
         }
     }
-    public Map<Integer, Entry> deletes; // {get; set; }
+    public Hashtable<Integer, Entry> deletes; // {get; set; }
     public ChunkArray<Node> nodes;
     /// <summary>Create a new instance of SymSpell.SuggestionStage.</summary>
     /// <remarks>Specifying ann accurate initialCapacity is not essential,
@@ -78,7 +79,7 @@ public class SuggestionStage {
         nodes.add(new Node(suggestion, next));
     }
 
-    void commitTo(Map<Integer, String[]> permanentDeletes) {
+    void commitTo(Hashtable<Integer, String[]> permanentDeletes) {
         deletes.forEach((key, value) -> {
             int i;
             String[] suggestions;

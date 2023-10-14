@@ -1,5 +1,6 @@
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +15,7 @@ public class DictionarySpellMatchFilterTest extends TestCase {
 
   public void setUp() throws Exception {
     userConfig = new UserConfig();
-    userConfig.acceptedPhrases = new HashSet(Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"));
+    userConfig.acceptedPhrases = new THashSet(Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"));
     filter = new DictionarySpellMatchFilter(userConfig);
   }
 

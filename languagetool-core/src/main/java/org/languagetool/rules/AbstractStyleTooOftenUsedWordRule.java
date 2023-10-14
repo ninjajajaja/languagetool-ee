@@ -21,6 +21,7 @@ package org.languagetool.rules;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -50,7 +51,7 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
   
   private int numWords;
   
-  private Map<String, Integer> wordMap = new HashMap<>();
+  private Hashtable<String, Integer> wordMap = new Hashtable<>();
 
   public AbstractStyleTooOftenUsedWordRule(ResourceBundle messages, Language lang, UserConfig userConfig, int minPercent) {
     this(messages, lang, userConfig, minPercent, DEFAULT_ACTIVATION);
@@ -126,7 +127,7 @@ public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
     return 100;
   }
   
-  public Map<String, Integer> getWordMap() {
+  public Hashtable<String, Integer> getWordMap() {
     return wordMap;
   }
 

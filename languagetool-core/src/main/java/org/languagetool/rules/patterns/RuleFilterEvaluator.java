@@ -39,15 +39,15 @@ public class RuleFilterEvaluator {
 
   @Nullable
   public RuleMatch runFilter(String filterArgs, RuleMatch ruleMatch, AnalyzedTokenReadings[] patternTokens, int patternTokenPos, List<Integer> tokenPositions) throws IOException {
-    Map<String,String> args = getResolvedArguments(filterArgs, patternTokens, patternTokenPos, tokenPositions);
+    Hashtable<String,String> args = getResolvedArguments(filterArgs, patternTokens, patternTokenPos, tokenPositions);
     return filter.acceptRuleMatch(ruleMatch, args, patternTokenPos, patternTokens);
   }
 
   /**
    * Resolves the backref arguments, e.g. replaces {@code \1} by the value of the first token in the pattern.
    */
-  public Map<String,String> getResolvedArguments(String filterArgs, AnalyzedTokenReadings[] patternTokens, int patternTokenPos, List<Integer> tokenPositions) {
-    Map<String,String> result = new HashMap<>();
+  public Hashtable<String,String> getResolvedArguments(String filterArgs, AnalyzedTokenReadings[] patternTokens, int patternTokenPos, List<Integer> tokenPositions) {
+    Hashtable<String,String> result = new Hashtable<>();
     String[] arguments = filterArgs.split("\\s+");
     for (String arg : arguments) {
       int delimPos = arg.indexOf(':');

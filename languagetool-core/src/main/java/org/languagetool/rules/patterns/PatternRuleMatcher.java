@@ -41,7 +41,7 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
 
   public static final String MISTAKE = "<mistake/>";
 
-  public static final Map<String,Integer> currentlyActiveRules = new ConcurrentHashMap<>();
+  public static final Hashtable<String,Integer> currentlyActiveRules = new Hashtable<>();
 
   private static final String allowedChars = "[^<>()]*?";
   private static final Pattern SUGGESTION_PATTERN_SUPPRESS = Pattern

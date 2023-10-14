@@ -19,6 +19,7 @@
 package org.languagetool.rules;
 
 import gnu.trove.THashMap;
+import gnu.trove.THashSet;
 import org.languagetool.JLanguageTool;
 
 import java.io.*;
@@ -34,9 +35,9 @@ import java.util.stream.Stream;
  */
 public class WordCoherencyDataLoader {
 
-  public Map<String, Set<String>> loadWords(String path) throws IOException {
+  public Hashtable<String, Set<String>> loadWords(String path) throws IOException {
     //InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
-    Map<String, Set<String>> map = new THashMap<>();
+    Hashtable<String, Set<String>> map = new Hashtable<>();
 //    try (
 //      InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 //      BufferedReader br = new BufferedReader(reader)
@@ -54,18 +55,18 @@ public class WordCoherencyDataLoader {
         if(map.containsKey(parts[0])) {
           map.get(parts[0]).add(parts[1]);
         } else {
-          map.put(parts[0], Stream.of(parts[1]).collect(Collectors.toSet()));
+          map.put(parts[0], new THashSet<>(Stream.of(parts[1]).collect(Collectors.toSet())));
         }
         if(map.containsKey(parts[1])) {
           map.get(parts[1]).add(parts[0]);
         } else {
-          map.put(parts[1], Stream.of(parts[0]).collect(Collectors.toSet()));
+          map.put(parts[1], new THashSet<>(Stream.of(parts[0]).collect(Collectors.toSet())));
         }
       }
 //    } catch (IOException e) {
 //      throw new RuntimeException("Could not load coherency data from " + path, e);
 //    }
-    return Collections.unmodifiableMap(map);
+    return map;
   }
 
 }

@@ -3,6 +3,7 @@ package org.languagetool.rules;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import org.junit.Before;
@@ -19,8 +20,8 @@ public class AbstractSimpleReplaceRuleTest {
   public void setup() {
     simpleReplaceRule = new AbstractSimpleReplaceRule(null) {
       @Override
-      protected Map<String, List<String>> getWrongWords() {
-        return Collections.emptyMap();
+      protected Hashtable<String, List<String>> getWrongWords() {
+        return new Hashtable<>();
       }
     };
   }

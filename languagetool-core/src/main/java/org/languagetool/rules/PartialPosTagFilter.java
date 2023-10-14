@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.AnalyzedTokenReadings;
@@ -52,7 +53,7 @@ public abstract class PartialPosTagFilter extends RuleFilter {
   protected abstract List<AnalyzedTokenReadings> tag(String token);
 
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
     if (!(args.containsKey("no") && args.containsKey("regexp") && args.containsKey("postag_regexp"))) {
       throw new RuntimeException("Set 'no', 'regexp' and 'postag_regexp' for filter " + PartialPosTagFilter.class.getSimpleName());
     }

@@ -19,6 +19,7 @@
 package org.languagetool.rules.spelling.morfologik;
 
 import com.google.common.cache.*;
+import gnu.trove.THashSet;
 import morfologik.fsa.FSA;
 import morfologik.fsa.builders.CFSA2Serializer;
 import morfologik.fsa.builders.FSABuilder;
@@ -105,9 +106,9 @@ public class MorfologikMultiSpeller {
               return lines;
             }
           });
-  private static final Map<String,Dictionary> dicPathToDict = new HashMap<>();
-  private static final Map<UserDictCacheKey, Cache<String, Dictionary>> userDictCaches = new HashMap<>();
-  private static final Map<UserDictCacheKey, Map<String, Integer>> userDictSizes = new HashMap<>();
+  private static final Hashtable<String,Dictionary> dicPathToDict = new Hashtable<>();
+  private static final Hashtable<UserDictCacheKey, Cache<String, Dictionary>> userDictCaches = new Hashtable<>();
+  private static final Hashtable<UserDictCacheKey, Hashtable<String, Integer>> userDictSizes = new Hashtable<>();
   private final List<MorfologikSpeller> spellers;
   private final List<MorfologikSpeller> defaultDictSpellers;
   private final List<MorfologikSpeller> userDictSpellers;
@@ -265,7 +266,7 @@ public class MorfologikMultiSpeller {
     } else {
       if (isUserDict && userDictCacheSize != null) {
         // for cache weigher, save dictionary sizes
-        userDictSizes.putIfAbsent(userDictCacheKey, new HashMap<>());
+        userDictSizes.putIfAbsent(userDictCacheKey, new Hashtable<>());
         userDictSizes.get(userDictCacheKey).put(userDictName, lines.size());
         Cache<String, Dictionary> userDictCache = getUserDictCache();
         Dictionary userDict = userDictCache.getIfPresent(userDictName);
@@ -327,7 +328,7 @@ public class MorfologikMultiSpeller {
   @NotNull
   private List<String> getSuggestionsFromSpellers(String word, List<MorfologikSpeller> spellerList) {
     List<WeightedSuggestion> result = new ArrayList<>();
-    Set<String> seenWords = new HashSet<>();
+    THashSet<String> seenWords = new THashSet<>();
     for (MorfologikSpeller speller : spellerList) {
       List<WeightedSuggestion> suggestions = speller.getSuggestions(word);
       for (WeightedSuggestion suggestion : suggestions) {

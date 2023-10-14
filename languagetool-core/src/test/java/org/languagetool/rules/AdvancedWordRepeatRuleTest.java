@@ -1,5 +1,6 @@
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 import junit.framework.TestCase;
@@ -64,7 +65,7 @@ public class AdvancedWordRepeatRuleTest extends TestCase {
 
     advancedWordRepeatRule = new AdvancedWordRepeatRule(null) {
       @Override
-      protected Set<String> getExcludedWordsPattern() {
+      protected THashSet<String> getExcludedWordsPattern() {
         return null;
       }
 

@@ -22,6 +22,8 @@
 package org.languagetool.rules.spelling;
 
 import com.google.common.cache.*;
+import gnu.trove.THashSet;
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.*;
@@ -55,21 +57,21 @@ public class SymSpellRule extends SpellingCheckRule {
       }
     });
 
-  private static final LoadingCache<Language, Set<String>> ignoredWordsCache = CacheBuilder.newBuilder()
+  private static final LoadingCache<Language, THashSet<String>> ignoredWordsCache = CacheBuilder.newBuilder()
     .expireAfterAccess(30, TimeUnit.MINUTES)
-    .build(new CacheLoader<Language, Set<String>>() {
+    .build(new CacheLoader<Language, THashSet<String>>() {
       @Override
-      public Set<String> load(Language lang) throws Exception {
+      public THashSet<String> load(Language lang) throws Exception {
         return getWordList(lang, "ignore.txt");
       }
     });
   public static final int INITIAL_CAPACITY = 50000;
 
   @NotNull
-  public static Set<String> getWordList(Language lang, String file) {
+  public static THashSet<String> getWordList(Language lang, String file) {
     //String base = getSpellingDictBaseDir(lang);
     //List<String> paths = Collections.singletonList(base + file);
-    Set<String> words = new HashSet<>();
+    THashSet<String> words = new THashSet<>();
     // forEachLineInResources(paths, words::add);
     words.add("apple");
     words.add("banana");
@@ -91,14 +93,14 @@ public class SymSpellRule extends SpellingCheckRule {
     words.add("rainbow");
     words.add("sunflower");
     words.add("turtle");
-    return Collections.unmodifiableSet(words);
+    return words;
   }
 
   private static final LoadingCache<Language, Set<String>> prohibitedWordsCache = CacheBuilder.newBuilder()
     .expireAfterAccess(30, TimeUnit.MINUTES)
     .build(new CacheLoader<Language, Set<String>>() {
       @Override
-      public Set<String> load(Language lang) throws Exception {
+      public THashSet<String> load(Language lang) throws Exception {
         return getWordList(lang, "probibit.txt");
       }
     });
@@ -153,7 +155,7 @@ public class SymSpellRule extends SpellingCheckRule {
   protected static SymSpell initDefaultDictSpeller(Language lang) {
     SymSpell speller = new SymSpell(INITIAL_CAPACITY, 3, -1, 0);
     System.out.println("Initializing symspell");
-    Set<String> prohibitedWords = new HashSet<String>();
+    THashSet<String> prohibitedWords = new THashSet<String>();
     prohibitedWords.add("fuck");
     prohibitedWords.add("duck");
     prohibitedWords.add("muck");
@@ -245,7 +247,7 @@ public class SymSpellRule extends SpellingCheckRule {
   @Override
   public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
     List<RuleMatch> matches = new ArrayList<>();
-    Set<String> ignoredWords = new HashSet<String>();
+    THashSet<String> ignoredWords = new THashSet<String>();
     ignoredWords.add("ah");
     ignoredWords.add("uh");
     ignoredWords.add("oh");
@@ -289,7 +291,7 @@ public class SymSpellRule extends SpellingCheckRule {
 
   @NotNull
   public List<String> filterCandidates(List<String> candidates) {
-    Set<String> ignoredWords = new HashSet<String>();
+    THashSet<String> ignoredWords = new THashSet<String>();
     ignoredWords.add("ah");
     ignoredWords.add("uh");
     ignoredWords.add("oh");
@@ -300,7 +302,7 @@ public class SymSpellRule extends SpellingCheckRule {
     ignoredWords.add("ehm");
     ignoredWords.add("öh");
     ignoredWords.add("äh");
-    Set<String> prohibitedWords = new HashSet<String>();
+    THashSet<String> prohibitedWords = new THashSet<String>();
     prohibitedWords.add("fuck");
     prohibitedWords.add("duck");
     prohibitedWords.add("muck");

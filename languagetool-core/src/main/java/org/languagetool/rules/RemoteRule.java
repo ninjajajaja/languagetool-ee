@@ -51,8 +51,8 @@ public abstract class RemoteRule extends Rule {
   
   private static final Logger logger = LoggerFactory.getLogger(RemoteRule.class);
 
-  protected static final List<Runnable> shutdownRoutines = new LinkedList<>();
-  protected static final ConcurrentMap<String, CircuitBreaker> circuitBreakers = new ConcurrentHashMap<>();
+  protected static final List<Runnable> shutdownRoutines = new ArrayList<>();
+  protected static final Hashtable<String, CircuitBreaker> circuitBreakers = new Hashtable<>();
 
   public final RemoteRuleConfig serviceConfiguration;
   protected final boolean premium;
@@ -175,7 +175,7 @@ public abstract class RemoteRule extends Rule {
     if (sentences.isEmpty()) {
       return new FutureTask<>(() -> new RemoteRuleResult(false, true, Collections.emptyList(), sentences));
     }
-    Map<String, String> context = MDC.getCopyOfContextMap();
+    Hashtable<String, String> context = (Hashtable<String, String>) MDC.getCopyOfContextMap();
     return new FutureTask<>(() -> {
       MDC.clear();
       if (context != null) {

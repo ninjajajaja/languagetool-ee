@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -42,7 +43,7 @@ public class UppercaseSentenceStartRule extends TextLevelRule {
           Pattern.compile("[a-z]|(m{0,4}(c[md]|d?c{0,3})(x[cl]|l?x{0,3})(i[xv]|v?i{0,3}))$");
   private static final Pattern WHITESPACE_OR_QUOTE = Pattern.compile("[ \"'„«»‘’“”\\n]"); //only ending quote is necessary?
   private static final Pattern SENTENCE_END1 = Pattern.compile("[.?!…]|");
-  private static final Set<String> EXCEPTIONS = new HashSet<>(Arrays.asList(
+  private static final THashSet<String> EXCEPTIONS = new THashSet<>(Arrays.asList(
           "n", // n/a
           "w", // w/o
           "x86",

@@ -20,6 +20,7 @@ package org.languagetool.rules;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -41,9 +42,9 @@ public abstract class AbstractSpecificCaseRule extends Rule {
 
   // a map that has as keys the special case phrases into lowercase
   // and as values the special case phrases properly spelled:
-  private static final Map<String,String> lcToProperSpelling = new THashMap<>();
+  private static final Hashtable<String,String> lcToProperSpelling = new Hashtable<>();
   // the phrases that will be detected by the rule:
-  public static Set<String> phrases;
+  public static THashSet<String> phrases;
   private static int maxLen;
 
   // used to speed up the server as the phrases are loaded in every initialization:

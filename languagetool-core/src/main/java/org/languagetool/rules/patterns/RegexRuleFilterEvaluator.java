@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.patterns;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.rules.RuleMatch;
@@ -40,12 +41,12 @@ public class RegexRuleFilterEvaluator {
 
   @Nullable
   public RuleMatch runFilter(String filterArgs, RuleMatch ruleMatch, AnalyzedSentence sentenceObj, Matcher patternMatcher) {
-    Map<String,String> args = getResolvedArguments(filterArgs);
+    Hashtable<String,String> args = getResolvedArguments(filterArgs);
     return filter.acceptRuleMatch(ruleMatch, args, sentenceObj, patternMatcher);
   }
 
-  private Map<String,String> getResolvedArguments(String filterArgs) {
-    Map<String,String> result = new HashMap<>();
+  private Hashtable<String,String> getResolvedArguments(String filterArgs) {
+    Hashtable<String,String> result = new Hashtable<>();
     String[] arguments = filterArgs.split("\\s+");
     for (String arg : arguments) {
       int delimPos = arg.indexOf(':');

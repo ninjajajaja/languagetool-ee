@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import java.util.Hashtable;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.Language;
 import org.languagetool.rules.patterns.RuleFilter;
@@ -40,7 +41,7 @@ public abstract class AbstractSuppressMisspelledSuggestionsFilter extends RuleFi
   }
 
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) throws IOException {
     RuleMatch ruleMatch = match;
     List<String> replacements = match.getSuggestedReplacements();

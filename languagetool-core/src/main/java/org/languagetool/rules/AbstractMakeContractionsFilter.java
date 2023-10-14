@@ -20,6 +20,7 @@ package org.languagetool.rules;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ import org.languagetool.rules.patterns.RuleFilter;
 public abstract class AbstractMakeContractionsFilter extends RuleFilter {
   
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) throws IOException {
     RuleMatch newMatch = match;
     List<String> newSugestions = new ArrayList<>();

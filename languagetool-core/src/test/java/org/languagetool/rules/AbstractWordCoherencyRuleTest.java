@@ -1,9 +1,11 @@
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 import junit.framework.TestCase;
@@ -18,10 +20,10 @@ public class AbstractWordCoherencyRuleTest extends TestCase {
   public void setUp() throws Exception {
     rule = new AbstractWordCoherencyRule(null) {
       @Override
-      protected Map<String, Set<String>> getWordMap() {
-        Map map = new HashMap();
+      protected Hashtable<String, THashSet<String>> getWordMap() {
+        Hashtable map = new Hashtable();
         for (int i = 0; i < 50; i++) {
-          map.put(String.valueOf(i), new HashSet<>(Arrays.asList(";", "-", ")")));
+          map.put(String.valueOf(i), new THashSet<>(Arrays.asList(";", "-", ")")));
         }
         return map;
       }
@@ -44,7 +46,7 @@ public class AbstractWordCoherencyRuleTest extends TestCase {
   }
 
   public void testGetWordMap() throws IOException {
-    Map<String,Set<String>> wordMap = rule.getWordMap();
+    Hashtable<String,THashSet<String>> wordMap = rule.getWordMap();
     for (int i = 0; i < 50; i++) {
       wordMap.get(String.valueOf(i)).contains(";");
       wordMap.get(String.valueOf(i)).contains("-");

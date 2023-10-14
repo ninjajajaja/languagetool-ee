@@ -30,6 +30,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import java.util.Hashtable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -80,7 +81,7 @@ public class RemoteRuleConfig {
   public String slidingWindowType = DEFAULT_SLIDING_WINDOW_TYPE;
   public int slidingWindowSize = DEFAULT_SLIDING_WINDOW_SIZE;
   public int minimumNumberOfCalls = DEFAULT_MINIMUM_NUMBER_OF_CALLS;
-  public Map<String, String> options = new HashMap<>();
+  public Hashtable<String, String> options = new Hashtable<>();
   public String language;
   public String type;
 
@@ -98,7 +99,7 @@ public class RemoteRuleConfig {
     this.slidingWindowType = copy.slidingWindowType;
     this.slidingWindowSize = copy.slidingWindowSize;
     this.minimumNumberOfCalls = copy.minimumNumberOfCalls;
-    this.options = new HashMap<>(copy.options);
+    this.options = new Hashtable<>(copy.options);
     this.language = copy.language;
     this.type = copy.type;
   }

@@ -49,7 +49,7 @@ public class UnifierTest {
 
     Unifier uni = unifierConfig.createUnifier();
 
-    Map<String, List<String>> equiv = new HashMap<>();
+    Hashtable<String, List<String>> equiv = new Hashtable<>();
     List<String> list1 = new ArrayList<>();
     list1.add("lowercase");
     equiv.put("case-sensitivity", list1);
@@ -124,7 +124,7 @@ public class UnifierTest {
     AnalyzedToken sing1 = new AnalyzedToken("mały", "adj:sg:blahblah", "mały");
     AnalyzedToken sing2 = new AnalyzedToken("człowiek", "subst:sg:blahblah", "człowiek");
 
-    Map<String, List<String>> equiv = new HashMap<>();
+    Hashtable<String, List<String>> equiv = new Hashtable<>();
     List<String> list1 = new ArrayList<>();
     list1.add("singular");
     equiv.put("number", list1);
@@ -162,7 +162,7 @@ public class UnifierTest {
     //now test all possible feature equivalences by leaving type blank
     sing1a = new AnalyzedToken("mały", "adj:pl:blahblah", "mały");
     equiv.clear();
-    equiv.put("number", null);
+    equiv.put("number", new ArrayList<>());
     satisfied = uni.isSatisfied(sing1, equiv);
     satisfied |= uni.isSatisfied(sing1a, equiv);
     uni.startUnify();
@@ -207,9 +207,9 @@ public class UnifierTest {
     AnalyzedToken sing1b = new AnalyzedToken("małe", "adj:pl:blahblah:m", "mały");
     AnalyzedToken sing2 = new AnalyzedToken("człowiek", "subst:sg:blahblah:m", "człowiek");
 
-    Map<String, List<String>> equiv = new HashMap<>();
-    equiv.put("number", null);
-    equiv.put("gender", null);
+    Hashtable<String, List<String>> equiv = new Hashtable<>();
+    equiv.put("number", new ArrayList<>());
+    equiv.put("gender", new ArrayList<>());
 
     boolean satisfied = uni.isSatisfied(sing1, equiv);
     satisfied |= uni.isSatisfied(sing1a, equiv);
@@ -246,9 +246,9 @@ public class UnifierTest {
     AnalyzedToken sing2 = new AnalyzedToken("zgarbiony", "adj:pl:blahblah:f", "zgarbiony");
     AnalyzedToken sing3 = new AnalyzedToken("człowiek", "subst:sg:blahblah:m", "człowiek");
 
-    Map<String, List<String>> equiv = new HashMap<>();
-    equiv.put("number", null);
-    equiv.put("gender", null);
+    Hashtable<String, List<String>> equiv = new Hashtable<>();
+    equiv.put("number", new ArrayList<>());
+    equiv.put("gender", new ArrayList<>());
 
     boolean satisfied = uni.isSatisfied(sing1, equiv);
     satisfied |= uni.isSatisfied(sing1a, equiv);
@@ -398,10 +398,10 @@ public class UnifierTest {
     AnalyzedToken sing2b = new AnalyzedToken("lekarstwo", "subst:sg:nom:n2", "lekarstwo");
     AnalyzedToken sing2c = new AnalyzedToken("lekarstwo", "subst:sg:voc:n2", "lekarstwo");
 
-    Map<String, List<String>> equiv = new HashMap<>();
-    equiv.put("number", null);
-    equiv.put("gender", null);
-    equiv.put("case", null);
+    Hashtable<String, List<String>> equiv = new Hashtable<>();
+    equiv.put("number", new ArrayList<>());
+    equiv.put("gender", new ArrayList<>());
+    equiv.put("case", new ArrayList<>());
 
     //now test the simplified interface
     uni.isUnified(sing1, equiv, false);
@@ -469,9 +469,9 @@ public class UnifierTest {
 
     //now we should have 4x4x4 combinations...
 
-    Map<String, List<String>> equiv = new HashMap<>();
-    equiv.put("number", null);
-    equiv.put("gender", null);
+    Hashtable<String, List<String>> equiv = new Hashtable<>();
+    equiv.put("number", new ArrayList<>());
+    equiv.put("gender", new ArrayList<>());
 
     boolean satisfied = uni.isSatisfied(det_sing_masc, equiv);
     uni.startUnify();
@@ -579,9 +579,9 @@ public class UnifierTest {
 
     Unifier uni = unifierConfig.createUnifier();
 
-    Map<String, List<String>> equiv = new HashMap<>();
-    equiv.put("number", null);
-    equiv.put("gender", null);
+    Hashtable<String, List<String>> equiv = new Hashtable<>();
+    equiv.put("number", new ArrayList<>());
+    equiv.put("gender", new ArrayList<>());
 
     AnalyzedToken sing1a = new AnalyzedToken("osobiste", "adj:pl:nom.acc.voc:f.n.m2.m3:pos:aff", "osobisty");
     AnalyzedToken sing1b = new AnalyzedToken("osobiste", "adj:sg:nom.acc.voc:n:pos:aff", "osobisty");

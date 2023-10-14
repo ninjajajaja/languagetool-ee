@@ -119,7 +119,7 @@ public abstract class AbstractCompoundRule extends Rule {
       AnalyzedTokenReadings firstMatchToken = prevTokens.peek();
       List<String> stringsToCheck = new ArrayList<>();      // no hyphens spelling
       List<String> origStringsToCheck = new ArrayList<>();  // original upper/lowercase and hyphens spelling
-      Map<String, AnalyzedTokenReadings> stringToToken =
+      Hashtable<String, AnalyzedTokenReadings> stringToToken =
               getStringToTokenMap(prevTokens, stringsToCheck, origStringsToCheck);
       // iterate backwards over all potentially incorrect strings to make
       // sure we match longer strings first:
@@ -189,10 +189,10 @@ public abstract class AbstractCompoundRule extends Rule {
     return newReplacements;
   }
 
-  public Map<String, AnalyzedTokenReadings> getStringToTokenMap(Queue<AnalyzedTokenReadings> prevTokens,
+  public Hashtable<String, AnalyzedTokenReadings> getStringToTokenMap(Queue<AnalyzedTokenReadings> prevTokens,
                                                                  List<String> stringsToCheck, List<String> origStringsToCheck) {
     StringBuilder sb = new StringBuilder();
-    Map<String, AnalyzedTokenReadings> stringToToken = new HashMap<>();
+    Hashtable<String, AnalyzedTokenReadings> stringToToken = new Hashtable<>();
     int j = 0;
     boolean isFirstSentStart = false;
     for (AnalyzedTokenReadings atr : prevTokens) {

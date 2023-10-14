@@ -17,7 +17,7 @@ public class SuggestionsChangesTest extends TestCase {
     sctc.experiments = new ArrayList<>();
     sctc.datasets = Arrays.asList(new SuggestionChangesDataset("datasetname", "path", "type", 0.5f, false, false));
     for (int i = 0; i < 5; i++) {
-      Map<String, List<Object>> m = new Hashtable<>();
+      Hashtable<String, List<Object>> m = new Hashtable<>();
       for (int j = 0; j < 3; j++) m.put("key " + j, Arrays.asList("B", "L", "A", 42));
       sctc.experiments.add(new SuggestionChangesExperimentRuns("name " + i, m));
     }

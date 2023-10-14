@@ -19,6 +19,8 @@
 package org.languagetool.rules;
 
 import java.util.Calendar;
+import java.util.Hashtable;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -77,7 +79,7 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
    * @param args a map with values for {@code year}, {@code month}, {@code day} (day of month), {@code weekDay}
    */
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> args, int patternTokenPos, AnalyzedTokenReadings[] patternTokens) {
 //    try {
       int dayOfWeekFromString = getDayOfWeek(getRequired("weekDay", args).replace("\u00AD", ""));  // replace soft hyphen
       Calendar dateFromDate = getDate(args);
@@ -113,7 +115,7 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
 //    }
   }
 
-  private Calendar getDate(Map<String, String> args) {
+  private Calendar getDate(Hashtable<String, String> args) {
     String yearArg = args.get("year");
     int year;
     if (yearArg == null && TestHackHelper.isJUnitTest()) {
@@ -138,7 +140,7 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
     return calendar;
   }
 
-  private int getDayOfMonthFromArguments(Map<String, String> args) {
+  private int getDayOfMonthFromArguments(Hashtable<String, String> args) {
     String dayOfMonthString = getRequired("day", args);
     int dayOfMonth;
     Matcher matcherDayOfMonth = DAY_OF_MONTH_PATTERN.matcher(dayOfMonthString);
@@ -154,7 +156,7 @@ public abstract class AbstractDateCheckFilter extends RuleFilter {
     return dayOfMonth;
   }
 
-  private int getMonthFromArguments(Map<String, String> args) {
+  private int getMonthFromArguments(Hashtable<String, String> args) {
     String monthStr = getRequired("month", args);
     int month;
     if (StringUtils.isNumeric(monthStr)) {

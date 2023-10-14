@@ -2,6 +2,7 @@ package org.languagetool.rules;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
@@ -35,7 +36,7 @@ public class AbstractFindSuggestionsFilterTest extends TestCase {
 
   public void testAcceptRuleMatch() throws IOException {
     RuleMatch ruleMatch = new RuleMatch(new FakeRule(), 0, 10, "message");
-    Map map = new HashMap<String,String>();
+    Hashtable map = new Hashtable<String,String>();
     map.put("Mode", "Mode");
     map.put("suppressMatch", "suppressMatch");
     map.put("removeSuggestionsRegexp", "removeSuggestionsRegexp");

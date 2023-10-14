@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -38,7 +40,7 @@ import org.languagetool.tools.StringTools;
 
 public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
 
-  protected abstract Map<String, SynonymsData> getWordsToCheck();
+  protected abstract Hashtable<String, SynonymsData> getWordsToCheck();
 
   protected abstract Synthesizer getSynthesizer();
 
@@ -84,7 +86,7 @@ public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
     List<RuleMatch> matches = new ArrayList<>();
     // int sentenceNumber = 0;
     int wordNumber = 0;
-    Map<String, Integer> wordsLastSeen = new HashMap<>();
+    Hashtable<String, Integer> wordsLastSeen = new Hashtable<>();
     int pos = 0;
     int prevSentenceLength = 0;
     for (AnalyzedSentence sentence : sentences) {
@@ -175,9 +177,9 @@ public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
 
   private static final String FILE_ENCODING = "utf-8";
 
-  protected static Map<String, SynonymsData> loadWords(String path) {
+  protected static Hashtable<String, SynonymsData> loadWords(String path) {
 //    final InputStream inputStream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
-    final Map<String, SynonymsData> map = new HashMap<>();
+    final Hashtable<String, SynonymsData> map = new Hashtable<>();
 //    try (Scanner scanner = new Scanner(inputStream, FILE_ENCODING)) {
 //      while (scanner.hasNextLine()) {
 //        final String line = scanner.nextLine().replaceFirst("#.*", "").trim();

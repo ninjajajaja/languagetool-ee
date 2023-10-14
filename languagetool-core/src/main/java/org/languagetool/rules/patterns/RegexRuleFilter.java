@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.patterns;
 
+import java.util.Hashtable;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.rules.RuleMatch;
@@ -40,6 +41,6 @@ public abstract class RegexRuleFilter {
    *         the arguments) that properly describes the detected error
    */
   @Nullable
-  public abstract RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, AnalyzedSentence sentenceObj, Matcher patternMatcher);
+  public abstract RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, AnalyzedSentence sentenceObj, Matcher patternMatcher);
 
 }

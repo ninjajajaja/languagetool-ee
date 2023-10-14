@@ -31,10 +31,10 @@ import java.util.*;
  */
 public class CompoundRuleData {
 
-  public final Set<String> incorrectCompounds = new THashSet<>();
-  private final Set<String> joinedSuggestion = new THashSet<>();
-  private final Set<String> joinedLowerCaseSuggestion = new THashSet<>();
-  private final Set<String> dashSuggestion = new THashSet<>();
+  public final THashSet<String> incorrectCompounds = new THashSet<>();
+  private final THashSet<String> joinedSuggestion = new THashSet<>();
+  private final THashSet<String> joinedLowerCaseSuggestion = new THashSet<>();
+  private final THashSet<String> dashSuggestion = new THashSet<>();
   private final LineExpander expander;
 
   public CompoundRuleData(String path) {
@@ -56,20 +56,20 @@ public class CompoundRuleData {
 //    }
   }
 
-  public Set<String> getIncorrectCompounds() {
-    return Collections.unmodifiableSet(incorrectCompounds);
+  public THashSet<String> getIncorrectCompounds() {
+    return incorrectCompounds;
   }
 
-  public Set<String> getJoinedSuggestion() {
-    return Collections.unmodifiableSet(joinedSuggestion);
+  public THashSet<String> getJoinedSuggestion() {
+    return joinedSuggestion;
   }
 
-  public Set<String> getDashSuggestion() {
-    return Collections.unmodifiableSet(dashSuggestion);
+  public THashSet<String> getDashSuggestion() {
+    return dashSuggestion;
   }
 
-  public Set<String> getJoinedLowerCaseSuggestion() {
-	return Collections.unmodifiableSet(joinedLowerCaseSuggestion);
+  public THashSet<String> getJoinedLowerCaseSuggestion() {
+	return joinedLowerCaseSuggestion;
   }
 
   private void loadCompoundFile(String path) throws IOException {

@@ -3,6 +3,7 @@ package org.languagetool.rules;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -48,8 +49,8 @@ public class AbstractCheckCaseRuleTest extends TestCase {
         return null;
       }
 
-      public List<Map<String, SuggestionWithMessage>> getWrongWords(boolean checkingCase) {
-      Map m = new HashMap<String, SuggestionWithMessage>();
+      public List<Hashtable<String, SuggestionWithMessage>> getWrongWords(boolean checkingCase) {
+        Hashtable m = new Hashtable<String, SuggestionWithMessage>();
       m.put("aa",new
       SuggestionWithMessage("a"));
       return Arrays.asList(m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m);

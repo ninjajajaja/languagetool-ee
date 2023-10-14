@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -45,7 +46,7 @@ public abstract class AdvancedWordRepeatRule extends Rule {
     setLocQualityIssueType(ITSIssueType.Style);
   }
 
-  protected abstract Set<String> getExcludedWordsPattern();
+  protected abstract THashSet<String> getExcludedWordsPattern();
   protected abstract Pattern getExcludedNonWordsPattern();
   protected abstract Pattern getExcludedPos();
   protected abstract String getMessage();
@@ -59,7 +60,7 @@ public abstract class AdvancedWordRepeatRule extends Rule {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
     boolean repetition = false;
-    Set<String> inflectedWords = new TreeSet<>();
+    THashSet<String> inflectedWords = new THashSet<>();
     String prevLemma;
     int curToken = 0;
     // start from real token, 0 = SENT_START

@@ -38,7 +38,7 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
   private MessageFormat formatter = null;
   private final Language textLanguage;
   private final Language motherTongue;
-  public final Map<String, List<String>> suggestionMap = new HashMap<>();  // rule ID -> list of translations
+  public final Hashtable<String, List<String>> suggestionMap = new Hashtable<>();  // rule ID -> list of translations
   private final List<String> suggestions = new ArrayList<>();
   private final List<StringBuilder> translations = new ArrayList<>();
   private final String falseFriendHint;

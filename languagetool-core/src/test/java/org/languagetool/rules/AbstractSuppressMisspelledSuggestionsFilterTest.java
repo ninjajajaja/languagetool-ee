@@ -3,6 +3,7 @@ package org.languagetool.rules;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import junit.framework.TestCase;
 import org.languagetool.AnalyzedSentence;
@@ -69,7 +70,7 @@ public class AbstractSuppressMisspelledSuggestionsFilterTest extends TestCase {
   }
 
   public void testAcceptRuleMatch() throws IOException {
-    Map<String,String> m = new HashMap<>();
+    Hashtable<String,String> m = new Hashtable<>();
     m.put("1", "a");
     m.put("2", "b");
     m.put("3", "c");

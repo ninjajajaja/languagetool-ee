@@ -45,7 +45,7 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
 
-    List<Map<String, SuggestionWithMessage>> wrongWords = getWrongWords(true);
+    List<Hashtable<String, SuggestionWithMessage>> wrongWords = getWrongWords(true);
     if (wrongWords.size() == 0) {
       return toRuleMatchArray(ruleMatches);
     }

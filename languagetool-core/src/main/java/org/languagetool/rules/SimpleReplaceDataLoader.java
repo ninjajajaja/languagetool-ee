@@ -35,10 +35,10 @@ public final class SimpleReplaceDataLoader {
   /**
    * Load replacement rules from a utf-8 file in the classpath.
    */
-  public Map<String, List<String>> loadWords(String path) {
+  public Hashtable<String, List<String>> loadWords(String path) {
     String[] wrongForms = path.split(" ");
 //    InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
-    Map<String, List<String>> map = new HashMap<>();
+    Hashtable<String, List<String>> map = new Hashtable<>();
 //    try (Scanner scanner = new Scanner(stream, "utf-8")) {
 //      while (scanner.hasNextLine()) {
 //        String line = scanner.nextLine();
@@ -57,11 +57,11 @@ public final class SimpleReplaceDataLoader {
 //        String[] wrongForms = parts[0].split("\\|");
 //        List<String> replacements = Arrays.asList(parts[1].split("\\|"));
         for (String wrongForm : wrongForms) {
-          map.put(wrongForm, null); //replacements);
+          map.put(wrongForm, Collections.emptyList()); //replacements);
         }
 //      }
 //    }
-    return Collections.unmodifiableMap(map);
+    return map;
   }
 
 }

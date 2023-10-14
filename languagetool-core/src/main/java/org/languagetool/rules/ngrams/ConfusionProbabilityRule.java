@@ -60,11 +60,11 @@ public abstract class ConfusionProbabilityRule extends Rule {
   private static final boolean DEBUG = false;  // also see DEBUG in BaseLanguageModel.java
 
   // Speed up the server use case, where rules get initialized for every call:
-  private static final LoadingCache<PathAndLanguage, Map<String, List<ConfusionPair>>> confSetCache = CacheBuilder.newBuilder()
+  private static final LoadingCache<PathAndLanguage, Hashtable<String, List<ConfusionPair>>> confSetCache = CacheBuilder.newBuilder()
       .expireAfterWrite(10, TimeUnit.MINUTES)
-      .build(new CacheLoader<PathAndLanguage, Map<String, List<ConfusionPair>>>() {
+      .build(new CacheLoader<PathAndLanguage, Hashtable<String, List<ConfusionPair>>>() {
         @Override
-        public Map<String, List<ConfusionPair>> load(@NotNull PathAndLanguage pathAndLanguage) throws IOException {
+        public Hashtable<String, List<ConfusionPair>> load(@NotNull PathAndLanguage pathAndLanguage) throws IOException {
           ConfusionSetLoader confusionSetLoader = new ConfusionSetLoader(pathAndLanguage.lang);
           ResourceDataBroker dataBroker = JLanguageTool.getDataBroker();
           try (InputStream confusionSetStream = dataBroker.getFromResourceDirAsStream(pathAndLanguage.path)) {
@@ -73,7 +73,7 @@ public abstract class ConfusionProbabilityRule extends Rule {
         }
       });
 
-  private final Map<String,List<ConfusionPair>> wordToPairs = new HashMap<>();
+  private final Hashtable<String,List<ConfusionPair>> wordToPairs = new Hashtable<>();
   private final LanguageModel lm;
   private final int grams;
   private final Language language;

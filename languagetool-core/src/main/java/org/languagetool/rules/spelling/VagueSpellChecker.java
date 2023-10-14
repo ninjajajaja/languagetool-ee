@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.spelling;
 
+import java.util.Hashtable;
 import morfologik.speller.Speller;
 import morfologik.stemming.Dictionary;
 import org.languagetool.AnalyzedSentence;
@@ -42,8 +43,8 @@ import java.util.ResourceBundle;
  */
 public class VagueSpellChecker {
 
-  private final static Map<Language, Rule> langToRule = new HashMap<>();
-  private final static Map<Language, Dictionary> langToDict = new HashMap<>();
+  private final static Hashtable<Language, Rule> langToRule = new Hashtable<>();
+  private final static Hashtable<Language, Dictionary> langToDict = new Hashtable<>();
   
   public boolean isValidWord(String word, Language lang) {
     Rule rule = langToRule.get(lang);

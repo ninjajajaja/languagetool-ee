@@ -21,6 +21,7 @@ package org.languagetool.rules.spelling.symspell.implementation;
 //        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //        SOFTWARE.
 
+import gnu.trove.THashSet;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -48,11 +49,11 @@ public class SymSpell implements Serializable {
   private int compactMask;
   private EditDistance.DistanceAlgorithm distanceAlgorithm = EditDistance.DistanceAlgorithm.Damerau;
   private int maxLength;
-  private Map<Integer, String[]> deletes = new HashMap<>();
+  private Hashtable<Integer, String[]> deletes = new Hashtable<>();
   // Dictionary of unique correct spelling words, and the frequency count for each word.
-  private Map<String, Long> words;
+  private Hashtable<String, Long> words;
   // Dictionary of unique words that are below the count threshold for being considered correct spellings.
-  private Map<String, Long> belowThresholdWords = new HashMap<>();
+  private Hashtable<String, Long> belowThresholdWords = new Hashtable<>();
   /// <summary>Spelling suggestion returned from lookup.</summary>
 
   /// <summary>Create a new instanc of SymSpell.SymSpell.</summary>
@@ -82,7 +83,7 @@ public class SymSpell implements Serializable {
 //        compactLevel = (byte) defaultCompactLevel;   //TODO might be faulty...
 
     this.initialCapacity = initialCapacity;
-    this.words = new HashMap<>(initialCapacity);
+    this.words = new Hashtable<>(initialCapacity);
     this.maxDictionaryEditDistance = maxDictionaryEditDistance;
     this.prefixLength = prefixLength;
     this.countThreshold = countThreshold;
@@ -155,7 +156,7 @@ public class SymSpell implements Serializable {
       edits.forEach(delete -> staging.add(getStringHash(delete), key));
     } else {
       if (deletes == null) {
-        this.deletes = new HashMap<>(initialCapacity); //initialisierung
+        this.deletes = new Hashtable<>(initialCapacity); //initialisierung
       }
 
       edits.forEach(delete -> {
@@ -246,7 +247,7 @@ public class SymSpell implements Serializable {
       System.out.println(ex.getMessage());
     }
     if (this.deletes == null) {
-      this.deletes = new HashMap<>(staging.deleteCount());
+      this.deletes = new Hashtable<>(staging.deleteCount());
     }
     commitStaged(staging);
     return true;
@@ -272,14 +273,14 @@ public class SymSpell implements Serializable {
     }
 
     if (this.deletes == null) {
-      this.deletes = new HashMap<>(staging.deleteCount());
+      this.deletes = new Hashtable<>(staging.deleteCount());
     }
     commitStaged(staging);
     return true;
   }
 
   public void purgeBelowThresholdWords() {
-    belowThresholdWords = new HashMap<String, Long>();
+    belowThresholdWords = new Hashtable<>();
   }
 
   /// <summary>Commit staged dictionary additions.</summary>
@@ -289,7 +290,7 @@ public class SymSpell implements Serializable {
   /// <param name="staging">The SymSpell.SuggestionStage object storing the staged data.</param>
   public void commitStaged(SuggestionStage staging) {
     if (this.deletes == null) {
-      this.deletes = new HashMap<>(staging.deletes.size());
+      this.deletes = new Hashtable<>(staging.deletes.size());
     }
     staging.commitTo(deletes);
   }
@@ -330,9 +331,9 @@ public class SymSpell implements Serializable {
     }
 
     // deletes we've considered already
-    HashSet<String> consideredDeletes = new HashSet<>();
+    THashSet<String> consideredDeletes = new THashSet<>();
     // suggestions we've considered already
-    HashSet<String> consideredSuggestions = new HashSet<>();
+    THashSet<String> consideredSuggestions = new THashSet<>();
     long suggestionCount;
 
     // quick look for exact match

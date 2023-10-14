@@ -141,7 +141,7 @@ public class RepeatedPatternRuleTransformer implements PatternRuleTransformer {
   @Override
   public TransformedRules apply(List<AbstractPatternRule> patternRules) {
     List<AbstractPatternRule> remaining = new ArrayList<>();
-    Map<String, List<AbstractPatternRule>> toTransform = new HashMap<>();
+    Hashtable<String, List<AbstractPatternRule>> toTransform = new Hashtable<>();
     // rules in a rule group / with the same ID should be combined so repetitions of similar patterns are matched
     for (AbstractPatternRule abstractPatternRule : patternRules) {
       if (abstractPatternRule.getMinPrevMatches() > 0) {

@@ -20,6 +20,7 @@
 package org.languagetool.rules;
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -34,7 +35,7 @@ public class AddCommasFilter extends RuleFilter {
   
   
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) throws IOException {
    
     // for patterns ", aun así" suggest "; aun así," and ", aun así,"

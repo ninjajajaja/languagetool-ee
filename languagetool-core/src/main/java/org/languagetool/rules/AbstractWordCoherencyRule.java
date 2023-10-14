@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import gnu.trove.THashSet;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.AnalyzedTokenReadings;
@@ -44,7 +45,7 @@ public abstract class AbstractWordCoherencyRule extends TextLevelRule {
    * Maps words in both directions, e.g. "aufwendig -&gt; aufwändig" and "aufwändig -&gt; aufwendig".
    * @since 3.0
    */
-  protected abstract Map<String, Set<String>> getWordMap();
+  protected abstract Hashtable<String, THashSet<String>> getWordMap();
 
   /**
    * Get the message shown to the user if the rule matches.
@@ -58,7 +59,7 @@ public abstract class AbstractWordCoherencyRule extends TextLevelRule {
   @Override
   public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
-    Map<String, String> shouldNotAppearWord = new HashMap<>();  // e.g. aufwändig -> aufwendig
+    Hashtable<String, String> shouldNotAppearWord = new Hashtable<>();  // e.g. aufwändig -> aufwendig
     int pos = 0;
     for (AnalyzedSentence sentence : sentences) {
       AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
@@ -66,7 +67,7 @@ public abstract class AbstractWordCoherencyRule extends TextLevelRule {
         String token = tmpToken.getToken();
         List<AnalyzedToken> readings = tmpToken.getReadings();
         if (!readings.isEmpty()) {
-          Set<String> baseforms = readings.stream().map(AnalyzedToken::getLemma).collect(Collectors.toSet());
+          THashSet<String> baseforms = new THashSet(readings.stream().map(AnalyzedToken::getLemma).collect(Collectors.toSet()));
           for (String baseform : baseforms) {
             if (baseform != null) {
               token = baseform;
@@ -88,7 +89,7 @@ public abstract class AbstractWordCoherencyRule extends TextLevelRule {
               }
               break;
             } else if (getWordMap().containsKey(token)) {
-              Set<String> shouldNotAppearSet = getWordMap().get(token);
+              THashSet<String> shouldNotAppearSet = getWordMap().get(token);
               for (String shouldNotAppear : shouldNotAppearSet) {
                 shouldNotAppearWord.put(shouldNotAppear, token);
               }

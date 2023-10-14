@@ -27,6 +27,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Streams;
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.NotNull;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.JLanguageTool;
@@ -69,19 +70,19 @@ public final class RemoteRuleFilters {
       return matches;
     }
     // load all relevant filters for given matches
-    Set<String> matchIds = matches.stream().map(m -> m.rule.getId()).collect(Collectors.toSet());
+    THashSet<String> matchIds = new THashSet<>(matches.stream().map(m -> m.rule.getId()).collect(Collectors.toSet()));
     List<AbstractPatternRule> filters = rules.get(lang).entrySet().stream()
       .filter(e -> matchIds.stream().anyMatch(id -> id.matches(e.getKey())))
       .flatMap(e -> e.getValue().stream())
       .collect(Collectors.toList());
 
     // prepare for lookup of matches
-    Map<MatchPosition, Set<AbstractPatternRule>> filterRulesByPosition = new HashMap<>();
+    Hashtable<MatchPosition, THashSet<AbstractPatternRule>> filterRulesByPosition = new Hashtable<>();
     for (AbstractPatternRule rule : filters) {
       RuleMatch[] filterMatches = rule.match(sentence);
       for (RuleMatch match : filterMatches) {
         MatchPosition pos = new MatchPosition(match.getFromPos(), match.getToPos());
-        filterRulesByPosition.computeIfAbsent(pos, k -> new HashSet<>()).add(rule);
+        filterRulesByPosition.computeIfAbsent(pos, k -> new THashSet<>()).add(rule);
       }
     }
 
@@ -89,7 +90,7 @@ public final class RemoteRuleFilters {
       .filter(match -> {
         MatchPosition pos = new MatchPosition(match.getFromPos(), match.getToPos());
         // is there a filter match with the right ID at this position?
-        boolean matched = filterRulesByPosition.getOrDefault(pos, Collections.emptySet())
+        boolean matched = filterRulesByPosition.getOrDefault(pos, new THashSet<>())
           .stream().anyMatch(rule -> match.rule.getId().matches(rule.getId()));
         return !matched;
       })
@@ -184,13 +185,13 @@ public final class RemoteRuleFilters {
       });
   }
 
-  static Map<String, List<AbstractPatternRule>> load(Language lang) {
+  static Hashtable<String, List<AbstractPatternRule>> load(Language lang) {
     JLanguageTool lt = new JLanguageTool(lang);
     ResourceDataBroker dataBroker = JLanguageTool.getDataBroker();
     String filename = dataBroker.getRulesDir() + "/" + getFilename(lang);
     try {
       List<AbstractPatternRule> allRules = lt.loadPatternRules(filename);
-      Map<String, List<AbstractPatternRule>> rules = new HashMap<>();
+      Hashtable<String, List<AbstractPatternRule>> rules = new Hashtable<>();
       for (AbstractPatternRule rule : allRules) {
         rules.computeIfAbsent(rule.getId(), k -> new ArrayList<>()).add(rule);
       }

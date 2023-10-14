@@ -18,6 +18,7 @@
  */
 package org.languagetool;
 
+import gnu.trove.THashSet;
 import org.languagetool.rules.Rule;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -42,7 +43,7 @@ public class UserConfig {
   }
 
   public List<String> userSpecificSpellerWords;
-  public Set<String> acceptedPhrases;
+  public THashSet<String> acceptedPhrases;
   private final List<Rule> userSpecificRules;
   private final int maxSpellingSuggestions;
   private final Long userDictCacheSize;
@@ -130,8 +131,8 @@ public class UserConfig {
     return userSpecificSpellerWords;
   }
 
-  private Set<String> buildAcceptedPhrases() {
-    HashSet<String> phrases = new HashSet<>();
+  private THashSet<String> buildAcceptedPhrases() {
+    THashSet<String> phrases = new THashSet<>();
     for (String wordOrPhrase : userSpecificSpellerWords) {
       if (wordOrPhrase.contains(" ")) {
         phrases.add(wordOrPhrase);
@@ -141,7 +142,7 @@ public class UserConfig {
   }
 
   @NotNull
-  public Set<String> getAcceptedPhrases() {
+  public THashSet<String> getAcceptedPhrases() {
     return acceptedPhrases;
   }
 

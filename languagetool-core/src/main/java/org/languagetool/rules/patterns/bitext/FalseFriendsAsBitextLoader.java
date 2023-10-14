@@ -22,6 +22,7 @@ package org.languagetool.rules.patterns.bitext;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public class FalseFriendsAsBitextLoader {
     List<AbstractPatternRule> rules2 = ruleLoader.getRules(
             JLanguageTool.getDataBroker().getFromRulesDirAsStream(filename),
             language, motherTongue);
-    Map<String, AbstractPatternRule> srcRules = new HashMap<>();
+    Hashtable<String, AbstractPatternRule> srcRules = new Hashtable<>();
     for (AbstractPatternRule rule : rules1) {
       srcRules.put(rule.getId(), rule);
     }

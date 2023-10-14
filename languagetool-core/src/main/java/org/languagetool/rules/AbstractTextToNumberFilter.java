@@ -21,6 +21,7 @@ package org.languagetool.rules;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +30,11 @@ import org.languagetool.rules.patterns.RuleFilter;
 
 public abstract class AbstractTextToNumberFilter extends RuleFilter {
 
-  protected static Map<String, Float> numbers = new HashMap<String, Float>();
-  protected static Map<String, Float> multipliers = new HashMap<String, Float>();
+  protected static Hashtable<String, Float> numbers = new Hashtable<>();
+  protected static Hashtable<String, Float> multipliers = new Hashtable<>();
 
   @Override
-  public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> arguments, int patternTokenPos,
+  public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
       AnalyzedTokenReadings[] patternTokens) throws IOException {
 
     int posWord = 0;

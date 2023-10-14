@@ -47,18 +47,18 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
   private static final Logger logger = LoggerFactory.getLogger(AbstractSimpleReplaceRule.class);
   private boolean checkLemmas = true;
 
-  protected abstract Map<String, List<String>> getWrongWords();
+  protected abstract Hashtable<String, List<String>> getWrongWords();
 
-  protected static Map<String, List<String>> loadFromPath(String path) {
+  protected static Hashtable<String, List<String>> loadFromPath(String path) {
     return new SimpleReplaceDataLoader().loadWords(path);
   }
 
   /**
    * @since 5.0
    */
-  protected static Map<String, List<String>> loadFromPath(String... paths) {
+  protected static Hashtable<String, List<String>> loadFromPath(String... paths) {
     SimpleReplaceDataLoader loader = new SimpleReplaceDataLoader();
-    Map<String, List<String>> map = new HashMap<>();
+    Hashtable<String, List<String>> map = new Hashtable<>();
     for (String path : paths) {
       map.putAll(loader.loadWords(path));
     }

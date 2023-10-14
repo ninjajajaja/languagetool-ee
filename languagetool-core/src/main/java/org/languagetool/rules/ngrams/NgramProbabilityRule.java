@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules.ngrams;
 
+import gnu.trove.THashSet;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
 import org.languagetool.Experimental;
@@ -231,7 +232,7 @@ public class NgramProbabilityRule extends Rule {
     return Optional.empty();
   }
 
-  private Optional<AnalyzedToken> getByPosTag(Set<AnalyzedToken> tokens, String wantedPosTagRegex) {
+  private Optional<AnalyzedToken> getByPosTag(THashSet<AnalyzedToken> tokens, String wantedPosTagRegex) {
     for (AnalyzedToken token : tokens) {
       if (token.getPOSTag() != null && token.getPOSTag().matches(wantedPosTagRegex)) {
         return Optional.of(token);
