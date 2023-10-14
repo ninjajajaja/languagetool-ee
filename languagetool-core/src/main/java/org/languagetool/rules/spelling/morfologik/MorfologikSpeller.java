@@ -33,8 +33,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Morfologik-based spell checker.
@@ -75,7 +73,7 @@ public class MorfologikSpeller {
    * Creates a speller with a maximum edit distance of one.
    * @param fileInClassPath path in classpath to morfologik dictionary
    */
-  public MorfologikSpeller(String fileInClassPath) throws IOException {
+  public MorfologikSpeller(String fileInClassPath) {
     this(fileInClassPath, 1);
   }
 
@@ -189,7 +187,7 @@ public class MorfologikSpeller {
     return suggestions;
   }
 
-  private int getSuggestionIndex(List<WeightedSuggestion> suggestions, String uppercaseFirst) {
+  private static int getSuggestionIndex(List<WeightedSuggestion> suggestions, String uppercaseFirst) {
     int i = 0;
     for (WeightedSuggestion suggestion : suggestions) {
       if (suggestion.getWord().equals(uppercaseFirst)) {

@@ -759,32 +759,32 @@ public class PatternToken implements Cloneable {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
+    String sb = new String();
     if (getNegation()) {
-      sb.append('!');
+      sb += '!';
     }
-    sb.append(getString());
+    sb += getString();
     String phraseName = getPhraseName();
     if (phraseName != null) {
-      sb.append(" {");
-      sb.append(phraseName);
-      sb.append('}');
+      sb += " {";
+      sb += phraseName;
+      sb += '}';
     }
     if (posToken != null) {
-      sb.append('/');
-      sb.append(posToken);
+      sb += '/';
+      sb += posToken;
     }
     ChunkTag chunkTag = getChunkTag();
     if (chunkTag != null) {
-      sb.append('/');
-      sb.append(chunkTag);
+      sb += '/';
+      sb += chunkTag;
     }
     List<PatternToken> exceptionList = getExceptionList();
     if (!exceptionList.isEmpty()) {
-      sb.append("/exceptions=");
-      sb.append(exceptionList);
+      sb += "/exceptions=";
+      sb += exceptionList;
     }
-    return sb.toString();
+    return sb;
   }
 
   public static class PosToken {

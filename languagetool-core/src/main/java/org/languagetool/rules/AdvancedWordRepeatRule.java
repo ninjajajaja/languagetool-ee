@@ -66,7 +66,8 @@ public abstract class AdvancedWordRepeatRule extends Rule {
     // start from real token, 0 = SENT_START
     int tokensLength = tokens.length;
     for (int i = 1; i < tokensLength; i++) {
-      String token = tokens[i].getToken();
+      AnalyzedTokenReadings tokensI = tokens[i];
+      String token = tokensI.getToken();
       // avoid "..." etc. to be matched:
       boolean isWord = true;
       boolean hasLemma = true;
@@ -75,7 +76,7 @@ public abstract class AdvancedWordRepeatRule extends Rule {
         isWord = false;
       }
 
-      for (AnalyzedToken analyzedToken : tokens[i]) {
+      for (AnalyzedToken analyzedToken : tokensI) {
         String posTag = analyzedToken.getPOSTag();
         if (posTag != null) {
           if (StringTools.isEmpty(posTag)) {
@@ -112,7 +113,7 @@ public abstract class AdvancedWordRepeatRule extends Rule {
       prevLemma = "";
       if (isWord) {
         boolean notSentEnd = false;
-        for (AnalyzedToken analyzedToken : tokens[i]) {
+        for (AnalyzedToken analyzedToken : tokensI) {
           String pos = analyzedToken.getPOSTag();
           if (pos != null) {
             notSentEnd |= JLanguageTool.SENTENCE_END_TAGNAME.equals(pos);
@@ -129,17 +130,17 @@ public abstract class AdvancedWordRepeatRule extends Rule {
             }
             prevLemma = curLemma;
           } else {
-            if (inflectedWords.contains(tokens[i].getToken()) && !notSentEnd) {
+            if (inflectedWords.contains(token) && !notSentEnd) {
               repetition = true;
             } else {
-              inflectedWords.add(tokens[i].getToken());
+              inflectedWords.add(token);
             }
           }
         }
       }
 
       if (repetition) {
-        int pos = tokens[i].getStartPos();
+        int pos = tokensI.getStartPos();
         RuleMatch ruleMatch = new RuleMatch(this, sentence, pos, pos
             + token.length(), getMessage(), getShortMessage());
         ruleMatches.add(ruleMatch);

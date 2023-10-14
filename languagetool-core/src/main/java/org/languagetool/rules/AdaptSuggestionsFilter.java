@@ -35,7 +35,7 @@ public class AdaptSuggestionsFilter extends RuleFilter {
   
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
-      AnalyzedTokenReadings[] patternTokens) throws IOException {
+      AnalyzedTokenReadings[] patternTokens) {
     Rule rule = match.rule;
     if (rule instanceof AbstractPatternRule) {
       List<String> adjustedSuggestions = new ArrayList<>();

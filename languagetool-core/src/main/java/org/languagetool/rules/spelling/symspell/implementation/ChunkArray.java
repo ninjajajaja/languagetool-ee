@@ -65,11 +65,11 @@ public class ChunkArray<T>
     public void setValues(int index, Node value){
         values[row(index)][col(index)] = value;
     }
-    public void setValues(int index, Node value, Node[][] list){
+    public static void setValues(int index, Node value, Node[][] list){
         list[row(index)][col(index)] = value;
     }
 
-    private int row(int index) { return index >> divShift; } // same as index / chunkSize
-    private int col(int index) { return index & (chunkSize - 1); } //same as index % chunkSize
+    private static int row(int index) { return index >> divShift; } // same as index / chunkSize
+    private static int col(int index) { return index & (chunkSize - 1); } //same as index % chunkSize
     private int capacity() { return values.length * chunkSize; }
 }

@@ -64,7 +64,7 @@ public class EmptyLineRule extends TextLevelRule {
   }
 
   @Override
-  public org.languagetool.rules.RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public org.languagetool.rules.RuleMatch[] match(List<AnalyzedSentence> sentences) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     int pos = 0;
     int sentencesSizeMinusOne = sentences.size() - 1;

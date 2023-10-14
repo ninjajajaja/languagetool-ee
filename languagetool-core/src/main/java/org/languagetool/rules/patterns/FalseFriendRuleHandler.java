@@ -40,14 +40,14 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
   private final Language motherTongue;
   public final Hashtable<String, List<String>> suggestionMap = new Hashtable<>();  // rule ID -> list of translations
   private final List<String> suggestions = new ArrayList<>();
-  private final List<StringBuilder> translations = new ArrayList<>();
+  private final List<String> translations = new ArrayList<>();
   private final String falseFriendHint;
 
   private boolean defaultOff;
   private Language language;
   private Language translationLanguage;
   private Language currentTranslationLanguage;
-  private StringBuilder translation = new StringBuilder();
+  private String translation = new String();
   private boolean inTranslation;
 
   FalseFriendRuleHandler(Language textLanguage, Language motherTongue, String falseFriendHint) {
@@ -99,8 +99,8 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
         }
       }
     } else if (qName.equals(EXAMPLE)) {
-      correctExample = new StringBuilder();
-      incorrectExample = new StringBuilder();
+      correctExample = new String();
+      incorrectExample = new String();
       if (attrs.getValue(TYPE).equals("incorrect")) {
         inIncorrectExample = true;
       } else if (attrs.getValue(TYPE).equals("correct")) {
@@ -163,7 +163,7 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
                 && language.equalsConsiderVariantsIfSpecified(motherTongue) && !suggestions.contains(translation.toString())) {
           suggestions.add(translation.toString());
         }
-        translation = new StringBuilder();
+        translation = new String();
         inTranslation = false;
         currentTranslationLanguage = null;
         break;
@@ -175,8 +175,8 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
         }
         inCorrectExample = false;
         inIncorrectExample = false;
-        correctExample = new StringBuilder();
-        incorrectExample = new StringBuilder();
+        correctExample = new String();
+        incorrectExample = new String();
         break;
       case MESSAGE:
         inMessage = false;
@@ -192,7 +192,7 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
     }
   }
 
-  private String formatTranslations(List<StringBuilder> translations) {
+  private static String formatTranslations(List<String> translations) {
     return translations.stream().map(o -> "\"" + o + "\"").collect(Collectors.joining(", "));
   }
 
@@ -200,13 +200,13 @@ class FalseFriendRuleHandler extends XMLRuleHandler {
   public void characters(char[] buf, int offset, int len) {
     String s = new String(buf, offset, len);
     if (inToken && inPattern) {
-      elements.append(s);
+      elements += s;
     } else if (inCorrectExample) {
-      correctExample.append(s);
+      correctExample += s;
     } else if (inIncorrectExample) {
-      incorrectExample.append(s);
+      incorrectExample += s;
     } else if (inTranslation) {
-      translation.append(s);
+      translation += s;
     }
   }
 

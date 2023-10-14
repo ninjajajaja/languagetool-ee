@@ -536,7 +536,7 @@ public class JLanguageTool {
           // ignore, for testing
           return Collections.emptyList();
         } else {
-          return ruleLoader.getRules(new File(filename), language);
+          return PatternRuleLoader.getRules(new File(filename), language);
         }
       } else {
         return ruleLoader.getRules(is, filename, language);

@@ -61,7 +61,7 @@ public class BitextPatternRuleTest {
       }
       System.out.println("Running tests for " + lang.getName() + "...");
       JLanguageTool lt = new JLanguageTool(lang);
-      List<BitextPatternRule> rules = ruleLoader.getRules(is, name);
+      List<BitextPatternRule> rules = BitextPatternRuleLoader.getRules(is, name);
       testBitextRulesFromXML(rules, lt, lang);
     }
   }

@@ -172,7 +172,7 @@ public class HunspellRule extends SpellingCheckRule {
       }
       int prevStartPos = -1;
       boolean gotResultsFromForeignLanguageChecker = false;
-      Long sentenceLength = Arrays.stream(sentence.getTokensWithoutWhitespace()).filter(k -> !k.isNonWord()).count() - 1;
+      long sentenceLength = Arrays.stream(sentence.getTokensWithoutWhitespace()).filter(k -> !k.isNonWord()).count() - 1;
       ForeignLanguageChecker foreignLanguageChecker = null;
       if (userConfig != null && !userConfig.getPreferredLanguages().isEmpty() && userConfig.getPreferredLanguages().size() >= 2) { //only create instance if user has 2 or more preferredLanguages
         foreignLanguageChecker = new ForeignLanguageChecker(language.getShortCode(), sentence.getText(), sentenceLength, userConfig.getPreferredLanguages());
@@ -431,20 +431,21 @@ public class HunspellRule extends SpellingCheckRule {
   }
 
   protected String getSentenceTextWithoutUrlsAndImmunizedTokens(AnalyzedSentence sentence) {
-    StringBuilder sb = new StringBuilder();
+    String sb = new String();
     AnalyzedTokenReadings[] sentenceTokens = getSentenceWithImmunization(sentence).getTokens();
     for (int i = 1; i < sentenceTokens.length; i++) {
-      String token = sentenceTokens[i].getToken();
-      if (sentenceTokens[i].isImmunized() || sentenceTokens[i].isIgnoredBySpeller() || isUrl(token) || isEMail(token) || isQuotedCompound(sentence, i, token)) {
+      AnalyzedTokenReadings sentenceTokensI = sentenceTokens[i];
+      String token = sentenceTokensI.getToken();
+      if (sentenceTokensI.isImmunized() || sentenceTokensI.isIgnoredBySpeller() || isUrl(token) || isEMail(token) || isQuotedCompound(sentence, i, token)) {
         if (isQuotedCompound(sentence, i, token)) {
-          sb.append(' ').append(token.substring(1));
+          sb += (' ' + token.substring(1));
         }
         // replace URLs and immunized tokens with whitespace to ignore them for spell checking:
         else if (token.length() < 20) {
-          sb.append(WHITESPACE_ARRAY[token.length()]);
+          sb += WHITESPACE_ARRAY[token.length()];
         } else {
           for (int j = 0; j < token.length(); j++) {
-            sb.append(' ');
+            sb += ' ';
           }
         }
       } else if (token.length() > 1 && token.codePointCount(0, token.length()) != token.length()) {
@@ -453,12 +454,12 @@ public class HunspellRule extends SpellingCheckRule {
         for (String emoji : emojis) {
           token = StringUtils.replace(token, emoji, WHITESPACE_ARRAY[emoji.length()]);
         }
-        sb.append(token);
+        sb += token;
       } else {
-        sb.append(token);
+        sb += token;
       }
     }
-    return sb.toString();
+    return sb;
   }
 
   protected final void ensureInitialized() throws IOException {

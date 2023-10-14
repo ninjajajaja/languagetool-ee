@@ -31,7 +31,7 @@ public class RegexRuleFilterCreator {
   /**
    * @param className fully qualified class Name of a class implementing {@link RegexRuleFilter}
    */
-  public RegexRuleFilter getFilter(String className) {
+  public static RegexRuleFilter getFilter(String className) {
     try {
       Class<?> aClass = JLanguageTool.getClassBroker().forName(className);
       Constructor<?>[] constructors = aClass.getConstructors();

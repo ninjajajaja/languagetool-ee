@@ -35,7 +35,7 @@ public abstract class AbstractTextToNumberFilter extends RuleFilter {
 
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
-      AnalyzedTokenReadings[] patternTokens) throws IOException {
+      AnalyzedTokenReadings[] patternTokens) {
 
     int posWord = 0;
     float total = 0;

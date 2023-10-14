@@ -47,15 +47,15 @@ public class SameRuleGroupFilter implements RuleMatchFilter {
     return filteredRules;
   }
 
-  private boolean overlapAndMatch(RuleMatch match, RuleMatch nextMatch) {
+  private static boolean overlapAndMatch(RuleMatch match, RuleMatch nextMatch) {
     return overlaps(match, nextMatch) && haveSameRuleGroup(match, nextMatch);
   }
 
-  boolean overlaps(RuleMatch match, RuleMatch nextMatch) {
+  static boolean overlaps(RuleMatch match, RuleMatch nextMatch) {
     return match.getFromPos() <= nextMatch.getToPos() && match.getToPos() >= nextMatch.getFromPos();
   }
 
-  private boolean haveSameRuleGroup(RuleMatch match, RuleMatch nextMatch) {
+  private static boolean haveSameRuleGroup(RuleMatch match, RuleMatch nextMatch) {
     String id1 = match.rule.getId();
     return id1 != null && id1.equals(nextMatch.rule.getId());
   }

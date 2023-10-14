@@ -190,7 +190,7 @@ public class ReadabilityRule extends TextLevelRule {
   /**
    * get level of readability (0 - 6)
    */
-  private int getReadabilityLevel(double fre) {
+  private static int getReadabilityLevel(double fre) {
     if (fre < 30) {
       return 0;
     } else if (fre < 50) {
@@ -269,7 +269,7 @@ public class ReadabilityRule extends TextLevelRule {
   }
 
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     int nParagraph = 0;
     nAllSentences = 0;

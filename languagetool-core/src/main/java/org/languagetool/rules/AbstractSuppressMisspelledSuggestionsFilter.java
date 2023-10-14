@@ -77,7 +77,7 @@ public abstract class AbstractSuppressMisspelledSuggestionsFilter extends RuleFi
     return !"false".equalsIgnoreCase(suppressMatch);
   }
 
-  public boolean isMisspelled(String s) throws IOException {
+  public boolean isMisspelled(String s) {
     SpellingCheckRule spellerRule = language.getDefaultSpellingRule();
     if (spellerRule == null)
       return false;

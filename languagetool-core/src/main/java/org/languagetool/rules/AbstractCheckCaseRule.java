@@ -51,16 +51,18 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
     }
     Queue<AnalyzedTokenReadings> prevTokens = new ArrayBlockingQueue<>(wrongWords.size());
     int sentStart = 0;
-    while (sentStart + 1 < tokens.length && isPunctuationStart(tokens[sentStart + 1].getToken())) {
+    int tokensLength = tokens.length;
+    while (sentStart + 1 < tokensLength && isPunctuationStart(tokens[sentStart + 1].getToken())) {
       sentStart++;
     }
     int tokensLength = tokens.length;
     for (int i = 1; i < tokensLength; i++) {
-      addToQueue(tokens[i], prevTokens);
+      AnalyzedTokenReadings tokensI = tokens[i];
+      addToQueue(tokensI, prevTokens);
       StringBuilder sb = new StringBuilder();
       List<String> phrases = new ArrayList<>();
       List<AnalyzedTokenReadings> prevTokensList = Arrays.asList(prevTokens.toArray(new AnalyzedTokenReadings[0]));
-      int prevTokensListSizeMinusOne = prevTokensList.size() - 1;
+      int prevTokensListSizeMinusOne = prevTokensList.size()-1;
       for (int j = prevTokensListSizeMinusOne; j >= 0; j--) {
         if (j != prevTokensListSizeMinusOne && prevTokensList.get(j + 1).isWhitespaceBefore()) {
           sb.insert(0, " ");
@@ -68,7 +70,7 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
         sb.insert(0, prevTokensList.get(j).getToken());
         phrases.add(0, sb.toString());
       }
-      if (isTokenException(tokens[i])) {
+      if (isTokenException(tokensI)) {
         continue;
       }
       int len = phrases.size(); // prevTokensList and variants have now the same length
@@ -132,7 +134,7 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
     return toRuleMatchArray(ruleMatches);
   }
 
-  private boolean isPunctuationStart(String word) {
+  private static boolean isPunctuationStart(String word) {
     return StringUtils.getDigits(word).length() > 0 // e.g. postal codes
         || StringTools.isPunctuationMark(word) || StringTools.isNotWordCharacter(word);
   }

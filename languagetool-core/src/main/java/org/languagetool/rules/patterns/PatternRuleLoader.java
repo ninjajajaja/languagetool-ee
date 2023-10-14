@@ -43,7 +43,7 @@ public class PatternRuleLoader extends DefaultHandler {
   /**
    * @param file XML file with pattern rules
    */
-  public final List<AbstractPatternRule> getRules(File file, Language lang) throws IOException {
+  public static List<AbstractPatternRule> getRules(File file, Language lang) throws IOException {
     try (InputStream inputStream = Files.newInputStream(file.toPath())) {
       PatternRuleLoader ruleLoader = new PatternRuleLoader();
       return ruleLoader.getRules(inputStream, file.getAbsolutePath(), lang);

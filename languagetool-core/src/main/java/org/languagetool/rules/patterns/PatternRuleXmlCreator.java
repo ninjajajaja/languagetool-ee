@@ -43,7 +43,7 @@ public class PatternRuleXmlCreator {
    * Return the given pattern rule as an indented XML string.
    * @since 2.3
    */
-  public final String toXML(PatternRuleId ruleId, Language language) {
+  public static String toXML(PatternRuleId ruleId, Language language) {
     List<String> filenames = language.getRuleFileNames();
     XPath xpath = XPathFactory.newInstance().newXPath();
     for (String filename : filenames) {
@@ -80,7 +80,7 @@ public class PatternRuleXmlCreator {
     throw new RuntimeException("Could not find rule '" + ruleId + "' for language " + language + " in files: " + filenames);
   }
 
-  private Document getDocument(InputStream is) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+  private static Document getDocument(InputStream is) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
     DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
     DOMImplementationLS impl = (DOMImplementationLS)registry.getDOMImplementation("LS");
     LSParser parser = impl.createLSParser(DOMImplementationLS.MODE_SYNCHRONOUS, null);
@@ -91,7 +91,7 @@ public class PatternRuleXmlCreator {
     return parser.parse(domInput);
   }
 
-  private String nodeToString(Node node) {
+  private static String nodeToString(Node node) {
     StringWriter sw = new StringWriter();
     try {
       Transformer t = TransformerFactory.newInstance().newTransformer();

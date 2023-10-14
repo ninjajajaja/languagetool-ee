@@ -32,7 +32,6 @@ import org.languagetool.tools.Tools;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -210,11 +209,11 @@ public abstract class ConfusionProbabilityRule extends Rule {
     return false;
   }
 
-  private String cleanId(String id) {
+  private static String cleanId(String id) {
     return id.toUpperCase().replace("Ä", "AE").replace("Ü", "UE").replace("Ö", "OE");
   }
 
-  private boolean isRealWord(String token) {
+  private static boolean isRealWord(String token) {
     return token.matches("[\\p{L}]+");
   }
 
@@ -235,11 +234,11 @@ public abstract class ConfusionProbabilityRule extends Rule {
     return false;
   }
 
-  private boolean covers(int exceptionStartPos, int exceptionEndPos, int startPos, int endPos) {
+  private static boolean covers(int exceptionStartPos, int exceptionEndPos, int startPos, int endPos) {
     return exceptionStartPos <= startPos && exceptionEndPos >= endPos;
   }
 
-  private List<String> getSuggestions(String message) {
+  private static List<String> getSuggestions(String message) {
     Matcher matcher = Pattern.compile("<suggestion>(.*?)</suggestion>").matcher(message);
     List<String> result = new ArrayList<>();
     while (matcher.find()) {
@@ -301,7 +300,7 @@ public abstract class ConfusionProbabilityRule extends Rule {
     return getBetterAlternativeOrNull(token, tokens, other, factor);
   }
 
-  private ConfusionString getAlternativeTerm(List<ConfusionString> confusionSet, GoogleToken token) {
+  private static ConfusionString getAlternativeTerm(List<ConfusionString> confusionSet, GoogleToken token) {
     for (ConfusionString s : confusionSet) {
       if (!s.str.equals(token.token)) {
         return s;
@@ -310,7 +309,7 @@ public abstract class ConfusionProbabilityRule extends Rule {
     throw new RuntimeException("No alternative found for: " + token);
   }
 
-  private ConfusionString getConfusionString(List<ConfusionString> confusionSet, GoogleToken token) {
+  private static ConfusionString getConfusionString(List<ConfusionString> confusionSet, GoogleToken token) {
     for (ConfusionString s : confusionSet) {
       if (s.str.equalsIgnoreCase(token.token)) {
         return s;
@@ -337,7 +336,7 @@ public abstract class ConfusionProbabilityRule extends Rule {
     return p2 >= MIN_PROB && p2 > p1 * factor ? otherWord : null;
   }
 
-  private void debug(String message, Object... vars) {
+  private static void debug(String message, Object... vars) {
     if (DEBUG) {
       System.out.printf(Locale.ENGLISH, message, vars);
     }

@@ -98,7 +98,7 @@ public class ConfusionSetLoader {
     return map;
   }
 
-  private void addToMap(Hashtable<String, List<ConfusionPair>> map, List<ConfusionString> confusionStrings, ConfusionPair confusionSet) {
+  private static void addToMap(Hashtable<String, List<ConfusionPair>> map, List<ConfusionString> confusionStrings, ConfusionPair confusionSet) {
     for (ConfusionString confusionString : confusionStrings) {
       String key = confusionString.str;
       List<ConfusionPair> existingEntry = map.get(key);

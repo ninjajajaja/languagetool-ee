@@ -148,28 +148,30 @@ public abstract class WrongWordInContextRule extends Rule {
         //ignoring token 0, i.e., SENT_START
         String token;
         for (i = 1; i < tokens.length && !matchedContext[foundWord]; i++) {
+          AnalyzedTokenReadings tokensI = tokens[i];
           if (matchLemmas) {
-            for (j = 0; j < tokens[i].getReadingsLength() && !matchedContext[foundWord]; j++) {
-              String lemma = tokens[i].getAnalyzedToken(j).getLemma();
+            for (j = 0; j < tokensI.getReadingsLength() && !matchedContext[foundWord]; j++) {
+              String lemma = tokensI.getAnalyzedToken(j).getLemma();
               if (lemma != null && !lemma.isEmpty()) {
                 matchedContext[foundWord] = matchers[foundWord].reset(lemma).find();
               }
             }
           } else {
-            token = tokens[i].getToken();
+            token = tokensI.getToken();
             matchedContext[foundWord] = matchers[foundWord].reset(token).find();
           }
         }
         for (i = 1; i < tokens.length && !matchedContext[notFoundWord]; i++) {
+          AnalyzedTokenReadings tokensI = tokens[i];
           if (matchLemmas) {
-            for (j = 0; j < tokens[i].getReadingsLength() && !matchedContext[notFoundWord]; j++) {
-              String lemma = tokens[i].getAnalyzedToken(j).getLemma();
+            for (j = 0; j < tokensI.getReadingsLength() && !matchedContext[notFoundWord]; j++) {
+              String lemma = tokensI.getAnalyzedToken(j).getLemma();
               if (lemma != null && !lemma.isEmpty()) {
                 matchedContext[notFoundWord] = matchers[notFoundWord].reset(lemma).find();
               }
             }
           } else {
-            token = tokens[i].getToken();
+            token = tokensI.getToken();
             matchedContext[notFoundWord] = matchers[notFoundWord].reset(token).find();
           }
         }
@@ -264,7 +266,7 @@ public abstract class WrongWordInContextRule extends Rule {
       contexts = new Pattern[2];
     }
     
-    private String addBoundaries(String str) {
+    private static String addBoundaries(String str) {
       String ignoreCase = "";
       if (str.startsWith("(?i)")) {
         str = str.substring(4);

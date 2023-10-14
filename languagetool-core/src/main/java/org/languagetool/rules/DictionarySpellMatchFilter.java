@@ -48,7 +48,7 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
 
   private static class PhraseSearchLoader extends CacheLoader<UserConfig, AhoCorasickDoubleArrayTrie<String>> {
     @Override
-    public AhoCorasickDoubleArrayTrie<String> load(UserConfig key) throws Exception {
+    public AhoCorasickDoubleArrayTrie<String> load(UserConfig key) {
       AhoCorasickDoubleArrayTrie<String> searcher = new AhoCorasickDoubleArrayTrie<>();
       Hashtable<String, String> phrases = new Hashtable<>();
       for (String phrase : key.getAcceptedPhrases()) {
@@ -101,7 +101,7 @@ public class DictionarySpellMatchFilter implements RuleMatchFilter {
     return ruleMatches;
   }
 
-  public Hashtable<String, List<RuleMatch>> getPhrases(List<RuleMatch> ruleMatches, AnnotatedText text) {
+  public static Hashtable<String, List<RuleMatch>> getPhrases(List<RuleMatch> ruleMatches, AnnotatedText text) {
     Hashtable<String, List<RuleMatch>> phraseToMatches = new Hashtable<>();
     int prevToPos = Integer.MIN_VALUE;
     List<RuleMatch> collectedMatches = new ArrayList<>();

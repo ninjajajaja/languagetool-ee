@@ -68,7 +68,7 @@ public class DumontsHunspellDictionary implements HunspellDictionary {
   }
 
   @Override
-  public void close() throws IOException {
+  public void close() {
     closed = true;
     hunspell.close();
   }

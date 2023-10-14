@@ -68,7 +68,7 @@ public class VagueSpellChecker {
     }
   }
 
-  private SpellingCheckRule getSpellingCheckRule(Language lang) {
+  private static SpellingCheckRule getSpellingCheckRule(Language lang) {
     JLanguageTool lt = new JLanguageTool(lang);
     SpellingCheckRule spellRule = null;
     for (Rule r : lt.getAllActiveRules()) {
@@ -102,7 +102,7 @@ public class VagueSpellChecker {
     }
 
     @Override
-    public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+    public RuleMatch[] match(AnalyzedSentence sentence) {
       throw new RuntimeException("not implemented");
     }
 

@@ -88,18 +88,18 @@ public class MatchState {
     setToken(tokens[idx]);
     IncludeRange includeSkipped = match.includeSkipped;
     if (next > 1 && includeSkipped != IncludeRange.NONE) {
-      StringBuilder sb = new StringBuilder();
+      String sb = new String();
       if (includeSkipped == IncludeRange.FOLLOWING) {
         formattedToken = null;
       }
       for (int k = index + 1; k < index + next; k++) {
         if (tokens[k].isWhitespaceBefore()
             && !(k == index + 1 && includeSkipped == IncludeRange.FOLLOWING)) {
-          sb.append(' ');
+          sb += ' ';
         }
-        sb.append(tokens[k].getToken());
+        sb += tokens[k].getToken();
       }
-      skippedTokens = sb.toString();
+      skippedTokens = sb;
     } else {
       skippedTokens = "";
     }
@@ -288,15 +288,16 @@ public class MatchState {
     } else {
       original = formattedToken != null ? formattedToken.getToken() : "";
     }
-    for (int i = 0; i < formattedString.length; i++) {
+    int formattedStringLength = formattedString.length;
+    for (int i = 0; i < formattedStringLength; i++) {
       formattedString[i] = convertCase(formattedString[i], original, lang);
     }
     // TODO should case conversion happen before or after including skipped tokens?
     IncludeRange includeSkipped = match.includeSkipped;
     if (includeSkipped != IncludeRange.NONE && skippedTokens != null
         && !skippedTokens.isEmpty()) {
-      String[] helper = new String[formattedString.length];
-      for (int i = 0; i < formattedString.length; i++) {
+      String[] helper = new String[formattedStringLength];
+      for (int i = 0; i < formattedStringLength; i++) {
         if (formattedString[i] == null) {
           formattedString[i] = "";
         }
@@ -309,7 +310,7 @@ public class MatchState {
       // tagger-based speller
       List<AnalyzedTokenReadings> analyzed = lang.getTagger().tag(
           formattedStringElements);
-      for (int i = 0; i < formattedString.length; i++) {
+      for (int i = 0; i < formattedStringLength; i++) {
         AnalyzedToken analyzedToken = analyzed.get(i).getAnalyzedToken(0);
         if (analyzedToken.getLemma() == null && analyzedToken.hasNoTag()) {
           formattedString[i] = PatternRuleMatcher.MISTAKE;
@@ -355,7 +356,7 @@ public class MatchState {
         if (posTags.isEmpty()) {
           posTags.add(targetPosTag);
         }
-        StringBuilder sb = new StringBuilder();
+        String sb = new String();
         int posTagLen = posTags.size();
         int l = 0;
         for (String lPosTag : posTags) {
@@ -364,12 +365,12 @@ public class MatchState {
           if (match.setPos) {
             lPosTag = synthesizer.getPosTagCorrection(lPosTag);
           }
-          sb.append(lPosTag);
+          sb += lPosTag;
           if (l < posTagLen) {
-            sb.append('|');
+            sb += '|';
           }
         }
-        targetPosTag = sb.toString();
+        targetPosTag = sb;
       }
     }
     return targetPosTag;

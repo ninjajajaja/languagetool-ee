@@ -45,7 +45,7 @@ public class RegexRuleFilterEvaluator {
     return filter.acceptRuleMatch(ruleMatch, args, sentenceObj, patternMatcher);
   }
 
-  private Hashtable<String,String> getResolvedArguments(String filterArgs) {
+  private static Hashtable<String,String> getResolvedArguments(String filterArgs) {
     Hashtable<String,String> result = new Hashtable<>();
     String[] arguments = filterArgs.split("\\s+");
     for (String arg : arguments) {

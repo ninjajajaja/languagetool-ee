@@ -54,11 +54,11 @@ public class RuleWithMaxFilter implements RuleMatchFilter {
     return filteredRules;
   }
 
-  final boolean includes(RuleMatch match, RuleMatch nextMatch) {
+  static boolean includes(RuleMatch match, RuleMatch nextMatch) {
     return match.getFromPos() <= nextMatch.getFromPos() && match.getToPos() >= nextMatch.getToPos();
   }
 
-  private boolean haveSameRule(RuleMatch match, RuleMatch nextMatch) {
+  private static boolean haveSameRule(RuleMatch match, RuleMatch nextMatch) {
     if (!(match.rule instanceof AbstractPatternRule) || !(nextMatch.rule instanceof AbstractPatternRule)) {
       return false;
     }

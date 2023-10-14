@@ -129,11 +129,7 @@ public class RemoteRuleCacheTest {
     assertThat(distinct.size(), is(equalTo(2)));
 
     List<RuleMatch> directMatches = sentences.stream().flatMap(s -> {
-      try {
-        return Arrays.stream(rule.match(s));
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
+      return Arrays.stream(rule.match(s));
     }).collect(Collectors.toList());
 
     List<RuleMatch> matches = check(text);

@@ -171,13 +171,14 @@ public abstract class AbstractPatternRulePerformer {
                                     int tokenNo, int firstMatchToken, int prevSkipNext)
           throws IOException {
     boolean anyMatched = false;
-    int numberOfReadings = tokens[tokenNo].getReadingsLength();
+    AnalyzedTokenReadings tokensTokenNo = tokens[tokenNo];
+    int numberOfReadings = tokensTokenNo.getReadingsLength();
     matcher.prepareAndGroup(firstMatchToken, tokens, rule.getLanguage());
 
     List<AnalyzedToken> readingsToUnify = toUnify == null ? null : new ArrayList<>();
 
     for (int i = 0; i < numberOfReadings; i++) {
-      AnalyzedToken matchToken = tokens[tokenNo].getAnalyzedToken(i);
+      AnalyzedToken matchToken = tokensTokenNo.getAnalyzedToken(i);
       prevMatched = prevMatched || prevSkipNext > 0
           && prevElement != null
           && prevElement.isMatchedByScopeNextException(matchToken);
@@ -204,14 +205,14 @@ public abstract class AbstractPatternRulePerformer {
       if (!anyMatched && (prevElement == null || !prevElement.getPatternToken().hasCurrentOrNextExceptions())) {
         if (matcher.getPatternToken().getPOStag() == null) {
           if (matcher.getPatternToken().isInflected()) {
-            if (tokens[tokenNo].hasSameLemmas()) {
+            if (tokensTokenNo.hasSameLemmas()) {
               return false; // same lemmas everywhere
             }
           } else {
             return false; // the token is the same, we will not get a match
           }
         } else if (!matcher.getPatternToken().getPOSNegation() // postag =! null
-            && !tokens[tokenNo].isTagged()) {
+            && !tokensTokenNo.isTagged()) {
           return false; // we won't find any postag here anyway
         }
       }
@@ -240,23 +241,24 @@ public abstract class AbstractPatternRulePerformer {
         }
       }
       if (matcher.getPatternToken().isUnificationNeutral() && neutralReadings != null) {
-        neutralReadings.computeIfAbsent(matcher.getPatternToken(), __ -> new ArrayList<>()).add(tokens[tokenNo]);
+        neutralReadings.computeIfAbsent(matcher.getPatternToken(), __ -> new ArrayList<>()).add(tokensTokenNo);
       }
     }
     ChunkTag chunkTag = matcher.getPatternToken().getChunkTag();
+    List<ChunkTag> tokensTokenNoGetChunkTags = tokensTokenNo.getChunkTags();
     if (chunkTag != null) {
       if (chunkTag.isRegexp()) {
-        anyMatched &= tokens[tokenNo].getChunkTags().stream().anyMatch(k -> k.getChunkTag().matches(chunkTag.getChunkTag()))
+        anyMatched &= tokensTokenNoGetChunkTags.stream().anyMatch(k -> k.getChunkTag().matches(chunkTag.getChunkTag()))
                         ^ matcher.getPatternToken().getNegation();
       } else {
-        anyMatched &= tokens[tokenNo].getChunkTags().contains(chunkTag)
+        anyMatched &= tokensTokenNoGetChunkTags.contains(chunkTag)
                         ^ matcher.getPatternToken().getNegation();
       }
     }
     if (matcher.getPatternToken().hasAndGroup()) {
       for (PatternToken e : matcher.getPatternToken().getAndGroup()) {
         if (e.getChunkTag() != null) {
-          anyMatched &= tokens[tokenNo].getChunkTags().contains(e.getChunkTag())
+          anyMatched &= tokensTokenNoGetChunkTags.contains(e.getChunkTag())
               ^ e.getNegation();
         }
       }
@@ -289,7 +291,7 @@ public abstract class AbstractPatternRulePerformer {
         boolean anyMatched = false;
         int readingsSize = readings.size();
         for (int i = 0; i < readingsSize; i++) {
-          anyMatched |= unifier.isUnified(readings.get(i), patternToken.getUniFeatures(), i == readings.size() - 1);
+          anyMatched |= unifier.isUnified(readings.get(i), patternToken.getUniFeatures(), i == readingsSize - 1);
         }
         if (patternToken.isUniNegated() && anyMatched) {
           return false;

@@ -284,7 +284,7 @@ public abstract class RemoteRule extends Rule {
   }
 
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     FutureTask<RemoteRuleResult> task = run(Collections.singletonList(sentence));
     Optional<ThreadPoolExecutor> executor = LtThreadPoolFactory.getFixedThreadPoolExecutor(LtThreadPoolFactory.REMOTE_RULE_EXECUTING_POOL);
     try {

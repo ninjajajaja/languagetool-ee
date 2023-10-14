@@ -36,7 +36,7 @@ public class AddCommasFilter extends RuleFilter {
   
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
-      AnalyzedTokenReadings[] patternTokens) throws IOException {
+      AnalyzedTokenReadings[] patternTokens) {
    
     // for patterns ", aun así" suggest "; aun así," and ", aun así,"
     String suggestSemicolon = getOptional("suggestSemicolon", arguments);

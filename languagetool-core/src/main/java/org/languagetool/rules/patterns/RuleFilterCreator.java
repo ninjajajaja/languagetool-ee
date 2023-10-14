@@ -31,7 +31,7 @@ public class RuleFilterCreator {
   /**
    * @param className fully qualified class Name of a class implementing {@link RuleFilter}
    */
-  public RuleFilter getFilter(String className) {
+  public static RuleFilter getFilter(String className) {
     try {
       Class<?> aClass = JLanguageTool.getClassBroker().forName(className);
       Constructor<?>[] constructors = aClass.getConstructors();

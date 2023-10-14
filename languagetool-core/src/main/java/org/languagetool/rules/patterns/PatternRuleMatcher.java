@@ -197,7 +197,7 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
    * case. If it does not, perform the default conversion to uppercase.
    * @return true, if the match preserves the case of the token.
    */
-  private boolean matchPreservesCase(List<Match> suggestionMatches, String msg) {
+  private static boolean matchPreservesCase(List<Match> suggestionMatches, String msg) {
     if (suggestionMatches != null && !suggestionMatches.isEmpty()) {
       //PatternRule rule = (PatternRule) this.rule;
       //FIXME: this only considers properly the first match in first suggestion.
@@ -386,20 +386,21 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
     }
     int lastLeftSugEnd = leftSide.indexOf(RuleMatch.SUGGESTION_END_TAG);
     int lastLeftSugStart = leftSide.lastIndexOf(RuleMatch.SUGGESTION_START_TAG);
-    StringBuilder sb = new StringBuilder();
-    sb.append(errorMessage);
-    for (int z = 0; z < matches.length; z++) {
-      sb.append(suggestionLeft);
-      sb.append(matches[z]);
-      sb.append(suggestionRight);
-      if (z < matches.length - 1 && lastLeftSugEnd < lastLeftSugStart) {
-        sb.append(RuleMatch.SUGGESTION_END_TAG);
-        sb.append(", ");
-        sb.append(RuleMatch.SUGGESTION_START_TAG);
+    String sb = new String();
+    sb += errorMessage;
+    int matchesLength = matches.length;
+    for (int z = 0; z < matchesLength; z++) {
+      sb += suggestionLeft;
+      sb += matches[z];
+      sb += suggestionRight;
+      if (z < matchesLength - 1 && lastLeftSugEnd < lastLeftSugStart) {
+        sb += RuleMatch.SUGGESTION_END_TAG;
+        sb += ", ";
+        sb += RuleMatch.SUGGESTION_START_TAG;
       }
     }
-    sb.append(rightSideNew);
-    return sb.toString();
+    sb += rightSideNew;
+    return sb;
   }
 
   /**
@@ -456,11 +457,12 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
       String[] output, int r, Language lang) {
     List<String> outputList = new ArrayList<>();
     if (r == input.length) {
-      StringBuilder sb = new StringBuilder();
-      for (int k = 0; k < output.length; k++) {
-        sb.append(output[k]);
-        if (k < output.length - 1) {
-          sb.append(StringTools.addSpace(output[k + 1], lang));
+      String sb = new String();
+      int outputLength = output.length;
+      for (int k = 0; k < outputLength; k++) {
+        sb += output[k];
+        if (k < outputLength - 1) {
+          sb += StringTools.addSpace(output[k + 1], lang);
         }
       }
       outputList.add(sb.toString());

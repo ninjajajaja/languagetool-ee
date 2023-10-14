@@ -42,14 +42,14 @@ public class ForeignLanguageChecker {
   private final long sentenceLength;
   private final List<String> preferredLanguages;
   
-  public ForeignLanguageChecker(String languageShortCode, String sentence, Long sentenceLength, List<String> preferredLanguages) {
+  public ForeignLanguageChecker(String languageShortCode, String sentence, long sentenceLength, List<String> preferredLanguages) {
     this.languageShortCode = languageShortCode;
     this.sentence = sentence;
     this.sentenceLength = sentenceLength;
     this.preferredLanguages = Collections.unmodifiableList(preferredLanguages);
   }
 
-  public String check(int matchesSoFar) throws IOException {
+  public String check(int matchesSoFar) {
     float errorRatio = (float) matchesSoFar / sentenceLength;
     if (sentenceLength >= MIN_SENTENCE_THRESHOLD && errorRatio >= ERROR_THRESHOLD) {
       LanguageIdentifier langIdent = LanguageIdentifierService.INSTANCE.getInitialized();

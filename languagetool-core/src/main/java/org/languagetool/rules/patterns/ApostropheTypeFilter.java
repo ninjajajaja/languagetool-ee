@@ -29,7 +29,7 @@ public class ApostropheTypeFilter extends RuleFilter {
 
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,
-      AnalyzedTokenReadings[] patternTokens) throws IOException {
+      AnalyzedTokenReadings[] patternTokens) {
     String wordFrom = getRequired("wordFrom", arguments);
     boolean hasTypographicalApostrophe = getRequired("hasTypographicalApostrophe", arguments).equalsIgnoreCase("true");
     if (wordFrom != null) {

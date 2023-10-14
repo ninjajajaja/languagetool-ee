@@ -60,10 +60,11 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     String lemmaSelect = getRequired("lemmaSelect", arguments);
     String postagFromStr = getRequired("postagFrom", arguments);
     String lemmaFromStr = getRequired("lemmaFrom", arguments);
-    
+
+    int patternTokensLength = patternTokens.length;
     int postagFrom = 0;
     if (postagFromStr.startsWith("marker")) {
-      while (postagFrom < patternTokens.length && patternTokens[postagFrom].getStartPos() < match.getFromPos()) {
+      while (postagFrom < patternTokensLength && patternTokens[postagFrom].getStartPos() < match.getFromPos()) {
         postagFrom++;
       }
       postagFrom++;
@@ -73,13 +74,13 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     } else {
       postagFrom = Integer.parseInt(postagFromStr);
     }
-    if (postagFrom < 1 || postagFrom > patternTokens.length) {
+    if (postagFrom < 1 || postagFrom > patternTokensLength) {
       throw new IllegalArgumentException("AdvancedSynthesizerFilter: Index out of bounds in "
           + match.rule.getFullId() + ", value: " + postagFromStr);
     }
     int lemmaFrom = 0;
     if (lemmaFromStr.startsWith("marker")) {
-      while (lemmaFrom < patternTokens.length && patternTokens[lemmaFrom].getStartPos() < match.getFromPos()) {
+      while (lemmaFrom < patternTokensLength && patternTokens[lemmaFrom].getStartPos() < match.getFromPos()) {
         lemmaFrom++;
       }
       lemmaFrom++;
@@ -89,7 +90,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     } else {
       lemmaFrom = Integer.parseInt(lemmaFromStr);
     }
-    if (lemmaFrom < 1 || lemmaFrom > patternTokens.length) {
+    if (lemmaFrom < 1 || lemmaFrom > patternTokensLength) {
       throw new IllegalArgumentException("AdvancedSynthesizerFilter: Index out of bounds in "
           + match.rule.getFullId() + ", value: " + lemmaFromStr);
     }
@@ -164,8 +165,8 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     return match;
   }
 
-  public String getCompositePostag(String lemmaSelect, String postagSelect, String originalPostag,
-      String desiredPostag, String postagReplace) {
+  public static String getCompositePostag(String lemmaSelect, String postagSelect, String originalPostag,
+    String desiredPostag, String postagReplace) {
     Pattern aPattern = Pattern.compile(lemmaSelect, Pattern.UNICODE_CASE);
     Pattern bPattern = Pattern.compile(postagSelect, Pattern.UNICODE_CASE);
     Matcher aMatcher = aPattern.matcher(originalPostag);
@@ -192,7 +193,7 @@ public abstract class AbstractAdvancedSynthesizerFilter extends RuleFilter {
     return false;
   }
 
-  private AnalyzedToken getAnalyzedToken(AnalyzedTokenReadings aToken, String regexp) {
+  private static AnalyzedToken getAnalyzedToken(AnalyzedTokenReadings aToken, String regexp) {
     Pattern pattern = Pattern.compile(regexp);
     for (AnalyzedToken analyzedToken : aToken) {
       String posTag = analyzedToken.getPOSTag();

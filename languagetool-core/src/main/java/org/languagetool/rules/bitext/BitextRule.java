@@ -62,7 +62,7 @@ public abstract class BitextRule extends Rule {
    */
   @Nullable
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     return null;
   }
 

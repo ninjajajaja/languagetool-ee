@@ -658,7 +658,7 @@ public class SymSpell implements Serializable {
     return true;
   }
 
-  private String[] parseWords(String text) {
+  private static String[] parseWords(String text) {
     // \p{L} UTF-8 characters, plus "_", does not split words at apostrophes.
     Pattern pattern = Pattern.compile("['’\\p{L}-[_]]+");
     Matcher match = pattern.matcher(text.toLowerCase());

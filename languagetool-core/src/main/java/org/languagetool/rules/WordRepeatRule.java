@@ -94,15 +94,16 @@ public class WordRepeatRule extends Rule {
     // we start from token 1, token no. 0 is guaranteed to be SENT_START
     int tokensLength = tokens.length;
     for (int i = 1; i < tokensLength; i++) {
-      String token = tokens[i].getToken();
-      if (tokens[i].isImmunized()) {
+      AnalyzedTokenReadings tokensI = tokens[i];
+      String token = tokensI.getToken();
+      if (tokensI.isImmunized()) {
         prevToken = "";
         continue;
       }
       if (isWord(token) && prevToken.equalsIgnoreCase(token) && !ignore(tokens, i)) {
         String msg = messages.getString("repetition");
         int prevPos = tokens[i - 1].getStartPos();
-        int pos = tokens[i].getStartPos();
+        int pos = tokensI.getStartPos();
         RuleMatch ruleMatch = createRuleMatch(prevToken, token, prevPos, pos, msg, sentence);
         ruleMatches.add(ruleMatch);
       }
@@ -117,12 +118,12 @@ public class WordRepeatRule extends Rule {
     return ruleMatch;
   }
 
-  protected boolean wordRepetitionOf(String word, AnalyzedTokenReadings[] tokens, int position) {
+  protected static boolean wordRepetitionOf(String word, AnalyzedTokenReadings[] tokens, int position) {
     return position > 0 && tokens[position - 1].getToken().equals(word) && tokens[position].getToken().equals(word);
   }
 
   // avoid "..." etc. to be matched:
-  private boolean isWord(String token) {
+  private static boolean isWord(String token) {
     boolean isWord = true;
     if (StringUtils.isNumericSpace(token)) {
       isWord = false;

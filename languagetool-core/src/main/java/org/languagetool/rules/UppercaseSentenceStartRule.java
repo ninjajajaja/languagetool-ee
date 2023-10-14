@@ -97,7 +97,7 @@ public class UppercaseSentenceStartRule extends TextLevelRule {
   }
 
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     String lastParagraphString = "";
     List<RuleMatch> ruleMatches = new ArrayList<>();
     if (sentences.size() == 1 && sentences.get(0).getTokens().length == 2) {
@@ -199,19 +199,19 @@ public class UppercaseSentenceStartRule extends TextLevelRule {
     return null;
   }
 
-  protected boolean isUrl(String token) {
+  protected static boolean isUrl(String token) {
     return WordTokenizer.isUrl(token);
   }
 
-  protected boolean isEMail(String token) {
+  protected static boolean isEMail(String token) {
     return WordTokenizer.isEMail(token);
   }
 
-  private boolean isDutchSpecialCase(String word) {
+  private static boolean isDutchSpecialCase(String word) {
     return StringUtils.equalsAny(word, "k", "m", "n", "r", "s", "t");
   }
 
-  private boolean isSentenceEnd(String word) {
+  private static boolean isSentenceEnd(String word) {
     return StringUtils.equalsAny(word, ".", "?", "!", "…");
   }
 

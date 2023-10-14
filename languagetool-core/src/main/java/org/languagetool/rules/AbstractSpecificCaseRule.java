@@ -126,7 +126,7 @@ public abstract class AbstractSpecificCaseRule extends Rule {
     for (int i = 0; i < tokensLength; i++) {
       List<String> l = new ArrayList<>();
       int j = 0;
-      while (l.size() < maxLen && i+j < tokens.length) {
+      while (l.size() < maxLen && i+j < tokensLength) {
         l.add(tokens[i+j].getToken());
         j++;
         String phrase = String.join(" ", l);
@@ -159,7 +159,7 @@ public abstract class AbstractSpecificCaseRule extends Rule {
    * @return     <code>true</code> if all the words within the given string 
    *             begin with capital letter, else <code>false</code>
    */
-  private boolean allWordsUppercase(String s) {
+  private static boolean allWordsUppercase(String s) {
     return Arrays.stream(s.split(" ")).allMatch(StringTools::startsWithUppercase);
   }
 }

@@ -40,7 +40,7 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
    * Implement so that "first" returns {@code 1}, second returns {@code 2} etc.
    * @param localizedDayOfMonth name of day of the month or abbreviation thereof
    */
-  protected int getDayOfMonth(String localizedDayOfMonth) {
+  protected static int getDayOfMonth(String localizedDayOfMonth) {
     return 0;
   }
 
@@ -86,7 +86,7 @@ public abstract class AbstractFutureDateFilter extends RuleFilter {
     return calendar;
   }
 
-  private int getDayOfMonthFromArguments(Hashtable<String, String> args) {
+  private static int getDayOfMonthFromArguments(Hashtable<String, String> args) {
     String dayOfMonthString = getRequired("day", args);
     int dayOfMonth;
     Matcher matcherDayOfMonth = DAY_OF_MONTH_PATTERN.matcher(dayOfMonthString);

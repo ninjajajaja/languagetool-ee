@@ -117,21 +117,22 @@ public class Unifier {
         equivalencesMatched.add(new Hashtable<>());
       }
       for (Map.Entry<String, List<String>> feat : uFeatures.entrySet()) {
+        String featGetKey = feat.getKey();
         List<String> types = feat.getValue();
         if (types == null || types.isEmpty()) {
-          types = equivalenceFeatures.get(feat.getKey());
+          types = equivalenceFeatures.get(featGetKey);
         }
         for (String typeName : types) {
           PatternToken testElem = equivalenceTypes
-              .get(new EquivalenceTypeLocator(feat.getKey(), typeName));
+              .get(new EquivalenceTypeLocator(featGetKey, typeName));
           if (testElem == null) {
             return false;
           }
           if (testElem.isMatched(aToken)) {
-            equivalencesMatched.get(tokCnt).computeIfAbsent(feat.getKey(), __ -> new THashSet<>()).add(typeName);
+            equivalencesMatched.get(tokCnt).computeIfAbsent(featGetKey, __ -> new THashSet<>()).add(typeName);
           }
         }
-        unified = equivalencesMatched.get(tokCnt).containsKey(feat.getKey());
+        unified = equivalencesMatched.get(tokCnt).containsKey(featGetKey);
         if (!unified) {
           equivalencesMatched.remove(tokCnt);
           break;
@@ -164,19 +165,20 @@ public class Unifier {
         for (Map.Entry<String, List<String>> feat : uFeatures.entrySet()) {
           boolean featUnified = false;
           List<String> types = feat.getValue();
+          String featGetKey = feat.getKey();
           if (types == null || types.isEmpty()) {
-            types = equivalenceFeatures.get(feat.getKey());
+            types = equivalenceFeatures.get(featGetKey);
           }
           for (String typeName : types) {
-            THashSet<String> set = equivalencesMatched.get(i).get(feat.getKey());
+            THashSet<String> set = equivalencesMatched.get(i).get(featGetKey);
             if (set != null && set.contains(typeName)) {
-              PatternToken testElem = equivalenceTypes.get(new EquivalenceTypeLocator(feat.getKey(), typeName));
+              PatternToken testElem = equivalenceTypes.get(new EquivalenceTypeLocator(featGetKey, typeName));
               boolean matched = testElem.isMatched(aToken);
               featUnified = featUnified || matched;
               //Stores equivalences to be kept
               if (matched) {
-                equivalencesToBeKept.computeIfAbsent(feat.getKey(), __ -> new THashSet<>()).add(typeName);
-                equivalencesMatchedHere.computeIfAbsent(feat.getKey(), __ -> new THashSet<>()).add(typeName);
+                equivalencesToBeKept.computeIfAbsent(featGetKey, __ -> new THashSet<>()).add(typeName);
+                equivalencesMatchedHere.computeIfAbsent(featGetKey, __ -> new THashSet<>()).add(typeName);
               }
             }
           }
@@ -212,20 +214,22 @@ public class Unifier {
     featuresFound = new ArrayList<>(tmpFeaturesFound);
     readingsCounter++;
     // Removes features
-    int tokSequenceSize = tokSequence.size();
-    for (int j = 0; j < tokSequenceSize; j++) {
-      int tokSequenceEquivalenceGetJSize = tokSequenceEquivalences.get(j).size();
-      for (int i = 0; i < tokSequenceEquivalenceGetJSize; i++) {
+    for (int j = 0; j < tokSequence.size(); j++) {
+      List<Map<String,Set<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
+      int tokSequenceEquivalencesGetJSize = tokSequenceEquivalencesGetJ.size();
+      for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
+        Map<String, Set<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
         for (Map.Entry<String, List<String>> feat : equivalenceFeatures.entrySet()) {
-          if (!UNIFY_IGNORE.equals(feat.getKey())) {
-            if (tokSequenceEquivalences.get(j).get(i).containsKey(feat.getKey())) {
-              if (equivalencesToBeKept.containsKey(feat.getKey())) {
-                tokSequenceEquivalences.get(j).get(i).get(feat.getKey()).retainAll(equivalencesToBeKept.get(feat.getKey()));
+          String featGetKey = feat.getKey();
+          if (!UNIFY_IGNORE.equals(featGetKey)) {
+            if (tokSequenceEquivalencesGetJGetI.containsKey(featGetKey)) {
+              if (equivalencesToBeKept.containsKey(featGetKey)) {
+                tokSequenceEquivalencesGetJGetI.get(featGetKey).retainAll(equivalencesToBeKept.get(featGetKey));
               } else {
-                tokSequenceEquivalences.get(j).get(i).remove(feat.getKey());
+                tokSequenceEquivalencesGetJGetI.remove(featGetKey);
               }
             } else {
-              tokSequenceEquivalences.get(j).get(i).remove(feat.getKey());
+              tokSequenceEquivalencesGetJGetI.remove(featGetKey);
             }
           }
         }
@@ -256,10 +260,12 @@ public class Unifier {
     int tokSequenceSize = tokSequence.size();
     for (int j = 0; j < tokSequenceSize; j++) {
       boolean unifiedTokensFound = false; // assume that nothing has been found
-      int tokSequenceEquivalencesGetJSize = tokSequenceEquivalences.get(j).size();
+      List<Map<String, Set<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
+      int tokSequenceEquivalencesGetJSize = tokSequenceEquivalencesGetJ.size();
       for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
+        Map<String, Set<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
         int featUnified = 0;
-        if (tokSequenceEquivalences.get(j).get(i).containsKey(UNIFY_IGNORE)) {
+        if (tokSequenceEquivalencesGetJGetI.containsKey(UNIFY_IGNORE)) {
           if (i == 0) {
             tokUnified++;
           }
@@ -267,7 +273,7 @@ public class Unifier {
           continue;
         } else {
           for (Map.Entry<String, List<String>> feat : uFeatures.entrySet()) {
-            THashSet<String> set = tokSequenceEquivalences.get(j).get(i).get(feat.getKey());
+            THashSet<String> set = tokSequenceEquivalencesGetJGetI.get(feat.getKey());
             if (set != null && set.isEmpty()) {
               featUnified = 0;
             } else {
@@ -320,15 +326,17 @@ public class Unifier {
     int tokSequenceSize = tokSequence.size();
     for (int j = 0; j < tokSequenceSize; j++) {
       boolean unifiedTokensFound = false; // assume that nothing has been found
-      int tokSequenceEquivalencesGetJSize = tokSequenceEquivalences.get(j).size();
+      List<Map<String, Set<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
+      int tokSequenceEquivalencesGetJSize = tokSequenceEquivalencesGetJ.size();
       for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
+        Map<String, Set<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
         int featUnified = 0;
-        if (tokSequenceEquivalences.get(j).get(i).containsKey(UNIFY_IGNORE)) {
+        if (tokSequenceEquivalencesGetJGetI.containsKey(UNIFY_IGNORE)) {
           addTokenToSequence(uTokens, tokSequence.get(j).getAnalyzedToken(i), j);
           unifiedTokensFound = true;
         } else {
           for (Map.Entry<String, List<String>> feat : unificationFeats.entrySet()) {
-            THashSet<String> set = tokSequenceEquivalences.get(j).get(i).get(feat.getKey());
+            THashSet<String> set = tokSequenceEquivalencesGetJGetI.get(feat.getKey());
             if (set != null && set.isEmpty()) {
               featUnified = 0;
             } else {
@@ -348,7 +356,7 @@ public class Unifier {
     return uTokens.toArray(new AnalyzedTokenReadings[0]);
   }
 
-  private void addTokenToSequence(List<AnalyzedTokenReadings> tokenSequence, AnalyzedToken token, int pos) {
+  private static void addTokenToSequence(List<AnalyzedTokenReadings> tokenSequence, AnalyzedToken token, int pos) {
     if (tokenSequence.size() <= pos || tokenSequence.isEmpty()) {
       AnalyzedTokenReadings tmpATR = new AnalyzedTokenReadings(token, 0);
       tokenSequence.add(tmpATR);

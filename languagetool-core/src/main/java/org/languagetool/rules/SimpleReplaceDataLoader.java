@@ -35,9 +35,9 @@ public final class SimpleReplaceDataLoader {
   /**
    * Load replacement rules from a utf-8 file in the classpath.
    */
-  public Hashtable<String, List<String>> loadWords(String path) {
+  public static Hashtable<String, List<String>> loadWords(String path) {
     String[] wrongForms = path.split(" ");
-//    InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
+//     InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
     Hashtable<String, List<String>> map = new Hashtable<>();
 //    try (Scanner scanner = new Scanner(stream, "utf-8")) {
 //      while (scanner.hasNextLine()) {

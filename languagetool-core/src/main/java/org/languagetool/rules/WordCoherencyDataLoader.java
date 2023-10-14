@@ -35,7 +35,7 @@ import java.util.stream.Stream;
  */
 public class WordCoherencyDataLoader {
 
-  public Hashtable<String, Set<String>> loadWords(String path) throws IOException {
+  public static Hashtable<String, Set<String>> loadWords(String path) throws IOException {
     //InputStream stream = JLanguageTool.getDataBroker().getFromRulesDirAsStream(path);
     Hashtable<String, Set<String>> map = new Hashtable<>();
 //    try (

@@ -37,7 +37,7 @@ public class YMDDateCheckFilter extends DateCheckFilter {
     if (args.containsKey("year") || args.containsKey("month") || args.containsKey("day")) {
       throw new RuntimeException("Set only 'weekDay' and 'date' for " + YMDDateCheckFilter.class.getSimpleName());
     }
-    return super.acceptRuleMatch(match, ymdDateHelper.parseDate(args), patternTokenPos, patternTokens);
+    return super.acceptRuleMatch(match, YMDDateHelper.parseDate(args), patternTokenPos, patternTokens);
   }
 
 }

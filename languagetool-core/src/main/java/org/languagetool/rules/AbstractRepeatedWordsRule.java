@@ -49,7 +49,7 @@ public abstract class AbstractRepeatedWordsRule extends TextLevelRule {
     return 1;
   }
 
-  protected int maxWordsDistance() {
+  protected static int maxWordsDistance() {
     return 150;
   }
 

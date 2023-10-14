@@ -58,7 +58,7 @@ public class PunctuationMarkAtParagraphEnd2 extends TextLevelRule {
   }
   
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     int pos = 0;
     int sentPos = 0;
@@ -88,10 +88,11 @@ public class PunctuationMarkAtParagraphEnd2 extends TextLevelRule {
     return toRuleMatchArray(ruleMatches);
   }
 
-  private AnalyzedTokenReadings getLastNonSpaceToken(AnalyzedTokenReadings[] tokens) {
+  private static AnalyzedTokenReadings getLastNonSpaceToken(AnalyzedTokenReadings[] tokens) {
     for (int i = tokens.length-1; i >= 0; i--) {
-      if (!tokens[i].isWhitespace()) {
-        return tokens[i];
+      AnalyzedTokenReadings tokensI = tokens[i];
+      if (!tokensI.isWhitespace()) {
+        return tokensI;
       }
     }
     return null;

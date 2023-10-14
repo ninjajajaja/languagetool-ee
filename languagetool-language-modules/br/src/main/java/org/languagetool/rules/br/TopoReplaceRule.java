@@ -176,8 +176,9 @@ public class TopoReplaceRule extends Rule {
       StringBuilder sb = new StringBuilder();
       List<String> variants = new ArrayList<>();
       List<AnalyzedTokenReadings> prevTokensList = new ArrayList<>(prevTokens);
-      for (int j = prevTokensList.size() - 1; j >= 0; j--) {
-        if (j != prevTokensList.size() - 1 && prevTokensList.get(j + 1).isWhitespaceBefore()) {
+      int prevTokensListSizeMinusOne = prevTokensList.size()-1;
+      for (int j = prevTokensListSizeMinusOne; j >= 0; j--) {
+        if (j != prevTokensListSizeMinusOne && prevTokensList.get(j + 1).isWhitespaceBefore()) {
           sb.insert(0, " ");
         }
         sb.insert(0, prevTokensList.get(j).getToken());

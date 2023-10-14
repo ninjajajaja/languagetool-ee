@@ -207,8 +207,8 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     return wordCount;
   }
 
-  protected void addToQueue(AnalyzedTokenReadings token,
-                          Queue<AnalyzedTokenReadings> prevTokens) {
+  protected static void addToQueue(AnalyzedTokenReadings token,
+    Queue<AnalyzedTokenReadings> prevTokens) {
     boolean inserted = prevTokens.offer(token);
     if (!inserted) {
       prevTokens.poll();
@@ -236,12 +236,13 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
 
     int tokensLength = tokens.length;
     for (int i = 1; i < tokensLength; i++) {
-      addToQueue(tokens[i], prevTokens);
+      AnalyzedTokenReadings tokensI = tokens[i];
+      addToQueue(tokensI, prevTokens);
       StringBuilder sb = new StringBuilder();
       List<String> variants = new ArrayList<>();
       List<AnalyzedTokenReadings> prevTokensList =
               Arrays.asList(prevTokens.toArray(new AnalyzedTokenReadings[0]));
-      int prevTokensListSizeMinusOne = prevTokensList.size() - 1;
+      int prevTokensListSizeMinusOne = prevTokensList.size()-1;
       for (int j = prevTokensListSizeMinusOne; j >= 0; j--) {
         if (j != prevTokensListSizeMinusOne && prevTokensList.get(j + 1).isWhitespaceBefore()) {
           sb.insert(0, " ");
@@ -249,7 +250,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
         sb.insert(0, prevTokensList.get(j).getToken());
         variants.add(0, sb.toString());
       }
-      if (isTokenException(tokens[i])) {
+      if (isTokenException(tokensI)) {
         continue;
       }
       int len = variants.size(); // prevTokensList and variants have now the same length
@@ -312,7 +313,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
     return toRuleMatchArray(ruleMatches);
   }
 
-  protected boolean isException(String matchedText) {
+  protected static boolean isException(String matchedText) {
     return false;
   }
   

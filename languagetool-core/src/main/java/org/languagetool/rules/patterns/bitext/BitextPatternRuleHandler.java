@@ -157,8 +157,8 @@ class BitextPatternRuleHandler extends PatternRuleHandler {
     } else if (inErrorTriggerExample) {
       throw new RuntimeException("'triggers_error' is not supported for bitext XML");
     }
-    correctExample = new StringBuilder();
-    incorrectExample = new StringBuilder();
+    correctExample = new String();
+    incorrectExample = new String();
     exampleCorrection = null;
     return example;
   }

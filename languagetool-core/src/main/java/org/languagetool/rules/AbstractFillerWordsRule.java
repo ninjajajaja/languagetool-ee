@@ -127,7 +127,7 @@ public abstract class AbstractFillerWordsRule extends TextLevelRule {
    * @see org.languagetool.rules.TextLevelRule#match(java.util.List)
    */
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     String msg = getMessage();
     List<Integer> startPos = new ArrayList<>();
@@ -160,14 +160,14 @@ public abstract class AbstractFillerWordsRule extends TextLevelRule {
           }
         }
       }
+      int startPosSize = startPos.size();
       if (Tools.isParagraphEnd(sentences, nSentence, lang)) {
         if(wordCount > 0) {
-          percent = startPos.size() * 100.0 / wordCount;
+          percent = startPosSize * 100.0 / wordCount;
         } else {
           percent = 0;
         }
         if (percent > minPercent) {
-          int startPosSize = startPos.size();
           for (int i = 0; i < startPosSize; i++) {
             RuleMatch ruleMatch = new RuleMatch(this, relevantSentences.get(i), startPos.get(i), endPos.get(i), msg);
             ruleMatches.add(ruleMatch);

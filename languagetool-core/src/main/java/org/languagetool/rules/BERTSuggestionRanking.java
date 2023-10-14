@@ -164,7 +164,7 @@ public class BERTSuggestionRanking extends RemoteRule {
   }
 
   @Override
-  protected Callable<RemoteRuleResult> executeRequest(RemoteRequest request, long timeoutMilliseconds) throws TimeoutException {
+  protected Callable<RemoteRuleResult> executeRequest(RemoteRequest request, long timeoutMilliseconds) {
     return () -> {
       if (model == null) {
         return fallbackResults(request);
@@ -185,9 +185,10 @@ public class BERTSuggestionRanking extends RemoteRule {
         int indicesSize = indices.size();
         for (int i = 0; i < indicesSize; i++) {
           List<Double> scores = results.get(i);
-          String userWord = requests.get(i).text.substring(requests.get(i).start, requests.get(i).end);
+          RemoteLanguageModel.Request requestsGetI = requests.get(i);
+          String userWord = requestsGetI.text.substring(requestsGetI.start, requestsGetI.end);
           RuleMatch match = matches.get(indices.get(i).intValue());
-          //RemoteLanguageModel.Request req = requests.get(i);
+          //RemoteLanguageModel.Request req = requestsGetI;
           //String error = req.text.substring(req.start, req.end);
           //logger.info("Scored suggestions for '{}': {} -> {}", error, match.getSuggestedReplacements(), Streams
           //  .zip(match.getSuggestedReplacementObjects().stream(), scores.stream(), Pair::of)
@@ -208,7 +209,7 @@ public class BERTSuggestionRanking extends RemoteRule {
   }
 
   @Nullable
-  private RemoteLanguageModel.Request buildRequest(RuleMatch match) {
+  private static RemoteLanguageModel.Request buildRequest(RuleMatch match) {
     List<String> suggestions = match.getSuggestedReplacements();
     if (suggestions != null && suggestions.size() > 1) {
       return new RemoteLanguageModel.Request(

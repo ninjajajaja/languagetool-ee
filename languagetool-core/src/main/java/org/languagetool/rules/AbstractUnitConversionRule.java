@@ -113,7 +113,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
           Pattern.compile("\\d+⁄\\d+")    // "1⁄4 cup" (it's not the standard slash)
   );
 
-  private URL buildURLForExplanation(String original) {
+  private static URL buildURLForExplanation(String original) {
     try {
       String query = URLEncoder.encode("convert " + original + " to metric", "utf-8");
       return new URL("http://www.wolframalpha.com/input/?i=" + query);
@@ -174,7 +174,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
    * @param original matched in the text
    * @param converted computed by this rule
    */
-  protected String getSuggestion(String original, String converted) {
+  protected static String getSuggestion(String original, String converted) {
     return original + " (" + converted + ")";
   }
 
@@ -182,7 +182,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
    * Override in subclasses.
    * @return formatting of rounded numbers according to locale
    */
-  protected String formatRounded(String s) {
+  protected static String formatRounded(String s) {
     return "ca. " + s;
   }
 
@@ -370,7 +370,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
     return formatted;
   }
 
-  private void sortByNaturalness(List<Map.Entry<Unit, Double>> conversions) {
+  private static void sortByNaturalness(List<Map.Entry<Unit, Double>> conversions) {
     conversions.sort((a, b) -> { // sort according to "naturalness" of this unit, i.e. numbers not being too small/large
       DoubleUnaryOperator naturalness = number -> { // smaller score -> better
         double abs = Math.abs(number);
@@ -550,7 +550,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
   }
 
   @Override
-  public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public RuleMatch[] match(AnalyzedSentence sentence) {
     List<RuleMatch> matches = new ArrayList<>();
     List<Map.Entry<Integer, Integer>> ignoreRanges = new ArrayList<>();
 
@@ -598,7 +598,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
     return matchesByStart.values().toArray(new RuleMatch[0]);
   }
 
-  private void removeAntiPatternMatches(AnalyzedSentence sentence, Hashtable<Integer, RuleMatch> matchesByStart) {
+  private static void removeAntiPatternMatches(AnalyzedSentence sentence, Hashtable<Integer, RuleMatch> matchesByStart) {
     for (Pattern antiPattern : antiPatterns) {
       String text = sentence.getText();
       Matcher matcher = antiPattern.matcher(text);

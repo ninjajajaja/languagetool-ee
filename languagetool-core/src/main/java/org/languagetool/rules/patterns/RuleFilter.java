@@ -56,10 +56,10 @@ public abstract class RuleFilter {
   private static class FakeRule extends Rule {
     @Override public String getId() { return "FAKE-RULE-FOR-FILTER"; }
     @Override public String getDescription() { return "<none>"; }
-    @Override public RuleMatch[] match(AnalyzedSentence sentence) throws IOException { return new RuleMatch[0]; }
+    @Override public RuleMatch[] match(AnalyzedSentence sentence) { return new RuleMatch[0]; }
   }
 
-  protected String getRequired(String key, Hashtable<String, String> map) {
+  protected static String getRequired(String key, Hashtable<String, String> map) {
     String result = map.get(key);
     if (result == null) {
       throw new IllegalArgumentException("Missing key '" + key + "'");
@@ -67,7 +67,7 @@ public abstract class RuleFilter {
     return result;
   }
 
-  protected String getOptional(String key, Hashtable<String, String> map) {
+  protected static String getOptional(String key, Hashtable<String, String> map) {
     return map.get(key);
   }
 

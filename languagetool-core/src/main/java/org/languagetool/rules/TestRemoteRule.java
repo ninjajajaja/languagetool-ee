@@ -58,7 +58,7 @@ public class TestRemoteRule extends RemoteRule {
     }
 
     @Override
-    protected Callable<RemoteRuleResult> executeRequest(RemoteRequest request, long timeoutMilliseconds) throws TimeoutException {
+    protected Callable<RemoteRuleResult> executeRequest(RemoteRequest request, long timeoutMilliseconds) {
       return () -> {
         TestRemoteRequest req = (TestRemoteRequest) request;
         List<RuleMatch> matches = req.sentences.stream().map(this::testMatch).collect(Collectors.toList());

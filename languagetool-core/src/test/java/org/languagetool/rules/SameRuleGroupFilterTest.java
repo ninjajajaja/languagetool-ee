@@ -76,15 +76,15 @@ public class SameRuleGroupFilterTest {
   public void testOverlaps() {
     SameRuleGroupFilter filter = new SameRuleGroupFilter();
 
-    assertTrue(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(10, 20)));
-    assertTrue(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(5, 11)));
-    assertTrue(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(19, 21)));
-    assertTrue(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(11, 19)));
-    assertTrue(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(1, 10)));
-    assertTrue(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(19, 20)));
+    assertTrue(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(10, 20)));
+    assertTrue(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(5, 11)));
+    assertTrue(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(19, 21)));
+    assertTrue(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(11, 19)));
+    assertTrue(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(1, 10)));
+    assertTrue(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(19, 20)));
 
-    assertFalse(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(21, 30)));
-    assertFalse(filter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(1, 9)));
+    assertFalse(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(21, 30)));
+    assertFalse(SameRuleGroupFilter.overlaps(makeRuleMatch(10, 20), makeRuleMatch(1, 9)));
   }
 
   private RuleMatch makeRuleMatch(int fromPos, int toPos) {

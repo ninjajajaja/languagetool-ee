@@ -37,7 +37,7 @@ import java.util.Set;
 
 public class RussianWordRootRepeatRule extends AbstractWordCoherencyRule {
 
-  private static final Map<String, Set<String>> wordMap = new WordCoherencyDataLoader().loadWords("/ru/wordrootrep.txt");
+  private static final Map<String, Set<String>> wordMap = WordCoherencyDataLoader.loadWords("/ru/wordrootrep.txt");
 
   public RussianWordRootRepeatRule(ResourceBundle messages) throws IOException {
     super(messages);

@@ -29,7 +29,7 @@ public class YMDDateHelper {
   public YMDDateHelper() {
   }
 
-  public Hashtable<String, String> parseDate(Hashtable<String, String> args) {
+  public static Hashtable<String, String> parseDate(Hashtable<String, String> args) {
     String dateString = args.get("date");
     if (dateString == null) {
       throw new IllegalArgumentException("Missing key 'date'");
@@ -44,7 +44,7 @@ public class YMDDateHelper {
     return args;
   }
 
-  public RuleMatch correctDate(RuleMatch match, Hashtable<String, String> args) {
+  public static RuleMatch correctDate(RuleMatch match, Hashtable<String, String> args) {
     String year = args.get("year");
     String month = args.get("month");
     String day = args.get("day");

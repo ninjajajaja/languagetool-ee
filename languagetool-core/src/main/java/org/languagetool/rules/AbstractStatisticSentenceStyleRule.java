@@ -96,11 +96,11 @@ public abstract class AbstractStatisticSentenceStyleRule extends TextLevelRule {
     return minPercentDefault;
   }
   
-  protected boolean isMark(AnalyzedTokenReadings token) {
+  protected static boolean isMark(AnalyzedTokenReadings token) {
     return MARKS_REGEX.matcher(token.getToken()).matches();
   }
   
-  protected boolean isOpeningQuote(AnalyzedTokenReadings token) {
+  protected static boolean isOpeningQuote(AnalyzedTokenReadings token) {
     return OPENING_QUOTES.matcher(token.getToken()).matches();
   }
 
@@ -151,7 +151,7 @@ public abstract class AbstractStatisticSentenceStyleRule extends TextLevelRule {
    * @see org.languagetool.rules.TextLevelRule#match(java.util.List)
    */
   @Override
-  public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
+  public RuleMatch[] match(List<AnalyzedSentence> sentences) {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     List<Integer> startPos = new ArrayList<>();
     List<Integer> endPos = new ArrayList<>();

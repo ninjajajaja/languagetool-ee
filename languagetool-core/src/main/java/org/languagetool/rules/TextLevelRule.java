@@ -64,7 +64,7 @@ public abstract class TextLevelRule extends Rule {
   }
   
   @Override
-  public final RuleMatch[] match(AnalyzedSentence sentence) throws IOException {
+  public final RuleMatch[] match(AnalyzedSentence sentence) {
     throw new RuntimeException("Not implemented for a text-level rule");
   }
   

@@ -164,12 +164,12 @@ public class ConsistencyPatternRuleTransformer implements PatternRuleTransformer
     return new TransformedRules(remaining, transformed);
   }
 
-  private String getMainRuleId(String originalId) {
+  private static String getMainRuleId(String originalId) {
     String[] parts =  originalId.split("_");
     return parts[0] + "_" + parts[1];
   }
 
-  private String getFeature(String originalId) {
+  private static String getFeature(String originalId) {
     String[] parts =  originalId.split("_");
     return parts[2];
   }
