@@ -121,7 +121,8 @@ public abstract class AbstractSpecificCaseRule extends Rule {
   public RuleMatch[] match(AnalyzedSentence sentence) {
     List<RuleMatch> matches = new ArrayList<>();
     AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
-    for (int i = 0; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 0; i < tokensLength; i++) {
       List<String> l = new ArrayList<>();
       int j = 0;
       while (l.size() < maxLen && i+j < tokens.length) {

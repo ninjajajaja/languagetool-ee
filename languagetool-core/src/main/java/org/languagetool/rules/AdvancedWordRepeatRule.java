@@ -63,7 +63,8 @@ public abstract class AdvancedWordRepeatRule extends Rule {
     String prevLemma;
     int curToken = 0;
     // start from real token, 0 = SENT_START
-    for (int i = 1; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 1; i < tokensLength; i++) {
       String token = tokens[i].getToken();
       // avoid "..." etc. to be matched:
       boolean isWord = true;

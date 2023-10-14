@@ -157,7 +157,8 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
    * listings are excluded
    */
   public static boolean hasBreakToken(AnalyzedTokenReadings[] tokens) {
-    for (int i = 0; i < tokens.length && i < MAX_TOKEN_TO_CHECK; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 0; i < tokensLength && i < MAX_TOKEN_TO_CHECK; i++) {
       if (tokens[i].getToken().equals("-") || tokens[i].getToken().equals("—") || tokens[i].getToken().equals("–")) {
         return true;
       }
@@ -234,7 +235,8 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
         lemmas.add(reading.getLemma());
       }
     }
-    for (int i = 0; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 0; i < tokensLength; i++) {
       if (i != notCheck && isTokenToCheck(tokens[i])) {
         if ((!lemmas.isEmpty() && tokens[i].hasAnyLemma(lemmas.toArray(new String[0])) && !isExceptionPair(testToken, tokens[i])) 
             || isPartOfWord(testToken.getToken(), tokens[i].getToken())) {
@@ -260,11 +262,12 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     List<AnalyzedTokenReadings[]> tokenList = new ArrayList<>();
     int pos = 0;
-    for (int n = 0; n < maxDistanceOfSentences && n < sentences.size(); n++) {
+    int sentencesSize = sentences.size();
+    for (int n = 0; n < maxDistanceOfSentences && n < sentencesSize; n++) {
       tokenList.add(sentences.get(n).getTokensWithoutWhitespace());
     }
-    for (int n = 0; n < sentences.size(); n++) {
-      if (n + maxDistanceOfSentences < sentences.size()) {
+    for (int n = 0; n < sentencesSize; n++) {
+      if (n + maxDistanceOfSentences < sentencesSize) {
         tokenList.add(sentences.get(n + maxDistanceOfSentences).getTokensWithoutWhitespace());
       }
       if (tokenList.size() > 2 * maxDistanceOfSentences + 1) {
@@ -277,7 +280,8 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
         nTok = tokenList.size() - (sentences.size() - n);
       }
       if (!hasBreakToken(tokenList.get(nTok))) {
-        for (int i = 0; i < tokenList.get(nTok).length; i++) {
+        int tokenListGetNTokLength = tokenList.get(nTok).length;
+        for (int i = 0; i < tokenListGetNTokLength; i++) {
           AnalyzedTokenReadings token = tokenList.get(nTok)[i];
           boolean isInQuotes = i > 0 && OPENING_QUOTES.matcher(tokenList.get(nTok)[i - 1].getToken()).matches()
               && i < tokenList.get(nTok).length - 1 && ENDING_QUOTES.matcher(tokenList.get(nTok)[i + 1].getToken()).matches();

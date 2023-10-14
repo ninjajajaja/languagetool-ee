@@ -102,7 +102,8 @@ public class PatternTokenMatcher {
   public final void addMemberAndGroup(AnalyzedToken token) {
     if (patternToken.hasAndGroup()) {
       List<PatternTokenMatcher> andGroupList = andGroup;
-      for (int i = 0; i < andGroupList.size(); i++) {
+      int andGroupListSize = andGroupList.size();
+      for (int i = 0; i < andGroupListSize; i++) {
         if (!andGroupCheck[i + 1]) {
           PatternTokenMatcher testAndGroup = andGroupList.get(i);
           if (testAndGroup.isMatched(token)) {

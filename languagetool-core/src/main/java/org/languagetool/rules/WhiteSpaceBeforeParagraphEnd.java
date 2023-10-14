@@ -64,8 +64,9 @@ public class WhiteSpaceBeforeParagraphEnd extends TextLevelRule {
   @Override
   public RuleMatch[] match(List<AnalyzedSentence> sentences) throws IOException {
     List<RuleMatch> ruleMatches = new ArrayList<>();
-    int pos = 0; 
-    for (int n = 0; n < sentences.size(); n++) {
+    int pos = 0;
+    int sentencesSize = sentences.size();
+    for (int n = 0; n < sentencesSize; n++) {
       AnalyzedSentence sentence = sentences.get(n);
       if(Tools.isParagraphEnd(sentences, n, lang)) {
         AnalyzedTokenReadings[] tokens = sentence.getTokens();

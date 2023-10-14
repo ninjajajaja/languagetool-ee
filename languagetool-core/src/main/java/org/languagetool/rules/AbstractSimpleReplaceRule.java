@@ -234,7 +234,8 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
   }
 
   public void setReplacements(List<String> replacements) {
-    for (int i = 0; i < replacements.size(); i++) {
+    int replacementsSize = replacements.size();
+    for (int i = 0; i < replacementsSize; i++) {
       replacements.set(i, StringTools.uppercaseFirstChar(replacements.get(i)));
     }
   }

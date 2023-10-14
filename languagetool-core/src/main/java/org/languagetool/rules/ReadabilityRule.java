@@ -236,7 +236,8 @@ public class ReadabilityRule extends TextLevelRule {
     }
     int nSyllables = 0;
     boolean lastDouble = false;
-    for (int i = 0; i < word.length() - 1; i++) {
+    int wordLengthMinusOne = word.length() - 1;
+    for (int i = 0; i < wordLengthMinusOne; i++) {
       char c = word.charAt(i);
       if (isVowel(c)) {
         char cn = word.charAt(i + 1);
@@ -280,7 +281,8 @@ public class ReadabilityRule extends TextLevelRule {
     int pos = 0;
     int startPos = -1;
     int endPos = -1;
-    for (int n = 0; n < sentences.size(); n++) {
+    int sentencesSize = sentences.size();
+    for (int n = 0; n < sentencesSize; n++) {
       AnalyzedSentence sentence = sentences.get(n);
       AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
       if (startPos < 0 && tokens.length > 1) {

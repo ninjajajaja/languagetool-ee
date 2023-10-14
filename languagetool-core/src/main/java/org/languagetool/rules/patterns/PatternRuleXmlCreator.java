@@ -60,7 +60,8 @@ public class PatternRuleXmlCreator {
         if (ruleId.getSubId() != null) {
           NodeList ruleGroupNodes = (NodeList) xpath.evaluate("/rules/category/rulegroup[@id='" + ruleId.getId() + "']/rule", doc, XPathConstants.NODESET);
           if (ruleGroupNodes != null) {
-            for (int i = 0; i < ruleGroupNodes.getLength(); i++) {
+            int ruleGroupNodesGetLength = ruleGroupNodes.getLength();
+            for (int i = 0; i < ruleGroupNodesGetLength; i++) {
               if (Integer.toString(i+1).equals(ruleId.getSubId())) {
                 return nodeToString(ruleGroupNodes.item(i));
               }

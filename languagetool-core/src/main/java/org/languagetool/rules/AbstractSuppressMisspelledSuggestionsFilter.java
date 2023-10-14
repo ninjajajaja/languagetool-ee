@@ -51,7 +51,8 @@ public abstract class AbstractSuppressMisspelledSuggestionsFilter extends RuleFi
     if (tagger != null && suppressPostag != null) {
       atrs = tagger.tag(replacements);
     }
-    for (int i = 0; i < replacements.size(); i++) {
+    int replacementsSize = replacements.size();
+    for (int i = 0; i < replacementsSize; i++) {
       if (!isMisspelled(replacements.get(i))) {
         if (tagger != null && suppressPostag != null) {
           if (!atrs.get(i).matchesPosTagRegex(suppressPostag)) {
@@ -72,11 +73,7 @@ public abstract class AbstractSuppressMisspelledSuggestionsFilter extends RuleFi
   }
 
   public boolean bSuppressMatch(String suppressMatch) {
-    boolean bSuppressMatch = true;
-    if (suppressMatch != null && suppressMatch.equalsIgnoreCase("false")) {
-      bSuppressMatch = false;
-    }
-    return bSuppressMatch;
+    return !"false".equalsIgnoreCase(suppressMatch);
   }
 
   public boolean isMisspelled(String s) throws IOException {

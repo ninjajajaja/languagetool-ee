@@ -130,15 +130,15 @@ public class MatchState {
           Pattern pPosRegexMatch = match.pPosRegexMatch;
           String posTagReplace = match.posTagReplace;
           String targetPosTag;
-          for (int i = 0; i < numRead; i++) {
-            String testTag = formattedToken.getAnalyzedToken(i).getPOSTag();
+          for (AnalyzedToken at : formattedToken.anTokReadings) {
+            String testTag = at.getPOSTag();
             if (testTag != null && pPosRegexMatch.matcher(testTag).matches()) {
               targetPosTag = testTag;
               if (posTagReplace != null) {
                 targetPosTag = pPosRegexMatch.matcher(targetPosTag).replaceAll(posTagReplace);
               }
               l.add(new AnalyzedToken(token, targetPosTag,
-                  formattedToken.getAnalyzedToken(i).getLemma()));
+                  at.getLemma()));
               l.get(l.size() - 1).setWhitespaceBefore(formattedToken.isWhitespaceBefore());
             }
           }
@@ -192,11 +192,11 @@ public class MatchState {
     String posTag = match.posTag;
     List<AnalyzedToken> list = new ArrayList<>();
     String lemma = "";
-    for (int j = 0; j < numRead; j++) {
-      String tempPosTag = formattedToken.getAnalyzedToken(j).getPOSTag();
+    for (AnalyzedToken at : formattedToken.anTokReadings) {
+      String tempPosTag = at.getPOSTag();
       if (tempPosTag != null) {
-        if (tempPosTag.equals(posTag) && formattedToken.getAnalyzedToken(j).getLemma() != null) {
-          lemma = formattedToken.getAnalyzedToken(j).getLemma();
+        if (tempPosTag.equals(posTag) && at.getLemma() != null) {
+          lemma = at.getLemma();
         }
         if (StringTools.isEmpty(lemma)) {
           lemma = formattedToken.getAnalyzedToken(0).getLemma();
@@ -271,8 +271,8 @@ public class MatchState {
           }
         } else {
           TreeSet<String> wordForms = new TreeSet<>();
-          for (int i = 0; i < readingCount; i++) {
-            String[] possibleWordForms = synthesizer.synthesize(formattedToken.getAnalyzedToken(i), posTag);
+          for (AnalyzedToken at : formattedToken.anTokReadings) {
+            String[] possibleWordForms = synthesizer.synthesize(at, posTag);
             if (possibleWordForms != null) {
               wordForms.addAll(Arrays.asList(possibleWordForms));
             }

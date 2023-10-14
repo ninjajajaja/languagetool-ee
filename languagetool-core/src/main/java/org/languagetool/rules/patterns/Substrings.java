@@ -142,7 +142,8 @@ class Substrings {
   }
 
   private boolean containsSubstrings(String text, boolean caseSensitive, int textPos, int firstSubstringIndex) {
-    for (int i = firstSubstringIndex; i < substrings.length; i++) {
+    int substringsLength = substrings.length;
+    for (int i = firstSubstringIndex; i < substringsLength; i++) {
       textPos = indexOf(text, substrings[i], caseSensitive, textPos);
       if (textPos < 0) {
         return false;
@@ -176,7 +177,8 @@ class Substrings {
   }
 
   private static int findNext(String text, int from, char up, char low) {
-    for (int i = from; i < text.length(); i++) {
+    int textLength = text.length();
+    for (int i = from; i < textLength; i++) {
       char c = text.charAt(i);
       if (c == up || c == low || Character.toUpperCase(c) == up || Character.toLowerCase(c) == low) {
         return i;

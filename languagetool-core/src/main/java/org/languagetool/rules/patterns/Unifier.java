@@ -211,8 +211,10 @@ public class Unifier {
     featuresFound = new ArrayList<>(tmpFeaturesFound);
     readingsCounter++;
     // Removes features
-    for (int j = 0; j < tokSequence.size(); j++) {
-      for (int i = 0; i < tokSequenceEquivalences.get(j).size(); i++) {
+    int tokSequenceSize = tokSequence.size();
+    for (int j = 0; j < tokSequenceSize; j++) {
+      int tokSequenceEquivalenceGetJSize = tokSequenceEquivalences.get(j).size();
+      for (int i = 0; i < tokSequenceEquivalenceGetJSize; i++) {
         for (Map.Entry<String, List<String>> feat : equivalenceFeatures.entrySet()) {
           if (!UNIFY_IGNORE.equals(feat.getKey())) {
             if (tokSequenceEquivalences.get(j).get(i).containsKey(feat.getKey())) {
@@ -250,9 +252,11 @@ public class Unifier {
    */
   public final boolean getFinalUnificationValue(Map<String, List<String>> uFeatures) {
     int tokUnified = 0;
-    for (int j = 0; j < tokSequence.size(); j++) {
+    int tokSequenceSize = tokSequence.size();
+    for (int j = 0; j < tokSequenceSize; j++) {
       boolean unifiedTokensFound = false; // assume that nothing has been found
-      for (int i = 0; i < tokSequenceEquivalences.get(j).size(); i++) {
+      int tokSequenceEquivalencesGetJSize = tokSequenceEquivalences.get(j).size();
+      for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
         int featUnified = 0;
         if (tokSequenceEquivalences.get(j).get(i).containsKey(UNIFY_IGNORE)) {
           if (i == 0) {
@@ -281,10 +285,7 @@ public class Unifier {
         return false;
       }
     }
-    if (tokUnified == tokSequence.size()) {
-      return true;
-    }
-    return false;
+    return tokUnified == tokSequence.size();
   }
 
   /**
@@ -315,9 +316,11 @@ public class Unifier {
       return null;
     }
     List<AnalyzedTokenReadings> uTokens = new ArrayList<>();
-    for (int j = 0; j < tokSequence.size(); j++) {
+    int tokSequenceSize = tokSequence.size();
+    for (int j = 0; j < tokSequenceSize; j++) {
       boolean unifiedTokensFound = false; // assume that nothing has been found
-      for (int i = 0; i < tokSequenceEquivalences.get(j).size(); i++) {
+      int tokSequenceEquivalencesGetJSize = tokSequenceEquivalences.get(j).size();
+      for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
         int featUnified = 0;
         if (tokSequenceEquivalences.get(j).get(i).containsKey(UNIFY_IGNORE)) {
           addTokenToSequence(uTokens, tokSequence.get(j).getAnalyzedToken(i), j);
@@ -417,7 +420,8 @@ public class Unifier {
     List<Map<String, Set<String>>> tokEquivs = new ArrayList<>(analyzedTokenReadings.getReadingsLength());
     Map<String, Set<String>> map = new HashMap<>();
     map.put(UNIFY_IGNORE, new HashSet<>());
-    for (int i = 0; i < analyzedTokenReadings.getReadingsLength(); i++) {
+    int rLength = analyzedTokenReadings.getReadingsLength();
+    for (int i = 0; i < rLength; i++) {
       tokEquivs.add(map);
     }
     tokSequenceEquivalences.add(tokEquivs);

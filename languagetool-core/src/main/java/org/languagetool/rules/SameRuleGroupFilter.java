@@ -36,7 +36,8 @@ public class SameRuleGroupFilter implements RuleMatchFilter {
   public List<RuleMatch> filter(List<RuleMatch> ruleMatches) {
     Collections.sort(ruleMatches);
     List<RuleMatch> filteredRules = new ArrayList<>();
-    for (int i = 0; i < ruleMatches.size(); i++) {
+    int ruleMatchesSize = ruleMatches.size();
+    for (int i = 0; i < ruleMatchesSize; i++) {
       RuleMatch match = ruleMatches.get(i);
       while (i < ruleMatches.size() - 1 && overlapAndMatch(match, ruleMatches.get(i + 1))) {
         i++;  // skip next match
@@ -51,10 +52,7 @@ public class SameRuleGroupFilter implements RuleMatchFilter {
   }
 
   boolean overlaps(RuleMatch match, RuleMatch nextMatch) {
-    if (match.getFromPos() <= nextMatch.getToPos() && match.getToPos() >= nextMatch.getFromPos()) {
-      return true;
-    }
-    return false;
+    return match.getFromPos() <= nextMatch.getToPos() && match.getToPos() >= nextMatch.getFromPos();
   }
 
   private boolean haveSameRuleGroup(RuleMatch match, RuleMatch nextMatch) {

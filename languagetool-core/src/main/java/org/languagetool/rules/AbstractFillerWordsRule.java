@@ -137,10 +137,12 @@ public abstract class AbstractFillerWordsRule extends TextLevelRule {
     int pos = 0;
     int wordCount = 0;
     boolean isDirectSpeech = false;
-    for (int nSentence = 0; nSentence < sentences.size(); nSentence++) {
+    int sentencesSize = sentences.size();
+    for (int nSentence = 0; nSentence < sentencesSize; nSentence++) {
       AnalyzedSentence sentence = sentences.get(nSentence);
       AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
-      for (int n = 1; n < tokens.length; n++) {
+      int tokensLength = tokens.length;
+      for (int n = 1; n < tokensLength; n++) {
         AnalyzedTokenReadings token = tokens[n];
         String sToken = token.getToken();
         if (!isDirectSpeech && OPENING_QUOTES.matcher(sToken).matches() && n < tokens.length -1 && !tokens[n + 1].isWhitespaceBefore()) {
@@ -165,7 +167,8 @@ public abstract class AbstractFillerWordsRule extends TextLevelRule {
           percent = 0;
         }
         if (percent > minPercent) {
-          for (int i = 0; i < startPos.size(); i++) {
+          int startPosSize = startPos.size();
+          for (int i = 0; i < startPosSize; i++) {
             RuleMatch ruleMatch = new RuleMatch(this, relevantSentences.get(i), startPos.get(i), endPos.get(i), msg);
             ruleMatches.add(ruleMatch);
           }
@@ -183,7 +186,8 @@ public abstract class AbstractFillerWordsRule extends TextLevelRule {
       percent = 0;
     }
     if (percent > minPercent) {
-      for (int i = 0; i < startPos.size(); i++) {
+      int startPosSize = startPos.size();
+      for (int i = 0; i < startPosSize; i++) {
         RuleMatch ruleMatch = new RuleMatch(this, relevantSentences.get(i), startPos.get(i), endPos.get(i), msg);
         ruleMatches.add(ruleMatch);
       }

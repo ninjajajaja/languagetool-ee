@@ -91,11 +91,7 @@ public class AddCommasFilter extends RuleFilter {
   }
 
   public boolean bSuggestSemicolon(String suggestSemicolon) {
-    boolean bSuggestSemicolon = false;
-    if (suggestSemicolon != null && suggestSemicolon.equalsIgnoreCase("true")) {
-      bSuggestSemicolon = true;
-    }
-    return bSuggestSemicolon;
+    return "true".equalsIgnoreCase(suggestSemicolon);
   }
 
 }

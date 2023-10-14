@@ -147,7 +147,8 @@ public class RegexPatternRule extends AbstractPatternRule implements RuleMatcher
     boolean insideSuggestion;
     StringBuilder processedMessage = new StringBuilder();
     int startOfProcessingPart = 0;
-    for (int i = 0; i < backReferences.size(); i++) {
+    int backReferencesSize = backReferences.size();
+    for (int i = 0; i < backReferencesSize; i++) {
       Pair<Integer, Integer> reference = backReferences.get(i);
 
       while (!allSuggestionsPassed && (reference.getLeft() > suggestions.get(closestSuggestionPosition).getRight())) {

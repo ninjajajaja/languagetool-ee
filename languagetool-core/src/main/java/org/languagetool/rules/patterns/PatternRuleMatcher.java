@@ -119,7 +119,8 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
             firstMatchToken, rule.getSuggestionsOutMsg(), rule.getSuggestionMatchesOutMsg());
     int correctedStPos = 0;
     if (rule.startPositionCorrection > 0) {
-      for (int l = 0; l <= Math.min(rule.startPositionCorrection, tokenPositions.length - 1); l++) {
+      int mathMin = Math.min(rule.startPositionCorrection, tokenPositions.length - 1);
+      for (int l = 0; l <= mathMin; l++) {
         correctedStPos += tokenPositions[l];
       }
       correctedStPos--;
@@ -274,7 +275,8 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
             + numLen)) - 1;
         int repTokenPos = 0;
         int nextTokenPos = 0;
-        for (int l = 0; l <= Math.min(j, positions.length - 1); l++) {
+        int mathMin = Math.min(j, positions.length - 1);
+        for (int l = 0; l <= mathMin; l++) {
           repTokenPos += positions[l];
         }
         if (j + 1 < positions.length) {
@@ -463,8 +465,9 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
       }
       outputList.add(sb.toString());
     } else {
-      for (int c = 0; c < input[r].length; c++) {
-        output[r] = input[r][c];
+      String[] inputR = input[r];
+      for (String inp : inputR) {
+        output[r] = inp;
         String[] sList = combineLists(input, output, r + 1, lang);
         outputList.addAll(Arrays.asList(sList));
       }

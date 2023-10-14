@@ -54,13 +54,15 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
     while (sentStart + 1 < tokens.length && isPunctuationStart(tokens[sentStart + 1].getToken())) {
       sentStart++;
     }
-    for (int i = 1; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 1; i < tokensLength; i++) {
       addToQueue(tokens[i], prevTokens);
       StringBuilder sb = new StringBuilder();
       List<String> phrases = new ArrayList<>();
       List<AnalyzedTokenReadings> prevTokensList = Arrays.asList(prevTokens.toArray(new AnalyzedTokenReadings[0]));
-      for (int j = prevTokensList.size() - 1; j >= 0; j--) {
-        if (j != prevTokensList.size() - 1 && prevTokensList.get(j + 1).isWhitespaceBefore()) {
+      int prevTokensListSizeMinusOne = prevTokensList.size() - 1;
+      for (int j = prevTokensListSizeMinusOne; j >= 0; j--) {
+        if (j != prevTokensListSizeMinusOne && prevTokensList.get(j + 1).isWhitespaceBefore()) {
           sb.insert(0, " ");
         }
         sb.insert(0, prevTokensList.get(j).getToken());

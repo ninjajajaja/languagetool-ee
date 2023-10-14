@@ -579,13 +579,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
   }
 
   public boolean onlyCaseDiffers(List<SuggestedReplacement> defaultSuggestions, String word) {
-    boolean onlyCaseDiffers = false;
-    if (defaultSuggestions.size() > 0 && word.equalsIgnoreCase(defaultSuggestions.get(0).replacement)) {
-      // We have no good concept yet for showing both translations and standard suggestions, so
-      // use a hack to fix e.g. "muslims" not suggesting "Muslims" (https://github.com/languagetool-org/languagetool/issues/3333)
-      onlyCaseDiffers = true;
-    }
-    return onlyCaseDiffers;
+    return defaultSuggestions.size() > 0 && word.equalsIgnoreCase(defaultSuggestions.get(0).replacement);
   }
 
   @NotNull

@@ -60,7 +60,8 @@ public abstract class AbstractPunctuationCheckRule extends Rule {
 
     int startTokenIdx = -1;
     String tkns = "";
-    for (int i = 0; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 0; i < tokensLength; i++) {
       String tokenStr = tokens[i].getToken();
 
       if (isPunctuation(tokenStr)) {

@@ -100,7 +100,8 @@ public class CommaWhitespaceRule extends Rule {
     String prevToken = "";
     String prevPrevToken = "";
     boolean prevWhite = false;
-    for (int i = 0; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 0; i < tokensLength; i++) {
       String token = tokens[i].getToken();
       boolean isWhitespace = isWhitespaceToken(tokens[i]);
       boolean twoSuggestions = false;
@@ -242,7 +243,8 @@ public class CommaWhitespaceRule extends Rule {
   }
 
   private static boolean containsDigit(String str) {
-    for (int i = 0; i < str.length(); i++) {
+    int strLength = str.length();
+    for (int i = 0; i < strLength; i++) {
       if (Character.isDigit(str.charAt(i))) {
         return true;
       }

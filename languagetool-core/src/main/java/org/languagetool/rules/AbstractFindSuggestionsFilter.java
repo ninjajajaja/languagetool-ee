@@ -249,15 +249,11 @@ public abstract class AbstractFindSuggestionsFilter extends RuleFilter {
   }
 
   public boolean bSuppressMatch(String suppressMatch) {
-    boolean bSuppressMatch = false;
-    if (suppressMatch != null && suppressMatch.equalsIgnoreCase("true")) {
-      bSuppressMatch = true;
-    }
-    return bSuppressMatch;
+    return "true".equalsIgnoreCase(suppressMatch);
   }
 
   public boolean diacriticsMode(String mode) {
-    return (mode != null) && mode.equals("diacritics");
+    return "diacritics".equals(mode);
   }
 
   protected boolean isSuggestionException(AnalyzedTokenReadings analyzedSuggestion) {

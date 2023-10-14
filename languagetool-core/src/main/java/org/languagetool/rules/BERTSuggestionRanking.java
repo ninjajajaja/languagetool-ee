@@ -182,7 +182,8 @@ public class BERTSuggestionRanking extends RemoteRule {
       } else {
         List<List<Double>> results = model.batchScore(requests, timeoutMilliseconds);
         // put curated at the top, then compare probabilities
-        for (int i = 0; i < indices.size(); i++) {
+        int indicesSize = indices.size();
+        for (int i = 0; i < indicesSize; i++) {
           List<Double> scores = results.get(i);
           String userWord = requests.get(i).text.substring(requests.get(i).start, requests.get(i).end);
           RuleMatch match = matches.get(indices.get(i).intValue());

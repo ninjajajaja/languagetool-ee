@@ -92,7 +92,8 @@ public class WordRepeatRule extends Rule {
     AnalyzedTokenReadings[] tokens = getSentenceWithImmunization(sentence).getTokensWithoutWhitespace();
     String prevToken = "";
     // we start from token 1, token no. 0 is guaranteed to be SENT_START
-    for (int i = 1; i < tokens.length; i++) {
+    int tokensLength = tokens.length;
+    for (int i = 1; i < tokensLength; i++) {
       String token = tokens[i].getToken();
       if (tokens[i].isImmunized()) {
         prevToken = "";

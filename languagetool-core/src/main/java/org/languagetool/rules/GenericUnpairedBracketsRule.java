@@ -146,9 +146,7 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
         return false;
       }
       // Smiley ";)" and  ";("
-      if (prevToken.equals(";") && !tokens[i].isWhitespaceBefore() && (tokenStr.equals(")") || tokenStr.equals("("))) {
-        return false;
-      }
+      return !prevToken.equals(";") || tokens[i].isWhitespaceBefore() || (!tokenStr.equals(")") && !tokenStr.equals("("));
     }
     return true;
   }
@@ -162,8 +160,10 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
     int sentenceIdx = 0;
     for (AnalyzedSentence sentence : sentences) {
       AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
-      for (int i = 1; i < tokens.length; i++) {
-        for (int j = 0; j < startSymbols.size(); j++) {
+      int tokensLength = tokens.length;
+      for (int i = 1; i < tokensLength; i++) {
+        int startSymbolsSize = startSymbols.size();
+        for (int j = 0; j < startSymbolsSize; j++) {
           if (fillSymbolStack(startPosBase, tokens, i, j, symbolStack, sentence, sentenceIdx)) {
             break;
           }
@@ -177,7 +177,8 @@ public class GenericUnpairedBracketsRule extends TextLevelRule {
     int ssSize = symbolStack.size();
     if (ssSize > 2 && ssSize % 2 == 1) {
       isSymmetric = true;
-      for (int i = 0; i < ssSize / 2; i++) {
+      int ssSizeHalfed = ssSize / 2;
+      for (int i = 0; i < ssSizeHalfed; i++) {
         if (startSymbols.indexOf(symbolStack.get(i).getSymbol().symbol) !=
             endSymbols.indexOf(symbolStack.get(ssSize - 1).getSymbol().symbol)) {
           isSymmetric = false;
