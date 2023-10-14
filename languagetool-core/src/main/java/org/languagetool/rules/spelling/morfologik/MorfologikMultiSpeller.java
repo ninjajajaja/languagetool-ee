@@ -106,7 +106,7 @@ public class MorfologikMultiSpeller {
               return lines;
             }
           });
-  private static final Hashtable<String,Dictionary> dicPathToDict = new Hashtable<>();
+  private final Hashtable<String,Dictionary> dicPathToDict = new Hashtable<>();
   private static final Hashtable<UserDictCacheKey, Cache<String, Dictionary>> userDictCaches = new Hashtable<>();
   private static final Hashtable<UserDictCacheKey, Hashtable<String, Integer>> userDictSizes = new Hashtable<>();
   private final List<MorfologikSpeller> spellers;

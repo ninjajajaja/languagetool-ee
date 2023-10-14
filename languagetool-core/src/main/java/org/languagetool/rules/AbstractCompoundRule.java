@@ -38,7 +38,7 @@ import java.util.stream.Stream;
  */
 public abstract class AbstractCompoundRule extends Rule {
 
-  static final int MAX_TERMS = 5;
+  final static int MAX_TERMS = 5;
 
   private final String withHyphenMessage;
   private final String withoutHyphenMessage;

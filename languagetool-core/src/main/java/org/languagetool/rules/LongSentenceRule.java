@@ -37,10 +37,10 @@ import java.util.regex.Pattern;
  */
 public class LongSentenceRule extends TextLevelRule {
 
-  public static final String RULE_ID = "TOO_LONG_SENTENCE";
+  public final String RULE_ID = "TOO_LONG_SENTENCE";
 
-  private static final Pattern QUOTED_SENT_END = Pattern.compile("[?!.][\"“”„»«]", Pattern.DOTALL);
-  private static final Pattern SENT_END = Pattern.compile("[?!.]");
+  private final Pattern QUOTED_SENT_END = Pattern.compile("[?!.][\"“”„»«]", Pattern.DOTALL);
+  private final Pattern SENT_END = Pattern.compile("[?!.]");
 
   private final ResourceBundle messages;
   private final int maxWords;

@@ -53,7 +53,7 @@ import static org.languagetool.JLanguageTool.getDataBroker;
 
 public abstract class MorfologikSpellerRule extends SpellingCheckRule {
 
-  private static final Logger logger = LoggerFactory.getLogger(MorfologikSpellerRule.class);
+  private final Logger logger = LoggerFactory.getLogger(MorfologikSpellerRule.class);
 
   protected MorfologikMultiSpeller speller1;
   protected MorfologikMultiSpeller speller2;
@@ -68,7 +68,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
   private final UserConfig userConfig;
  
   //do not use very frequent words in split word suggestions ex. to *thow ≠ tot how 
-  static final int MAX_FREQUENCY_FOR_SPLITTING = 21; //0..21
+  final int MAX_FREQUENCY_FOR_SPLITTING = 21; //0..21
   
   private final Pattern pStartsWithNumbersBullets = Pattern.compile("^(\\d[\\.,\\d]*|\\P{L}+)(.*)$");
   private final Pattern pStartsWithNumbersBulletsExceptions = Pattern.compile("^([\\p{C}\\-\\$%&]+)(.*)$");

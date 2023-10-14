@@ -33,7 +33,7 @@ import java.util.*;
  */
 public class Unifier {
 
-  private static final String UNIFY_IGNORE = "unify-ignore";
+  private final String UNIFY_IGNORE = "unify-ignore";
     
   private final List<AnalyzedTokenReadings> tokSequence = new ArrayList<>();
 

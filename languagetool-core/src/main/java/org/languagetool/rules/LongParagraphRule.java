@@ -31,10 +31,10 @@ import org.languagetool.tools.Tools;
  */
 public class LongParagraphRule extends TextLevelRule {
 
-  public static final String RULE_ID = "TOO_LONG_PARAGRAPH";
+  public final String RULE_ID = "TOO_LONG_PARAGRAPH";
 
   private static final boolean DEFAULT_ACTIVATION = false;
-  private static final int DEFAULT_MAX_WORDS = 220;
+  private final int DEFAULT_MAX_WORDS = 220;
 
   private final Language lang;
 

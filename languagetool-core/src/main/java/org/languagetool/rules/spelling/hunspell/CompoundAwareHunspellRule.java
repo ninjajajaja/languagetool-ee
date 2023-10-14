@@ -41,7 +41,7 @@ import java.util.stream.IntStream;
  */
 public abstract class CompoundAwareHunspellRule extends HunspellRule {
 
-  private static final int MAX_SUGGESTIONS = 20;
+  private final int MAX_SUGGESTIONS = 20;
   
   private final CompoundWordTokenizer compoundSplitter;
   private final MorfologikMultiSpeller morfoSpeller;

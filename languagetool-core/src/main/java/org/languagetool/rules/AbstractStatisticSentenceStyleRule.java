@@ -42,9 +42,9 @@ import org.languagetool.rules.Category.Location;
  * @since 5.3
  */
 public abstract class AbstractStatisticSentenceStyleRule extends TextLevelRule {
-  private static final Pattern OPENING_QUOTES = Pattern.compile("[\"“„»«]");
-  private static final Pattern ENDING_QUOTES = Pattern.compile("[\"“”»«]");
-  private static final Pattern MARKS_REGEX = Pattern.compile("[,;.:?•!-–—]");
+  private final Pattern OPENING_QUOTES = Pattern.compile("[\"“„»«]");
+  private final Pattern ENDING_QUOTES = Pattern.compile("[\"“”»«]");
+  private final Pattern MARKS_REGEX = Pattern.compile("[,;.:?•!-–—]");
   private static final boolean DEFAULT_ACTIVATION = false;
 
   private final int minPercent;

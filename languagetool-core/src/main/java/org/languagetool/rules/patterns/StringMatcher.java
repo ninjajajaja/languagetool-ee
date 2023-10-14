@@ -42,7 +42,7 @@ public abstract class StringMatcher {
   final boolean caseSensitive;
   final boolean isRegExp;
   
-  public final static int MAX_MATCH_LENGTH = 250;
+  public static final int MAX_MATCH_LENGTH = 250;
 
   private StringMatcher(String pattern, boolean isRegExp, boolean caseSensitive) {
     this.pattern = pattern;
@@ -247,10 +247,10 @@ public abstract class StringMatcher {
   }
 
   private static abstract class RegexpParser<T> {
-    private static final String unsupported = "?$^{}*+";
-    private static final String finishing = ")|";
-    private static final String starting = "([\\";
-    private static final String nonLiteral = finishing + unsupported + starting + ".";
+    private final String unsupported = "?$^{}*+";
+    private final String finishing = ")|";
+    private final String starting = "([\\";
+    private final String nonLiteral = finishing + unsupported + starting + ".";
 
     private final String regexp;
     private int pos;

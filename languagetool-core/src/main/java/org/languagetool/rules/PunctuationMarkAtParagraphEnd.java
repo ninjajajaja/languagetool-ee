@@ -36,9 +36,9 @@ import org.languagetool.tools.Tools;
  */
 public class PunctuationMarkAtParagraphEnd extends TextLevelRule {
 
-  private final static String[] PUNCTUATION_MARKS = {".", "!", "?", ":", ",", ";"};
-  private final static String[] QUOTATION_MARKS = {"„", "»", "«", "\"", "”", "″", "’", "‚", "‘", "›", "‹", "′", "'"};
-  private final static Pattern P_NUMERIC = Pattern.compile("[0-9.]+");
+  private static final String[] PUNCTUATION_MARKS = {".", "!", "?", ":", ",", ";"};
+  private static final String[] QUOTATION_MARKS = {"„", "»", "«", "\"", "”", "″", "’", "‚", "‘", "›", "‹", "′", "'"};
+  private static final Pattern P_NUMERIC = Pattern.compile("[0-9.]+");
   
   private final Language lang;
 

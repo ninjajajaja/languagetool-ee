@@ -50,7 +50,7 @@ import java.util.function.Supplier;
  */
 public abstract class Rule {
 
-  private static final Category MISC = new Category(CategoryIds.MISC, "Miscellaneous");
+  private final Category MISC = new Category(CategoryIds.MISC, "Miscellaneous");
 
   protected final ResourceBundle messages;
 

@@ -105,7 +105,7 @@ public abstract class AdvancedWordRepeatRule extends Rule {
 
       }
 
-//      Matcher m1 = getExcludedNonWordsPattern().matcher(tokens[i].getToken());
+//      Matcher m1 = getExcludedNonWordsPattern().matcher(token);
 //      if (isWord && m1.matches()) {
 //        isWord = false;
 //      }

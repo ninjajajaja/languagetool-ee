@@ -34,7 +34,7 @@ import org.languagetool.rules.IncorrectExample;
  */
 public class HunspellNoSuggestionRule extends HunspellRule {
 
-  public static final String RULE_ID = "HUNSPELL_NO_SUGGEST_RULE";
+  public final String RULE_ID = "HUNSPELL_NO_SUGGEST_RULE";
 
   public HunspellNoSuggestionRule(ResourceBundle messages, Language language, UserConfig userConfig, List<Language> altLanguages) {
     super(messages, language, userConfig, altLanguages);

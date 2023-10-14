@@ -40,8 +40,8 @@ import org.languagetool.rules.Category.Location;
  */
 public class ReadabilityRule extends TextLevelRule {
 
-  private static final int MARK_WORDS = 3;
-  private static final int MIN_WORDS = 10;
+  private final int MARK_WORDS = 3;
+  private final int MIN_WORDS = 10;
 
   private final LinguServices linguServices;
   private final Language lang;

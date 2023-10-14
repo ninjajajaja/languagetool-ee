@@ -44,7 +44,7 @@ public abstract class AbstractSimpleReplaceRule extends Rule {
   protected boolean ignoreTaggedWords = false;
   protected boolean subRuleSpecificIds;
 
-  private static final Logger logger = LoggerFactory.getLogger(AbstractSimpleReplaceRule.class);
+  private final Logger logger = LoggerFactory.getLogger(AbstractSimpleReplaceRule.class);
   private boolean checkLemmas = true;
 
   protected abstract Hashtable<String, List<String>> getWrongWords();

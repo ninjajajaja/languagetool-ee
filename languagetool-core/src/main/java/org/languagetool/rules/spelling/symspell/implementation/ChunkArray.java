@@ -29,8 +29,8 @@ import java.util.Arrays;
 // to copy the entire backing array contents from the old backing array to the new.
 public class ChunkArray<T>
 {
-    private static int chunkSize = 4096;//this must be a power of 2, otherwise can't optimize row and col functions
-    private static int divShift = 12;   // number of bits to shift right to do division by chunkSize (the bit position of chunkSize)
+    private int chunkSize = 4096;//this must be a power of 2, otherwise can't optimize row and col functions
+    private int divShift = 12;   // number of bits to shift right to do division by chunkSize (the bit position of chunkSize)
     public SuggestionStage.Node[][] values;             // Note: Node (SymSpell.SuggestionStage.Node) is found in SymSpell.SymSpell.java.
     public int count;
 

@@ -49,14 +49,14 @@ public abstract class ConfusionProbabilityRule extends Rule {
    * @since 3.1
    * @deprecated not used anymore, the id is now more specific (like {@code CONFUSION_RULE_TERM1_TERM2})
    */
-  public static final String RULE_ID = "CONFUSION_RULE";
+  public final String RULE_ID = "CONFUSION_RULE";
   // probability is only used then at least these many of the occurrence lookups succeeded, 
   // i.e. returned a value > 0:
   public static final float MIN_COVERAGE = 0.5f;
   // the minimum value the more probable variant needs to have to be considered:
-  private static final double MIN_PROB = 0.0;  // try values > 0 to avoid false alarms
+  private final double MIN_PROB = 0.0;  // try values > 0 to avoid false alarms
 
-  private static final boolean DEBUG = false;  // also see DEBUG in BaseLanguageModel.java
+  private final boolean DEBUG = false;  // also see DEBUG in BaseLanguageModel.java
 
   // Speed up the server use case, where rules get initialized for every call:
   private static final LoadingCache<PathAndLanguage, Hashtable<String, List<ConfusionPair>>> confSetCache = CacheBuilder.newBuilder()

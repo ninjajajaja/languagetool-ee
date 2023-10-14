@@ -45,7 +45,7 @@ public abstract class AbstractSpecificCaseRule extends Rule {
   private static final Hashtable<String,String> lcToProperSpelling = new Hashtable<>();
   // the phrases that will be detected by the rule:
   public static THashSet<String> phrases;
-  private static int maxLen;
+  private int maxLen;
 
   // used to speed up the server as the phrases are loaded in every initialization:
   protected final CachingWordListLoader phrasesListLoader = new CachingWordListLoader();

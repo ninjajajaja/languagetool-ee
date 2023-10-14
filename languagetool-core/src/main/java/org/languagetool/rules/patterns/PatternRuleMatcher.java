@@ -51,7 +51,7 @@ final public class PatternRuleMatcher extends AbstractPatternRulePerformer imple
 
   private final boolean useList;
   //private final Integer slowMatchThreshold;
-  private static final boolean monitorRules = System.getProperty("monitorActiveRules") != null;
+  private final boolean monitorRules = System.getProperty("monitorActiveRules") != null;
 
   @ApiStatus.Internal
   public PatternRuleMatcher(AbstractTokenBasedRule rule, boolean useList) {

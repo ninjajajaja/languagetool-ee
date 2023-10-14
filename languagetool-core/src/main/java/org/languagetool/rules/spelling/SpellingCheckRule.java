@@ -61,7 +61,7 @@ public abstract class SpellingCheckRule extends Rule {
    * @since 4.4
    */
   public static final String LANGUAGETOOLER = "LanguageTooler";
-  public static final int MAX_TOKEN_LENGTH = 200;
+  public final int MAX_TOKEN_LENGTH = 200;
 
   protected final Language language;
 
@@ -74,13 +74,13 @@ public abstract class SpellingCheckRule extends Rule {
   protected LanguageModel languageModel;
   protected final CachingWordListLoader wordListLoader = new CachingWordListLoader();
 
-  private static final String SPELLING_IGNORE_FILE = "/hunspell/ignore.txt";
-  private static final String SPELLING_FILE = "/hunspell/spelling.txt";
-  private static final String CUSTOM_SPELLING_FILE = "/hunspell/spelling_custom.txt";
-  private static final String GLOBAL_SPELLING_FILE = "spelling_global.txt";
-  private static final String SPELLING_PROHIBIT_FILE = "/hunspell/prohibit.txt";
-  private static final String CUSTOM_SPELLING_PROHIBIT_FILE = "/hunspell/prohibit_custom.txt";
-  private static final String SPELLING_FILE_VARIANT = null;
+  private final String SPELLING_IGNORE_FILE = "/hunspell/ignore.txt";
+  private final String SPELLING_FILE = "/hunspell/spelling.txt";
+  private final String CUSTOM_SPELLING_FILE = "/hunspell/spelling_custom.txt";
+  private final String GLOBAL_SPELLING_FILE = "spelling_global.txt";
+  private final String SPELLING_PROHIBIT_FILE = "/hunspell/prohibit.txt";
+  private final String CUSTOM_SPELLING_PROHIBIT_FILE = "/hunspell/prohibit_custom.txt";
+  private final String SPELLING_FILE_VARIANT = null;
 
   private final Set<String> wordsToBeProhibited = new THashSet<>();
 

@@ -43,30 +43,30 @@ public class PatternToken implements Cloneable {
 
   private static final PatternToken[] EMPTY_ARRAY = new PatternToken[0];
 
-  private static final int INFLECTED_MASK = 1;
-  private static final int NEGATION_MASK = 2;
-  private static final int TEST_WHITESPACE_MASK = 4;
-  private static final int WHITESPACE_BEFORE_MASK = 8;
-  private static final int INSIDE_MARKER_MASK = 0x10;
+  private final int INFLECTED_MASK = 1;
+  private final int NEGATION_MASK = 2;
+  private final int TEST_WHITESPACE_MASK = 4;
+  private final int WHITESPACE_BEFORE_MASK = 8;
+  private final int INSIDE_MARKER_MASK = 0x10;
 
   /** True if scope=="next". */
-  private static final int EXCEPTION_VALID_NEXT_MASK = 0x20;
+  private final int EXCEPTION_VALID_NEXT_MASK = 0x20;
 
-  private static final int MAY_BE_OMITTED_MASK = 0x40;
+  private final int MAY_BE_OMITTED_MASK = 0x40;
 
   /**
    * This var is used to determine if calling {@link #setStringElement} makes sense. This method
    * takes most time so it's best to reduce the number of its calls.
    */
-  private static final int TEST_STRING_MASK = 0x80;
+  private final int TEST_STRING_MASK = 0x80;
 
   /** Determines whether the element should be ignored when doing unification **/
-  private static final int UNIFICATION_NEUTRAL_MASK = 0x100;
+  private final int UNIFICATION_NEUTRAL_MASK = 0x100;
 
-  private static final int UNI_NEGATION_MASK = 0x200;
+  private final int UNI_NEGATION_MASK = 0x200;
 
   /** Set to true on tokens that close the unification block. */
-  private static final int LAST_UNIFIED_MASK = 0x400;
+  private final int LAST_UNIFIED_MASK = 0x400;
 
   private short flags;
 

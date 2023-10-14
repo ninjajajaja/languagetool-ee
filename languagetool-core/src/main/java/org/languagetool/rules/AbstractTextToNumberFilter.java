@@ -30,8 +30,8 @@ import org.languagetool.rules.patterns.RuleFilter;
 
 public abstract class AbstractTextToNumberFilter extends RuleFilter {
 
-  protected static Hashtable<String, Float> numbers = new Hashtable<>();
-  protected static Hashtable<String, Float> multipliers = new Hashtable<>();
+  protected Hashtable<String, Float> numbers = new Hashtable<>();
+  protected Hashtable<String, Float> multipliers = new Hashtable<>();
 
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Hashtable<String, String> arguments, int patternTokenPos,

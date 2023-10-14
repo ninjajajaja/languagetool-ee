@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 class FalseFriendRuleHandler extends XMLRuleHandler {
 
   // Definitions of values in XML files:
-  private static final String TRANSLATION = "translation";
+  private final String TRANSLATION = "translation";
 
   private ResourceBundle englishMessages = null;
   private ResourceBundle messages = null;

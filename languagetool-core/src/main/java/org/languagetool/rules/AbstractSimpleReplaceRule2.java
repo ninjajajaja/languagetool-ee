@@ -81,7 +81,7 @@ public abstract class AbstractSimpleReplaceRule2 extends Rule {
    */
   public abstract Locale getLocale();
 
-  private static final LoadingCache<PathsAndLanguage, List<Hashtable<String, SuggestionWithMessage>>> cache = CacheBuilder.newBuilder()
+  private final LoadingCache<PathsAndLanguage, List<Hashtable<String, SuggestionWithMessage>>> cache = CacheBuilder.newBuilder()
           .expireAfterWrite(30, TimeUnit.MINUTES)
           .build(new CacheLoader<PathsAndLanguage, List<Hashtable<String, SuggestionWithMessage>>>() {
             @Override

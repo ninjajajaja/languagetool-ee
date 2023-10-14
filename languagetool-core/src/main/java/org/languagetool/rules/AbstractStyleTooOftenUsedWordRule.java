@@ -40,10 +40,10 @@ import org.languagetool.rules.Category.Location;
  * @since 6.2.3
  */
 public abstract class AbstractStyleTooOftenUsedWordRule extends TextLevelRule {
-  private static final Pattern OPENING_QUOTES = Pattern.compile("[\"“„»«]");
-  private static final Pattern ENDING_QUOTES = Pattern.compile("[\"“”»«]");
+  private final Pattern OPENING_QUOTES = Pattern.compile("[\"“„»«]");
+  private final Pattern ENDING_QUOTES = Pattern.compile("[\"“”»«]");
   private static final boolean DEFAULT_ACTIVATION = false;
-  private static final int MIN_WORD_COUNT= 100;
+  private final int MIN_WORD_COUNT= 100;
 
   private final int minPercent;
   private final int defaultMinPercent;

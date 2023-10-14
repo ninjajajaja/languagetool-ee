@@ -33,8 +33,8 @@ import org.languagetool.rules.RuleMatch;
  */
 public class DifferentLengthRule extends BitextRule {
 
-  private static final int MAX_SKEW = 250;
-  private static final int MIN_SKEW = 30;
+  private final int MAX_SKEW = 250;
+  private final int MIN_SKEW = 30;
 
   public DifferentLengthRule() {
     setLocQualityIssueType(ITSIssueType.Length);

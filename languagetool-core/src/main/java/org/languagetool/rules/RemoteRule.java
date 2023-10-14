@@ -52,7 +52,7 @@ public abstract class RemoteRule extends Rule {
   private static final Logger logger = LoggerFactory.getLogger(RemoteRule.class);
 
   protected static final List<Runnable> shutdownRoutines = new ArrayList<>();
-  protected static final Hashtable<String, CircuitBreaker> circuitBreakers = new Hashtable<>();
+  protected final Hashtable<String, CircuitBreaker> circuitBreakers = new Hashtable<>();
 
   public final RemoteRuleConfig serviceConfiguration;
   protected final boolean premium;

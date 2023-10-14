@@ -54,38 +54,38 @@ import static tech.units.indriya.unit.Units.*;
 @SuppressWarnings("unchecked")
 public abstract class AbstractUnitConversionRule extends Rule {
   
-  protected static final Unit<Mass> POUND = KILOGRAM.multiply(0.45359237);
-  protected static final Unit<Mass> OUNCE = POUND.divide(12);
+  protected final Unit<Mass> POUND = KILOGRAM.multiply(0.45359237);
+  protected final Unit<Mass> OUNCE = POUND.divide(12);
 
-  protected static final Unit<Length> FEET = METRE.multiply(0.3048);
-  protected static final Unit<Length> YARD = FEET.multiply(3);
-  protected static final Unit<Length> INCH = FEET.divide(12);
-  protected static final Unit<Length> MILE = FEET.multiply(5280);
+  protected final Unit<Length> FEET = METRE.multiply(0.3048);
+  protected final Unit<Length> YARD = FEET.multiply(3);
+  protected final Unit<Length> INCH = FEET.divide(12);
+  protected final Unit<Length> MILE = FEET.multiply(5280);
 
-  protected static final Unit<Volume> US_QUART = LITRE.multiply(0.946352946);
-  protected static final Unit<Volume> US_GALLON = US_QUART.multiply(4);
-  protected static final Unit<Volume> US_PINT = US_QUART.divide(2);
-  protected static final Unit<Volume> US_CUP = US_QUART.divide(4);
-  protected static final Unit<Volume> US_FL_OUNCE = US_QUART.divide(32);
+  protected final Unit<Volume> US_QUART = LITRE.multiply(0.946352946);
+  protected final Unit<Volume> US_GALLON = US_QUART.multiply(4);
+  protected final Unit<Volume> US_PINT = US_QUART.divide(2);
+  protected final Unit<Volume> US_CUP = US_QUART.divide(4);
+  protected final Unit<Volume> US_FL_OUNCE = US_QUART.divide(32);
 
-  protected static final Unit<Volume> IMP_PINT = LITRE.multiply(0.5682612532);
-  protected static final Unit<Volume> IMP_QUART = IMP_PINT.multiply(2);
-  protected static final Unit<Volume> IMP_GALLON = IMP_QUART.multiply(4);
-  protected static final Unit<Volume> IMP_FL_OUNCE = IMP_PINT.divide(20);
+  protected final Unit<Volume> IMP_PINT = LITRE.multiply(0.5682612532);
+  protected final Unit<Volume> IMP_QUART = IMP_PINT.multiply(2);
+  protected final Unit<Volume> IMP_GALLON = IMP_QUART.multiply(4);
+  protected final Unit<Volume> IMP_FL_OUNCE = IMP_PINT.divide(20);
 
-  protected static final Unit<Temperature> FAHRENHEIT = CELSIUS.multiply(5.0/9.0).shift(-32);
+  protected final Unit<Temperature> FAHRENHEIT = CELSIUS.multiply(5.0/9.0).shift(-32);
   // limit size of matched number to (possibly) avoid hangups
   // we need a different regex for including a word boundary (\b), instead of just prepending that
   // because otherwise negative numbers aren't correctly recognized
-  protected static final String NUMBER_REGEX = "(-?[0-9]{1,32}[0-9,.]{0,32})";
-  protected static final String NUMBER_REGEX_WITH_BOUNDARY = "(-?\\b[0-9]{1,32}[0-9,.]{0,32})";
+  protected final String NUMBER_REGEX = "(-?[0-9]{1,32}[0-9,.]{0,32})";
+  protected final String NUMBER_REGEX_WITH_BOUNDARY = "(-?\\b[0-9]{1,32}[0-9,.]{0,32})";
 
   protected final Pattern numberRangePart = Pattern.compile(NUMBER_REGEX_WITH_BOUNDARY + "$");
   
-  private static final double DELTA = 1e-2;
-  private static final double ROUNDING_DELTA = 0.05;
-  private static final int MAX_SUGGESTIONS = 5;
-  private static final int WHITESPACE_LIMIT = 5;
+  private final double DELTA = 1e-2;
+  private final double ROUNDING_DELTA = 0.05;
+  private final int MAX_SUGGESTIONS = 5;
+  private final int WHITESPACE_LIMIT = 5;
 
   protected Map<Pattern, Unit> unitPatterns = new LinkedHashMap<>();  // use LinkedHashMap for stable iteration order
 
@@ -104,7 +104,7 @@ public abstract class AbstractUnitConversionRule extends Rule {
     UNIT_MISMATCH
   }
 
-  private final static List<Pattern> antiPatterns = Arrays.asList(
+  private final List<Pattern> antiPatterns = Arrays.asList(
           Pattern.compile("\\s?\\d+'\\d\\d\\d\\s?"),   // "100'000", thousands separator in de-CH
           Pattern.compile("\\d+[-‐–]\\d+"),   // "3-5 pounds"
           Pattern.compile("\\d+/\\d+"),   // "1/4 mile"
