@@ -215,10 +215,10 @@ public class Unifier {
     readingsCounter++;
     // Removes features
     for (int j = 0; j < tokSequence.size(); j++) {
-      List<Map<String,Set<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
+      List<Hashtable<String,THashSet<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
       int tokSequenceEquivalencesGetJSize = tokSequenceEquivalencesGetJ.size();
       for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
-        Map<String, Set<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
+        Hashtable<String, THashSet<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
         for (Map.Entry<String, List<String>> feat : equivalenceFeatures.entrySet()) {
           String featGetKey = feat.getKey();
           if (!UNIFY_IGNORE.equals(featGetKey)) {
@@ -260,10 +260,10 @@ public class Unifier {
     int tokSequenceSize = tokSequence.size();
     for (int j = 0; j < tokSequenceSize; j++) {
       boolean unifiedTokensFound = false; // assume that nothing has been found
-      List<Map<String, Set<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
+      List<Hashtable<String, THashSet<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
       int tokSequenceEquivalencesGetJSize = tokSequenceEquivalencesGetJ.size();
       for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
-        Map<String, Set<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
+        Hashtable<String, THashSet<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
         int featUnified = 0;
         if (tokSequenceEquivalencesGetJGetI.containsKey(UNIFY_IGNORE)) {
           if (i == 0) {
@@ -326,10 +326,10 @@ public class Unifier {
     int tokSequenceSize = tokSequence.size();
     for (int j = 0; j < tokSequenceSize; j++) {
       boolean unifiedTokensFound = false; // assume that nothing has been found
-      List<Map<String, Set<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
+      List<Hashtable<String, THashSet<String>>> tokSequenceEquivalencesGetJ = tokSequenceEquivalences.get(j);
       int tokSequenceEquivalencesGetJSize = tokSequenceEquivalencesGetJ.size();
       for (int i = 0; i < tokSequenceEquivalencesGetJSize; i++) {
-        Map<String, Set<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
+        Hashtable<String, THashSet<String>> tokSequenceEquivalencesGetJGetI = tokSequenceEquivalencesGetJ.get(i);
         int featUnified = 0;
         if (tokSequenceEquivalencesGetJGetI.containsKey(UNIFY_IGNORE)) {
           addTokenToSequence(uTokens, tokSequence.get(j).getAnalyzedToken(i), j);

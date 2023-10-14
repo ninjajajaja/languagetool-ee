@@ -55,7 +55,6 @@ public abstract class AbstractCheckCaseRule extends AbstractSimpleReplaceRule2 {
     while (sentStart + 1 < tokensLength && isPunctuationStart(tokens[sentStart + 1].getToken())) {
       sentStart++;
     }
-    int tokensLength = tokens.length;
     for (int i = 1; i < tokensLength; i++) {
       AnalyzedTokenReadings tokensI = tokens[i];
       addToQueue(tokensI, prevTokens);
